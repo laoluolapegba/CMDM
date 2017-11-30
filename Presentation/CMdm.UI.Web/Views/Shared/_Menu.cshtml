@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNet.Identity
+@using CMdm.Data;
+    @using CMdm.Data.Rbac;
+    @using CMdm.Entities.ViewModels;
+    @using CMdm.UI.Web.Helpers.CrossCutting.Security;
+
+    @{
+
+        List<MenuViewModel> menuList = null;
+        var _db = new AppDbContext();
+        if (HttpContext.Current.Request.IsAuthenticated)
+        {
+            var identity = ((CustomPrincipal)HttpContext.Current.User).CustomIdentity;
+            var menus = (from p in _db.CM_PERMISSIONS
+                         join x in _db.CM_ROLE_PERM_XREF on p.PERMISSION_ID equals x.PERMISSION_ID
+                         where x.ROLE_ID == identity.UserRoleId
+                         select new
+                         {
+                             PermissionId = p.PERMISSION_ID,
+                             RoleId = x.ROLE_ID,
+                             PermissionDesc = p.PERMISSIONDESCRIPTION,
+                             ActionName = p.ACTION_NAME,
+                             ControllerName = p.CONTROLLER_NAME,
+                             ParentPermission = p.PARENT_PERMISSION,
+                             IconClass = p.ICON_CLASS,
+                             IsopenClass = p.ISOPEN_CLASS,
+                             ToggleIconClass = p.TOGGLE_ICON
+
+                         }).AsEnumerable();
+
+            //_db.CM_PERMISSIONS.Join(_db.CM_ROLE_PERM_XREF, x => x.PERMISSION_ID, p => p.PERMISSION_ID, (p, x) => new { Permission = p, Xref = x })
+            //.Where(s => s.Permission.ISACTIVE == true).Where(s2 => s2.Xref.ROLE_ID == identity.UserRoleId);
+
+            var menuData = menus.Select(o => new MenuViewModel
+            {
+                PermissionId = o.PermissionId,
+                RoleId = o.RoleId,
+                PermissionDesc = o.PermissionDesc,
+                ActionName = o.ActionName,
+                ControllerName = o.ControllerName,
+                ParentPermission = o.ParentPermission,
+                IconClass = o.IconClass,
+                IsopenClass = o.IsopenClass,
+                ToggleIconClass = o.ToggleIconClass
+            }).ToList();
+
+
+            //var menuList = menuData as IEnumerable<MenuViewModel>;
+            menuList = menuData;
+            
+        }
+
+        if (Request.IsAuthenticated)
+        {
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                @foreach (var mp in menuList.Where(p => p.ParentPermission == 0))
+                {
+                    <li id=@mp.PermissionId class="treeview">
+                        <a href="#">
+                            <i class="fa @mp.IconClass fa-fw"></i><span>@mp.PermissionDesc</span>
+                            <i class="toggle-icon fa @mp.ToggleIconClass pull-right"></i>
+                        </a>
+                        
+                        @if (menuList.Count(p => p.ParentPermission == mp.PermissionId) > 0)
+                    {
+                    @:<ul class="treeview-menu @mp.IsopenClass">
+        }
+
+                        @RenderMenuItem(menuList, mp)
+
+                        @if (menuList.Count(p => p.ParentPermission == mp.PermissionId) > 0)
+                    {
+                    @:</ul>
+                    }
+
+                    </li>
+                }
+            </ul>
+            @helper RenderMenuItem(List<MenuViewModel> menuList, MenuViewModel mi)
+        {
+foreach (var cp in menuList.Where(p => p.ParentPermission == mi.PermissionId))
+{
+        @:<li>   <a href="@Url.Action(@cp.ActionName, @cp.ControllerName)">  <i class="fa fa-circle-o"></i>  <span>@cp.PermissionDesc</span>    </a>
+            if (menuList.Count(p => p.ParentPermission == cp.PermissionId) > 0)
+            {
+            @:<ul class="treeview-menu">
+                }
+
+            @RenderMenuItem(menuList, cp)
+            if (menuList.Count(p => p.ParentPermission == cp.PermissionId) > 0)
+            {
+            @:</ul>
+              }
+                else
+                {
+            @:</li>
+            }
+        }
+        }
+                }
+
+
+    }

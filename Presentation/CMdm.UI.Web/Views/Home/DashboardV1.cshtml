@@ -1,0 +1,245 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Home/DashboardV1/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/morris/css")
+@Styles.Render("~/AdminLTE/plugins/jvectormap/css")
+@Styles.Render("~/AdminLTE/plugins/datepicker/css")
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/css")
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>450</h3>
+                <p>Total Fund Credit</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    53<sup style="font-size: 20px">%</sup>
+                </h3>
+                <p>Total Payout</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-cash"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>445,000</h3>
+                <p>Total Income</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios-pricetag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>330,000</h3>
+                <p>Total Investment</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-arrow-up"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>450</h3>
+                <p>Current Stream</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    53<sup style="font-size: 20px">%</sup>
+                </h3>
+                <p>Assimilation Rate</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>44</h3>
+                <p>New Registrations</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>165</h3>
+                <p>Unique Visitors today</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <section class="col-lg-7 connectedSortable">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+            </ul>
+            <div class="tab-content no-padding">
+                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+            </div>
+        </div>
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-comments-o"></i>
+                <h3 class="box-title">Chat</h3>
+                <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                    <div class="btn-group" data-toggle="btn-toggle">
+                        <button type="button" class="btn btn-default btn-sm active">
+                            <i class="fa fa-square text-green"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="item">
+                    <img src="../../AdminLTE/dist/img/user.svg" alt="user image" class="online">
+                    <p class="message">
+                        <a href="#" class="name">
+                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                            Mike Doe
+                        </a>
+                        I would like to meet you to discuss the latest news about
+                        the arrival of the new theme. They say it is going to be one the
+                        best themes on the market
+                    </p>
+                    <div class="attachment">
+                        <h4>Attachments:</h4>
+                        <p class="filename">
+                            Theme-thumbnail-image.jpg
+                        </p>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="../../AdminLTE/dist/img/user.svg" alt="user image" class="offline">
+                    <p class="message">
+                        <a href="#" class="name">
+                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
+                            Alexander Pierce
+                        </a>
+                        I would like to meet you to discuss the latest news about
+                        the arrival of the new theme. They say it is going to be one the
+                        best themes on the market
+                    </p>
+                </div>
+                <div class="item">
+                    <img src="../../AdminLTE/dist/img/user.svg" alt="user image" class="offline">
+                    <p class="message">
+                        <a href="#" class="name">
+                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                            Susan Doe
+                        </a>
+                        I would like to meet you to discuss the latest news about
+                        the arrival of the new theme. They say it is going to be one the
+                        best themes on the market
+                    </p>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Type message...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </section>
+    <section class="col-lg-5 connectedSortable">
+        
+        <div class="box box-solid bg-teal-gradient">
+            <div class="box-header">
+                <i class="fa fa-th"></i>
+                <h3 class="box-title">Sales Graph</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body border-radius-none">
+                <div class="chart" id="line-chart" style="height: 250px;"></div>
+            </div>
+            <div class="box-footer no-border">
+                
+            </div>
+        </div>
+        
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/AdminLTE/plugins/jvectormap/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/knob/js")
+    @Scripts.Render("~/AdminLTE/plugins/raphael/js")
+    @Scripts.Render("~/AdminLTE/plugins/morris/js")
+    @Scripts.Render("~/AdminLTE/plugins/datepicker/js")
+    @Scripts.Render("~/Scripts/Home/DashboardV1")
+}

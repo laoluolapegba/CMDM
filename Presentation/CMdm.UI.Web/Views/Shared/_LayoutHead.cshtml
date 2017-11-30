@@ -1,0 +1,88 @@
+﻿
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="home" id="ApplicationPath" href="~/" />
+<link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+@Styles.Render("~/Content/customlogin/font-open-sans.css")
+@Styles.Render("~/Content/customlogin/font-awesome.css")
+@Styles.Render("~/Content/customlogin/simple-line-icons.css")
+@Styles.Render("~/Content/customlogin/ionicons.css")
+@Styles.Render("~/Content/customlogin/aristo/aristo.css")
+@Styles.Render("~/Content/customlogin/bootstrap.css")
+@Styles.Render("~/Content/customlogin/colorbox/jquery.colorbox.css")
+@Styles.Render("~/Content/customlogin/jquery.fileupload.css")
+@Styles.Render("~/Content/customlogin/pace.css")
+@Styles.Render("~/Content/customlogin/slick.grid.css")
+@Styles.Render("~/Content/customlogin/css/select2.css")
+@Styles.Render("~/Content/customlogin/toastr.css")
+@Styles.Render("~/Content/customlogin/serenity/serenity.css")
+@Styles.Render("~/Content/customlogin/site/site.css")
+@if (System.Globalization.CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft)
+{
+    @Styles.Render("~/Content/customlogin/site/site.rtl.css")
+}
+@*@{var cookie = Request.Cookies["ThemePreference"]; var theme = cookie != null && !cookie.Value.IsEmptyOrNull() ? cookie.Value : "default"; }*@
+<script type="application/json" id="ScriptCulture"></script>
+<script type="text/javascript">window.paceOptions = { minTime: 250, ghostTime: 250, restartOnRequestAfter: 250, ajax: { trackMethods: ['GET', 'POST'], trackWebSockets: true, ignoreURLs: [] } };</script>
+@Scripts.Render("~/Scripts/customlogin/pace.js")
+@*@foreach(var x in CommonIncludes.Scripts) { @Scripts.Render(x) }*@
+
+
+@Scripts.Render("~/Scripts/customlogin/rsvp.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery-3.1.1.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery-ui-1.12.1.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery-ui-i18n.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.validate.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.blockUI.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.cookie.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.json.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.autoNumeric.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.colorbox.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.dialogextendQ.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.event.drag.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.scrollintoview.js" )
+@Scripts.Render("~/Scripts/customlogin/select2.js" )
+@Scripts.Render("~/Scripts/customlogin/sortable.js" )
+@Scripts.Render("~/Scripts/customlogin/toastr.js" )
+@*@Scripts.Render("~/Scripts/customlogin/SlickGrid/slick.core.js?v=BLCRBDx7U3jsEuDNgnEQkw2" )
+@Scripts.Render("~/Scripts/customlogin/SlickGrid/slick.grid.js?v=f5lvq3M8mdFxwZoSgj7E8w2" )
+@Scripts.Render("~/Scripts/customlogin/SlickGrid/slick.groupitemmetadataprovider.js?v=RUFU1x9TDSkyvChFWteLsA2" )
+@Scripts.Render("~/Scripts/customlogin/SlickGrid/Plugins/slick.autotooltips.js?v=-AIKLINWiZmkA-CnhA5ZRQ2" )
+@Scripts.Render("~/Scripts/customlogin/SlickGrid/Plugins/slick.headerbuttons.js?v=9YOWFAIrd9_PYSbDwFxdqg2" )*@
+@Scripts.Render("~/Scripts/customlogin/bootstrap.js" )
+@Scripts.Render("~/Scripts/customlogin/saltarelle/mscorlib.js" )
+@Scripts.Render("~/Scripts/customlogin/serenity/Serenity.CoreLib.js" )
+@Scripts.Render("~/Scripts/customlogin/serenity/Serenity.Script.UI.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.cropzoom.js" )
+
+@Scripts.Render("~/Scripts/customlogin/jquery.fileupload.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.iframe-transport.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.maskedinput.js" )
+@Scripts.Render("~/Scripts/customlogin/jquery.slimscroll.js" )
+@Scripts.Render("~/Scripts/customlogin/SlickGrid/Plugins/slick.rowselectionmodel.js" )
+@Scripts.Render("~/Scripts/customlogin/mousetrap.js" )
+@Scripts.Render("~/Scripts/customlogin/fastclick/fastclick.js" )
+
+@Scripts.Render("~/Scripts/customlogin/jquery.cropzoom.js")
+@Scripts.Render("~/Scripts/customlogin/jquery.fileupload.js")
+@Scripts.Render("~/Scripts/customlogin/jquery.iframe-transport.js")
+@Scripts.Render("~/Scripts/customlogin/jquery.maskedinput.js")
+@Scripts.Render("~/Scripts/customlogin/jquery.slimscroll.js")
+@*@Scripts.Render("~/Scripts/SlickGrid/Plugins/slick.rowselectionmodel.js")
+    @Scripts.Render("~/Scripts/mousetrap.js")*@
+@Scripts.Render("~/Scripts/customlogin/fastclick/fastclick.js")
+@*@Scripts.Render("~/AdminLTE/dist/js/app.js")*@
+@*@Scripts.Render("~/Scripts/Site/Serene2._9.Web.js")*@
+@Scripts.Render("/Scripts/Site/Serene2._9.Web.js")
+
+
+<script src="/DynJS.axd/LocalText.Site.en-US.Public.js"></script>
+<script src="/DynJS.axd/ColumnsBundle.js"></script>
+<script src="/DynJS.axd/FormBundle.js"></script>
+<script src="/DynJS.axd/TemplateBundle.js"></script>
+<script src="/DynJS.axd/RegisteredScripts.js"></script>
+
+@Styles.Render("~/Scripts/vegas/vegas.css")
+@Scripts.Render("~/Scripts/vegas/vegas.min.js")
