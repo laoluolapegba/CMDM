@@ -11,7 +11,7 @@ using CMdm.Entities.Domain.Dqi;
 namespace CMdm.Entities.Domain.Mdm
 {
     [Table("MDM_DQ_DATASOURCE")]
-    public partial class MdmDQDataSource
+    public partial class MdmDQDataSource 
     {
         public MdmDQDataSource()
         {

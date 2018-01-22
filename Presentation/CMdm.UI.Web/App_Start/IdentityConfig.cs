@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using SendGrid;
 using System;
 using System.Configuration;
 using System.Data.Entity;
@@ -13,6 +12,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using CMdm.Data.Identity.Models;
+using System.Net.Mail;
 
 namespace CMdm.UI.Web
 {
@@ -26,32 +26,33 @@ namespace CMdm.UI.Web
         // Use NuGet to install SendGrid (Basic C# client lib) 
         private async Task configSendGridasync(IdentityMessage message)
         {
-            //try
-            //{
-            //    using (var client = new SmtpClient())
-            //    {
-            //        using (var msg = new MailMessage(ConfigurationManager.AppSettings["mailSender"], message.Destination))
-            //        {
-            //            msg.Subject = message.Subject;
-            //            msg.Body = message.Body;
+            try
+            {
+                using (var client = new SmtpClient())
+                {
+                    using (var msg = new MailMessage(ConfigurationManager.AppSettings["mailSender"], message.Destination))
+                    {
+                        msg.Subject = message.Subject;
+                        msg.Body = message.Body;
 
-            //            msg.IsBodyHtml = true;
+                        msg.IsBodyHtml = true;
 
 
-            //            client.EnableSsl = true;
-            //            client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mailSender"], ConfigurationManager.AppSettings["mailPassword"]);
-            //            client.Send(msg);
-            //        };
-            //    };
-            //}
-            //catch (SmtpException ex)
-            //{
-            //    //return false;
-            //}
-            //catch (Exception ex)
-            //{
-            //    //return false;
-            //}
+                        client.EnableSsl = true;
+                        client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mailSender"], ConfigurationManager.AppSettings["mailPassword"]);
+                        client.Send(msg);
+                    };
+                };
+            }
+            catch (SmtpException ex)
+            {
+                //return false;
+            }
+            catch (Exception ex)
+            {
+                //return false;
+            }
+            /*
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
             myMessage.From = new System.Net.Mail.MailAddress(
@@ -81,6 +82,7 @@ namespace CMdm.UI.Web
                 Trace.TraceError("Failed to create Web transport.");
                 await Task.FromResult(0);
             }
+            */
         }
 
 

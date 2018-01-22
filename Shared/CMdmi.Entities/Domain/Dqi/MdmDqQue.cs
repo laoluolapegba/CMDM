@@ -18,7 +18,7 @@ namespace CMdm.Entities.Domain.Dqi
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RECORD_ID { get; set; }
+        public int RECORD_ID { get; set; } 
         [DisplayName("Datasource Name")]
         public string DATA_SOURCE { get; set; }
         [DisplayName("Table Name")]

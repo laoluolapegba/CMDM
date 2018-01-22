@@ -1,0 +1,592 @@
+﻿<DataModel name="cdma" formatVersion="13" modelVersion="2" defQuery="" id="0a388f99-b582-43ab-beb5-b1c51b4d53ed">
+  <Description />
+  <CustomInfo />
+  <DMEOptions>
+    <listBoxTablesWidth>279</listBoxTablesWidth>
+    <FormWidth>880</FormWidth>
+    <FormHeight>577</FormHeight>
+  </DMEOptions>
+  <DBParams>
+    <SqlDialect>Oracle</SqlDialect>
+    <ConnectionString>Data Source=46.101.26.21:1521/orasma;User ID=cdma;Password=cdma</ConnectionString>
+    <LoginPrompt>False</LoginPrompt>
+    <GateClass>Korzh.EasyQuery.DbGates.OdpNetDbGate</GateClass>
+  </DBParams>
+  <Tables>
+    <Table class="db" alias="CUSTOMER_ADDRESS" schema="CDMA" db="" dsgnLayout="" priority="1000" name="CUSTOMER_ADDRESS" hints="" quote="False" />
+    <Table class="db" alias="CUSTOMER_CHANNELS" schema="CDMA" db="" dsgnLayout="" priority="1000" name="CUSTOMER_CHANNELS" hints="" quote="False" />
+    <Table class="db" alias="CUSTOMER_DEPENDANT" schema="CDMA" db="" dsgnLayout="" priority="1000" name="CUSTOMER_DEPENDANT" hints="" quote="False" />
+    <Table class="db" alias="CUSTOMER_EMPLOYMENT" schema="CDMA" db="" dsgnLayout="" priority="1000" name="CUSTOMER_EMPLOYMENT" hints="" quote="False" />
+    <Table class="db" alias="CUSTOMER_PREFERENCES" schema="CDMA" db="" dsgnLayout="" priority="1000" name="CUSTOMER_PREFERENCES" hints="" quote="False" />
+    <Table class="db" alias="INDIVIDUAL_CUSTOMER_DETAIL" schema="CDMA" db="" dsgnLayout="" priority="1000" name="INDIVIDUAL_CUSTOMER_DETAIL" hints="" quote="False" />
+  </Tables>
+  <Links />
+  <Editors>
+    <Editor id="_DTE" type="EDIT" resType="String" defValue="" />
+    <Editor id="_DPDE" type="DATETIME" resType="Unknown" subType="Date" />
+    <Editor id="_DPTE" type="DATETIME" resType="Unknown" subType="Time" />
+  </Editors>
+  <Operators>
+    <Operator id="Equal" caption="is equal to" expr="{expr1} = {expr2}" format="{expr1} [[is equal to]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotEqual" caption="is not equal to" expr="{expr1} &lt;&gt; {expr2}" format="{expr1} [[is not equal to]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="LessThan" caption="is less than" expr="{expr1} &lt; {expr2}" format="{expr1} [[is less than]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="LessOrEqual" caption="is less than or equal to" expr="{expr1} &lt;= {expr2}" format="{expr1} [[is less than or equal to]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="GreaterThan" caption="is greater than" expr="{expr1} &gt; {expr2}" format="{expr1} [[is greater than]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="GreaterOrEqual" caption="is greater than or equal to" expr="{expr1} &gt;= {expr2}" format="{expr1} [[is greater than or equal to]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="IsNull" caption="is null" expr="{expr1} IS NULL" format="{expr1} [[is null]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="IsNotNull" caption="is not null" expr="{expr1} IS NOT NULL" format="{expr1} [[is not null]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="IsTrue" caption="is true" expr="{expr1} = ${true}" format="{expr1} [[is true]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Boolean operators" cond="False">
+      <Types>Bool</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotTrue" caption="is not true" expr="(({expr1} &lt;&gt; ${true}) OR ({expr1} IS NULL))" format="{expr1} [[is not true]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Boolean operators" cond="False">
+      <Types>Bool</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="InList" caption="is in list" expr="{expr1} in ({expr2})" format="{expr1} [[is in list]] {expr2}" constFmt="{const}" kind="List" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotInList" caption="is not in list" expr="NOT ({expr1} in ({expr2}))" format="{expr1} [[is not in list]] {expr2}" constFmt="{const}" kind="List" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="Between" caption="is between" expr="{expr1} BETWEEN {expr2} AND {expr3}" format="{expr1} [[is between]] {expr2} and {expr3}" constFmt="{const}" kind="Scalar" isRange="True" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotBetween" caption="is not between" expr="NOT ({expr1} BETWEEN {expr2} AND {expr3})" format="{expr1} [[is not between]] {expr2} and {expr3}" constFmt="{const}" kind="Scalar" isRange="True" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="StartsWith" caption="starts with" expr="{expr1} LIKE {expr2}" format="{expr1} [[starts with]] {expr2}" constFmt="{const}{ws}" kind="Scalar" caseIns="False" editor="_DTE" group="String operators" cond="False">
+      <Types>String,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotStartsWith" caption="does not start with" expr="NOT ({expr1} LIKE {expr2})" format="{expr1} [[does not start with]] {expr2}" constFmt="{const}{ws}" kind="Scalar" caseIns="False" editor="_DTE" group="String operators" cond="False">
+      <Types>String,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="Contains" caption="contains" expr="{expr1} LIKE {expr2}" format="{expr1} [[contains]] {expr2}" constFmt="{ws}{const}{ws}" kind="Scalar" caseIns="False" editor="_DTE" group="String operators" cond="False">
+      <Types>String,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotContains" caption="does not contain" expr="NOT ({expr1} LIKE {expr2})" format="{expr1} [[does not contain]] {expr2}" constFmt="{ws}{const}{ws}" kind="Scalar" caseIns="False" editor="_DTE" group="String operators" cond="False">
+      <Types>String,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="InSubQuery" caption="in sub query" expr="{expr1} IN ({expr2})" format="{expr1} [[in sub query]] {expr2}" constFmt="{const}" kind="Query" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="NotInSubQuery" caption="not in sub query" expr="NOT ({expr1} IN ({expr2}))" format="{expr1} [[is not in sub query]] {expr2}" constFmt="{const}" kind="Query" caseIns="False" group="Common operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinToday" caption="today" expr="${{Today}} &lt;= {expr1} AND {expr1} &lt; ${{Tomorrow}}" format="{expr1} [[within today]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinThisWeek" caption="this week" expr="${{FirstDayOfWeek}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfNextWeek}}" format="{expr1} [[within this week]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinPrevWeek" caption="last week" expr="${{FirstDayOfPrevWeek}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfWeek}}" format="{expr1} [[within last week]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinThisMonth" caption="this month" expr="${{FirstDayOfMonth}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfNextMonth}}" format="{expr1} [[within this month]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinPrevMonth" caption="previous month" expr="${{FirstDayOfPrevMonth}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfMonth}}" format="{expr1} [[within previous month]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinThisYear" caption="this year" expr="${{FirstDayOfYear}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfNextYear}}" format="{expr1} [[within this year]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateWithinPrevYear" caption="last year" expr="${{FirstDayOfPrevYear}} &lt;= {expr1} AND {expr1} &lt; ${{FirstDayOfYear}}" format="{expr1} [[within last year]]" constFmt="{const}" kind="Scalar" caseIns="False" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+    <Operator id="DateBeforePrecise" caption="before" expr="{expr1} &lt; {expr2}" format="{expr1} [[before]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" editor="_DPDE" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" defDefValue="${Today}" />
+    </Operator>
+    <Operator id="DateAfterPrecise" caption="after" expr="{expr1} &gt;= {expr2}" format="{expr1} [[after]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" editor="_DPDE" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" defDefValue="${FirstDayOfMonth}" />
+    </Operator>
+    <Operator id="DatePeriodPrecise" caption="custom period" expr="{expr1} BETWEEN {expr2} AND {expr3}" format="{expr1} [[within]] {expr2} and {expr3}" constFmt="{const}" kind="Scalar" isRange="True" caseIns="False" editor="_DPDE" group="Date/time operators" cond="False">
+      <Types>Date,DateTime</Types>
+      <Operands defType="Unknown" defDefValue="${Today}">
+        <Operand type="Unknown" kind="Scalar" defVal="${FirstDayOfMonth}" />
+        <Operand type="Unknown" kind="Scalar" defVal="${Today}" />
+      </Operands>
+    </Operator>
+    <Operator id="TimeBeforePrecise" caption="before" expr="{expr1} &lt; {expr2}" format="{expr1} [[before]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" editor="_DPTE" group="Date/time operators" cond="False">
+      <Types>Time</Types>
+      <Operands defType="Unknown" defDefValue="${Now}" />
+    </Operator>
+    <Operator id="TimeAfterPrecise" caption="after" expr="{expr1} &gt;= {expr2}" format="{expr1} [[after]] {expr2}" constFmt="{const}" kind="Scalar" caseIns="False" editor="_DPTE" group="Date/time operators" cond="False">
+      <Types>Time</Types>
+      <Operands defType="Unknown" defDefValue="${HourStart}" />
+    </Operator>
+    <Operator id="TimePeriodPrecise" caption="between" expr="{expr1} BETWEEN {expr2} AND {expr3}" format="{expr1} [[between]] {expr2} and {expr3}" constFmt="{const}" kind="Scalar" isRange="True" caseIns="False" editor="_DPTE" group="Date/time operators" cond="False">
+      <Types>Time</Types>
+      <Operands defType="Unknown" defDefValue="${Today}">
+        <Operand type="Unknown" kind="Scalar" defVal="${HourStart}" />
+        <Operand type="Unknown" kind="Scalar" defVal="${Now}" />
+      </Operands>
+    </Operator>
+    <Operator id="MaximumOfAttr" caption="is maximum of" expr="{expr1} = (SELECT MAX({expr2.field}) FROM {expr2.table})" format="{expr1} [[is equal to maximum of]] {expr2}" constFmt="{const}" kind="Attribute" caseIns="False" group="Other operators" cond="False">
+      <Types>String,Byte,Word,Int,Int32,Int64,Bool,Float,Currency,BCD,Autoinc,Memo,FixedChar,Date,DateTime,Time</Types>
+      <Operands defType="Unknown" />
+    </Operator>
+  </Operators>
+  <Entities maxId="0">
+    <Entity id="" name="CUSTOMER_ADDRESS" UIC="True" UIR="True" UIS="True">
+      <Attr id="CUSTOMER_ADDRESS.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="Float" size="22" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>Equal,Between,LessThan,LessOrEqual,GreaterThan,GreaterOrEqual,InList,NotEqual,NotBetween,NotInList,MaximumOfAttr,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.ADDRESS_TYPE" kind="Data" expr="ADDRESS_TYPE" caption="ADDRESS_TYPE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.HOUSE_IDENTIFIER" kind="Data" expr="HOUSE_IDENTIFIER" caption="HOUSE_IDENTIFIER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.ADDRESS_LINE_1" kind="Data" expr="ADDRESS_LINE_1" caption="ADDRESS_LINE_1" type="String" size="1000" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.ADDRESS_LINE_2" kind="Data" expr="ADDRESS_LINE_2" caption="ADDRESS_LINE_2" type="String" size="1000" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.ADDRESS_LINE_3" kind="Data" expr="ADDRESS_LINE_3" caption="ADDRESS_LINE_3" type="String" size="1000" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.ADMINISTRATIVE_AREA" kind="Data" expr="ADMINISTRATIVE_AREA" caption="ADMINISTRATIVE_AREA" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.LOCALITY" kind="Data" expr="LOCALITY" caption="LOCALITY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.LOCATION_COORDINATES" kind="Data" expr="LOCATION_COORDINATES" caption="LOCATION_COORDINATES" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.POST_CODE" kind="Data" expr="POST_CODE" caption="POST_CODE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.POST_OFFICE_BOX" kind="Data" expr="POST_OFFICE_BOX" caption="POST_OFFICE_BOX" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.COUNTRY" kind="Data" expr="COUNTRY" caption="COUNTRY" type="String" size="200" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.STATE" kind="Data" expr="STATE" caption="STATE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.CITY" kind="Data" expr="CITY" caption="CITY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.COUNTRY_OF_RESIDENCE" kind="Data" expr="COUNTRY_OF_RESIDENCE" caption="COUNTRY_OF_RESIDENCE" type="String" size="200" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.HOLD_DATA" kind="Data" expr="HOLD_DATA" caption="HOLD_DATA" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_ADDRESS.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_ADDRESS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+    <Entity id="" name="CUSTOMER_CHANNELS" UIC="True" UIR="True" UIS="True">
+      <Attr id="CUSTOMER_CHANNELS.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.BRANCH" kind="Data" expr="BRANCH" caption="BRANCH" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.ATM" kind="Data" expr="ATM" caption="ATM" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.INTERNET_BANKING" kind="Data" expr="INTERNET_BANKING" caption="INTERNET_BANKING" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.MOBILE_BANKING" kind="Data" expr="MOBILE_BANKING" caption="MOBILE_BANKING" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.TELEPHONE_BANKING" kind="Data" expr="TELEPHONE_BANKING" caption="TELEPHONE_BANKING" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_CHANNELS.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_CHANNELS">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+    <Entity id="" name="CUSTOMER_DEPENDANT" UIC="True" UIR="True" UIS="True">
+      <Attr id="CUSTOMER_DEPENDANT.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.FAMILY_RELATIONSHIP_TYPE" kind="Data" expr="FAMILY_RELATIONSHIP_TYPE" caption="FAMILY_RELATIONSHIP_TYPE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.NAME" kind="Data" expr="NAME" caption="NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.ADDRESS" kind="Data" expr="ADDRESS" caption="ADDRESS" type="String" size="1000" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.TELEPHONE_NUMBER" kind="Data" expr="TELEPHONE_NUMBER" caption="TELEPHONE_NUMBER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.{DATE OF BIRTH}" kind="Data" expr="DATE OF BIRTH" caption="DATE OF BIRTH" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.EMPLOYMENT_DETAIL" kind="Data" expr="EMPLOYMENT_DETAIL" caption="EMPLOYMENT_DETAIL" type="String" size="1000" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.OCCUPATION" kind="Data" expr="OCCUPATION" caption="OCCUPATION" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.REFERENCE_ID" kind="Data" expr="REFERENCE_ID" caption="REFERENCE_ID" type="Float" size="22" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>Equal,Between,LessThan,LessOrEqual,GreaterThan,GreaterOrEqual,InList,NotEqual,NotBetween,NotInList,MaximumOfAttr,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_DEPENDANT.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_DEPENDANT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+    <Entity id="" name="CUSTOMER_EMPLOYMENT" UIC="True" UIR="True" UIS="True">
+      <Attr id="CUSTOMER_EMPLOYMENT.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.EMPLOYMENT_TYPE" kind="Data" expr="EMPLOYMENT_TYPE" caption="EMPLOYMENT_TYPE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CURRENT_EMPLOYER_NAME" kind="Data" expr="CURRENT_EMPLOYER_NAME" caption="CURRENT_EMPLOYER_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CURRENT_EMPLOYER_ADDRESS" kind="Data" expr="CURRENT_EMPLOYER_ADDRESS" caption="CURRENT_EMPLOYER_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CURRENT_EMPLOYER_PHONE" kind="Data" expr="CURRENT_EMPLOYER_PHONE" caption="CURRENT_EMPLOYER_PHONE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CURRENT_EMPLOYER_POSITION_HELD" kind="Data" expr="CURRENT_EMPLOYER_POSITION_HELD" caption="CURRENT_EMPLOYER_POSITION_HELD" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.EMPLOYMENT_DATE" kind="Data" expr="EMPLOYMENT_DATE" caption="EMPLOYMENT_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.PREVIOUS_EMPLOYER_ADDRESS" kind="Data" expr="PREVIOUS_EMPLOYER_ADDRESS" caption="PREVIOUS_EMPLOYER_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.PREVIOUS_EMPLOYER_NAME" kind="Data" expr="PREVIOUS_EMPLOYER_NAME" caption="PREVIOUS_EMPLOYER_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.PREV_EMPLOYER_POSITION_HELD" kind="Data" expr="PREV_EMPLOYER_POSITION_HELD" caption="PREV_EMPLOYER_POSITION_HELD" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.TIME_SPENT_WITH_PREV_EMPLOYER" kind="Data" expr="TIME_SPENT_WITH_PREV_EMPLOYER" caption="TIME_SPENT_WITH_PREV_EMPLOYER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.BUSINESS_OCCUPATION" kind="Data" expr="BUSINESS_OCCUPATION" caption="BUSINESS_OCCUPATION" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.REFERENCE_ID" kind="Data" expr="REFERENCE_ID" caption="REFERENCE_ID" type="Float" size="22" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>Equal,Between,LessThan,LessOrEqual,GreaterThan,GreaterOrEqual,InList,NotEqual,NotBetween,NotInList,MaximumOfAttr,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_EMPLOYMENT.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_EMPLOYMENT">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+    <Entity id="" name="CUSTOMER_PREFERENCES" UIC="True" UIR="True" UIS="True">
+      <Attr id="CUSTOMER_PREFERENCES.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.VACATION_PREFERRED_PERIOD" kind="Data" expr="VACATION_PREFERRED_PERIOD" caption="VACATION_PREFERRED_PERIOD" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.VACATION_PREFERRED_LOCATION" kind="Data" expr="VACATION_PREFERRED_LOCATION" caption="VACATION_PREFERRED_LOCATION" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.GAME" kind="Data" expr="GAME" caption="GAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.CLUB" kind="Data" expr="CLUB" caption="CLUB" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.RESTAURANT" kind="Data" expr="RESTAURANT" caption="RESTAURANT" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.MUSIC" kind="Data" expr="MUSIC" caption="MUSIC" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="CUSTOMER_PREFERENCES.HOBBY" kind="Data" expr="HOBBY" caption="HOBBY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="CUSTOMER_PREFERENCES">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+    <Entity id="" name="INDIVIDUAL_CUSTOMER_DETAIL" UIC="True" UIR="True" UIS="True">
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.CUSTOMER_ID" kind="Data" expr="CUSTOMER_ID" caption="CUSTOMER_ID" type="Float" size="22" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>Equal,Between,LessThan,LessOrEqual,GreaterThan,GreaterOrEqual,InList,NotEqual,NotBetween,NotInList,MaximumOfAttr,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.PREFIX" kind="Data" expr="PREFIX" caption="PREFIX" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.FIRST_NAME" kind="Data" expr="FIRST_NAME" caption="FIRST_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.LAST_NAME" kind="Data" expr="LAST_NAME" caption="LAST_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.MIDDLE_NAME" kind="Data" expr="MIDDLE_NAME" caption="MIDDLE_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.SHORT_NAME" kind="Data" expr="SHORT_NAME" caption="SHORT_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.PREFERRED_NAME" kind="Data" expr="PREFERRED_NAME" caption="PREFERRED_NAME" type="String" size="200" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.MOTHER_MAIDEN_NAME" kind="Data" expr="MOTHER_MAIDEN_NAME" caption="MOTHER_MAIDEN_NAME" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.SOCIAL_SECURITY_NUMBER" kind="Data" expr="SOCIAL_SECURITY_NUMBER" caption="SOCIAL_SECURITY_NUMBER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.TAX_IDENTIFICATION_NUMBER" kind="Data" expr="TAX_IDENTIFICATION_NUMBER" caption="TAX_IDENTIFICATION_NUMBER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.TITLE" kind="Data" expr="TITLE" caption="TITLE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.DATE_OF_BIRTH" kind="Data" expr="DATE_OF_BIRTH" caption="DATE_OF_BIRTH" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.GENDER" kind="Data" expr="GENDER" caption="GENDER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.MARITAL_STATUS" kind="Data" expr="MARITAL_STATUS" caption="MARITAL_STATUS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.PLACE_OF_BIRTH" kind="Data" expr="PLACE_OF_BIRTH" caption="PLACE_OF_BIRTH" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.RELIGION" kind="Data" expr="RELIGION" caption="RELIGION" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.STATE_OF_ORIGIN" kind="Data" expr="STATE_OF_ORIGIN" caption="STATE_OF_ORIGIN" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.NATIONALITY" kind="Data" expr="NATIONALITY" caption="NATIONALITY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.HEIGHT" kind="Data" expr="HEIGHT" caption="HEIGHT" type="Float" size="22" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>Equal,Between,LessThan,LessOrEqual,GreaterThan,GreaterOrEqual,InList,NotEqual,NotBetween,NotInList,MaximumOfAttr,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.COMPLEXION" kind="Data" expr="COMPLEXION" caption="COMPLEXION" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.EYE_COLOR" kind="Data" expr="EYE_COLOR" caption="EYE_COLOR" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.DISABILITY" kind="Data" expr="DISABILITY" caption="DISABILITY" type="String" size="1" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.FACIAL_MARKS" kind="Data" expr="FACIAL_MARKS" caption="FACIAL_MARKS" type="String" size="1" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.RACE" kind="Data" expr="RACE" caption="RACE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.DOCUMENT_TYPE" kind="Data" expr="DOCUMENT_TYPE" caption="DOCUMENT_TYPE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.DOCUMENT_NUMBER" kind="Data" expr="DOCUMENT_NUMBER" caption="DOCUMENT_NUMBER" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ISSUING_AUTHORITY" kind="Data" expr="ISSUING_AUTHORITY" caption="ISSUING_AUTHORITY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ISSUING_COUNTRY" kind="Data" expr="ISSUING_COUNTRY" caption="ISSUING_COUNTRY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ISSUING_STATE" kind="Data" expr="ISSUING_STATE" caption="ISSUING_STATE" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ISSUED_DATE" kind="Data" expr="ISSUED_DATE" caption="ISSUED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.EXPIRY_DATE" kind="Data" expr="EXPIRY_DATE" caption="EXPIRY_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.CREATED_DATE" kind="Data" expr="CREATED_DATE" caption="CREATED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.CREATED_BY" kind="Data" expr="CREATED_BY" caption="CREATED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.LAST_MODIFIED_DATE" kind="Data" expr="LAST_MODIFIED_DATE" caption="LAST_MODIFIED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.LAST_MODIFIED_BY" kind="Data" expr="LAST_MODIFIED_BY" caption="LAST_MODIFIED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.AUTHORISED" kind="Data" expr="AUTHORISED" caption="AUTHORISED" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.AUTHORISED_BY" kind="Data" expr="AUTHORISED_BY" caption="AUTHORISED_BY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.AUTHORISED_DATE" kind="Data" expr="AUTHORISED_DATE" caption="AUTHORISED_DATE" type="Date" size="7" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>DateWithinToday,DateWithinThisWeek,DateWithinPrevWeek,DateWithinThisMonth,DateWithinPrevMonth,DateWithinThisYear,DateWithinPrevYear,DateBeforePrecise,DateAfterPrecise,DatePeriodPrecise,MaximumOfAttr,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ACCOUNT_NO" kind="Data" expr="ACCOUNT_NO" caption="ACCOUNT_NO" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.IP_ADDRESS" kind="Data" expr="IP_ADDRESS" caption="IP_ADDRESS" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.ISSUING_CITY" kind="Data" expr="ISSUING_CITY" caption="ISSUING_CITY" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.POLITICALLY_EXPOSED_PERSON" kind="Data" expr="POLITICALLY_EXPOSED_PERSON" caption="POLITICALLY_EXPOSED_PERSON" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+      <Attr id="INDIVIDUAL_CUSTOMER_DETAIL.FINANCIALLY_EXPOSED_PERSON" kind="Data" expr="FINANCIALLY_EXPOSED_PERSON" caption="FINANCIALLY_EXPOSED_PERSON" type="String" size="100" UIC="True" UIR="True" UIS="True" customFunc="" quote="False" UAL="True" aggr="False" tables="INDIVIDUAL_CUSTOMER_DETAIL">
+        <Operators>StartsWith,Contains,Equal,InList,NotStartsWith,NotContains,NotEqual,NotInList,InSubQuery,NotInSubQuery,IsNull,IsNotNull</Operators>
+      </Attr>
+    </Entity>
+  </Entities>
+</DataModel>

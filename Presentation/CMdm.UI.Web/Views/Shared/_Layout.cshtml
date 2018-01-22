@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@ViewBag.Title - Bluespace MDM</title>
+    <title>@ViewBag.Title - Bluechip MDM</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
 
     @Styles.Render("~/AdminLTE/plugins/font-awesome/css")
     @Styles.Render("~/AdminLTE/plugins/ionicons/css")
@@ -22,6 +24,8 @@
         }
     </style>
 
+	<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

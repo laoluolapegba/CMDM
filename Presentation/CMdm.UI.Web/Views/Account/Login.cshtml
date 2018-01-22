@@ -65,7 +65,7 @@
                             <div class="form-group has-feedback">
                                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username" })
                                 @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Password" })

@@ -11,7 +11,7 @@ using CMdm.Data;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Entities.Domain.Dqi;
 
-namespace Cdma.Web.Controllers
+namespace CMdm.UI.Web.Controllers
 {
     public class DQQueController : Controller
     {

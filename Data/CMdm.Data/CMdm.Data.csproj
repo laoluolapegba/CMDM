@@ -80,7 +80,6 @@
     <Compile Include="Rbac\CM_USER_PROFILE.cs" />
     <Compile Include="Rbac\CM_USER_ROLES.cs" />
     <Compile Include="Rbac\CM_USER_ROLE_XREF.cs" />
-    <Compile Include="Rbac\MDM_DQI_SETTING.cs" />
     <Compile Include="Rbac\Notification.cs" />
     <Compile Include="AppDbContext.cs" />
   </ItemGroup>

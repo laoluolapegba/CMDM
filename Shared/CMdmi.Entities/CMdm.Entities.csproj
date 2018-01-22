@@ -48,11 +48,12 @@
     <Compile Include="Domain\Courses\Course.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
+    <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
     <Compile Include="Domain\Mdm\MdmAggrDimensions.cs" />
+    <Compile Include="Domain\Dqi\MdmDqCatalog.cs" />
     <Compile Include="Domain\Mdm\MdmCatalog.cs" />
-    <Compile Include="Domain\Mdm\MdmDqCatalog.cs" />
     <Compile Include="Domain\Mdm\MdmDQDataSource.cs" />
     <Compile Include="Domain\Mdm\MdmDQDsType.cs" />
     <Compile Include="Domain\Dqi\MdmDQImpact.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Domain\Dqi\MdmDqRunExceptions.cs" />
     <Compile Include="Domain\Dqi\MdmDqRunSchedule.cs" />
     <Compile Include="Domain\Mdm\MdmMetrics.cs" />
+    <Compile Include="Domain\Mdm\MdmRegex.cs" />
     <Compile Include="Domain\Mdm\MdmWeights.cs" />
     <Compile Include="Domain\User\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

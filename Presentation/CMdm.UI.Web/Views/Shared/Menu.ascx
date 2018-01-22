@@ -10,10 +10,10 @@
      var _db = new AppDbContext();
      if (HttpContext.Current.Request.IsAuthenticated)
      {
-         //var identity = ((CustomPrincipal)HttpContext.Current.User).CustomIdentity;
+         var identity = ((CustomPrincipal)HttpContext.Current.User).CustomIdentity;
          var menus = (from p in _db.CM_PERMISSIONS
                       join x in _db.CM_ROLE_PERM_XREF on p.PERMISSION_ID equals x.PERMISSION_ID
-                      where x.ROLE_ID == 81
+                      where x.ROLE_ID == identity.UserRoleId
                       select new
                       {
                           PermissionId = p.PERMISSION_ID,
@@ -61,8 +61,8 @@
                 {%>
                         <li class="treeview">
                             <a href="<%=ResolveUrl(menuList[i].Url)%>">
-                                <i class="fa <%:menuList[i].IconClass%>"></i> <span class="text"><%:menuList[i].PermissionDesc%></span>
-                                <i class="fa fa-angle-left pull-right"></i>
+                                <i class="fa <%:menuList[i].IconClass%>"></i> <span><%:menuList[i].PermissionDesc%></span>
+                                <i class="toggle-icon fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
 
@@ -70,12 +70,12 @@
                                     {
                                         if (menuList[j].ParentPermission == menuList[i].PermissionId)
                                         {%>
-                                        <li class="treeview">
+                                        <li>
                                             <a href="<%=ResolveUrl(menuList[j].Url)%>" >
-                                                <i class="fa <%:menuList[j].IconClass%>"></i> <span><%:menuList[j].PermissionDesc%></span>
-                                                <i class="fa fa-angle-left pull-right"></i>
+                                                <i class="fa fa-circle-o"></i> <span><%:menuList[j].PermissionDesc%></span>
+                                                <%--<i class="fa fa-angle-left pull-right"></i>--%>
                                             </a>
-                                            <ul class="treeview-menu">
+                                            <%--<ul class="treeview-menu">
                                                 <%for (int k = 0; k < menuList.Count; k++)
                                                     {
                                                         if (menuList[k].ParentPermission == menuList[j].PermissionId)
@@ -89,7 +89,7 @@
                                                    <% }
                                                        }
                                                 %>
-                                            </ul>
+                                            </ul>--%>
                                         </li>
                                   <%  }
                                       }

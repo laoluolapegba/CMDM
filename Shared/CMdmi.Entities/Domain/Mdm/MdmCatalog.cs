@@ -1,39 +1,25 @@
-﻿using System;
+﻿using CMdm.Entities.Domain.Dqi;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace CMdm.Entities.Domain.Mdm
 {
-  
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("MDM_DQI_PARAMETERS")]
+   
+    [Table("MDM_CATALOG")]
     public partial class MdmCatalog
     {
-
-
+        public MdmCatalog()
+        {
+            MdmDqRules = new HashSet<MdmDqRule>();
+        }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int COLUMNID { get; set; }
-
-        public string TABLE_CATEGORIES { get; set; }
-
-        public string TABLE_NAMES { get; set; }
-
-        public string TABLE_DESC { get; set; }
-        public string COLUMN_NAMES { get; set; }
-        public string COLUMN_DESC { get; set; }
-        public int COLUMN_WEIGHT { get; set; }
-        public string IMPORTANCE_LEVEL { get; set; }
-        public string DEFAULT_VALUE { get; set; }
-
-        public int REGEX { get; set; }
-        [StringLength(20)]
+        public int CATALOG_ID { get; set; }  //,,,
+        public string CATALOG_NAME { get; set; }
+        public int CATEGORY_ID { get; set; }
         public string CREATED_BY { get; set; }
 
         public DateTime? CREATED_DATE { get; set; }
@@ -42,14 +28,6 @@ namespace CMdm.Entities.Domain.Mdm
         public string LAST_MODIFIED_BY { get; set; }
 
         public DateTime? LAST_MODIFIED_DATE { get; set; }
-
-        [StringLength(1)]
-        public string RECORD_STATUS { get; set; }
-
-        public bool COLUMN_REQUIRED { get; set; }
-        public int MANDATORY_LEVEL { get; set; }
-        public int COLUMN_ORDER { get; set; }
-
-
+        public virtual ICollection<MdmDqRule> MdmDqRules { get; set; }
     }
 }

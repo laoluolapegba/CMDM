@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Dqi.MdmDqCatalog>
+
+@*@{
+    ViewBag.Title = "DQI Parameters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+@{
+    ViewBag.Title = "Data Quality Index ";
+    ViewBag.SubTitle = "Parameters";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Parameters</h3>
+                <div class="ibox-tools">
+                    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.COLUMN_ORDER)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.COLUMN_NAMES)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.COLUMN_REQUIRED)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MdmWeights.WEIGHT_DESC)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.MdmRegex.REGEX_DESC)
+                            </th>*@
+                           
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td> @Html.DisplayFor(modelItem => item.COLUMN_ORDER)</td>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COLUMN_NAMES)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COLUMN_REQUIRED)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MdmWeights.WEIGHT_DESC)
+                                </td>
+                               @* <td>
+                                    @Html.DisplayFor(modelItem => item.MdmRegex.REGEX_NAME)
+                                </td>*@
+                               
+                                <td>
+                                    <div class="btn-group">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.COLUMNID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.COLUMNID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.COLUMNID })
+                                    </div>
+                                </td>
+                                <td></td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>- -</th>
+                            <th>- -</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}

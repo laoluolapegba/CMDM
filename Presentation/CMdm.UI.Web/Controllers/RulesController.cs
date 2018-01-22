@@ -24,7 +24,7 @@ using Korzh.EasyQuery;
 using System.Text;
 using CMdm.Entities.Domain.Dqi;
 
-namespace Cdma.Web.Controllers
+namespace CMdm.UI.Web.Controllers
 {
     [ValidateInput(false)]
     public class RulesController : Controller
@@ -36,7 +36,7 @@ namespace Cdma.Web.Controllers
         // GET: Rules
         public ActionResult Index()
         {
-           
+
             var mdmDqRules = db.MdmDqRules.Include(m => m.MdmAggrDimensions).Include(m => m.MdmDQDataSources).Include(m => m.MdmDQPriorities).Include(m => m.MdmDqRunSchedules);
             return View(mdmDqRules.ToList());
         }
@@ -67,7 +67,7 @@ namespace Cdma.Web.Controllers
             ViewBag.DATA_SOURCE_ID = new SelectList(db.MdmDQDataSources, "DS_ID", "DS_USERNAME");
             ViewBag.SEVERITY = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION");
             ViewBag.RUN_SCHEDULE = new SelectList(db.MdmDqRunSchedules, "SCHEDULE_ID", "SCHEDULE_DESCRIPTION");
-            ViewBag.CATALOG_ID = new SelectList(db.MdmDqCatalogs, "CATALOG_ID", "CATALOG_NAME");
+            ViewBag.CATALOG_ID = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME");
             return View();
         }
 
@@ -94,7 +94,7 @@ namespace Cdma.Web.Controllers
             ViewBag.DATA_SOURCE_ID = new SelectList(db.MdmDQDataSources, "DS_ID", "DS_USERNAME", mdmDqRule.DATA_SOURCE_ID);
             ViewBag.SEVERITY = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION", mdmDqRule.SEVERITY);
             ViewBag.RUN_SCHEDULE = new SelectList(db.MdmDqRunSchedules, "SCHEDULE_ID", "SCHEDULE_DESCRIPTION", mdmDqRule.RUN_SCHEDULE);
-            ViewBag.CATALOG_ID = new SelectList(db.MdmDqCatalogs, "CATALOG_ID", "CATALOG_NAME");
+            ViewBag.CATALOG_ID = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME");
             return View(mdmDqRule);
         }
 
@@ -114,7 +114,7 @@ namespace Cdma.Web.Controllers
             ViewBag.DATA_SOURCE_ID = new SelectList(db.MdmDQDataSources, "DS_ID", "DS_USERNAME", mdmDqRule.DATA_SOURCE_ID);
             ViewBag.SEVERITY = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION", mdmDqRule.SEVERITY);
             ViewBag.RUN_SCHEDULE = new SelectList(db.MdmDqRunSchedules, "SCHEDULE_ID", "SCHEDULE_DESCRIPTION", mdmDqRule.RUN_SCHEDULE);
-            ViewBag.CATALOG_ID = new SelectList(db.MdmDqCatalogs, "CATALOG_ID", "CATALOG_NAME");
+            ViewBag.CATALOG_ID = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME");
             return View(mdmDqRule);
         }
 
@@ -135,7 +135,7 @@ namespace Cdma.Web.Controllers
             ViewBag.DATA_SOURCE_ID = new SelectList(db.MdmDQDataSources, "DS_ID", "DS_USERNAME", mdmDqRule.DATA_SOURCE_ID);
             ViewBag.SEVERITY = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION", mdmDqRule.SEVERITY);
             ViewBag.RUN_SCHEDULE = new SelectList(db.MdmDqRunSchedules, "SCHEDULE_ID", "SCHEDULE_DESCRIPTION", mdmDqRule.RUN_SCHEDULE);
-            ViewBag.CATALOG_ID = new SelectList(db.MdmDqCatalogs, "CATALOG_ID", "CATALOG_NAME");
+            ViewBag.CATALOG_ID = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME");
             return View(mdmDqRule);
         }
         [HttpPost]
@@ -156,7 +156,7 @@ namespace Cdma.Web.Controllers
             ViewBag.DATA_SOURCE_ID = new SelectList(db.MdmDQDataSources, "DS_ID", "DS_USERNAME", mdmDqRule.DATA_SOURCE_ID);
             ViewBag.SEVERITY = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION", mdmDqRule.SEVERITY);
             ViewBag.RUN_SCHEDULE = new SelectList(db.MdmDqRunSchedules, "SCHEDULE_ID", "SCHEDULE_DESCRIPTION", mdmDqRule.RUN_SCHEDULE);
-            ViewBag.CATALOG_ID = new SelectList(db.MdmDqCatalogs, "CATALOG_ID", "CATALOG_NAME");
+            ViewBag.CATALOG_ID = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME");
             return View("Create", mdmDqRule);
         }
 

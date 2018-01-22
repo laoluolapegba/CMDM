@@ -39,6 +39,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <form runat="server">
+        <asp:ScriptManager runat="server">
+            </asp:ScriptManager>
         <div class="wrapper">
             <header class="main-header">
                 <a href="<%: ResolveUrl("~/Home/Dashboard1")%>" class="logo">
@@ -358,7 +360,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Bluechip CMDM</b> version 1.0
                 </div>
-                <strong>Copyrights | Bluechip Technologies Ltd &copy; 2017 <a href="http://www.bluechiptech.biz">Bluechip Technologies Ltd</a>.</strong> All rights
+                <strong>Copyright | Bluechip Technologies Ltd &copy; 2017 <a href="http://www.bluechiptech.biz">Bluechip Technologies Ltd</a>.</strong> All rights
             reserved.
             </footer>
             <aside class="control-sidebar control-sidebar-dark">
@@ -522,6 +524,7 @@
 
     <asp:ContentPlaceHolder ID="menu" runat="server" />
     <asp:ContentPlaceHolder ID="scripts" runat="server" />
+     <asp:ContentPlaceHolder ID="ExtraJavaScripts" runat="server" />
     <%--<%@RenderSection("menu", required: false) %>--%>
     <%--   <%@RenderSection("scripts", required: false) %>--%>
 </body>

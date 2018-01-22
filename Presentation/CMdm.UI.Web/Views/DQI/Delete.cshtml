@@ -1,0 +1,73 @@
+﻿@model CMdm.Entities.Domain.Mdm.MdmWeights
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MdmWeights</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WEIGHT_VALUE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WEIGHT_VALUE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RECORD_STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RECORD_STATUS)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

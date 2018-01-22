@@ -45,7 +45,11 @@ namespace CMdm.Data
             modelBuilder.Entity<MdmDqRule>().HasRequired(e => e.MdmDqRunSchedules).WithMany(t => t.MdmDqRules).HasForeignKey(e => e.RUN_SCHEDULE).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDqRule>().HasRequired(e => e.MdmAggrDimensions).WithMany(t => t.MdmDqRules).HasForeignKey(e => e.DIMENSION).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDqRule>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmDqRules).HasForeignKey(e => e.SEVERITY).WillCascadeOnDelete(false);
-            modelBuilder.Entity<MdmDqRule>().HasRequired(e => e.MdmDqCatalogs).WithMany(t => t.MdmDqRules).HasForeignKey(e => e.CATALOG_ID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmDqRule>().HasRequired(e => e.MdmCatalogs).WithMany(t => t.MdmDqRules).HasForeignKey(e => e.CATALOG_ID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MdmDqCatalog>().HasRequired(e => e.MdmWeights).WithMany(t => t.MdmDqiCatalogs).HasForeignKey(e => e.COLUMN_WEIGHT).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmDqCatalog>().HasRequired(e => e.MdmRegex).WithMany(t => t.MdmDqiCatalogs).HasForeignKey(e => e.REGEX).WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<MdmDQDataSource>().HasRequired(e => e.MdmDQDsTypes).WithMany(t => t.MdmDQDataSources).HasForeignKey(e => e.DS_TYPE).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDQQue>().HasRequired(e => e.MdmDqRules).WithMany(t => t.MdmDQQues).HasForeignKey(e => e.RULE_ID).WillCascadeOnDelete(false);
@@ -95,7 +99,7 @@ namespace CMdm.Data
         public virtual DbSet<EntityMast> EntityMast { get; set; }
         public virtual DbSet<MdmMetrics> MDM_METRICS { get; set; }
         public virtual DbSet<MdmWeights> MDM_WEIGHTS { get; set; }
-        public virtual DbSet<MdmCatalog> MDM_CATALOGS { get; set; }
+        //public virtual DbSet<MdmCatalog> MDM_CATALOGS { get; set; }
 
         public virtual DbSet<MdmDQImpact> MdmDQImpacts { get; set; }
         public virtual DbSet<MdmDQPriority> MdmDQPriorities { get; set; }
@@ -110,8 +114,11 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<MdmDqRunSchedule> MdmDqRunSchedules { get; set; }
         public System.Data.Entity.DbSet<MdmDQDsType> MdmDQDsTypes { get; set; }
-        public System.Data.Entity.DbSet<MdmDqCatalog> MdmDqCatalogs { get; set; }
+        public System.Data.Entity.DbSet<MdmCatalog> MdmCatalogs { get; set; }
         public DbSet<MdmDqRunException> MdmDqRunExceptions { get; set; }
+        public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
+        public DbSet<MdmRegex> MdmRegex { get; set; }
+
     }
 
 }

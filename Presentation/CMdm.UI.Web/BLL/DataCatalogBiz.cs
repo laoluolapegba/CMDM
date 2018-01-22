@@ -18,8 +18,8 @@ namespace CMdm.UI.Web.BLL
         public bool IsCatalogExist(string Catalogname)
         {
             //bool exists = true;
-            var entity = from n in DQIdb.MDM_CATALOGS
-                        where n.TABLE_NAMES == Catalogname
+            var entity = from n in DQIdb.MdmDqiParams
+                         where n.TABLE_NAMES == Catalogname
                         select new { n.TABLE_NAMES };
             int count = entity.Count();
             return count > 0;

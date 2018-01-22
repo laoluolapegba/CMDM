@@ -1,0 +1,127 @@
+﻿.firstLookContainer {
+    width: 587px;
+}
+ 
+    .firstLookContainer td {
+    }
+ 
+.headerCell {
+    width: 560px;
+    height: 23px;
+    background-image: url(images/header.gif);
+}
+ 
+.headerBottom {
+    background-image: url(images/headerBottom.gif);
+    height: 22px;
+}
+ 
+.roundedLeftCorner {
+    width: 14px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-image: url(images/topLeft.gif);
+}
+ 
+.roundedRightCorner {
+    width: 14px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-image: url(images/topRight.gif);
+}
+ 
+.mainCell {
+    background: #fffffe url(images/mainCellBg.gif) repeat-x;
+    font: normal 11px Arial, Verdana, Sans-serif;
+    color: #7f7f74;
+}
+ 
+    .mainCell table {
+        font: normal 11px Arial, Verdana, Sans-serif;
+        color: #7f7f74;
+    }
+ 
+.controlButtonsPanel {
+    width: 587px;
+    height: 44px;
+    background: #fffffe url(images/controlButtonsPanelBg.gif) no-repeat;
+}
+ 
+.buttonsContainer {
+    height: 25px;
+    width: 211px;
+    background: transparent url(images/buttonsContainerBg.gif) no-repeat;
+    margin-top: 17px;
+    margin-left: 23px;
+}
+ 
+.controlButton {
+    height: 18px;
+    background-color: transparent;
+    margin-top: 4px;
+    margin-left: 8px;
+    border: 0px;
+}
+ 
+.firstLookFooter {
+    width: 587px;
+    height: 15px;
+    background: #fffffe url(images/footerBg.gif) no-repeat;
+}
+ 
+.controlsTable {
+    margin-left: 23px;
+    margin-right: 23px;
+    width: 525px;
+    height: auto;
+}
+ 
+    .controlsTable td {
+        vertical-align: top;
+    }
+ 
+.heading {
+    font-size: 18px;
+    background: url(images/headingBg.gif) bottom;
+    width: 240px;
+    height: 25px;
+}
+ 
+.inputTxt {
+    border: solid 1px #7f9db9;
+    width: 185px;
+}
+ 
+.controlsTable select {
+    width: 190px;
+}
+ 
+.contactsDropDown {
+    font-size: 11px;
+    float: right;
+}
+ 
+/* datagrid styles */
+ 
+.callBackDataGrid {
+    width: 253px;
+}
+ 
+    .callBackDataGrid tr {
+        background: transparent url(images/callBackDataGridBg.gif) repeat-x;
+        height: 29px;
+    }
+ 
+    .callBackDataGrid td {
+        vertical-align: middle;
+    }
+ 
+.editCell, .deleteCell {
+    width: 28px;
+    text-align: center;
+}
+ 
+    .editCell img, .deleteCell img {
+        cursor: hand;
+        cursor: pointer;
+    }

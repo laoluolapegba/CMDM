@@ -75,7 +75,7 @@ namespace CMdm.UI.Web
             if (!this.IsPostBack)
             {
                // DQIProfileBiz rep = new DQIProfileBiz();
-                //string dqi = rep.DQIValue();
+               //string dqi = rep.DQIValue();
                // int custCount = rep.CustCount("UBA_CDMA_MAIN");
 
                // lblDataQuality.Text = dqi.ToString();

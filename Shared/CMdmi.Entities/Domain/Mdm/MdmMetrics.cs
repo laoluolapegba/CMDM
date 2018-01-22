@@ -12,11 +12,12 @@ namespace CMdm.Entities.Domain.Mdm
         public MdmMetrics()
         {
             MDM_DQI_AGGR_TRANSACTIONS = new HashSet<DqiAggrTransactions>();
+           
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short METRIC_ID { get; set; }
+        public int METRIC_ID { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -41,5 +42,6 @@ namespace CMdm.Entities.Domain.Mdm
         public string RECORD_STATUS { get; set; }
 
         public virtual ICollection<DqiAggrTransactions> MDM_DQI_AGGR_TRANSACTIONS { get; set; }
+        
     }
 }

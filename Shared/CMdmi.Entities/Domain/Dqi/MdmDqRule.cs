@@ -27,7 +27,7 @@ namespace CMdm.Entities.Domain.Dqi
 
         [DisplayName("Datasource Id")]
         public int DATA_SOURCE_ID { get; set; }
-        [DisplayName("Catalog")]
+        [DisplayName("Catalog")] 
 
         public int CATALOG_ID { get; set; }
         [DisplayName("Rule Name")]
@@ -56,7 +56,7 @@ namespace CMdm.Entities.Domain.Dqi
         public virtual MdmDqRunSchedule MdmDqRunSchedules { get; set; }
         public virtual MdmAggrDimensions MdmAggrDimensions { get; set; }
         public virtual MdmDQPriority MdmDQPriorities { get; set; }
-        public virtual MdmDqCatalog MdmDqCatalogs { get; set; }
+        public virtual MdmCatalog MdmCatalogs { get; set; }
         public HashSet<MdmDQQue> MdmDQQues { get; private set; }
         
     }

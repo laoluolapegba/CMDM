@@ -9,7 +9,7 @@ namespace CMdm.Entities.Domain.Mdm
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("MDM_AGGR_DIMENSION")]
-    public partial class MdmAggrDimensions : BaseEntity
+    public partial class MdmAggrDimensions 
     {
         public MdmAggrDimensions()
         {

@@ -9,7 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Cdma.Web.Controllers
+namespace CMdm.UI.Web.Controllers
 {
     public class DqExceptionsController : Controller
     {

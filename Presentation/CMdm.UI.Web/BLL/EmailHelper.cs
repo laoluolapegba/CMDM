@@ -6,7 +6,7 @@ using System.Web;
 //using Cdma.Web.Properties;
 using System.Net;
 using System.Net.Mail;
-//using Cdma.External;
+//using CMdm.Data;
 using Oracle.DataAccess.Client;
 using System.Configuration;
 using System.Data;

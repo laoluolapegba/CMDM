@@ -1,8 +1,10 @@
 namespace CMdm.Entities.Domain.Mdm
 {
+    using Dqi;
     using Entity;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,11 +14,12 @@ namespace CMdm.Entities.Domain.Mdm
         public MdmWeights()
         {
             MDM_ENTITY_DETAILS = new HashSet<EntityDetails>();
+            MdmDqiCatalogs = new HashSet<MdmDqCatalog>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short WEIGHT_ID { get; set; }
+        public decimal WEIGHT_ID { get; set; }
 
         public short? WEIGHT_VALUE { get; set; }
 
@@ -32,7 +35,9 @@ namespace CMdm.Entities.Domain.Mdm
 
         [StringLength(1)]
         public string RECORD_STATUS { get; set; }
-
+        [DisplayName("Weight")]
+        public string WEIGHT_DESC { get; set; }
         public virtual ICollection<EntityDetails> MDM_ENTITY_DETAILS { get; set; }
+        public virtual ICollection<MdmDqCatalog> MdmDqiCatalogs { get; set; }
     }
 }
