@@ -1,0 +1,105 @@
+﻿@model CMdm.Entities.Domain.Dqi.MdmDqRule
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MdmDqRule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmAggrDimensions.DIMENSION_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmAggrDimensions.DIMENSION_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQDataSources.DS_USERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQDataSources.DS_USERNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CATALOG_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATALOG_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RULE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RULE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.POP_QUERY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POP_QUERY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCEPTION_QUERY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCEPTION_QUERY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION_RESOLUTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION_RESOLUTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_RUN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_RUN)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

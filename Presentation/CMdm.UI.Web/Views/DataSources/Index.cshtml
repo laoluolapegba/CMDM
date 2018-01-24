@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MdmDqi.Data.MdmDQDataSource>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Data Sources</h2>
+
+<p>
+    @Html.ActionLink("Add New Source", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MdmDQDsTypes.TYPE_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DS_USERNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DS_PASSWORD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DS_HOSTNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DS_SID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DS_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MdmDQDsTypes.TYPE_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DS_USERNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DS_PASSWORD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DS_HOSTNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DS_SID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DS_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATUS)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DS_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DS_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DS_ID })
+        </td>
+    </tr>
+}
+
+</table>

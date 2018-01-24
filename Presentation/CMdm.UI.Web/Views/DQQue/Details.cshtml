@@ -1,0 +1,99 @@
+﻿@model CMdm.Entities.Domain.Dqi.MdmDQQue
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MdmDQQue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQImpacts.IMPACT_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQImpacts.IMPACT_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQQueStatuses.STATUS_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQQueStatuses.STATUS_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DATA_SOURCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DATA_SOURCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CATALOG_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATALOG_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ERROR_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ERROR_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ERROR_DESC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ERROR_DESC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DQ_PROCESS_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DQ_PROCESS_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RECORD_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

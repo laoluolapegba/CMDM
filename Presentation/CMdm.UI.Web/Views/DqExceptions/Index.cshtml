@@ -1,0 +1,106 @@
+﻿@model IEnumerable<MdmDqi.Data.MdmDqRunException>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MdmDQQueStatuses.STATUS_DESCRIPTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RULE_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RULE_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUST_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCH_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCH_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RUN_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RUN_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MdmDQQueStatuses.STATUS_DESCRIPTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RULE_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RULE_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUST_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCH_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCH_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RUN_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RUN_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EXCEPTION_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EXCEPTION_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EXCEPTION_ID })
+        </td>
+    </tr>
+}
+
+</table>

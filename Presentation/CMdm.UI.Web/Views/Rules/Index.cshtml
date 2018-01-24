@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Dqi.MdmDqRule>
+
+@{
+    ViewBag.Title = "Data Quality Rules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Data Quality Rules</h2>
+<p>
+
+    @Html.ActionLink("Create New Rule", "Create", null, new { @class = "btn btn-primary btn-xs" })
+</p>
+<div class="widget-content">
+
+    <table class="table table-striped table-bordered table-hover dataTables-example">
+        <thead>
+            <tr>
+               
+               
+                <th>
+                    @Html.DisplayNameFor(model => model.RULE_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MdmAggrDimensions.DIMENSION_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MdmDQDataSources.DS_USERNAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LAST_RUN)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach (var item in Model)
+           {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.RULE_NAME, "Edit", new { id = item.RECORD_ID })
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MdmAggrDimensions.DIMENSION_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MdmDQDataSources.DS_USERNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MdmDQPriorities.PRIORITY_DESCRIPTION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+                </td>
+              
+                <td>
+                        @Html.DisplayFor(modelItem => item.LAST_RUN)
+                    </td>
+
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RECORD_ID }) |
+                    
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RECORD_ID })
+                </td>
+            </tr>
+           }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>-</th>
+                <th>-</th>
+                <th>-</th>
+                <th>-</th>
+                
+                <th>-</th>
+                <th>-</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+           
+
+@section Styles {
+    @Styles.Render("~/Content/assets/css/plugins/datatable/dataTablesStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Rules' },
+                    { extend: 'pdf', title: 'Rules' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>
+}

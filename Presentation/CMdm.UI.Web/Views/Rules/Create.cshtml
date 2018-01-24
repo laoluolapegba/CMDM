@@ -1,0 +1,468 @@
+﻿@model CMdm.Entities.Domain.Dqi.MdmDqRule
+
+@{
+    ViewBag.Title = "Create Rule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Data Quality Rule</h2>
+
+
+@section Styles{
+      <!--EasyQuery CSS files -->
+<link href="~/Content/easyquery/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/easyquery/easyquery.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="~/Content/easyquery/eq-icons-default.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="~/Content/easyquery/eqview.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/easyquery/easychart.css" rel="stylesheet" type="text/css" />
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Data Quality Rules</h4>
+    <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <!-- INLINE FORM -->
+    <div class="row">
+        <div role="form">
+            <div class="form-group col-md-4">
+                <label>Rule Name</label>
+                @*<input type="email" placeholder="Enter email" class="form-control">*@
+                @Html.EditorFor(model => model.RULE_NAME, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                @Html.ValidationMessageFor(model => model.RULE_NAME, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group  col-md-4">
+                <label>Source</label>
+                @Html.DropDownList("DATA_SOURCE_ID", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group  col-md-4">
+                <label>DIMENSION</label>
+                @Html.DropDownList("DIMENSION", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div role="form">
+            <div class="form-group col-md-4">
+                <label>Severity</label>
+                @Html.DropDownList("SEVERITY", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group  col-md-4">
+                <label>Schedule</label>
+                @Html.DropDownList("RUN_SCHEDULE", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group  col-md-4">
+                <label>Catalog</label>
+                @Html.DropDownList("CATALOG_ID", null, htmlAttributes: new { @class = "form-control" })
+              
+            </div>
+
+        </div>
+    </div>
+
+								<!-- END INLINE FORM -->
+
+    <!-- EasyQuery widgets settings -->
+    <script type="text/javascript">
+    //+ "EasyQuery"
+        window.easyQuerySettings = {
+            serviceUrl: getPrefix(),
+            loadDefaultModel: true,
+            loadQueryOnStart: true,
+            //locale: "fr",
+            entitiesPanel: {
+                showCheckboxes: true
+            },
+            columnsPanel: {
+                allowAggrColumns: true,
+                attrElementFormat: "{entity} {attr}",
+                showColumnCaptions: true,
+                adjustEntitiesMenuHeight: false,
+                menuOptions: {
+                    showSearchBoxAfter: 30,
+                    activateOnMouseOver: true
+                }
+
+            },
+            queryPanel: {
+                showPoweredBy: false,
+                accentActiveCondition: false,
+                alwaysShowButtonsInPredicates: false,
+                allowParameterization: true,
+                allowInJoinConditions: true,
+                buttons: {
+                    condition: ["menu"],
+                    predicate: ["addCondition", "addPredicate", "enable", "delete"]
+                },
+
+                //dateFormatValue: "dd.mm.yy",
+                //dateFormatDisplay: "dd M yy",
+                menuOptions: {
+                    showSearchBoxAfter: 20,
+                    activateOnMouseOver: true
+                }
+
+            },
+            syncQueryOptions: {
+                sqlOptions: {SelectDistinct:true}
+            },
+
+			//an example of "List Request" callback handler for "Custom List" value editors
+            listRequestHandler: function (params, onResult) {
+                var processed = true;
+                if (params.listName == "Regions") {
+                    var query = EQ.client.getQuery();
+
+                    //trying to get currently selected country (if there is such condition)
+                    var country = query.getOneValueForAttr(query, "Customer.Country");
+
+                    if (country == "Canada") {
+                        onResult([
+                            { id: "BC", text: "British Columbia" },
+                            { id: "Quebec", text: "Quebec" }
+                        ]);
+
+                    }
+                    else {
+                        onResult([
+                            { id: "CA", text: "California" },
+                            { id: "CO", text: "Colorado" },
+                            { id: "OR", text: "Oregon" },
+                            { id: "WA", text: "Washington" }
+                        ]);
+                    }
+                }
+                else
+                    processed = false;
+
+                return processed;
+            },
+
+            antiForgeryToken: document.querySelector('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').value
+
+        };
+
+        window.easyQueryViewSettings = {
+            showChart: true,
+            useEasyChart: true //, defaultChartType: 7
+        };
+
+        function getPrefix() {
+            var res = window.location.origin + "/Rules/";  //"http://localhost:57406/Rules/";// window.location.pathname;
+            if (res.charAt(res.length-1) !== '/')
+                res = res + '/';
+            return res;
+        }
+
+    </script>
+
+
+    <div id="main" style="clear-left">
+        <!--
+        <input id="QueryContentJson" type="hidden" value="@ViewBag.QueryJson" />
+        -->
+        @*<div class="header">
+            <div class="title">Query Builder</div>
+           
+            <div class="global-message">@ViewBag.Message</div>
+        </div>*@
+        <div id="content">
+            <div class="header-panel">
+                <div class="entities-block">
+                    <hr class="entities-hr hr" />
+                    <div class="entities-title">Entities</div>
+                    <div class="entities-panel-container">
+                        <!-- EntitiesPanel widget placeholder -->
+                        <div id="EntitiesPanel" onselectstart="return false"></div>
+                    </div>
+                </div>
+
+                <div class="central-block">
+                    <div class="columns-block">
+                        <hr class="columns-hr hr" />
+                        <div class="columns-title">Columns</div>
+                        <div class="columns-panel-container">
+                            <!-- ColumnsPanel widget placeholder -->
+                            <div id="ColumnsPanel"></div>
+                        </div>
+                    </div>
+                    <div class="columns-sorting-block">
+                        <div class="columns-sorting-title">Columns Sorting</div>
+                        <div class="columns-sorting-container">
+                            <div id="SortingBar"></div>
+                        </div>
+                    </div>
+                    <div class="conditions-block">
+                        <hr class="conditions-hr hr" />
+                        <div class="conditions-title">Conditions</div>
+                        <div class="query-panel-container">
+                            <!-- QueryPanel widget placeholder -->
+                            <div id="QueryPanel"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-block">
+                    <hr class="menu-hr hr" />
+                    <div class="menu-title">Menu</div>
+                    <div class="menu-content">
+                        <div id="ClearQueryButton" class="eqv-button clear-button">Clear query</div>
+                        @using (Html.BeginForm("LoadQueryFromFile", "Rules", FormMethod.Post, new { id = "LoadQueryForm", enctype = "multipart/form-data" }))
+                        {
+                            <input type="file" id="LoadQueryFileInput" name="queryFile" style="display: none;" />
+                            <input type="submit" style="display: none;" />
+                        }
+                        <div id="LoadQueryFileButton" class="eqv-button load-query-button">Load query file</div>
+                        <a href="@Url.Action("GetCurrentQuery","Rules")" class="eqv-button save-query-button" target="_blank">Save to file</a>
+                        <div id="ExecuteQueryButton" class="eqv-button execute-button">Execute</div>
+
+                        <!-- Old version of load/save buttons -->
+                        <!--
+                        <div id="LoadQueryButton" class="eqv-button load-query-button">Load query</div>
+                        <div id="SaveQueryButton" class="eqv-button save-query-button">Save query</div>
+                        -->
+
+                        <div><p></p></div>
+                        <!-- Test button which perfoms different operation over query and model just for demonstration purposes -->
+                        <!-- Uncomment next line if would like to try -->
+                        <!--<div id="TestButton" class="eqv-button execute-button" style="display:block">Test</div>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-panel">
+                <div class="sql-panel">
+                    <hr class="sql-panel-hr hr" />
+                    <div class="sql-panel-title">SQL</div>
+                    <div id="SqlPanel" class="sql-block">
+                        <div class="sql-panel-result"></div>
+                    </div>
+                </div>
+                <div class="result-panel">
+                    <hr class="result-panel-hr hr" />
+                    <div class="result-panel-title">
+                        Result
+                        <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
+
+                        <span id="ResultExportButtons">
+                            <a href="@Url.Action("ExportToFileExcel","Rules")">Export to Excel</a>
+                            <a href="@Url.Action("ExportToFileCsv","Rules")">Export to CSV</a>
+                        </span>
+                    </div>
+                    <div id="ResultPanel" class="result-panel-content">
+                    </div>
+                    <div class="result-panel-content-padding">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+       
+        @*<div class="widget-content">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#home2" role="tab" data-toggle="tab"><i class="fa fa-flash"></i> Exception Query</a></li>
+                <li><a href="#profile2" role="tab" data-toggle="tab"><i class="fa fa-group"></i> Population Query</a></li>
+                <li><a href="#settings2" role="tab" data-toggle="tab"><i class="fa fa-cog"></i> Settings</a></li>
+                
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-head">Query Editor</div>
+                        <div class="panel-body">
+                           
+                            <div class="form-group">
+                                
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.EXCEPTION_QUERY, new { htmlAttributes = new { @class = "form-control", @row = 20 } })
+                                    @Html.ValidationMessageFor(model => model.EXCEPTION_QUERY, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div>
+                                    
+                                    <input type="submit" value="Validate Query" id="preview" name="action:Preview" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-head">Data Preview</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+
+                                <div class="col-md-8">
+                                    Dynamic Data
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-head">Query Editor</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.POP_QUERY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.POP_QUERY, "", new { @class = "text-danger" })
+                                </div>
+                                <div>
+                                    @*<input type="button" value="Preview Data" class="btn btn-success" />
+                                    <input type="submit" value="Validate Query" id="previewpop" name="action:Preview" class="btn btn-success" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-head">Data Preview</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+
+                                <div class="col-md-8">
+                                    Dynamic Data
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                   
+                </div>
+                <div class="tab-pane fade" id="settings2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-head">Schedule</div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    @Html.DropDownList("RUN_SCHEDULE", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RUN_SCHEDULE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>*@
+
+       
+    </div>
+    <div class="form-group">
+        <div>
+            <input type="submit" value="Create Rule" id="save" name="action:Create"   class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+<!-- EasyQuery script files -->
+<script src="~/Scripts/easyquery/jquery-ui.js"></script>
+<script src="~/Scripts/easyquery/eq.all.min.js"></script>
+<script src="~/Scripts/easyquery/eq.view.basic.js"></script>
+<script src="~/Scripts/easyquery/easychart.js"></script>
+@*<script src="~/Scripts/tinymce/tinymce.min.js"></script>*@
+<script src="~/Scripts/easyquery/jsapi.js"></script>
+<script type="text/javascript">
+       
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+    function GoogleVisualizationLoaded() {
+        //alert("Visualization loaded!!!");
+    }
+
+    $(function () {
+        //TestButton click event hanlder. Implements different functionality with query and models.
+        //Uncomment the part you would like to try
+        $("#TestButton").click(function () {
+            var cp = EQ.client.controls.CPWidget;
+            //cp.ColumnsPanel("removeColumn", EQ.client.getQuery().query.columns[0]);
+
+            var query = EQ.client.getQuery();
+            //query.removeColumn(query.getColumns()[0]);
+            query.moveColumn(0, 1);
+
+
+            //                EQ.client.locale = 'ru';
+            //how to get current Query
+            //var query = EQ.client.getQuery();
+
+            //Here we show how to load another data model
+            //EQ.client.loadModel({ modelName: "NWindSQL" });
+            //EQ.client.loadQuery({ queryName: "query6" });
+
+            //The next line demonstrates how to add a condition into existing query
+            //query.addSimpleCondition({ attr: "Customers.CompanyName", operator: "StartsWith", value: "A" });
+
+        });
+
+
+        $('#LoadQueryFileInput').change(function () {
+            $('#LoadQueryForm').submit();
+        });
+
+        $('#LoadQueryFileButton').click(function () {
+            $('#LoadQueryFileInput').click();
+        });
+
+        var message = '@ViewBag.Message';
+        if (message) {
+            $('.global-message').show().delay(5000).hide(2000);
+        }
+    });
+
+</script>
+}
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#preview").click(function () {
+                $("form").attr("action", "/Rules/Preview");
+            });
+            $("#previewpop").click(function () {
+                $("form").attr("action", "/Rules/Preview");
+            });
+            $("#save").click(function () {
+                $("form").attr("action", "/Rules/Create");
+            });
+            //$('.summernote').summernote();
+            //$('#EXCEPTION_QUERY').summernote();
+
+        });
+        tinymce.init({
+            selector: 'textarea',  // change this value according to your HTML
+            branding: false,
+            height: 300,
+            menubar: false,
+            encoding: "xml",
+            forced_root_block: false
+        });
+
+    </script>
+    *@

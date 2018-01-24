@@ -1,0 +1,99 @@
+﻿@model CMdm.Entities.Domain.Dqi.MdmDqRule
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MdmDqRule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmAggrDimensions.DIMENSION_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmAggrDimensions.DIMENSION_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQDataSources.DS_USERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQDataSources.DS_USERNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDQPriorities.PRIORITY_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MdmDqRunSchedules.SCHEDULE_DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CATALOG_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATALOG_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RULE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RULE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.POP_QUERY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POP_QUERY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCEPTION_QUERY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCEPTION_QUERY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION_RESOLUTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION_RESOLUTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_RUN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_RUN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RECORD_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

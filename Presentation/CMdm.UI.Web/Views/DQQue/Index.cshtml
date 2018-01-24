@@ -1,0 +1,179 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Dqi.MdmDQQue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Data Quality Queue</h2>
+@section Styles{
+    <link href="~/Content/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/assets/css/plugins/datatable/dataTablesStyles")
+}
+<div class="main-content">
+    
+    
+
+    <div class="wrapper wrapper-content  animated fadeInRight">
+       
+            <div class="row">
+
+                <div class="m-b-lg">
+
+                    <div class="input-group">
+                        <input type="text" placeholder="Search issue by name..." class=" form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-white"> Search</button>
+                        </span>
+                    </div>
+                    <div class="m-t-md">
+
+                        <strong>Found @ViewBag.BrnQueCount issues.</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover issue-tracker">
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                string badgestyle = string.Empty;
+                                string status = string.Empty;
+                                string prioritystatus = string.Empty;
+                                string prioritybadgestyle = string.Empty;
+                                switch (item.QUE_STATUS)
+                                {
+                                    case 1:
+                                        badgestyle = "label label-success";
+                                        status = "Fixed";
+                                        break;
+                                    case 2:
+                                        badgestyle = "label label-warning";
+                                        status = "In progress";
+                                        break;
+                                    case 3:
+                                        badgestyle = "label label-primary";
+                                        status = "Added";
+                                        break;
+                                    default:
+                                        badgestyle = "label label-info";
+                                        status = "Information";
+                                        break;
+                                }
+                                switch (item.PRIORITY)
+                                {
+                                    case 1:
+                                        prioritybadgestyle = "label label-primary";
+                                        prioritystatus = "Low";
+                                        break;
+                                    case 2:
+                                        prioritybadgestyle = "label label-warning";
+                                        prioritystatus = "Medium";
+                                        break;
+                                    case 3:
+                                        prioritybadgestyle = "label label-danger";
+                                        prioritystatus = "High";
+                                        break;
+                                    default:
+                                        prioritybadgestyle = "label label-info";
+                                        prioritystatus = "Medium";
+                                        break;
+                                }
+                                <tr>
+                                    <td>
+                                        <span class="@badgestyle">@status</span>
+
+                                    </td>
+                                    <td class="issue-info">
+                                        <a href="@Url.Action("DqDetails", "DQQue", new { ruleid = item.RULE_ID, branchid= item.BRANCH_CODE })"> @item.CATALOG_NAME <b>@item.ERROR_DESC</b></a>
+                                       
+                                        @*<a href="#">
+                                            <b> @Html.DisplayFor(modelItem => item.CATALOG_NAME) </b> -  @Html.DisplayFor(modelItem => item.ERROR_DESC)
+                                        </a>*@
+                                        <br />
+                                        <small>
+                                            @Html.DisplayFor(modelItem => item.MdmDqRules.RULE_NAME)
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x"></i>
+                                                <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                                            </span>  @prioritystatus
+                                        </small>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DQ_PROCESS_NAME)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CREATED_DATE)
+                                    </td>
+                                    <td class="project-completion">
+                                        <small>Resolved : @item.PCT_COMPLETION%</small>
+                                        <div class="progress progress-mini">
+                                            <div style="width: @item.PCT_COMPLETION%;" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        2days
+                                    </td>
+                                    <td class="text-right">
+                                        <button class="btn btn-white btn-xs"> Tag</button>
+                                        <button class="btn btn-white btn-xs"> Mag</button>
+                                    </td>
+                                </tr>
+
+
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+<script src="~/Content/js/inspinia.js"></script>
+    <script src="~/Content/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/Content/assets/js/plugins/pace/pace.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Rules' },
+                    { extend: 'pdf', title: 'Rules' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+    </script>
+}

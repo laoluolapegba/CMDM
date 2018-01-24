@@ -15,16 +15,29 @@ namespace CMdm.UI.Web.Controllers
 {
     public class DQQueController : Controller
     {
+        #region Fields
+
+        private readonly IDqQueService _dqQueService;
         private AppDbContext db = new AppDbContext();
         private DQQueBiz bizrule;
-        public DQQueController()
+        #endregion
+        #region Constructors
+        public DQQueController(IDqQueService dqQueService)
         {
             bizrule = new DQQueBiz();
+            this._dqQueService = dqQueService;
         }
+        #endregion
+
+        #region Methods
+        #region Que list / create / edit / delete
         // GET: MdmDQQues
         public ActionResult Index()
         {
-            
+            //|TODO implement a permission provider Service
+            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageDataQualityQue))
+            //    return AccessDeniedView();
+
             var identity = ((CustomPrincipal)User).CustomIdentity;
             ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
@@ -72,7 +85,7 @@ namespace CMdm.UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RECORD_ID,DATA_SOURCE,CATALOG_NAME,ERROR_CODE,ERROR_DESC,DQ_PROCESS_NAME,IMPACT_LEVEL,PRIORITY,QUE_STATUS,CREATED_BY,CREATED_DATE")] MdmDQQue mdmDQQue)
+        public ActionResult Create(MdmDQQue mdmDQQue)
         {
             if (ModelState.IsValid)
             {
@@ -158,5 +171,7 @@ namespace CMdm.UI.Web.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
+        #endregion
     }
 }

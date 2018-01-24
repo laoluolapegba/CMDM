@@ -1,0 +1,196 @@
+﻿@model IEnumerable<MdmDqi.Data.MdmDQQue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<div class="main-content">
+    <div class="widget">
+        <div class="widget-header">
+            <h3><i class="fa fa-certificate"></i>Data Quality Queue</h3>
+        </div>
+        <div class="widget-content">
+            <!-- INBOX -->
+            <div class="inbox">
+                <div class="row">
+                    <div class="col-md-9">
+                    </div>
+                    <div class="col-md-3">
+                        <!-- search box col-lg-10 col-lg-offset-2-->
+
+                        <div class="input-group input-group-sm">
+                            <input type="search" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button"><i class="fa fa-search"></i>Search</button>
+                            </span>
+                        </div>
+
+                        <!-- end search box -->
+                    </div>
+                </div>
+                <br />
+                <div class="top">
+                    <div class="row">
+
+                        <div class="col-lg-10">
+                            <div class="top-menu">
+                                <label class="control-inline fancy-checkbox fancy-checkbox-all">
+                                    <input type="checkbox">
+                                    <span>&nbsp;</span>
+                                </label>
+                                <ul class="list-inline top-menu-group1"></ul>
+
+                                <ul class="list-inline top-menu-group2">
+                                    <li class="top-menu-label">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-tags"></i>Status <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Closed</a></li>
+                                                <li><a href="#">Open</a></li>
+                                                <li><a href="#">In progress</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="top-menu-label">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-tags"></i>Severity <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">High</a></li>
+                                                <li><a href="#">Low</a></li>
+                                                <li><a href="#">Medium</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="top-menu-label">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-tags"></i>Impact <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Enterprise</a></li>
+                                                <li><a href="#">Entity</a></li>
+                                                <li><a href="#">Departmental</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="top-menu-more">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-list"></i>MORE <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li class="mark-all"><a href="#">Mark All</a></li>
+                                                <li class="hide mark-read"><a href="#">Mark As Read</a></li>
+                                                <li class="hide mark-unread"><a href="#">Mark As Unread</a></li>
+                                                <li class="hide add-star"><a href="#">Add Star</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="top-menu-more">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn">
+                                                <i class="fa fa-recycle"></i>REFRESH
+                                            </button>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div>
+
+                                </div>
+                                <div class="navigation">
+
+
+                                </div>
+                            </div>
+                            <!-- /top-menu -->
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /top -->
+
+                <div class="bottom">
+                    <div class="row">
+                        <!-- inbox left menu -->
+                        <!-- end inbox left menu -->
+                        <!-- right main content, the messages -->
+                        <div class="col-xs-12 col-sm-9 col-lg-12">
+
+                            <div class="messages">
+                                <table class="table-condensed message-table">
+                                    <colgroup>
+                                        <col class="col-check">
+                                        <col class="col-star">
+                                        <col class="col-from">
+                                        <col class="col-title">
+                                        <col class="col-attachment">
+                                        <col class="col-timestamp">
+                                    </colgroup>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            string badgestyle = string.Empty;
+                                            string status = string.Empty;
+                                            switch (item.QUE_STATUS)
+                                            {
+                                                case 1:
+                                                    badgestyle = "message-label label-primary";
+                                                    status = "Info";
+                                                    break;
+                                                case 2:
+                                                    badgestyle = "message-label label-warning";
+                                                    status = "Warning";
+                                                    break;
+                                                case 3:
+                                                    badgestyle = "message-label label-danger";
+                                                    status = "Critial";
+                                                    break;
+                                                default:
+                                                    badgestyle = "message-label label-info";
+                                                    status = "Information";
+                                                    break;
+                                            }
+                                            <tr>
+                                                <td>
+                                                    <label class="fancy-checkbox">
+                                                        <input type="checkbox">
+                                                        <span>&nbsp;</span>
+                                                    </label>
+                                                </td>
+                                                <td><i class="fa fa-star-o"></i></td>
+                                                <td><span class="from">@Html.DisplayFor(modelItem => item.CATALOG_NAME)</span></td>
+                                                <td>
+                                                    <span class="@badgestyle">@status</span>
+                                                    <span class="title">@Html.DisplayFor(modelItem => item.DQ_PROCESS_NAME)</span> <span class="preview">@Html.DisplayFor(modelItem => item.ERROR_DESC) </span>
+                                                </td>
+                                                <td><span class="icon-attachment"><i class="fa fa-user"></i></span></td>
+                                                <td><span class="timestamp">@Html.DisplayFor(modelItem => item.CREATED_BY)</span></td>
+                                            </tr>
+                                        }
+                                        
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- end right main content, the messages -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- END INBOX -->
+
+        </div>
+        <!-- /main-content -->
+    </div>
+</div>
