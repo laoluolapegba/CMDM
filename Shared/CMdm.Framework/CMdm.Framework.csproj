@@ -94,13 +94,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Kendoui\DataSourceRequest.cs" />
     <Compile Include="Kendoui\DataSourceResult.cs" />
     <Compile Include="Kendoui\Filter.cs" />
     <Compile Include="Kendoui\ModelStateExtensions.cs" />
     <Compile Include="Kendoui\QueryableExtensions.cs" />
     <Compile Include="Kendoui\Sort.cs" />
+    <Compile Include="Mvc\BaseModel.cs" />
+    <Compile Include="Mvc\ModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\NotifyType.cs" />
   </ItemGroup>
@@ -109,7 +114,6 @@
     <Folder Include="Korzh\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

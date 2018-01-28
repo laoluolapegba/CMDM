@@ -497,6 +497,7 @@
     <Compile Include="Helpers\UI\GravatarOptions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
+    <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -1169,6 +1170,7 @@
     <Content Include="Scripts\Charts\Inline.js" />
     <Content Include="Scripts\Charts\Morris-menu.js" />
     <Content Include="Scripts\Charts\Morris.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\customlogin\bootstrap.js" />
     <Content Include="Scripts\customlogin\bootstrap.min.js" />
     <Content Include="Scripts\customlogin\fastclick\fastclick.js" />
@@ -1772,6 +1774,9 @@
     <Content Include="Views\DQI\Edit.cshtml" />
     <Content Include="Views\DQI\Index.cshtml" />
     <Content Include="Views\DQI\DQIParams.cshtml" />
+    <Content Include="Views\DQQue\List.cshtml" />
+    <Content Include="Views\Account\Loginneww.cshtml" />
+    <Content Include="Views\Shared\_GridPagerMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActionFilters\" />
@@ -1819,6 +1824,10 @@
     <ProjectReference Include="..\..\Services\CMdm.Services\CMdm.Services.csproj">
       <Project>{cafa0c53-39a3-47c3-98c9-ca905d4d5a68}</Project>
       <Name>CMdm.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\CMdm.Core\CMdm.Core.csproj">
+      <Project>{c2ee2738-0ac8-4a7a-a737-0ef76ae9ed72}</Project>
+      <Name>CMdm.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Shared\CMdm.Framework\CMdm.Framework.csproj">
       <Project>{fda3ff46-9864-481c-a160-4222ab622dd9}</Project>

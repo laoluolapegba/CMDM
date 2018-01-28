@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMdm.Entities.Core
+namespace CMdm.Core
 {
     /// <summary>
     /// Paged list interface

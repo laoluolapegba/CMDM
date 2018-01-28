@@ -14,6 +14,12 @@
     @Styles.Render("~/AdminLTE/bootstrap/css")
     @Styles.Render("~/AdminLTE/dist/css")
     @Styles.Render("~/AdminLTE/dist/css/skins")
+    @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+    @RenderSection("menu", required: false)
+    @Scripts.Render("~/AdminLTE/bootstrap/js")
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/Content/kendo/css")
+    @Scripts.Render("~/Scripts/common.js")
     <style>
         .main-header .logo i {
           width: 50px;
@@ -237,9 +243,10 @@
         <div class="control-sidebar-bg"></div>
     </div>
 
-    @Scripts.Render("~/AdminLTE/plugins/jquery/js")
-    @RenderSection("menu", required: false)
-    @Scripts.Render("~/AdminLTE/bootstrap/js")
+   @* @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+
+    @Scripts.Render("~/AdminLTE/bootstrap/js")*@
+
     @Scripts.Render("~/AdminLTE/plugins/slimscroll/js")
     @Scripts.Render("~/AdminLTE/plugins/fastclick/js")
     @Scripts.Render("~/Scripts/Shared/_Layout")

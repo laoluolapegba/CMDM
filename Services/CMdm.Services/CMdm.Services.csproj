@@ -52,12 +52,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="DqQue\DqQueService.cs" />
+    <Compile Include="DqQue\DqQueServiceNopStyle.cs" />
+    <Compile Include="DqQue\IDqQueService.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LoggingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CMdm.Data\CMdm.Data.csproj">
       <Project>{634c7996-9d6a-4709-a56e-c93c37d790bc}</Project>
       <Name>CMdm.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\CMdm.Core\CMdm.Core.csproj">
+      <Project>{c2ee2738-0ac8-4a7a-a737-0ef76ae9ed72}</Project>
+      <Name>CMdm.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Shared\CMdmi.Entities\CMdm.Entities.csproj">
       <Project>{a75108f2-71a2-4cdb-924f-f98d31a7efd5}</Project>
@@ -72,9 +82,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Courses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

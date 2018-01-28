@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CMdm.Core;
+using CMdm.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CMdm.Entities.Core;
-using CMdm.Entities.Core.Data;
 
 namespace CMdm.Data
 {

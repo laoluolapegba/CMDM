@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<CMdm.Entities.Domain.Dqi.MdmDQQue>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Data Quality Issues";
+    ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Data Quality Queue</h2>
 @section Styles{
     <link href="~/Content/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/assets/css/plugins/datatable/dataTablesStyles")
@@ -14,18 +14,18 @@
     
     
 
-    <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="">
        
             <div class="row">
 
                 <div class="m-b-lg">
 
-                    <div class="input-group">
+                    @*<div class="input-group">
                         <input type="text" placeholder="Search issue by name..." class=" form-control">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-white"> Search</button>
                         </span>
-                    </div>
+                    </div>*@
                     <div class="m-t-md">
 
                         <strong>Found @ViewBag.BrnQueCount issues.</strong>

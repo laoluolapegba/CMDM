@@ -1,7 +1,6 @@
 namespace CMdm.Entities.Domain.Mdm
 {
     using Dqi;
-    using Core;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;

@@ -10,38 +10,91 @@ using CMdm.UI.Web.BLL;
 using CMdm.Data;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Entities.Domain.Dqi;
+using CMdm.Framework.Kendoui;
+using CMdm.Services.DqQue;
+using CMdm.UI.Web.Models.DqQue;
+//using CMdm.Core;
 
 namespace CMdm.UI.Web.Controllers
 {
-    public class DQQueController : Controller
+    public class DQQueController : BaseController
     {
         #region Fields
 
-        private readonly IDqQueService _dqQueService;
+        private IDqQueService _dqQueService;
         private AppDbContext db = new AppDbContext();
         private DQQueBiz bizrule;
         #endregion
         #region Constructors
-        public DQQueController(IDqQueService dqQueService)
+        public DQQueController()
         {
             bizrule = new DQQueBiz();
-            this._dqQueService = dqQueService;
+            _dqQueService = new DqQueService();
         }
         #endregion
 
         #region Methods
         #region Que list / create / edit / delete
-        // GET: MdmDQQues
         public ActionResult Index()
         {
-            //|TODO implement a permission provider Service
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageDataQualityQue))
-            //    return AccessDeniedView();
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
             ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
             return View(mdmDQQues.ToList());
+            //return RedirectToAction("List");
+        }
+        // GET: MdmDQQues
+        public ActionResult Index_()
+        {
+            //|TODO implement a permission provider Service
+            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageDataQualityQue))
+            //    return AccessDeniedView();
+            //var dqQue - new 
+
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
+            var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
+            return View(mdmDQQues.ToList());
+        }
+        public ActionResult List()
+        {
+
+            var model = new DqQueListModel();
+            return View(model);
+        }
+        [HttpPost]
+        public virtual ActionResult List(DataSourceRequest command, DqQueListModel model, string sort, string sortDir)
+        {
+
+            var items = _dqQueService.GetAllQueItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
+            //    logLevel, command.Page - 1, command.PageSize);
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new DqQueListModel
+                {
+                    RECORD_ID = x.RECORD_ID,
+                    DATA_SOURCE = x.DATA_SOURCE,
+                    CATALOG_NAME = x.CATALOG_NAME,
+                    ERROR_DESC = x.ERROR_DESC,
+                    CREATED_DATE = x.CREATED_DATE// _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                }),
+                Total = items.TotalCount
+            };
+
+            //var gridModel = new DataSourceResult
+            //{
+            //    Data = items.Select(x =>
+            //    {
+            //        var itemsModel = x.ToModel();
+            //        PrepareSomethingModel(itemsModel, x, false, false);
+            //        return itemsModel;
+            //    }),
+            //    Total = items.TotalCount,
+            //};
+
+            return Json(gridModel);
         }
         public ActionResult Indexa()
         {

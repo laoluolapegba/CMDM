@@ -68,7 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdmEntityTypeConfiguration.cs" />
+    <Compile Include="CMdmObjectContext.cs" />
+    <Compile Include="DAC\DqQueDAC.cs" />
+    <Compile Include="DynamicExpressions.cs" />
     <Compile Include="EfRepository.cs" />
+    <Compile Include="IDbContext.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Initializers\SQLServerInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,11 +95,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DAC\" />
     <Folder Include="Migrations\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\CMdm.Core\CMdm.Core.csproj">
+      <Project>{c2ee2738-0ac8-4a7a-a737-0ef76ae9ed72}</Project>
+      <Name>CMdm.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Shared\CMdmi.Entities\CMdm.Entities.csproj">
       <Project>{a75108f2-71a2-4cdb-924f-f98d31a7efd5}</Project>
       <Name>CMdm.Entities</Name>

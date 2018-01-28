@@ -74,6 +74,7 @@ namespace CMdm.UI.Web.Controllers
 
             //var customer = workContext.CurrentCustomer;
             //logger.Error(exc.Message, exc, customer);
+            WriteToTextFile(exc.Message);
         }
         /// <summary>
         /// Display success notification
@@ -202,6 +203,26 @@ namespace CMdm.UI.Web.Controllers
                 LogException(filterContext.Exception);
             base.OnException(filterContext);
         }
+        public static void WriteToTextFile(string textLog)
+        {
+            try
+            {
+                FileStream objFS = null;
+                string strFilepath = AppDomain.CurrentDomain.BaseDirectory + "\\exceptions\\" + System.DateTime.Now.ToString("yyyy-MM-dd") + "AppDevWebSvcLog.log";
+                if (!System.IO.File.Exists(strFilepath))
+                {
+                    objFS = new FileStream(strFilepath, FileMode.Create);
+                }
+                else { objFS = new FileStream(strFilepath, FileMode.Append); }
+                using (StreamWriter Sr = new StreamWriter(objFS))
+                {
+                    Sr.WriteLine(System.DateTime.Now.ToShortTimeString() + "---" + textLog);
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+        }
     }
 }

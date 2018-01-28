@@ -40,17 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApplicationException.cs" />
-    <Compile Include="Core\BaseEntity.cs" />
-    <Compile Include="Core\Data\IRespository.cs" />
-    <Compile Include="Core\IPagedList.cs" />
-    <Compile Include="Core\PagedList.cs" />
-    <Compile Include="Domain\Courses\Course.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
+    <Compile Include="Domain\Logging\Log.cs" />
+    <Compile Include="Domain\Logging\LogLevel.cs" />
     <Compile Include="Domain\Mdm\MdmAggrDimensions.cs" />
     <Compile Include="Domain\Dqi\MdmDqCatalog.cs" />
     <Compile Include="Domain\Mdm\MdmCatalog.cs" />
@@ -73,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\Customer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMdm.Core\CMdm.Core.csproj">
+      <Project>{c2ee2738-0ac8-4a7a-a737-0ef76ae9ed72}</Project>
+      <Name>CMdm.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
