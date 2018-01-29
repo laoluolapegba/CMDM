@@ -98,6 +98,7 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="HtmlExtensions.cs" />
+    <Compile Include="HtmlExtensions2.cs" />
     <Compile Include="Kendoui\DataSourceRequest.cs" />
     <Compile Include="Kendoui\DataSourceResult.cs" />
     <Compile Include="Kendoui\Filter.cs" />
