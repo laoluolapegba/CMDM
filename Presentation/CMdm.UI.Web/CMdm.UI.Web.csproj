@@ -287,6 +287,7 @@
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
@@ -756,6 +757,7 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\customlogin.css" />
     <Content Include="Content\customlogin\aristo\aristo.css" />
     <Content Include="Content\customlogin\bootstrap.css" />
     <Content Include="Content\customlogin\colorbox\jquery.colorbox.css" />
@@ -780,13 +782,18 @@
     <Content Include="Content\easyquery\eq-icons-default.css" />
     <Content Include="Content\easyquery\eqview.css" />
     <Content Include="Content\easyquery\jquery-ui.css" />
-    <Content Include="Content\images\logo-teci-new.png" />
+    <Content Include="Content\ico\favicon.png" />
+    <Content Include="Content\ico\kingadmin-favicon114x114.png" />
+    <Content Include="Content\ico\kingadmin-favicon144x144.png" />
+    <Content Include="Content\ico\kingadmin-favicon57x57.png" />
+    <Content Include="Content\ico\kingadmin-favicon72x72.png" />
+    <Content Include="Content\images\logo-white.png" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\slides\slide1.jpg" />
     <Content Include="Content\images\slides\slide2.jpg" />
     <Content Include="Content\images\slides\slide3.jpg" />
     <Content Include="Content\images\slides\slide4.jpg" />
     <Content Include="Content\images\slides\slide5.jpg" />
-    <Content Include="Content\images\teci-logo-w-40.png" />
     <Content Include="Content\kendo\2017.3.1026\Black\editor.png" />
     <Content Include="Content\kendo\2017.3.1026\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2017.3.1026\Black\indeterminate.gif" />
@@ -1777,6 +1784,9 @@
     <Content Include="Views\DQQue\List.cshtml" />
     <Content Include="Views\Account\Loginneww.cshtml" />
     <Content Include="Views\Shared\_GridPagerMessages.cshtml" />
+    <Content Include="Views\Security\AccessDenied.cshtml" />
+    <Content Include="Views\Account\Login3.cshtml" />
+    <Content Include="Views\Account\LoginAdminLte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActionFilters\" />
