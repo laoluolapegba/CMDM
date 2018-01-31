@@ -1,25 +1,23 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.DqQue.DqQueListModel
-
+@model CMdm.UI.Web.Models.DqRule.DqRuleListModel
+    @*ViewBag.Title = "Data Quality Rules";
+    ViewBag.SubTitle = "List";*@
 @{
-    ViewBag.Title = "Data Quality Issues";
-    ViewBag.SubTitle = "List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var defaultGridPageSize = 20;
-    var gridPageSizes = "10, 15, 20, 50, 100";
+    ViewBag.Title = "Data Quality Rules";
+        ViewBag.SubTitle = "List";
+Layout = "~/Views/Shared/_Layout.cshtml";
+var defaultGridPageSize = 20;
+var gridPageSizes = "10, 15, 20, 50, 100";
 }
 
-@*<div class="content-header clearfix">
-    <h1 class="pull-left">
-        Data Quality QUe
-    </h1>
-    <div class="pull-right">
-        <a href="@Url.Action("Create")" class="btn bg-blue">
-            <i class="fa fa-plus-square"></i>
-            Add New
-        </a>
+<div class="content-header clearfix">
+        <div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Add New
+            </a>
+        </div>
     </div>
-</div>*@
 @Html.AntiForgeryToken()
 <div class="content">
     <div class="form-horizontal">
@@ -30,15 +28,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    Error Description
+                                    @Html.LabelFor(model => model.RULE_NAME)
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmEditorFor(model => model.SearchName)
                                 </div>
                             </div>
                             <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.DimensionId)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("DimensionId", Model.QualityDimensions)
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="button" id="search-que" class="btn btn-primary btn-search">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
                                         <i class="fa fa-search"></i>
                                         Search
                                     </button>
@@ -51,16 +57,16 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div id="dqque-grid"></div>
+                    <div id="dqrule-grid"></div>
 
                     <script>
                         $(document).ready(function () {
-                            $("#dqque-grid").kendoGrid({
+                            $("#dqrule-grid").kendoGrid({
                                 dataSource: {
                                     type: "json",
                                     transport: {
                                         read: {
-                                            url: "@Html.Raw(Url.Action("List", "DQQue"))",
+                                            url: "@Html.Raw(Url.Action("List", "Rules"))",
                                             type: "POST",
                                             dataType: "json",
                                             data: additionalData
@@ -92,36 +98,67 @@
                                 },
                                 scrollable: false,
                                 columns: [{
-                                    field: "ERROR_DESC",
-                                    title: "Error",
-                                    width: 300
+                                    field: "RULE_NAME",
+                                    title: "Rulename",
+                                    width: 200
+                                }, {
+                                    field: "DIMENSION",
+                                    title: "Quality Dimension",
+                                    width: 100
                                 }, {
                                     field: "DATA_SOURCE",
-                                    title: "Data Source",
-                                    width: 300
+                                    title: "Datasource name",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+
                                 }, {
-                                    field: "CATALOG_NAME",
-                                    title: "Cataog name",
+                                    field: "SEVERITY",
+                                    title: "Severity",
                                     width: 100,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-                                    
-                                }, {
+
+                                },{
+                                    field: "RUN_SCHEDULE",
+                                    title: "Schedule",
+                                    width: 100,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+
+                                },
+                                {
+                                    field: "LAST_RUN",
+                                    title: "Last Run Date",
+                                    width: 150,
+                                    type: "date",
+                                    format: "{0:G}",
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+
+                                },{
+                                    field: "RECORD_STATUS",
+                                    title: "Active",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(RECORD_STATUS) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },{
                                     field: "RECORD_ID",
                                     title: "Id",
-                                    width: 100,
+                                    width: 60,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-                                    template: '<a class="btn btn-default" href="Details/#=RECORD_ID#"><i class="fa fa-pencil"></i>Details)</a>'                                }]
+                                    template: '<a class="btn btn-default" href="Details/#=RECORD_ID#"><i class="fa fa-pencil"></i>Edit</a>'                                }]
                             });
                         });
                     </script>
                     <script type="text/javascript">
                         $(document).ready(function () {
                             //search button
-                            $('#search-que').click(function () {
+                            $('#search-rule').click(function () {
                                 //search
-                                var grid = $('#dqque-grid').data('kendoGrid');
+                                var grid = $('#dqrule-grid').data('kendoGrid');
                                 grid.dataSource.page(1); //new search. Set page size to 1
                                 //grid.dataSource.read(); we already loaded the grid above using "page" function
                                 return false;
@@ -129,7 +166,7 @@
 
                             $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
                                 if (event.keyCode == 13) {
-                                    $("#search-que").click();
+                                    $("#search-rule").click();
                                     return false;
                                 }
                             });

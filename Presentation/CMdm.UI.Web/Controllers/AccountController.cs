@@ -549,8 +549,13 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Abandon();
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account");
+
+            //AuthenticationManager.SignOut();
+            //return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         [AllowAnonymous]

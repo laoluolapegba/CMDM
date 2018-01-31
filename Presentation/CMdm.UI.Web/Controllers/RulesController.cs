@@ -23,7 +23,9 @@ using Korzh.Utils.Db;
 using Korzh.EasyQuery;
 using System.Text;
 using CMdm.Entities.Domain.Dqi;
-
+using CMdm.UI.Web.Models.DqRule;
+using CMdm.Framework.Kendoui;
+using CMdm.Services.DqRule;
 namespace CMdm.UI.Web.Controllers
 {
     [ValidateInput(false)]
@@ -32,6 +34,8 @@ namespace CMdm.UI.Web.Controllers
         private static string connString = ConfigurationManager.ConnectionStrings["ConnectionStringCDMA"].ConnectionString;
         private AppDbContext db = new AppDbContext();
         private EqServiceProviderDb eqService;
+        private IDqRuleService _dqRuleService;
+        #region methods
 
         // GET: Rules
         public ActionResult Index()
@@ -39,6 +43,52 @@ namespace CMdm.UI.Web.Controllers
 
             var mdmDqRules = db.MdmDqRules.Include(m => m.MdmAggrDimensions).Include(m => m.MdmDQDataSources).Include(m => m.MdmDQPriorities).Include(m => m.MdmDqRunSchedules);
             return View(mdmDqRules.ToList());
+        }
+        public ActionResult List()
+        {
+            var model = new DqRuleListModel();
+            //model.QualityDimensions = db.MDM_DQI_AGGR_TRANSACTIONS.ToList();
+            model.QualityDimensions = new SelectList(db.MDM_AGGR_DIMENSION, "DIMENSIONID", "DIMENSION_NAME").ToList();
+            model.QualityDimensions.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+            return View(model);
+        }
+        [HttpPost]
+        public virtual ActionResult List(DataSourceRequest command, DqRuleListModel model, string sort, string sortDir)
+        {
+
+            var items = _dqRuleService.GetAllRuleItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
+            //    logLevel, command.Page - 1, command.PageSize);
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new DqRuleListModel
+                {
+                    RECORD_ID = x.RECORD_ID,
+                    RULE_NAME = x.RULE_NAME,
+                    DIMENSION = x.MdmAggrDimensions.DIMENSION_NAME,
+                    DATA_SOURCE = x.MdmDQDataSources.DS_NAME,
+                    SEVERITY  = x.MdmDQPriorities.PRIORITY_DESCRIPTION,
+                    RUN_SCHEDULE = x.MdmDqRunSchedules.SCHEDULE_DESCRIPTION,
+                    LAST_RUN = x.LAST_RUN
+                    //CATALOG_NAME = x.CATALOG_NAME,
+                    //ERROR_DESC = x.ERROR_DESC,
+                    //CREATED_DATE = x.CREATED_DATE// _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                }),
+                Total = items.TotalCount
+            };
+
+            //var gridModel = new DataSourceResult
+            //{
+            //    Data = items.Select(x =>
+            //    {
+            //        var itemsModel = x.ToModel();
+            //        PrepareSomethingModel(itemsModel, x, false, false);
+            //        return itemsModel;
+            //    }),
+            //    Total = items.TotalCount,
+            //};
+
+            return Json(gridModel);
         }
 
         // GET: Rules/Details/5
@@ -231,6 +281,7 @@ namespace CMdm.UI.Web.Controllers
         
         public RulesController()
         {
+            _dqRuleService = new DqRuleService();
             eqService = new EqServiceProviderDb();
             eqService.DefaultModelName = "cdmamodel"; // "NWindSQL";            
 
@@ -519,6 +570,7 @@ namespace CMdm.UI.Web.Controllers
         }
 
 
+        #endregion
         #endregion
         #endregion
     }

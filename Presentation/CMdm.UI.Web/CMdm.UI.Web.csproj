@@ -499,6 +499,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
+    <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -1787,6 +1788,7 @@
     <Content Include="Views\Security\AccessDenied.cshtml" />
     <Content Include="Views\Account\Login3.cshtml" />
     <Content Include="Views\Account\LoginAdminLte.cshtml" />
+    <Content Include="Views\Rules\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActionFilters\" />

@@ -37,7 +37,8 @@ namespace CMdm.UI.Web.Controllers
         #region Que list / create / edit / delete
         public ActionResult Index()
         {
-
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
@@ -51,7 +52,8 @@ namespace CMdm.UI.Web.Controllers
             //if (!_permissionService.Authorize(StandardPermissionProvider.ManageDataQualityQue))
             //    return AccessDeniedView();
             //var dqQue - new 
-
+            if(User == null)
+                return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
@@ -103,6 +105,8 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult DqDetails(int ruleid, int branchid)
         {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             //ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDqRunExceptions = db.MdmDqRunExceptions.Where(a=>a.RULE_ID == ruleid).Where(a=>a.BRANCH_CODE==branchid).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);

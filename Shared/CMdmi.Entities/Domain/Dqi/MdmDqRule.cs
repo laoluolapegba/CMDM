@@ -51,6 +51,7 @@ namespace CMdm.Entities.Domain.Dqi
         public int SEVERITY { get; set; }
         [DisplayName("Last Run Date")]
         public DateTime? LAST_RUN { get; set; }
+        public bool RECORD_STATUS { get; set; }
         public virtual MdmDQDataSource MdmDQDataSources { get; set; }
 
         public virtual MdmDqRunSchedule MdmDqRunSchedules { get; set; }
