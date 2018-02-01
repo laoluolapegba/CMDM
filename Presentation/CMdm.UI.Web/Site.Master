@@ -40,7 +40,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <form runat="server">
         <asp:ScriptManager runat="server">
-            </asp:ScriptManager>
+        </asp:ScriptManager>
         <div class="wrapper">
             <header class="main-header">
                 <a href="<%: ResolveUrl("~/Home/Dashboard1")%>" class="logo">
@@ -67,7 +67,7 @@
                                     <span class="text"><%:identity.BranchName%></span>
                                 </a>
                             </li>
-                           
+
                             <li class="dropdown messages-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-envelope-o"></i>
@@ -241,7 +241,7 @@
                                     </li>
                                 </ul>
                             </li>
-                             <%} %>
+                            <%} %>
                             <li class="dropdown user user-menu">
                                 <%if (Request.IsAuthenticated)
                                     {
@@ -252,7 +252,7 @@
 
                                     <img src="~/AdminLTE/dist/img/<%:identity.Name%>" alt="" />
                                     <span style="float: right; font-size: small;">
-                                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label>                                        
+                                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
                                         <span class="caret"></span>
                                     </span>
 
@@ -274,16 +274,21 @@
                                              <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Manage/Index" CssClass="btn btn-default btn-flat">Profile</asp:HyperLink>
                                           
                                         </div>--%>
-                                        <div class="pull-right">
-                                           <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Account/LogOff" CssClass="btn btn-default btn-flat">Logout</asp:HyperLink>
-                                        </div>
+
+                                            <div class="pull-right">
+
+                                                <asp:HyperLink ID="lnklogoff" runat="server" NavigateUrl="~/LogOff.aspx" CssClass="btn btn-default btn-flat">Logout</asp:HyperLink>
+                                            </div>
                                         
+
+
+
 
                                     </li>
                                 </ul>
                                 <%}
-                                else
-                                { %>
+                                    else
+                                    { %>
                                 <ul class="nav navbar-nav">
 
                                     <li>
@@ -524,7 +529,7 @@
 
     <asp:ContentPlaceHolder ID="menu" runat="server" />
     <asp:ContentPlaceHolder ID="scripts" runat="server" />
-     <asp:ContentPlaceHolder ID="ExtraJavaScripts" runat="server" />
+    <asp:ContentPlaceHolder ID="ExtraJavaScripts" runat="server" />
     <%--<%@RenderSection("menu", required: false) %>--%>
     <%--   <%@RenderSection("scripts", required: false) %>--%>
 </body>
