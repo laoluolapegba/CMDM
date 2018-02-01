@@ -16,7 +16,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Index()
         {
-            return View("DashboardV1");
+            return View();
         }
     }
 }

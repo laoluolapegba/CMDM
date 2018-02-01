@@ -112,7 +112,7 @@ namespace CMdm.Framework
             return MvcHtmlString.Create(result.ToString());
         }
 
-        public static MvcHtmlString CmdmDropDownList<TModel>(this HtmlHelper<TModel> helper, string name,
+        public static MvcHtmlString CMdmDropDownList<TModel>(this HtmlHelper<TModel> helper, string name,
             IEnumerable<SelectListItem> itemList, object htmlAttributes = null,
             bool renderFormControlClass = true, bool required = false)
         {

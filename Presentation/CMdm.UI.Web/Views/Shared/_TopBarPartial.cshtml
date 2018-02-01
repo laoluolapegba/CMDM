@@ -239,9 +239,9 @@
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <div class="pull-left">
+                                @*<div class="pull-left">
                                     @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-flat", title = "Manage" })
-                                </div>
+                                </div>*@
                                 <div class="pull-right">
                                     <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
                                 </div>

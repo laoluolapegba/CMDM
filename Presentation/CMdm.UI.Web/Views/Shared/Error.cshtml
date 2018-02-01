@@ -1,8 +1,43 @@
-﻿@model HandleErrorInfo
+﻿@model System.Web.Mvc.HandleErrorInfo
+
 @{
     ViewBag.Title = "Error";
 }
+<div class="wrapper full-page-wrapper page-error ">
+    <div class="inner-page">
+        <h1>
+            <span class="clearfix title">
+                <span class="text">Oops! <br />Error</span>
+            </span>
+        </h1>
+        <p>We tried our best to complete the task, but an unexpected error occurred.</p>
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+        <br />
+        <p>You could notify the project admin if you think this is a serious error. Nonetheless, the exception has been logged and we might be able to help you.</p>
+
+        <br />
+        <asp:literal id="ExceptionLiteral" />
+        <br />
+
+        <div>
+            <a href="javascript:history.go(-1)" class="btn btn-custom-primary"><i class="fa fa-arrow-left"></i> Go Back</a>
+            <a href="#" class="btn btn-primary"><i class="fa fa-home"></i> Home</a>
+        </div>
+    </div>
+    @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+    {
+        <div>
+            <p>
+                <b>Exception:</b> @Model.Exception.Message<br />
+                <b>Controller:</b> @Model.ControllerName<br />
+                <b>Action:</b> @Model.ActionName
+            </p>
+            <div style="overflow:scroll">
+                <pre>
+@Model.Exception.Message
+                </pre>
+            </div>
+        </div>
+    }
+</div>
 

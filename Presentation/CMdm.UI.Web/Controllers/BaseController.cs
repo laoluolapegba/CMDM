@@ -12,7 +12,15 @@ namespace CMdm.UI.Web.Controllers
 {
     public class BaseController : Controller
     {
-
+        /// <summary>
+        /// Access denied view
+        /// </summary>
+        /// <returns>Access denied view</returns>
+        protected virtual ActionResult AccessDeniedView()
+        {
+            //return new HttpUnauthorizedResult();
+            return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
+        }
         /// <summary>
         /// Render partial view to string
         /// </summary>

@@ -1,271 +1,204 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Common Statistics";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Elevation Church institute">
-    
+@section Menu {
+    @Scripts.Render("~/Scripts/Home/DashboardV1/menu")
+}
 
-    <title>The Elevation Church Institute (CMdm)</title>
+@Styles.Render("~/AdminLTE/plugins/morris/css")
+@Styles.Render("~/AdminLTE/plugins/jvectormap/css")
+@Styles.Render("~/AdminLTE/plugins/datepicker/css")
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/css")
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
-    <style type="text/css">
-        body {
-            background-color: #f2f2f2;
-            font-family: "Lato";
-            font-weight: 300;
-            font-size: 16px;
-            color: #555;
-            padding-top: 50px;
-            -webkit-font-smoothing: antialiased;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: "Raleway";
-            font-weight: 300;
-            color: #333;
-        }
-
-        p {
-            line-height: 28px;
-            margin-bottom: 25px;
-        }
-
-        .centered {
-            text-align: center;
-        }
-
-        a {
-            color: #3bc492;
-            word-wrap: break-word;
-            -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-            -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-            -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-            -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-            transition: color 0.1s ease-in, background 0.1s ease-in;
-        }
-
-            a:hover,
-            a:focus {
-                color: #c0392b;
-                text-decoration: none;
-                outline: 0;
-            }
-
-            a:before,
-            a:after {
-                -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-                -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-                -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-                -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-                transition: color 0.1s ease-in, background 0.1s ease-in;
-            }
-
-        hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid #ccc;
-            margin: 1em 0;
-            padding: 0;
-        }
-
-        #headerwrap {
-            background-color: #34495e;
-            padding-top: 40px;
-        }
-
-            #headerwrap h1 {
-                margin-top: 0px;
-                color: white;
-                font-size: 50px;
-            }
-
-            #headerwrap h3 {
-                color: white;
-                font-size: 20px;
-            }
-
-            #headerwrap h4 {
-                color: lightgreen;
-                font-weight: 700;
-                text-align: left;
-            }
-
-            #headerwrap li {
-                color: #f2f2f2;
-                text-align: left;
-                margin-left: -40px;
-                padding: 0;
-            }
-
-            #headerwrap p {
-                text-align: left;
-                color: white;
-            }
-
-        #resources i {
-            font-size: 48px;
-        }
-
-        #intro {
-            padding-top: 50px;
-            border-top: #bdc3c7 solid 5px;
-        }
-
-        #features {
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
-
-            #features .ac a {
-                font-size: 20px;
-            }
-
-        #footerwrap {
-            background-color: #2f2f2f;
-            color: white;
-            padding-top: 40px;
-            padding-bottom: 60px;
-            text-align: left;
-        }
-
-            #footerwrap h3 {
-                font-size: 28px;
-                color: white;
-            }
-
-            #footerwrap p {
-                color: white;
-                font-size: 18px;
-            }
-
-        #c {
-            background: #222222;
-            padding-top: 15px;
-            text-align: right;
-        }
-
-            #c p {
-                color: white;
-            }
-    </style>
-
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.6/jquery.smooth-scroll.min.js"></script>
-
-
-</head>
-@*<a href="#" class="logo" data-dark-logo="logo-CMdm-new.png">
-        <img src="~/content/images/logo-teci-new.png" alt="Logo" style="height:40px;width:40px">
-    </a>*@
-<body data-spy="scroll" data-offset="0" data-target="#navigation">
-
-    <div id="navigation" class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-           
-            <a class="navbar-brand" href="#"><img src="~/content/images/logo-CMdm-new.png" alt="Logo" style="height:inherit;width:inherit"></a>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    
-                </button>                
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>450</h3>
+                <p>Open Exceptions</p>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#home" class="smothscroll">Home</a></li>
-                    <li><a href="#resources" class="smothscroll">Resources</a></li>
-                    <li><a href=@Url.Action( "Login","Account") class="smothscroll">Students</a></li>
-                    <li><a href="#" class="smothscroll">Administrators</a></li>
-                </ul>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-
-
-    <section id="home" name="home"></section>
-    <div id="headerwrap">
-        <div class="container">
-            <div class="row centered">
-                <div class="col-lg-12">
-                    <h1>Welcome To <b>CMdm</b></h1>
-                    <h3>This is the management web portal of the elevation church institute.</h3>
-                    <br />
-                    <br />
-                </div>
-
-                <div class="col-lg-5">
-                    <h4>For Administrators</h4>
-                    <p><b>Manage communication to all channels centrally.</b></p>
-                    <p><b>Monitor participants' progress and report activities.</b></p>
-                    <p><b>Measure and Analyze assimilation into workforce.</b></p>
-                    
-                </div>
-                <div class="col-lg-2">
-                </div>
-                <div class="col-lg-5">
-                    <h4>For Members and Students</h4>
-                    <p><b><a href="http://www.elevationng.org/CMdm/register">Register </a>and Enroll for a course </b></p>
-                    <p><b><a href="https://myCMdm.elevationng.org/assessment/">Rewrite an assessment  </a> </b></p>
-                    
-                </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    2.45<sup style="font-size: 20px">%</sup>
+                </h3>
+                <p>Bankwide % Contribution</p>
             </div>
-        </div>
-        <br />
-        <br />
-    </div>
-
-
-    <section id="resources" name="resources">
-        <!-- INTRO WRAP -->
-        <div id="intro">
-            <div class="container">
-                <div class="row centered">
-                    <h1>Resources</h1>
-                    <br>
-                    <br>
-                    <div class="col-lg-4">
-                        <a href="#"><i class="fa fa-book"></i></a>
-                        <h3>Course materials</h3>
-                        <p>See <a href="#"><b>Admin Guide</b></a> for documentation. </p>
-                    </div>
-                    <div class="col-lg-4">  More Info
-Any question? email teci@elevationng.org
-                        <a href="#"><i class="fa fa-question-circle"></i></a>
-                        <h3>Have Questions?</h3>
-                        <p>Feel free to send an email to <a href="#"><b>teci@elevationng.org.</b></a> You might also suggest better ways to serve you.</p>
-                    </div>
-                    <div class="col-lg-4">
-                        <a href="#"><i class="fa fa-history"></i></a>
-                        <h3>Stay Up to Date</h3>
-                        <p>Join the mailing list <a href="#"><b>..</b></a> .</p>
-                    </div>
-                </div>
-                <br>
-                <hr>
+            <div class="icon">
+                <i class="ion ion-cash"></i>
             </div>
-        </div>
-    </section>
-
-    <div id="c" style="margin-top: 150px;">
-        <div class="container">
-            <p>&copy; 2017. The Elevation Church Institute (TECi). All Rights Reserved. <a target="_blank" href="http://techrunch.net" style="font-size:xx-small">credit</a></p>
-
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>14</h3>
+                <p>Trending Exceptions</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios-pricetag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>56%</h3>
+                <p>Data Quality Index</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-arrow-up"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>12,513</h3>
+                <p>Branch Customers</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    53<sup style="font-size: 20px">%</sup>
+                </h3>
+                <p>Assimilation Rate</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>44</h3>
+                <p>New Customers</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>2,500,345</h3>
+                <p>Total Bank Customers</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <section class="col-lg-7 connectedSortable">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                <li class="pull-left header"><i class="fa fa-inbox"></i> Exception Run History</li>
+            </ul>
+            <div class="tab-content no-padding">
+                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+            </div>
+        </div>
+        
+        </section>
+</div>
+@*<div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>450</h3>
+                            <p>Current Stream</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>
+                                53<sup style="font-size: 20px">%</sup>
+                            </h3>
+                            <p>Assimilation Rate</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>44</h3>
+                            <p>New Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>165</h3>
+                            <p>Unique Visitors today</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>*@
+
+
+        @section Scripts {
+            @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+            <script>
+                $.widget.bridge('uibutton', $.ui.button);
+            </script>
+
+            @Scripts.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/js")
+            @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+            @Scripts.Render("~/AdminLTE/plugins/jvectormap/js")
+            @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+            @Scripts.Render("~/AdminLTE/plugins/knob/js")
+            @Scripts.Render("~/AdminLTE/plugins/raphael/js")
+            @Scripts.Render("~/AdminLTE/plugins/morris/js")
+            @Scripts.Render("~/AdminLTE/plugins/datepicker/js")
+            @Scripts.Render("~/Scripts/Home/DashboardV1")
+        }

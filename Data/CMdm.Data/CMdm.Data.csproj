@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="CmdmEntityTypeConfiguration.cs" />
     <Compile Include="CMdmObjectContext.cs" />
+    <Compile Include="DAC\DqRuleDAC.cs" />
     <Compile Include="DAC\DqQueDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />
     <Compile Include="EfRepository.cs" />
