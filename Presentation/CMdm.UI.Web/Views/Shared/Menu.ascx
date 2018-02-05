@@ -27,7 +27,7 @@
                           ToggleIconClass = p.TOGGLE_ICON,
                           Url = p.FORM_URL
 
-                      }).AsEnumerable();
+                      }).AsEnumerable().OrderBy(a=>a.PermissionId);
 
 
          var menuData = menus.Select(o => new MenuViewModel

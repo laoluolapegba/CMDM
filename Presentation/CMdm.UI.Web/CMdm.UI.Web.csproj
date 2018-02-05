@@ -292,6 +292,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageCustController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
@@ -511,6 +512,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
+    <Compile Include="Models\DqQue\DqquebrnListModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -791,6 +793,7 @@
     <Content Include="Content\customlogin\slick.grid.css" />
     <Content Include="Content\customlogin\toastr.css" />
     <Content Include="Content\customlogin\toastr.min.css" />
+    <Content Include="Content\customstyle.css" />
     <Content Include="Content\easyquery\easychart.css" />
     <Content Include="Content\easyquery\easyquery.css" />
     <Content Include="Content\easyquery\eq-icons-default.css" />
@@ -1806,6 +1809,14 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
+    <Content Include="Views\DQQue\BrnIssueList.cshtml" />
+    <Content Include="Views\ManageCust\Create.cshtml" />
+    <Content Include="Views\ManageCust\Delete.cshtml" />
+    <Content Include="Views\ManageCust\Details.cshtml" />
+    <Content Include="Views\ManageCust\Edit.cshtml" />
+    <Content Include="Views\ManageCust\Index.cshtml" />
+    <Content Include="Views\ManageCust\Unauthorized.cshtml" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

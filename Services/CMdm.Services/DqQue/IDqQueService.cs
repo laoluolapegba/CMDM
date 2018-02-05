@@ -26,6 +26,8 @@ namespace CMdm.Services.DqQue
         /// <returns>Vendors</returns>
         IPagedList<MdmDQQue> GetAllQueItems(string name = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
+        IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? ruleId = null,  int? BranchId = null, int? status = null, int? priority = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
 
     }
 }

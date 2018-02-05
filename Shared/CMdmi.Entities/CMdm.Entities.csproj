@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
@@ -67,9 +68,7 @@
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\Customer\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CMdm.Core\CMdm.Core.csproj">
       <Project>{c2ee2738-0ac8-4a7a-a737-0ef76ae9ed72}</Project>

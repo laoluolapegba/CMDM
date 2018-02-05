@@ -119,6 +119,7 @@ namespace CMdm.Data
         public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
         public DbSet<MdmRegex> MdmRegex { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
     }
 
 }

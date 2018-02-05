@@ -1,0 +1,349 @@
+﻿@using CMdm.Framework;
+@model IEnumerable<CMdm.Entities.Domain.Customer.IndCustomerBioData>
+
+@{
+    ViewBag.Title = "Data Cleaning";
+    ViewBag.SubTitle = "Pending Authorization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Modified Customer Records
+        </h1>
+        <div class="pull-right">
+            <a href="@Url.Action("Edit")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Authorize
+            </a>
+            <button type="submit" name="download-catalog-pdf" class="btn bg-purple">
+                <i class="fa fa-file-pdf-o"></i>
+                DownloadPDF
+            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success">
+                    <i class="fa fa-download"></i>
+                    Export
+                </button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">&nbsp;</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <button type="submit" name="exportxml-all">
+                            <i class="fa fa-file-code-o"></i>
+                           ExportToXml All
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportxml-selected">
+                            <i class="fa fa-file-code-o"></i>
+                            ExportToXml Selected
+                        </button>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <button type="submit" name="exportexcel-all">
+                            <i class="fa fa-file-excel-o"></i>
+                            ExportToExcel.All
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportexcel-selected">
+                            <i class="fa fa-file-excel-o"></i>
+                            ExportToExcel Selected
+                        </button>
+                    </li>
+                </ul>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default panel-search">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer Id")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.Editor("CUSTOMER_NO")
+                                      
+                                        
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.SearchCategoryId)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownList("StatusId", Model.AvailableCategories)
+                                    </div>
+                                </div>*@                                
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-5">
+                                <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                    <i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="cust-grid">
+
+                            <div>
+                                <input type="submit" value="Approve Selected" name="action:AuthorizeAll" class="btn btn-primary btn-xs" />
+                                <input type="submit" value="Reject Selected" name="action:RejectAll" class="btn btn-primary btn-xs" />
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" value="checkbox" id="chkSelectAll">
+                                                </label>
+                                            </th>
+                                            <th>
+                                                
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.TITLE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.SURNAME)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FIRST_NAME)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.OTHER_NAME)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.NICKNAME_ALIAS)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DATE_OF_BIRTH)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.PLACE_OF_BIRTH)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.COUNTRY_OF_BIRTH)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.SEX)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.AGE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.MARITAL_STATUS)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.NATIONALITY)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.STATE_OF_ORIGIN)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.MOTHER_MAIDEN_NAME)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DISABILITY)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.COMPLEXION)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.NUMBER_OF_CHILDREN)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.RELIGION)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.CREATED_DATE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.CREATED_BY)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.AUTHORISED)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.IP_ADDRESS)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.BRANCH_CODE)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td class="text-nowrap">
+                                            <input class="chkSelect" type="checkbox" name="Selected" value="@item.CUSTOMER_NO">
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("IndividualCustomer", "CustomerInfo", new { CustId = item.CUSTOMER_NO})"> <b>@item.CUSTOMER_NO</b></a>
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TITLE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SURNAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FIRST_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OTHER_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NICKNAME_ALIAS)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DATE_OF_BIRTH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PLACE_OF_BIRTH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.COUNTRY_OF_BIRTH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SEX)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AGE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MARITAL_STATUS)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NATIONALITY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.STATE_OF_ORIGIN)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MOTHER_MAIDEN_NAME)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DISABILITY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.COMPLEXION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NUMBER_OF_CHILDREN)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RELIGION)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CREATED_BY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AUTHORISED)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BRANCH_CODE)
+                                        </td>
+                                       
+                                    </tr>
+                                    }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    
+}
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+
+        function toggleChecked(status) {
+            $("#checkboxes input").each(function () {
+
+                // Set the checked status of each to match the
+                // checked status of the check all checkbox:
+                $(this).prop("checked", status);
+            });
+        }
+
+        $(document).ready(function () {
+
+            $("#chkSelectAll").bind("change", function () {
+                $(".chkSelect").prop("checked", $(this).prop("checked"));
+            });
+            $(".chkSelect").bind("change", function () {
+                if (!$(this).prop("checked"))
+                    $("#chkSelectAll").prop("checked", false);
+            });
+            $(".alert").hide().fadeIn("slow");
+        });
+</script>
+}
