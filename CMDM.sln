@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+<<<<<<< HEAD
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
+=======
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+>>>>>>> 1306f6957580fe6f82e91fc57f9b8c148a024c21
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{664CAD8E-AD40-4EF4-8C18-54EECEB92BD1}"
 EndProject
@@ -14,6 +19,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{6EC8A1DF-FB2B-49F9-9ACD-E1606360D6CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1434453E-E49D-47D6-BC73-51B15256AB1B}"
+	ProjectSection(SolutionItems) = preProject
+		Services\CMdm.Services\App.config = Services\CMdm.Services\App.config
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4C0414C1-BA3A-4559-BE7B-08AB9705B219}"
 EndProject

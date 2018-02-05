@@ -211,3 +211,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/Data/CMdm.Database/CMdm.Database.jfm
+*.jfm
