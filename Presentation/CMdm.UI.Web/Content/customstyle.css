@@ -1,0 +1,45 @@
+﻿/*order list statuses*/
+.order-list span.order-status {
+    padding: .2em .6em .3em;
+    border-radius: .25em;
+    color: #2e2e2e;
+}
+.order-list span.order-status-pending {
+    background-color: #f39c12;
+    color: #fff;
+}
+.order-list span.order-status-processing {
+    background-color: #00c0ef;
+    color: #fff;
+}
+.order-list span.order-status-complete {
+    background-color: #00a65a;
+    color: #fff;
+}
+.order-list span.order-status-cancelled {
+    background-color: #dd4b39;
+    color: #fff;
+}
+
+/*grid color statuses*/
+span.grid-report-item {
+    padding: .2em .6em .3em;
+    border-radius: .25em;
+    color: #2e2e2e;
+}
+span.grid-report-item.yellow {
+    background-color: #f39c12;
+    color: #fff;
+}
+span.grid-report-item.blue {
+    background-color: #00c0ef;
+    color: #fff;
+}
+span.grid-report-item.green {
+    background-color: #00a65a;
+    color: #fff;
+}
+span.grid-report-item.red {
+    background-color: #dd4b39;
+    color: #fff;
+}

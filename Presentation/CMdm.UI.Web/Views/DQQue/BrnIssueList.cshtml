@@ -1,23 +1,14 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.DqRule.DqRuleListModel
-    @*ViewBag.Title = "Data Quality Rules";
+@model CMdm.UI.Web.Models.DqQue.DqquebrnListModel
+@*ViewBag.Title = "Data Quality Rules";
     ViewBag.SubTitle = "List";*@
 @{
-    ViewBag.Title = "Data Quality Rules";
-        ViewBag.SubTitle = "List";
-Layout = "~/Views/Shared/_Layout.cshtml";
-var defaultGridPageSize = 20;
-var gridPageSizes = "10, 15, 20, 50, 100";
+    ViewBag.Title = "Data Quality Issues";
+    ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 15;
+    var gridPageSizes = "10, 15, 20, 50, 100";
 }
-
-<div class="content-header clearfix">
-        <div class="pull-right">
-            <a href="@Url.Action("Create")" class="btn bg-blue">
-                <i class="fa fa-plus-square"></i>
-                Add New
-            </a>
-        </div>
-    </div>
 @Html.AntiForgeryToken()
 <div class="content">
     <div class="form-horizontal">
@@ -26,6 +17,7 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
+                            
                             <div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.RULE_NAME)
@@ -36,10 +28,26 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    @Html.LabelFor(model => model.DimensionId)
+                                    @Html.LabelFor(model => model.BRANCH_CODE)
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.CMdmDropDownList("DimensionId", Model.QualityDimensions)
+                                    @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.ISSUE_PRIORITY_DESC)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("PRIORITY_CODE", Model.Priorities)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.ISSUE_STATUS_DESC)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("STATUS_CODE", Model.Statuses)
                                 </div>
                             </div>
                             <div class="form-group">
@@ -66,7 +74,7 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                     type: "json",
                                     transport: {
                                         read: {
-                                            url: "@Html.Raw(Url.Action("List", "Rules"))",
+                                            url: "@Html.Raw(Url.Action("BrnIssueList", "DQQue"))",
                                             type: "POST",
                                             dataType: "json",
                                             data: additionalData
@@ -98,56 +106,59 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                 },
                                 scrollable: false,
                                 columns: [{
+                                    field: "CUST_ID",
+                                    title: "CustomerId",
+                                    width: 80,
+                                    template: '<a href="@Url.Content("/CustomerInfo/IndividualCustomer?CustId=")#=CUST_ID#">#:CUST_ID#</a>'
+                                }, {
                                     field: "RULE_NAME",
                                     title: "Rulename",
-                                    width: 200,
-                                    template: '<a href="@Url.Content("/DQQUe/BrnIssueList?ruleid=")#=RECORD_ID#">#:RULE_NAME#</a>'
-                                }, {
-                                    field: "DIMENSION",
-                                    title: "Quality Dimension",
-                                    width: 100
-                                }, {
-                                    field: "DATA_SOURCE",
-                                    title: "Datasource name",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-
-                                }, {
-                                    field: "SEVERITY",
-                                    title: "Severity",
-                                    width: 100,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-
+                                    width: 200
                                 },{
-                                    field: "RUN_SCHEDULE",
-                                    title: "Schedule",
-                                    width: 100,
+                                    field: "BRANCH_NAME",
+                                    title: "Branch",
+                                    width: 150
+                                }, 
+                                @if (1==1)
+                                {
+                                        <text>{
+                                    field: "PRIORITY_CODE",
+                                    title: "Priority",
+                                            width: 50,
+                                            template: '<span class="grid-report-item ' +
+                                                '# if(PRIORITY_CODE == 1) {# red #} #' +
+                                                '# if(PRIORITY_CODE == 2) {# yellow #} #' +
+                                                '# if(PRIORITY_CODE == 3) {# blue #} #' +
+                                                '# if(PRIORITY_CODE == 4) {# green #} #' +
+                                                '# if(PRIORITY_CODE == 5) {# green #} #' +
+                                                '">#=ISSUE_PRIORITY_DESC#</span>'
+                                        },</text>
+                                    } 
+                                
+                                {
+                                    field: "RUN_DATE",
+                                    title: "Last Run Date",
+                                    width: 150,
+                                    type: "date",
+                                    format: "{0:G}",
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
 
                                 },
-                                {
-                                    field: "LAST_RUN",
-                                    title: "Last Run Date",
-                                    width: 150,
-                                    type: "date",
-                                    format: "{0:G}"
-                                },{
-                                    field: "RECORD_STATUS",
-                                    title: "Active",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '# if(RECORD_STATUS ==1) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
-                                },{
-                                    field: "RECORD_ID",
-                                    title: "Id",
-                                    width: 60,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<a class="btn btn-default" href="Details/#=RECORD_ID#"><i class="fa fa-pencil"></i>Edit</a>'                                }]
+                                    @if (1==1)
+                                    {
+                                        <text>{
+                                            field: "STATUS_CODE",
+                                            title: "Status",
+                                            width: 100,
+                                            template: '<span class="grid-report-item ' +
+                                                '# if(STATUS_CODE == 2) {# green #} #' +
+                                                '# if(STATUS_CODE == 3) {# yellow #} #' +
+                                                '# if(STATUS_CODE == 1) {# red #} #' +
+                                                '">#=ISSUE_STATUS_DESC#</span>'
+                                        },</text>
+                                    }
+                                   ]
                             });
                         });
                     </script>
@@ -172,7 +183,15 @@ var gridPageSizes = "10, 15, 20, 50, 100";
 
                         function additionalData() {
                             var data = {
-                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                BRANCH_CODE: $('#BRANCH_CODE').val(),
+                                PRIORITY_CODE: $('#PRIORITY_CODE').val(),
+                                STATUS_CODE: $('#STATUS_CODE').val()
+                                @*CreatedOnFrom: $('#@Html.FieldIdFor(model => model.CreatedOnFrom)').val(),
+                                CreatedOnTo: $('#@Html.FieldIdFor(model => model.CreatedOnTo)').val(),
+                                    Dates in kendo :https://blog.falafel.com/passing-dates-kendo-ui-aspnet/
+                                    *@
+
                             };
                             addAntiForgeryToken(data);
                             return data;

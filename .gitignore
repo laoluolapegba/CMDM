@@ -212,6 +212,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /Data/CMdm.Database/CMdm.Database.jfm
-/Presentation/CMdm.UI.Web/AdminLTE/bootstrap/css/bootstrap-datepicker.min.css
-/Presentation/CMdm.UI.Web/AdminLTE/bootstrap/js/bootstrap-datepicker.min.js
-/Presentation/CMdm.UI.Web/AdminLTE/dist/css/bootstrap-datepicker.min.css
+*.jfm

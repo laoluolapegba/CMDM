@@ -60,6 +60,7 @@
                 </div>
             </div>
             <asp:Button ID="btnAccept" runat="server" Text="Accept Selected Records" CssClass="btn btn-primary" OnClick="btnAccept_Click" />
+            <asp:Button ID="btnReject" runat="server" Text="Reject Selected Records" CssClass="btn btn-primary" />
             <!-- END WIDGET WIZARD Jaro-Winkler and Levenshtein edit distance algorithms -->
 
         </div>

@@ -19,6 +19,7 @@
     @Scripts.Render("~/AdminLTE/bootstrap/js")
     @Scripts.Render("~/bundles/kendo")
     @Styles.Render("~/Content/kendo/css")
+    @Styles.Render("~/Content/customstyle.css")
     @Scripts.Render("~/Scripts/common.js")
     <style>
         .main-header .logo i {
@@ -36,11 +37,11 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
-            <a href="@Url.Action("DashboardV1", "Home")" class="logo">
+            <a href="@Url.Action("Index", "Home")" class="logo">
                 <span class="logo-mini"><b>C</b>MDM</span>
                 <span class="logo-lg">
                     <i></i>
-                    <b>C</b>mdm
+                    <b>CMDM</b>
                 </span>
             </a>
             @Html.Partial("_TopBarPartial")            

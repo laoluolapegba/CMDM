@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="content">
         <div class="main-header">
-            <h2>Data Quality Reports </h2>
+            <h2>Data Quality Report </h2>
             <em>Branch Summary </em>
         </div>
 
@@ -58,7 +58,7 @@ group by a.branch_code , branch_name, dat_last_run"></asp:SqlDataSource>
 
                 </div>
             </div>
-            <asp:Button ID="btnAccept" runat="server" Text="Accept Selected Records" CssClass="btn btn-primary" OnClick="btnAccept_Click" />
+            <%--<asp:Button ID="btnAccept" runat="server" Text="Accept Selected Records" CssClass="btn btn-primary" OnClick="btnAccept_Click" />--%>
             <!-- END WIDGET WIZARD Jaro-Winkler and Levenshtein edit distance algorithms -->
 
         </div>

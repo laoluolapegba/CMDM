@@ -119,15 +119,7 @@ namespace CMdm.Data
         public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
         public DbSet<MdmRegex> MdmRegex { get; set; }
 
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.cDMA_INDIVIDUAL_IDENTIFICATION> CDMA_INDIVIDUAL_BIO_DATA { get; set; }
-
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_ADDRESS_DETAIL> CDMA_INDIVIDUAL_ADDRESS_DETAIL { get; set; }
-
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_DETAIL> CDMA_INDIVIDUAL_CONTACT_DETAIL { get; set; }
-
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_IDENTIFICATION> CDMA_INDIVIDUAL_IDENTIFICATION { get; set; }
-
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_OTHER_DETAILS> CDMA_INDIVIDUAL_OTHER_DETAILS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
     }
 
 }

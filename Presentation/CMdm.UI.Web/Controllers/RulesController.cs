@@ -40,7 +40,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: Rules
         public ActionResult Index()
         {
-
+            //return RedirectToAction("List");
             var mdmDqRules = db.MdmDqRules.Include(m => m.MdmAggrDimensions).Include(m => m.MdmDQDataSources).Include(m => m.MdmDQPriorities).Include(m => m.MdmDqRunSchedules);
             return View(mdmDqRules.ToList());
         }
