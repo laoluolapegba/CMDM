@@ -1,0 +1,316 @@
+﻿@model CMdm.Entities.Domain.Customer.cDMA_INDIVIDUAL_IDENTIFICATION
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<style>
+    .nav-tabs-custom > .tab-content {
+        color: black;
+    }
+   label
+    {
+       display:block;       
+
+    }
+
+    
+
+   
+</style> 
+<div class="col-md-6">
+    <!-- Custom Tabs (Pulled to the right) -->
+    <div class="nav-tabs-custom" style=" width:850px;">
+        <ul class="nav nav-tabs pull-right">
+            <li class="active"><a href="#tab_1-1" data-toggle="tab">Edit Profile</a></li>
+            <li><a href="#tab_2-2" data-toggle="tab">Change History</a></li>
+          <!--<li><a href="#tab_3-2" data-toggle="tab">Other Details</a></li>-->
+             
+            <li class="pull-left header"><i class="fa fa-th"></i>@ViewBag.record.SURNAME @ViewBag.record.FIRST_NAME @ViewBag.record.OTHER_NAME</ li >
+        </ul>
+        <div class="tab-content" >
+            <div class="tab-pane active"  id="tab_1-1">
+                
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>CUSTOMER BIO DATA</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.CUSTOMER_NO)
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Title</label>
+
+                                    @Html.EditorFor(model => model.TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TITLE, "", new { @class = "text-danger " })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Surname</label>
+
+                                    @Html.EditorFor(model => model.SURNAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SURNAME, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>First Name</label>
+
+                                    @Html.EditorFor(model => model.FIRST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FIRST_NAME, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Other Name</label>
+
+                                    @Html.EditorFor(model => model.OTHER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.OTHER_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Nickname</label>
+
+                                    @Html.EditorFor(model => model.NICKNAME_ALIAS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NICKNAME_ALIAS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Date of Birth</label>
+
+                                    @Html.EditorFor(model => model.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DATE_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Place of Birth</label>
+                                    @Html.EditorFor(model => model.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PLACE_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Country of Birth</label>
+
+                                    @Html.EditorFor(model => model.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.COUNTRY_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Sex</label>
+
+                                    @Html.EditorFor(model => model.SEX, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SEX, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Age</label>
+                                    @Html.EditorFor(model => model.AGE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AGE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Marital Status</label>
+
+                                    @Html.EditorFor(model => model.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MARITAL_STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Nationality</label>
+
+                                    @Html.EditorFor(model => model.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NATIONALITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> State of Origin</label>
+                                    @Html.EditorFor(model => model.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Mother Maiden Name</label>
+                                    @Html.EditorFor(model => model.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Disability</label>
+
+                                    @Html.EditorFor(model => model.DISABILITY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DISABILITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>Complexion</label>
+                                    @Html.EditorFor(model => model.COMPLEXION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.COMPLEXION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Number of Children</label>
+                                    @Html.EditorFor(model => model.NUMBER_OF_CHILDREN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Religion</label>
+                                    @Html.EditorFor(model => model.RELIGION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.RELIGION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>Branch Code</label>
+                                    @Html.EditorFor(model => model.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BRANCH_CODE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                             
+                        </div>
+
+                   <div class="row">
+                        <div style="float:right;" class="col-lg-6">
+                            <div class="input-group">
+                                <br />
+                                <input type="submit" value="Save" class="btn btn-default" />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    </div>
+                }
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2-2">
+                
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Task</th>
+                            <th>Progress</th>
+                            <th style="width: 40px">Label</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>Update software</td>
+                            <td>
+                                <div class="progress progress-xs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-red">55%</span></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>Clean database</td>
+                            <td>
+                                <div class="progress progress-xs">
+                                    <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-yellow">70%</span></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>Cron job running</td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-light-blue">30%</span></td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td>Fix and squish bugs</td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-green">90%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_1-1" >
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+</div>
+<!-- /.col -->
+</div>
+
+

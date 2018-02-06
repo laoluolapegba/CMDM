@@ -1,0 +1,152 @@
+﻿@model CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_ADDRESS_DETAIL
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CDMA_INDIVIDUAL_ADDRESS_DETAIL</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RESIDENTIAL_ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RESIDENTIAL_ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CITY_TOWN_OF_RESIDENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY_TOWN_OF_RESIDENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LGA_OF_RESIDENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LGA_OF_RESIDENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NEAREST_BUS_STOP_LANDMARK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NEAREST_BUS_STOP_LANDMARK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATE_OF_RESIDENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATE_OF_RESIDENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COUNTRY_OF_RESIDENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COUNTRY_OF_RESIDENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RESIDENCE_OWNED_OR_RENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RESIDENCE_OWNED_OR_RENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIP_POSTAL_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIP_POSTAL_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP_ADDRESS)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

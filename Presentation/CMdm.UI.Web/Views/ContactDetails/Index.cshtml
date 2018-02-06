@@ -1,0 +1,93 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_DETAIL>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MOBILE_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMAIL_ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MAILING_ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MOBILE_NO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMAIL_ADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MAILING_ADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTOMER_NO })
+        </td>
+    </tr>
+}
+
+</table>

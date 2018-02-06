@@ -280,18 +280,24 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
+    <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\DqExceptionsController.cs" />
     <Compile Include="Controllers\DQIController.cs" />
     <Compile Include="Controllers\DQQueController.cs" />
+    <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ElementsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndIdentificationController.cs" />
+    <Compile Include="Controllers\IndividualAddressController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
@@ -567,6 +573,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminLTE\bootstrap\css\bootstrap-datepicker.min.css" />
     <Content Include="AdminLTE\bootstrap\css\bootstrap.css" />
     <Content Include="AdminLTE\bootstrap\css\bootstrap.min.css" />
     <Content Include="AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -574,6 +581,7 @@
     <Content Include="AdminLTE\bootstrap\js\bootstrap.min.js" />
     <Content Include="AdminLTE\dist\css\admin-lte.css" />
     <Content Include="AdminLTE\dist\css\admin-lte.min.css" />
+    <Content Include="AdminLTE\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black-light.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black-light.min.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black.css" />
@@ -610,6 +618,7 @@
     <Content Include="AdminLTE\dist\img\default-50x50.gif" />
     <Content Include="AdminLTE\dist\img\defaultavatar.png" />
     <Content Include="AdminLTE\dist\img\icons.png" />
+    <Content Include="AdminLTE\dist\img\loading.gif" />
     <Content Include="AdminLTE\dist\img\photo1.png" />
     <Content Include="AdminLTE\dist\img\photo2.png" />
     <Content Include="AdminLTE\dist\img\photo3.jpg" />
@@ -617,6 +626,7 @@
     <Content Include="AdminLTE\dist\img\user.svg" />
     <Content Include="AdminLTE\dist\js\app.js" />
     <Content Include="AdminLTE\dist\js\app.min.js" />
+    <Content Include="AdminLTE\bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="AdminLTE\documentation\css\style.css" />
     <Content Include="AdminLTE\documentation\js\docs.js" />
     <Content Include="AdminLTE\plugins\bootstrap-slider\css\slider.css" />
@@ -1806,6 +1816,33 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Dynamic\EditCustomer.cshtml" />
+    <Content Include="Views\IndividualAddress\Create.cshtml" />
+    <Content Include="Views\IndividualAddress\Delete.cshtml" />
+    <Content Include="Views\IndividualAddress\Details.cshtml" />
+    <Content Include="Views\IndividualAddress\Edit.cshtml" />
+    <Content Include="Views\IndividualAddress\Index.cshtml" />
+    <Content Include="Views\ContactDetails\Create.cshtml" />
+    <Content Include="Views\ContactDetails\Delete.cshtml" />
+    <Content Include="Views\ContactDetails\Details.cshtml" />
+    <Content Include="Views\ContactDetails\Edit.cshtml" />
+    <Content Include="Views\ContactDetails\Index.cshtml" />
+    <Content Include="Views\IndIdentification\Create.cshtml" />
+    <Content Include="Views\IndIdentification\Delete.cshtml" />
+    <Content Include="Views\IndIdentification\Details.cshtml" />
+    <Content Include="Views\IndIdentification\Edit.cshtml" />
+    <Content Include="Views\IndIdentification\Index.cshtml" />
+    <Content Include="Views\OtherDetails\Create.cshtml" />
+    <Content Include="Views\OtherDetails\Delete.cshtml" />
+    <Content Include="Views\OtherDetails\Details.cshtml" />
+    <Content Include="Views\OtherDetails\Edit.cshtml" />
+    <Content Include="Views\OtherDetails\Index.cshtml" />
+    <Content Include="Views\Dynamic\SaveBioData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

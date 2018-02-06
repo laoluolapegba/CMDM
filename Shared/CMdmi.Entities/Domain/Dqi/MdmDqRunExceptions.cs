@@ -42,5 +42,7 @@ namespace CMdm.Entities.Domain.Dqi
         public virtual MdmDQQueStatus MdmDQQueStatuses { get; set; }
         //public virtual MdmDqRule MdmDqRule { get; set; }
         //public virtual Mdm MdmDqRule { get; set; }
+        [DisplayName("Table Name")]
+        public string CATALOG_TABLE_NAME { get; set; }
     }
 }
