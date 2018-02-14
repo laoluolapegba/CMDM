@@ -125,6 +125,7 @@ namespace CMdm.Data
         public DbSet<SRC_CDMA_LGA> SRC_CDMA_LGA { get; set; }
         public DbSet<CDMA_IDENTIFICATION_TYPE> CDMA_IDENTIFICATION_TYPE { get; set; }
 
+<<<<<<< HEAD
         
 
 
@@ -146,6 +147,9 @@ namespace CMdm.Data
 
         //
 
+=======
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
+>>>>>>> 225a5f4d1805c10ab00050b33331e6248ab8fa7d
     }
 
 }
