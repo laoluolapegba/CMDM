@@ -2,9 +2,27 @@
  
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryval")
 }
+@*@Styles.Render("~/AdminLTE/plugins/font-awesome/css")
+        @Styles.Render("~/AdminLTE/plugins/ionicons/css")
+        @Styles.Render("~/AdminLTE/bootstrap/css")
+        @Styles.Render("~/AdminLTE/dist/css")
+        @Styles.Render("~/AdminLTE/dist/css/skins")
+        @Scripts.Render("~/AdminLTE/plugins/jquery/js")
 
+    @Scripts.Render("~/AdminLTE/bootstrap/js") *@
+@*@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/Content/kendo/css")
+@Styles.Render("~/Content/customstyle.css")
+@Scripts.Render("~/Scripts/common.js")*@
+
+ 
+ <script>
+     var date = $('#BioData_DATE_OF_BIRTH').datepicker({ dateFormat: 'mm-yy-dd' }).val();
+</script>
+
+  
 
 <style>
     .nav-tabs-custom > .tab-content {
@@ -20,6 +38,10 @@
         width: 100%;
         height: 24px;
         padding: 2px 4px; 
+    }
+    br 
+    {
+        display:block;
     }
 
    
@@ -106,14 +128,10 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>Date of Birth</label>
-
-                                   @(Html.Kendo().DatePickerFor(model => model.BioData.DATE_OF_BIRTH))
-                                      <input id="datepicker" />
-                                                <script>
-                                            $("#datepicker").kendoDatePicker({ });
-                                                </script>
+                                  
+                                     
                                     <!-- /.form group -->
-                                    @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } }) 
+                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.BioData.DATE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -132,8 +150,9 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label> Country of Birth</label>
-                                    
-                                    @Html.EditorFor(model => model.BioData.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                   
+                                   <!-- @Html.EditorFor(model => model.BioData.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })-->
                                     @Html.ValidationMessageFor(model => model.BioData.COUNTRY_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -157,7 +176,7 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label> Age</label>
-                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -172,8 +191,8 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>Nationality</label>
-
-                                    @Html.EditorFor(model => model.BioData.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.BioData.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.NATIONALITY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -220,7 +239,8 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label> Number of Children</label>
-                                    @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN,
+new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
 
 
@@ -229,7 +249,8 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>Religion</label>
-                                    @Html.EditorFor(model => model.BioData.RELIGION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.BioData.RELIGION, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.RELIGION, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -239,7 +260,11 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label>Branch Code</label>
-                                    @Html.EditorFor(model => model.BioData.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })
+                                    
+                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+
+
+                                    @*@Html.EditorFor(model => model.BioData.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.BRANCH_CODE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -252,15 +277,22 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="input-group">
-                                    <label>*Residential Address</label>
-                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                    <label>*State of Residence</label>
+
+                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();" })
+
+
+                                    @*@Html.EditorFor(model => model.AddressDetails.STATE_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.STATE_OF_RESIDENCE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+
+
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>*LGA of Residence</label>
-                                    @Html.EditorFor(model => model.AddressDetails.LGA_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div id="lgloading"><img style="width:100px;height:100px;display:none;" src="~/AdminLTE/dist/img/loading.gif"></div>
+                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -276,17 +308,23 @@
 
 
                         <div class="row">
+
                             <div class="col-lg-3">
                                 <div class="input-group">
-                                    <label>*State of Residence</label>
-                                    @Html.EditorFor(model => model.AddressDetails.STATE_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.AddressDetails.STATE_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                    <label>*Residential Address</label>
+                                    @Html.EditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+
+
+
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>*Country of Residence</label>
-                                    @Html.EditorFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
+                                    
+                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
 
 
@@ -297,9 +335,15 @@
                                     <label>Residence owned or rented </label>
 
                                     <label>
-                                        <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned 
+                                        @Html.RadioButtonFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "Owned")
+                                        <span>Owned</span>
+
+                                        @Html.RadioButtonFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "Rented")
+                                        <span>Rented</span>
+
+                                        @*<input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned 
                                    
-                                        <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Rented" type="radio"> Rented
+                                        <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Rented" type="radio"> Rented*@
                                     </label>
                                     @*@Html.EditorFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "", new { @class = "text-danger" })*@
@@ -323,7 +367,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label> Zip Postal Code</label>
-                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -365,7 +409,12 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label>*Identification Type</label>
-                                   @Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    
+                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+
+
+                                   @*@Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
                                    @Html.ValidationMessageFor(model => model.identification.IDENTIFICATION_TYPE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -380,7 +429,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>*ID Issue Date </label>
-                                    @Html.EditorFor(model => model.identification.ID_ISSUE_DATE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.identification.ID_ISSUE_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
                                     @Html.ValidationMessageFor(model => model.identification.ID_ISSUE_DATE, "", new { @class = "text-danger" }) 
                                 </div>
                             </div>
@@ -391,8 +440,8 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label>*ID Expiry Date</label>
-                                    @Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.identification.IDENTIFICATION_TYPE, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.identification.ID_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.identification.ID_EXPIRY_DATE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -421,11 +470,11 @@
 
 
 
- 
 
 
 
-                            
+
+
                             <br/>
 
                         <div class="modal-footer">
@@ -446,7 +495,7 @@
                         </div>
                     </div>
                -->
- 
+
                 }
 
             </div>
@@ -461,67 +510,58 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="box-group" id="accordion">
-                            <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                            <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it ViewBag.profile_log -->
+@{ 
+    CMdm.Data.AppDbContext _db = new CMdm.Data.AppDbContext() ;
+    var getdetails = new CMdm.UI.Web.Controllers.DynamicController();
+
+
+}
+@foreach (var log in ViewBag.profile_log)
+{
+    //for (var i = 0; i < myMoney.Count; i++)
+    //{
+    //    Console.WriteLine("Amount is {0} and type is {1}", myMoney[i].amount, myMoney[i].type);
+
                             <div class="panel box box-primary">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                            Collapsible Group Item #1
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#@log.TIED" aria-expanded="false" class="collapsed">
+                                            @{ 
+
+                                                var userd = getdetails.getUserDetails(log.LOGGED_BY);
+
+                                            }
+                                               Edited By  @userd.DISPLAY_NAME [@log.LOGGED_DATE]
+                                                    
+
+                                                    
+
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div id="@log.TIED" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                     <div class="box-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                        nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                        labore sustainable VHS.
-                                    </div>
+                                        <ul>
+                                        @if (!String.IsNullOrEmpty(log.COMMENTS))
+                                        {
+                                            @Html.Raw(@log.COMMENTS)
+                                        }
+                                            else
+                                            {
+
+                                           <text> No Changed were made on this log</text>
+    }
+
+                                            </ul>
+</div>
                                 </div>
                             </div>
-                            <div class="panel box box-danger">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-                                            Collapsible Group Danger
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                    <div class="box-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                        nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                        labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel box box-success">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="" aria-expanded="true">
-                                            Collapsible Group Success
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true" style="">
-                                    <div class="box-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                        nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                        labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
+
+}
+
+                            
+                            
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -531,15 +571,7 @@
 
             </div>
             <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_1-1" >
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
+            
             <!-- /.tab-pane -->
         </div>
         <!-- /.tab-content -->

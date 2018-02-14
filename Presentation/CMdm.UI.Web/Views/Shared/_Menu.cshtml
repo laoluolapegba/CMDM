@@ -26,7 +26,7 @@
                              IsopenClass = p.ISOPEN_CLASS,
                              ToggleIconClass = p.TOGGLE_ICON
 
-                         }).AsEnumerable();
+                         }).AsEnumerable().OrderBy(a=>a.PermissionId);
 
             //_db.CM_PERMISSIONS.Join(_db.CM_ROLE_PERM_XREF, x => x.PERMISSION_ID, p => p.PERMISSION_ID, (p, x) => new { Permission = p, Xref = x })
             //.Where(s => s.Permission.ISACTIVE == true).Where(s2 => s2.Xref.ROLE_ID == identity.UserRoleId);

@@ -54,7 +54,7 @@ namespace Cdma.Web.DQI
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    lblDQIParamMsg.Text = "Error Occured:" + ex.Message;
                 }
                 finally
                 {

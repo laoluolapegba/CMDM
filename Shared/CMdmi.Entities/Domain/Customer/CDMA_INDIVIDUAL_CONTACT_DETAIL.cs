@@ -20,7 +20,7 @@ namespace CMdm.Entities.Domain.Customer
         public string MOBILE_NO { get; set; }
         public string EMAIL_ADDRESS { get; set; }
         public string MAILING_ADDRESS { get; set; }
-        public string CREATED_DATE { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }

@@ -448,6 +448,14 @@ namespace CMdm.UI.Web
             bundles.Add(new ScriptBundle("~/AdminLTE/plugins/morris/js").Include(
                                          "~/AdminLTE/plugins/morris/js/morris.min.js"));
 
+            //Create bundel for jQueryUI  
+            //js  
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            //          "~/Scripts/jquery-ui-{version}.js"));
+            ////css  
+            //bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
+            //       "~/Content/jquery-ui.css"));
+
         }
     }
 }

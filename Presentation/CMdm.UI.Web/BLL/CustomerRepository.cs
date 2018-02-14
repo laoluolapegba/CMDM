@@ -165,7 +165,7 @@ namespace CMdm.UI.Web.BLL
             }
 
             return TCAcct;
-
+             
         }
         public NextOfkin GetNextOfKin(string p_customer_no, string table)
         {

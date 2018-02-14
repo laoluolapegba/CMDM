@@ -18,13 +18,19 @@
         public string CUSTOMER_NO { get; set; }
         public string IDENTIFICATION_TYPE { get; set; }
         public string ID_NO { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ID_EXPIRY_DATE { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ID_ISSUE_DATE { get; set; }
+
         public string PLACE_OF_ISSUANCE { get; set; }
         
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-        public string LAST_MODIFIED_DATE { get; set; }     
+
+        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }     
         public string LAST_MODIFIED_BY { get; set; }
 
         public string AUTHORISED { get; set; }

@@ -82,7 +82,7 @@ namespace CMdm.Services.DqQue
         /// <summary>
         /// Gets all queitems
         /// </summary>
-        /// <param name="name">Vendor name</param>
+        /// <param name="name">name</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
@@ -111,6 +111,29 @@ namespace CMdm.Services.DqQue
             //query = query.OrderBy(v => v.CREATED_DATE).ThenBy(v => v.ERROR_DESC);
 
             var queitems = new PagedList<MdmDQQue>(result, pageIndex, pageSize);
+            return queitems;
+        }
+
+        /// <summary>
+        /// Gets all queitems
+        /// </summary>
+        /// <param name="name">description</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Queitems</returns>
+        public virtual IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? ruleId =null, int? BranchId = null, int? status = null, int? priority = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")  //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
+        {
+            List<MdmDqRunException> result = default(List<MdmDqRunException>);
+
+            if (string.IsNullOrWhiteSpace(sortExpression))
+                sortExpression = "RUN_DATE DESC";
+            // Step 1 - Calling Select on the DAC.
+            result = _dqqueDAC.SelectBrnIssues(name,  pageIndex, pageSize, sortExpression, ruleId=null, BranchId, status, priority); //createdOnFrom = null, createdOnTo = null,
+
+
+            var queitems = new PagedList<MdmDqRunException>(result, pageIndex, pageSize);
             return queitems;
         }
 

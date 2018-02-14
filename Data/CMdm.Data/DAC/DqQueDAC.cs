@@ -65,7 +65,7 @@ namespace CMdm.Data.DAC
         /// <param name="startRowIndex">The starting row index.</param>
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
-        /// <returns>A collection of Leave objects.</returns>		
+        /// <returns>A collection of  objects.</returns>		
         public List<MdmDQQue> Select(string name, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
@@ -130,6 +130,53 @@ namespace CMdm.Data.DAC
             //if (status != null)
             //    query = query.Where(l => l.Status == status);
             return query;
+        }
+        //
+        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int ? BranchId = null, int? status = null, int? priority = null)
+        {
+            //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
+            using (var db = new AppDbContext())
+            {
+                // Store the query.
+                //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
+                var query = db.MdmDqRunExceptions.Select(q => q).Include(a=>a.MdmDQPriorities).Include(a=>a.MdmDQQueStatuses);
+
+                if (!string.IsNullOrWhiteSpace(name))
+                    query = query.Where(v => v.RULE_NAME.Contains(name));
+                //if (createdOnFrom.HasValue)
+                //    query = query.Where(al => createdOnFrom.Value <= al.RUN_DATE);
+                //if (createdOnTo.HasValue)
+                //    query = query.Where(al => createdOnTo.Value >= al.RUN_DATE);
+                if (ruleId.HasValue && ruleId > 0)
+                {
+                    int rule = (int)ruleId.Value;
+                    query = query.Where(d => d.RULE_ID == rule);
+                }
+                if (BranchId.HasValue && BranchId > 0)
+                {
+                    int brnId = (int)BranchId.Value;
+                    query = query.Where(d => d.BRANCH_CODE == brnId);
+                }
+                if (status.HasValue && status>0)
+                {
+                    int stat = (int)status.Value;
+                    query = query.Where(d => d.ISSUE_STATUS == stat);
+                }
+                if (priority.HasValue && priority > 0)
+                {
+                    int prior = (int)priority.Value;
+                    query = query.Where(d => d.ISSUE_PRIORITY == prior);
+                }
+                // Append filters.
+                //query = AppendFilters(query, name);
+
+                // Sort and page.
+                query = query.OrderBy(a => a.RUN_DATE)//    //OrderBy(a => a.CREATED_DATE)  //
+                        .Skip(startRowIndex).Take(maximumRows);
+
+                // Return result.
+                return query.ToList();
+            }
         }
     }
 }

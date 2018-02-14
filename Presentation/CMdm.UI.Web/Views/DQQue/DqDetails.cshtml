@@ -18,9 +18,14 @@
 
 <div class="content">
     <div class="main-header">
+        
+      
         <h2>Branch @ViewBag.BranchCode Data Quality Issues</h2>
         <em>You have <span class="label label-success">4 active</span> issues, <span class="label label-warning">2 pending</span> and <span class="label label-default">2 closed</span></em>
-    </div>
+               
+        
+    
+     </div>
 
 
 
@@ -111,6 +116,10 @@
                             <button onclick="modifyProfile('@item.CUST_ID',@item.BRANCH_CODE,@item.RULE_ID,'@item.CATALOG_TABLE_NAME');" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-primary">
                                Modify
                             </button>
+
+                            <button onclick="validateProfile('@item.CUST_ID',@item.BRANCH_CODE,@item.RULE_ID,'@item.CATALOG_TABLE_NAME');" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">
+                                Validate
+                            </button>
                         </td>
                         <td>
                             <a href="@Url.Action("IndividualCustomer", "CustomerInfo", new { CustId = item.CUST_ID})"> <b>@item.CUST_ID</b></a>
@@ -171,10 +180,46 @@
 
 
 <script type="text/javascript">
+    
+    //biodata
+    function ApproveData() {
+        //  alert('Hello');saving display
+        // document.getElementById("display").innerHTML = "";       
+        $("#display").css({ 'display': 'none' });
+        $("#update").css({ 'display': 'none' });
+        $("#saving").css({ 'display': 'block' });
+       
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("ApproveBioData", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    };
+
+
 
     //biodata
    function submitBioData() {
-        alert('Hello');
+       //  alert('Hello');saving display
+       // document.getElementById("display").innerHTML = "";       
+       $("#display").css({ 'display': 'none' });
+       $("#update").css({ 'display': 'none' });
+       $("#saving").css({ 'display': 'block' });
+       
         var frm = $('#biodata');
 
         var url = "@Url.Action("SaveBioData", "Dynamic")"; // the script where you handle the form input.
@@ -183,7 +228,13 @@
             url: url,
             data: $("#biodata").serialize(), // serializes the form's elements.
             success: function (data) {
-                alert(data); // show response from the server.
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
             }
         });
 
@@ -194,6 +245,7 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
+        $("#update").css({ 'display': 'none' });
         var queryString = "c_id=" + cus_id;
         queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
         //alert(cus_id);
@@ -205,8 +257,9 @@
                      // alert(data);
                      $("#loading").css({ 'display': 'none' });
                      $("#display").css({ 'display': 'block' });
+
                       document.getElementById("display").innerHTML = "";
-                      document.getElementById("display").innerHTML="hello";
+                     // document.getElementById("display").innerHTML="hello";
                      // var response = jQuery.parseJSON(data);
                       //alert(response);
                       document.getElementById("display").innerHTML = data;
@@ -216,6 +269,38 @@
 
 
     }
+
+
+
+    //modifyProfile
+    function validateProfile(cus_id,branch,rule,table)
+    {
+        $("#update").css({ 'display': 'none' });
+        var queryString = "c_id=" + cus_id;
+        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
+        //alert(cus_id);
+        $("#loading").css({ 'display': 'block' });
+        $("#display").css({ 'display': 'none' });
+        $.ajax({url: "@Url.Action("DataValidation", "Dynamic")",
+            type: 'get',data: queryString,cache: false,
+        success: function (data) {
+            // alert(data);
+            $("#loading").css({ 'display': 'none' });
+            $("#display").css({ 'display': 'block' });
+
+            document.getElementById("display").innerHTML = "";
+            // document.getElementById("display").innerHTML="hello";
+            // var response = jQuery.parseJSON(data);
+            //alert(response);
+            document.getElementById("display").innerHTML = data;
+        }
+    }
+                   );
+
+
+    }
+
+
 
 
         $(document).ready(function () {
@@ -249,9 +334,7 @@
         });
 
 
-        $('#datepicker').datepicker({
-            autoclose: true
-        })
+         
 
 
 </script>
@@ -262,8 +345,27 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <center><div id="loading"><img src="~/AdminLTE/dist/img/loading.gif"></div></center>
+            <div class="modal-body" style="display:none" id="update">
+
+            </div>
+
+
             <div class="modal-body" id="display">
                
+            </div>
+            <div id="saving" class="box box-danger box-solid" style="display:none">
+                <div class="box-header">
+                    <h3 class="box-title">Updating Record</h3>
+                </div>
+                <div class="box-body">
+                    Saving record,please wait...
+                </div>
+                <!-- /.box-body -->
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <!-- end loading -->
             </div>
             
         </div>
@@ -272,3 +374,34 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    function loadlga() {
+ 
+        var itemSelected = $("#STATES_RES").val();       
+
+        var queryString = "state_id=" + itemSelected;
+         
+       // $("#lgloading").css({ 'display': 'block' });
+        $("#lgloading").show();
+       // alert(itemSelected);
+        $.ajax({url: "@Url.Action("loadlga", "Dynamic")",
+            type: 'get',data: queryString,cache: false,
+        success: function (data) {
+            // alert(data);
+             
+            $("#lgloading").css({ 'display': 'none' });
+       
+            document.getElementById("LGA").innerHTML = ""; 
+            
+            document.getElementById("LGA").innerHTML = data;
+        }
+    }
+                   );
+
+
+
+ 
+    }
+
+</script>

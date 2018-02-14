@@ -100,7 +100,8 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                 columns: [{
                                     field: "RULE_NAME",
                                     title: "Rulename",
-                                    width: 200
+                                    width: 200,
+                                    template: '<a href="@Url.Content("/DQQUe/BrnIssueList?ruleid=")#=RECORD_ID#">#:RULE_NAME#</a>'
                                 }, {
                                     field: "DIMENSION",
                                     title: "Quality Dimension",
@@ -132,17 +133,14 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                     title: "Last Run Date",
                                     width: 150,
                                     type: "date",
-                                    format: "{0:G}",
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-
+                                    format: "{0:G}"
                                 },{
                                     field: "RECORD_STATUS",
                                     title: "Active",
                                     width: 50,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-                                    template: '# if(RECORD_STATUS) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                    template: '# if(RECORD_STATUS ==1) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
                                 },{
                                     field: "RECORD_ID",
                                     title: "Id",

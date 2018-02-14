@@ -16,7 +16,7 @@
         [Key]
         public string CUSTOMER_NO { get; set; }
         public string TIN_NO { get; set; }
-        public string CREATED_DATE { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
  
