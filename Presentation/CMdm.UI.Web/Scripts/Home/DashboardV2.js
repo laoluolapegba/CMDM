@@ -99,37 +99,37 @@
           value: 700,
           color: "#f56954",
           highlight: "#f56954",
-          label: "Chrome"
+          label: "Date of Birth"
       },
       {
           value: 500,
           color: "#00a65a",
           highlight: "#00a65a",
-          label: "IE"
+          label: "Email"
       },
       {
           value: 400,
           color: "#f39c12",
           highlight: "#f39c12",
-          label: "FireFox"
+          label: "Addresses"
       },
       {
           value: 600,
           color: "#00c0ef",
           highlight: "#00c0ef",
-          label: "Safari"
+          label: "Phone numbers"
       },
       {
           value: 300,
           color: "#3c8dbc",
           highlight: "#3c8dbc",
-          label: "Opera"
+          label: "Gender"
       },
       {
           value: 100,
           color: "#d2d6de",
           highlight: "#d2d6de",
-          label: "Navigator"
+          label: "Names"
       }
     ];
     var pieOptions = {

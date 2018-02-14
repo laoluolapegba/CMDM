@@ -1,0 +1,43 @@
+﻿@model CMdm.Entities.Domain.Mdm.MdmRegex
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MdmRegex</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.REGEX_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGEX_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REGEX_DESC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGEX_DESC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REGEX_STRING)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGEX_STRING)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.REGEX_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

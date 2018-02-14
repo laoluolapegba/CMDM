@@ -42,7 +42,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CREATED_DATE, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CREATED_DATE, new { htmlAttributes = new { @class = "form-control" } })
+                @(Html.Kendo().DatePicker().Name("DateTile"))
+                <input id="datepicker" />
+                <script>
+                    $("#datepicker").kendoDatePicker({
+                      
+                    });
+                </script>
+                @*@Html.EditorFor(model => model.CREATED_DATE, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.CREATED_DATE, "", new { @class = "text-danger" })
             </div>
         </div>

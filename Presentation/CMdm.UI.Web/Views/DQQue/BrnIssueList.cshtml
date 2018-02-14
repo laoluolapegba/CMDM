@@ -17,7 +17,22 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
-                            
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.CreatedOnFrom)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmEditorFor(model => model.CreatedOnFrom)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.CreatedOnTo)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmEditorFor(model => model.CreatedOnTo)
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.RULE_NAME)

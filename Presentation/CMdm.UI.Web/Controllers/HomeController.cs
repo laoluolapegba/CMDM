@@ -18,5 +18,9 @@ namespace CMdm.UI.Web.Controllers
         {
             return View();
         }
+        public ActionResult BankDash()
+        {
+            return View();
+        }
     }
 }

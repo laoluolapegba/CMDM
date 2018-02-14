@@ -10,8 +10,8 @@ namespace CMdm.UI.Web
             filters.Add(new HandleErrorWithELMAHAttribute());
             filters.Add(new HandleErrorAttribute());
             filters.Add(new ElmahHandledErrorLoggerFilter());
-            filters.Add(new AuthorizeAttribute());
-            //filters.Add(new AuthorizeAttribute());
+            //filters.Add(new CMdm.UI.Web.ActionFilters.AuthorizeAttribute());
+            filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
     }
 }

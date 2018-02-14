@@ -1,4 +1,5 @@
-﻿using CMdm.UI.Web.Helpers.CrossCutting.Security;
+﻿using CMdm.Framework.Mvc;
+using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,6 +15,7 @@ namespace CMdm.UI.Web
     {
         protected void Application_Start()
         {
+            ModelBinders.Binders.Add(typeof(DateTime), new ModelBinder());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

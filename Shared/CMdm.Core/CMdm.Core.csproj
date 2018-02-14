@@ -45,6 +45,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="IPagedList.cs" />
+    <Compile Include="MimeTypes.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

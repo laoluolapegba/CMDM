@@ -14,18 +14,21 @@ namespace CMdm.Entities.Domain.Mdm
         public MdmRegex()
         {
             MdmDqiCatalogs = new HashSet<MdmDqCatalog>();
+            EntityDetails = new HashSet<MdmEntityDetails>();
             //REGEX_ID,REGEX_NAME,REGEX_DESC,REGEX_STRING
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public decimal REGEX_ID { get; set; }
+        public int REGEX_ID { get; set; }
         [DisplayName("Regular Expression")]
-        public short? REGEX_NAME { get; set; }
+        public string REGEX_NAME { get; set; }
         [DisplayName("Regular Expression")]
         public string REGEX_DESC { get; set; }
         public string REGEX_STRING { get; set; }
         
         public virtual ICollection<MdmDqCatalog> MdmDqiCatalogs { get; set; }
+        public virtual ICollection<MdmEntityDetails> EntityDetails { get; set; }
+
     }
 }

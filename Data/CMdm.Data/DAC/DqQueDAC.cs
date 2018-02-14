@@ -16,7 +16,7 @@ namespace CMdm.Data.DAC
         /// <summary>
         /// Inserts a new row in the MdmDQQue table.
         /// </summary>
-        /// <param name="leave">A MdmDQQue object.</param>
+        /// <param name="mdmque">A MdmDQQue object.</param>
         /// <returns>An updated MdmDQQue object.</returns>
         public MdmDQQue Insert(MdmDQQue mdmdque)
         {

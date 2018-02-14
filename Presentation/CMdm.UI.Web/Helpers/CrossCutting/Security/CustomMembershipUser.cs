@@ -31,7 +31,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             FirstName = user.FIRSTNAME;
             LastName = user.LASTNAME;
             UserRoleId = (int)user.ROLE_ID;
-           UserRoleName = user.CM_USER_ROLES.ROLE_NAME;
+            UserRoleName = user.CM_USER_ROLES.ROLE_NAME;
             DisplayName = user.DISPLAY_NAME;
             ProfileId = (int)user.PROFILE_ID;
             BranchId = (int)user.BRANCH_ID;

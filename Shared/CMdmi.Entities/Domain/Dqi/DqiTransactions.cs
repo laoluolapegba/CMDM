@@ -31,6 +31,6 @@ namespace CMdm.Entities.Domain.Dqi
 
         public DateTime? RUNDATE { get; set; }
 
-        public virtual EntityDetails MDM_ENTITY_DETAILS { get; set; }
+        public virtual MdmEntityDetails MDM_ENTITY_DETAILS { get; set; }
     }
 }

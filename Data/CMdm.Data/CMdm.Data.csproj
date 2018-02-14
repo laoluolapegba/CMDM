@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="CmdmEntityTypeConfiguration.cs" />
     <Compile Include="CMdmObjectContext.cs" />
+    <Compile Include="DAC\DqParamDAC.cs" />
     <Compile Include="DAC\DqRuleDAC.cs" />
     <Compile Include="DAC\DqQueDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Rbac\CM_USER_ROLE_XREF.cs" />
     <Compile Include="Rbac\Notification.cs" />
     <Compile Include="AppDbContext.cs" />
+    <Compile Include="Rbac\RolePermission.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

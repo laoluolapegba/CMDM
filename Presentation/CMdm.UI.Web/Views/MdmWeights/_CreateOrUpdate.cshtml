@@ -1,0 +1,46 @@
+﻿@model CMdm.UI.Web.Models.MdmWeight.MdmWeightModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.WEIGHT_ID)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.WEIGHT_DESC)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.CMdmEditorFor(model => model.WEIGHT_DESC, required: true)
+                                @Html.ValidationMessageFor(model => model.WEIGHT_DESC)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Value")
+                        </div>
+                        <div class="col-md-3">
+                            @Html.CMdmEditorFor(model => model.WEIGHT_VALUE, required:true)
+                            @Html.ValidationMessageFor(model => model.WEIGHT_VALUE)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Active")
+                        </div>
+                        <div class="col-md-3">
+                            @Html.CheckBoxFor(model => model.RECORD_STATUS_BOOL)
+                            @Html.ValidationMessageFor(model => model.RECORD_STATUS)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

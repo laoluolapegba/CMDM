@@ -1,0 +1,127 @@
+﻿@model IEnumerable<CMdm.UI.Web.Models.MdmWeight.MdmWeightModel>
+
+
+@{
+    ViewBag.Title = "Dqi Weights";
+    ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        DQI Weights
+    </h1>
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Add New
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+           
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.WEIGHT_DESC)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.WEIGHT_VALUE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CREATED_BY)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CREATED_DATE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+                                </th>
+                                
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RECORD_STATUS)
+                                </th>
+                               
+                                @*<th>
+                                        @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+                                    </th>*@
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WEIGHT_DESC)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WEIGHT_VALUE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CREATED_BY)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CREATED_DATE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+                                    </td>
+                                    
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RECORD_STATUS_BOOL)
+                                        @*@{
+                                            var iconstring = @item.RECORD_STATUS ? "<i class='fa fa-check true-icon'></i>" : "<i class='fa fa-close false-icon'></i>";
+                                         }                                          
+                                        <span @iconstring> </span>*@
+                                    </td>
+                                    
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.WEIGHT_ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.WEIGHT_ID }) 
+
+                                    </td>
+                                   
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}
+
+
+
+
+
+
+

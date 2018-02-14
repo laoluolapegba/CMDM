@@ -6,10 +6,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles{
+@*@section Styles{
     <link href="~/Content/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/assets/css/plugins/datatable/dataTablesStyles")
+}*@
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
 }
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
 <div class="main-content">
     
     
@@ -138,42 +143,7 @@
 </div>
 
 
-
 @section Scripts {
-    @Scripts.Render("~/plugins/dataTables")
-<script src="~/Content/js/inspinia.js"></script>
-    <script src="~/Content/assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="~/Content/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/Content/assets/js/plugins/pace/pace.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'Rules' },
-                    { extend: 'pdf', title: 'Rules' },
-
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-
-            });
-
-
-
-        });
-    </script>
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
 }

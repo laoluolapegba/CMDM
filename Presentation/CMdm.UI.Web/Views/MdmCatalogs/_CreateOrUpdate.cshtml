@@ -1,0 +1,37 @@
+﻿@model CMdm.UI.Web.Models.DqCatalogs.DqCatalogListModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.CATALOG_ID)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.CATALOG_NAME)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.CMdmEditorFor(model => model.CATALOG_NAME, required: true)
+                                @Html.ValidationMessageFor(model => model.CATALOG_NAME)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Category")
+                        </div>
+                        <div class="col-md-9">
+                            @Html.CMdmDropDownListFor(model => model.CATEGORY_ID, Model.Categories)
+                            @Html.ValidationMessageFor(model => model.CATEGORY_ID)
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

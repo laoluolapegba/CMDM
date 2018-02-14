@@ -46,6 +46,8 @@
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
+    <Compile Include="Domain\Localization\Language.cs" />
+    <Compile Include="Domain\Localization\LocaleStringResource.cs" />
     <Compile Include="Domain\Logging\Log.cs" />
     <Compile Include="Domain\Logging\LogLevel.cs" />
     <Compile Include="Domain\Mdm\MdmAggrDimensions.cs" />

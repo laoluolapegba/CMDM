@@ -1,0 +1,67 @@
+﻿@model CMdm.Entities.Domain.Mdm.MdmCatalog
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MdmCatalog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CATALOG_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATALOG_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CATEGORY_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATEGORY_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_DATE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CATALOG_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

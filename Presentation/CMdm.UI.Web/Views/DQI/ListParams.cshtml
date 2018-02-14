@@ -1,0 +1,405 @@
+﻿@using CMdm.Framework;
+@model CMdm.UI.Web.Models.DqParam.DqParamListModel
+@*ViewBag.Title = "Data Quality Rules";
+    ViewBag.SubTitle = "List";*@
+@{
+    ViewBag.Title = "Data Quality Parameters";
+    ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 15;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+@Html.AntiForgeryToken()
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.ENTITY_COL_NAME)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmEditorFor(model => model.SearchName)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.CATALOG_ID)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("CATALOG_ID", Model.Catalogs)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.ENTITY_ID)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("ENTITY_ID", Model.EntityList)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.DQ_DIMENSION)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("DIMENSIONID", Model.Dimensions)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="params-grid"></div>
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#params-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            async: false,
+                                            url: "@Html.Raw(Url.Action("ListParams", "DQI"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: additionalData
+                                        },
+                                        update: {
+                                            async: false,
+                                            url: "@Html.Raw(Url.Action("UpdateParams", "DQI"))",
+                                            dataType: "json",
+                                            type: "POST",
+                                        },
+                                        parameterMap: function(data, operation) {
+                                            if (operation != "read") {
+                                                //post the entities so the ASP.NET DefaultModelBinder will understand them:
+                                                //products[0].Name="name"
+                                                //products[0].Id = 1
+                                                //products[1].Name="name"
+                                                //products[1].Id = 1
+
+                                                var result = {};
+
+                                                for (var i = 0; i < data.models.length; i++) {
+                                                    var entity = data.models[i];
+
+                                                    for (var member in entity) {
+                                                        result["paramList[" + i + "]." + member] = entity[member];
+                                                    }
+                                                }
+
+                                                addAntiForgeryToken(result);
+                                                return result;
+                                            } else {
+                                                addAntiForgeryToken(data);
+                                                //return JSON.stringify(data);
+                                                return data;
+                                            }
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors",
+                                        model: {
+                                            id: "ENTITY_DETAIL_ID",
+                                            fields: {
+                                                ENTITY_TAB_NAME: { editable: false, type: "string" },
+                                                ENTITY_COL_NAME: { editable: false, type: "string" },
+                                                FLG_MANDATORY: { editable: true, type: "boolean" },
+                                                WEIGHT_ID: { editable: true, type: "number" },
+                                                REGEX: { editable: true, type: "number" },
+                                                DEFAULT_VALUE: { editable: true, type: "string" },
+                                                COLUMN_ORDER: { editable: false, type: "number" },
+                                                CATALOG_ID: { editable: false, type: "number" },
+                                                USE_FOR_DQI: { editable: true, type: "boolean" },
+                                                DQ_DIMENSION: { editable: false, type: "number" },
+                                                RECORD_STATUS: { editable: true, type: "boolean" },
+                                                ENTITY_DETAIL_ID: { editable: false, type: "number" },
+                                                Weights: { defaultValue: { WEIGHT_ID: 0, WEIGHT_DESC: "Zero"} },
+                                            }
+                                        }
+
+                                    },
+                                    requestEnd: function (e) {
+                                        if (e.type == "update") {
+                                            this.read();
+                                        }
+                                    },
+                                    error: function(e) {
+                                        error_handler(e);
+                                        //display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(defaultGridPageSize),
+                                    //bulk editing
+                                    batch: true,
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(gridPageSizes)],
+                                    @Html.Partial("_GridPagerMessages")
+                                },
+                                toolbar: ["save", "cancel"],
+                                editable: {
+                                    confirmation: "Delete?",
+                                    mode: "incell"
+                                },
+                                scrollable: false,
+                                columns: [{
+                                    field: "ENTITY_TAB_NAME",
+                                    title: "Table",
+                                    width: 80
+                                }, {
+                                    field: "ENTITY_COL_NAME",
+                                    title: "Column",
+                                    width: 150
+                                },{
+                                    field: "FLG_MANDATORY",
+                                    title: "Mandatory",
+                                    width: 80,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(FLG_MANDATORY == 1) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },
+                                {
+                                    field: "WEIGHT_ID",
+                                    title: "Weigth",
+                                    width: 100,
+                                    editor: weightDropDownEditor, template : "#=Weights.WEIGHT_DESC#"
+                                },
+                                {
+                                    field: "REGEX",
+                                    title: "Regex",
+                                    width: 120,
+                                    editor: regexDropDownEditor, template : "#=RegexCbo.REGEX_NAME#"
+                                },
+                                {
+                                    field: "DEFAULT_VALUE",
+                                    title: "Default Value",
+                                    width: 120
+                                },
+                                
+                                {
+                                    field: "CATALOG_ID",
+                                    title: "Catalog",
+                                    width: 150,
+                                    editor: catalogDropDownEditor, template : "#=CatalogsCbo.CATALOG_NAME#"
+                                },
+                                {
+                                    field: "USE_FOR_DQI",
+                                    title: "Use for DQi",
+                                    width: 60,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(USE_FOR_DQI == 1) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                   
+                                },
+                                   {
+                                       field: "DQ_DIMENSION",
+                                       title: "Dimension",
+                                       width: 120,
+                                       editor: dimDropDownEditor, template : "#=DimsCbo.DIMENSION_NAME#"
+                                   },
+                                    {
+                                        field: "RECORD_STATUS",
+                                        title: "Status",
+                                        width: 100,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '# if(RECORD_STATUS == 1) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+
+                                    },
+                                    {
+                                        field: "COLUMN_ORDER",
+                                        title: "Column Order",
+                                        width: 80
+                                    }
+                                   ]
+                            });
+                        });
+                    </script>
+                    <script type="text/javascript">
+                        var categories = [];
+                        $(document).ready(function () {
+                            //search button
+                            $('#search-rule').click(function () {
+                                //search
+                                var grid = $('#params-grid').data('kendoGrid');
+                                grid.dataSource.page(1); //new search. Set page size to 1
+                                //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                return false;
+                            });
+
+                            $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                                if (event.keyCode == 13) {
+                                    $("#search-rule").click();
+                                    return false;
+                                }
+                            });
+                        });
+                        //get categories and rebind the grid
+                        //$.getJSON("../../DQI/GetWeights", function(data) {
+                       //     categories = data;
+                        //});
+                        function additionalData() {
+                            var data = {
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                DIMENSIONID: $('#DIMENSIONID').val(),
+                                ENTITY_ID: $('#ENTITY_ID').val(),
+                                CATALOG_ID: $('#CATALOG_ID').val()
+
+
+                            };
+                            addAntiForgeryToken(data);
+                            return data;
+                        }
+
+                        function weightDropDownEditor(container, options) {
+                            $('<input required name="' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    optionLabel: "Select Weight",
+                                    dataTextField: "WEIGHT_DESC",
+                                    dataValueField: "WEIGHT_ID",
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("GetWeights", "MdmWeights"))",
+                                                dataType: "json"
+                                            },
+                                            schema: {
+                                                model: {
+                                                    id: "WEIGHT_ID",
+                                                    value: "WEIGHT_DESC"
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                        }
+                        function dimDropDownEditor(container, options) {
+                            $('<input required name="' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    optionLabel: "Select DQ Dimension",
+                                    dataTextField: "DIMENSION_NAME",
+                                    dataValueField: "DIMENSIONID",
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("GetDims", "MdmDimensions"))",
+                                            dataType: "json"
+                                        },
+                                        schema: {
+                                            model: {
+                                                id: "DIMENSIONID",
+                                                value: "DIMENSION_NAME"
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        function catalogDropDownEditor(container, options) {
+                            $('<input required name="' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    optionLabel: "Select Catalog",
+                                    dataTextField: "CATALOG_NAME",
+                                    dataValueField: "CATALOG_ID",
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("GetCatalogs", "MdmCatalogs"))",
+                                            dataType: "json"
+                                        },
+                                        schema: {
+                                            model: {
+                                                id: "CATALOG_ID",
+                                                value: "CATALOG_NAME"
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        function regexDropDownEditor(container, options) {
+                            $('<input required name="' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    optionLabel: "Select Validator",
+                                    dataTextField: "REGEX_NAME",
+                                    dataValueField: "REGEX_ID",
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("GetValidators", "MdmValidators"))",
+                                            dataType: "json"
+                                        },
+                                        schema: {
+                                            model: {
+                                                id: "REGEX_ID",
+                                                value: "REGEX_NAME"
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        function error_handler(e) {
+                            if (e.errors) {
+                                var message = "Errors:\n";
+                                $.each(e.errors, function (key, value) {
+                                    if ('errors' in value) {
+                                        $.each(value.errors, function() {
+                                            message += this + "\n";
+                                        });
+                                    }
+                                });
+                                alert(message);
+                            }
+                        }
+                        function getWeightName(weightId) {
+                            for (var idx = 0, length = categories.length; idx < length; idx++) {
+                                if (categories[idx].WEIGHT_ID === weightId) {
+                                    return categories[idx].WEIGHT_DESC;
+                                }
+                            }
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

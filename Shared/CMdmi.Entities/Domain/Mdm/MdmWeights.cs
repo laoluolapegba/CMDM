@@ -13,13 +13,13 @@ namespace CMdm.Entities.Domain.Mdm
     {
         public MdmWeights()
         {
-            MDM_ENTITY_DETAILS = new HashSet<EntityDetails>();
+            MDM_ENTITY_DETAILS = new HashSet<MdmEntityDetails>();
             MdmDqiCatalogs = new HashSet<MdmDqCatalog>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public decimal WEIGHT_ID { get; set; }
+        public int WEIGHT_ID { get; set; }
 
         public short? WEIGHT_VALUE { get; set; }
 
@@ -33,11 +33,11 @@ namespace CMdm.Entities.Domain.Mdm
 
         public DateTime? LAST_MODIFIED_DATE { get; set; }
 
-        [StringLength(1)]
-        public string RECORD_STATUS { get; set; }
+        //[StringLength(1)]
+        public int RECORD_STATUS { get; set; }
         [DisplayName("Weight")]
         public string WEIGHT_DESC { get; set; }
-        public virtual ICollection<EntityDetails> MDM_ENTITY_DETAILS { get; set; }
+        public virtual ICollection<MdmEntityDetails> MDM_ENTITY_DETAILS { get; set; }
         public virtual ICollection<MdmDqCatalog> MdmDqiCatalogs { get; set; }
     }
 }

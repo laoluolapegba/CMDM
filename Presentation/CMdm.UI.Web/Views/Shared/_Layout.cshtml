@@ -21,6 +21,7 @@
     @Styles.Render("~/Content/kendo/css")
     @Styles.Render("~/Content/customstyle.css")
     @Scripts.Render("~/Scripts/common.js")
+    @Styles.Render("~/Themes/DefaultClean/Content/css/nopcss.css")
     <style>
         .main-header .logo i {
           width: 50px;
@@ -30,9 +31,19 @@
           animation: fa-spin 5s infinite linear reverse;
         }
     </style>
-
+    @*@{ 
+        var browser = Request.Browser;
+        if (browser.Browser == "IE" && browser.MajorVersion == 8)
+        {
+            Styles.Render("~/Themes/DefaultClean/Content/css/ie8.css");
+        }
+       
+        
+    }*@
+    
+  
 	<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>
+	@*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

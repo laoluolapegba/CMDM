@@ -57,6 +57,14 @@ namespace CMdm.Data
             modelBuilder.Entity<MdmDqRunException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmDqRunExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDqRunException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmDqRunExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MDM_WEIGHTS).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.WEIGHT_ID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmCatalog).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.CATALOG_ID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmRegex).WithMany(t => t.EntityDetails).HasForeignKey(e => e.REGEX).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmAggrDimensions).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.DQ_DIMENSION).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.EntityMast).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
+
         }
         #region Utilities
 
@@ -95,7 +103,7 @@ namespace CMdm.Data
         public virtual DbSet<MdmAggrDimensions> MDM_AGGR_DIMENSION { get; set; }
         public virtual DbSet<DqiAggrTransactions> MDM_DQI_AGGR_TRANSACTIONS { get; set; }
         public virtual DbSet<DqiTransactions> MDM_DQI_RECORD_TRANSACTIONS { get; set; }
-        public virtual DbSet<EntityDetails> EntityDetails { get; set; }
+        public virtual DbSet<MdmEntityDetails> EntityDetails { get; set; }
         public virtual DbSet<EntityMast> EntityMast { get; set; }
         public virtual DbSet<MdmMetrics> MDM_METRICS { get; set; }
         public virtual DbSet<MdmWeights> MDM_WEIGHTS { get; set; }

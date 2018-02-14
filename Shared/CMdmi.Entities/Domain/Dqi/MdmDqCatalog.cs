@@ -31,11 +31,11 @@ namespace CMdm.Entities.Domain.Dqi
         public string COLUMN_NAMES { get; set; }
         [DisplayName("Attribute Description")]
         public string COLUMN_DESC { get; set; }
-        public decimal COLUMN_WEIGHT { get; set; }
+        public int COLUMN_WEIGHT { get; set; }
         public string IMPORTANCE_LEVEL { get; set; }
         public string DEFAULT_VALUE { get; set; }
 
-        public decimal REGEX { get; set; }
+        public int REGEX { get; set; }
         [StringLength(20)]
         public string CREATED_BY { get; set; }
 
@@ -54,5 +54,6 @@ namespace CMdm.Entities.Domain.Dqi
         public int? COLUMN_ORDER { get; set; }
         public virtual MdmWeights MdmWeights { get; set; }
         public virtual MdmRegex MdmRegex { get; set; }
+
     }
 }

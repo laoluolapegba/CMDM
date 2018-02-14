@@ -34,7 +34,7 @@ namespace CMdm.UI.Web.BLL
             Mdmw.WEIGHT_VALUE = Convert.ToInt16(WeightValue);
             Mdmw.CREATED_BY = "admin";
             Mdmw.CREATED_DATE = DateTime.Now;
-            Mdmw.RECORD_STATUS = "Y"; 
+            Mdmw.RECORD_STATUS = 1;
             DQIdb.MDM_WEIGHTS.Add(Mdmw);
             DQIdb.SaveChanges();
 
@@ -134,14 +134,14 @@ namespace CMdm.UI.Web.BLL
 
             using (var mdm = new AppDbContext())
             {
-                var entityObj = new EntityDetails
+                var entityObj = new MdmEntityDetails
                 {
                     ENTITY_TAB_NAME = tblName,
                     ENTITY_COL_NAME = tblCol,
                     FLG_MANDATORY = true,
                     WEIGHT_ID = Convert.ToInt16(tblWeight),
                     CREATED_BY = "Admin",
-                    RECORD_STATUS = "Y",
+                    RECORD_STATUS = true,
                     CREATED_DATE = DateTime.Now,
 
                 };

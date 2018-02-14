@@ -46,7 +46,7 @@ namespace CMdm.Entities.Domain.Dqi
         [DisplayName("Schedule")]
         public int RUN_SCHEDULE { get; set; }
         [DisplayName("Dimension")]
-        public short DIMENSION { get; set; }
+        public int DIMENSION { get; set; }
         [DisplayName("Severity")]
         public int SEVERITY { get; set; }
         [DisplayName("Last Run Date")]

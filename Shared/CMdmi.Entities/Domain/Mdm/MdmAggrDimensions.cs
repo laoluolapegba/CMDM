@@ -1,5 +1,6 @@
 namespace CMdm.Entities.Domain.Mdm
 {
+    using Entity;
     using Dqi;
     using System;
     using System.Collections.Generic;
@@ -14,11 +15,12 @@ namespace CMdm.Entities.Domain.Mdm
         {
             MDM_DQI_AGGR_TRANSACTIONS = new HashSet<DqiAggrTransactions>();
             MdmDqRules = new HashSet<MdmDqRule>();
+            MDM_ENTITY_DETAILS = new HashSet<MdmEntityDetails>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short DIMENSIONID { get; set; }
+        public int DIMENSIONID { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -40,5 +42,6 @@ namespace CMdm.Entities.Domain.Mdm
 
         public virtual ICollection<DqiAggrTransactions> MDM_DQI_AGGR_TRANSACTIONS { get; set; }
         public virtual ICollection<MdmDqRule> MdmDqRules { get; set; }
+        public virtual ICollection<MdmEntityDetails> MDM_ENTITY_DETAILS { get; set; }
     }
 }

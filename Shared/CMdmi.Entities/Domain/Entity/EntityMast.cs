@@ -10,12 +10,12 @@ namespace CMdm.Entities.Domain.Entity
     {
         public EntityMast()
         {
-            EntityDetails = new HashSet<EntityDetails>();
+            EntityDetails = new HashSet<MdmEntityDetails>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short ENTITY_ID { get; set; }
+        public int ENTITY_ID { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -45,6 +45,6 @@ namespace CMdm.Entities.Domain.Entity
         [StringLength(1)]
         public string RECORD_STATUS { get; set; }
 
-        public virtual ICollection<EntityDetails> EntityDetails { get; set; }
+        public virtual ICollection<MdmEntityDetails> EntityDetails { get; set; }
     }
 }

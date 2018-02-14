@@ -1,4 +1,5 @@
 ﻿using CMdm.Entities.Domain.Dqi;
+using CMdm.Entities.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace CMdm.Entities.Domain.Mdm
         public MdmCatalog()
         {
             MdmDqRules = new HashSet<MdmDqRule>();
+            MDM_ENTITY_DETAILS = new HashSet<MdmEntityDetails>();
         }
         [Key]
         public int CATALOG_ID { get; set; }  //,,,
@@ -29,5 +31,6 @@ namespace CMdm.Entities.Domain.Mdm
 
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public virtual ICollection<MdmDqRule> MdmDqRules { get; set; }
+        public virtual ICollection<MdmEntityDetails> MDM_ENTITY_DETAILS { get; set; }
     }
 }

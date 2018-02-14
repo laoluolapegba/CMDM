@@ -18,6 +18,27 @@ namespace CMdm.Framework.Mvc
             {
                 ((BaseModel)model).BindModel(controllerContext, bindingContext);
             }
+            var value = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+
+            //this is a workaround for the model error in mvc "The value '/Date(1562135578800000)/' is not valid for {DateType}
+            //https://www.telerik.com/forums/the-value-'-date(-62135578800000)-'-is-not-valid-for
+            if (value!=null && value.AttemptedValue.StartsWith("/Date("))
+            {
+                try
+                {
+                    DateTime date = new DateTime(1970, 01, 01, 0, 0, 0, DateTimeKind.Utc).ToUniversalTime();
+                    string attemptedValue = value.AttemptedValue.Replace("/Date(", "").Replace(")/", "");
+                    double milliSecondsOffset = Convert.ToDouble(attemptedValue);
+                    DateTime result = date.AddMilliseconds(milliSecondsOffset);
+                    result = result.ToUniversalTime();
+                    return result;
+                }
+                catch
+                {
+                }
+                return base.BindModel(controllerContext, bindingContext);
+            }
+            //return base.BindModel(controllerContext, bindingContext);
             return model;
         }
 

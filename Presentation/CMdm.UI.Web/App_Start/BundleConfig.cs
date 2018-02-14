@@ -33,19 +33,24 @@ namespace CMdm.UI.Web
 
             RegisterDocumentation(bundles);
             RegisterTelerik(bundles);
+            RegisterTestDash(bundles);
             bundles.IgnoreList.Clear();  //allow minified files in debug mode.
         }
 
         private static void RegisterTelerik(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                "~/Scripts/kendo/2017.3.1026/kendo.all.min.js",
+                "~/Scripts/kendo/2017.3.1026/kendo.web.min.js",
                 // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
                 "~/Scripts/kendo/2017.3.1026/kendo.aspnetmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
                 "~/Content/kendo/2017.3.1026/kendo.common-bootstrap.min.css",
                 "~/Content/kendo/2017.3.1026/kendo.bootstrap.min.css"));
+        }
+        private static void RegisterPartialViews()
+        {
+
         }
 
         private static void RegisterDocumentation(BundleCollection bundles)
@@ -227,6 +232,13 @@ namespace CMdm.UI.Web
                 "~/Scripts/Home/DashboardV2.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Home/DashboardV2/menu").Include(
                 "~/Scripts/Home/DashboardV2-menu.js"));
+        }
+        private static void RegisterTestDash(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/Scripts/Home/Bankdash").Include(
+                "~/Scripts/Home/bankdash.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/Home/Bankdash/menu").Include(
+                "~/Scripts/Home/bankdash-menu.js"));
         }
 
         private static void RegisterAccount(BundleCollection bundles)
