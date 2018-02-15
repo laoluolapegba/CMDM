@@ -11,6 +11,7 @@ namespace CMdm.Data
     using Entities.Domain.Mdm;
     using Entities.Domain.Dqi;
     using Entities.Domain.Entity;
+    using Entities.Domain.Customer;
 
     //using Entities.Domain.Courses;
 
@@ -105,7 +106,7 @@ namespace CMdm.Data
         public virtual DbSet<DqiTransactions> MDM_DQI_RECORD_TRANSACTIONS { get; set; }
         public virtual DbSet<MdmEntityDetails> EntityDetails { get; set; }
         public virtual DbSet<EntityMast> EntityMast { get; set; }
-        public virtual DbSet<MdmMetrics> MDM_METRICS { get; set; }
+        public virtual DbSet<CMdm.Entities.Domain.Mdm.MdmMetrics> MDM_METRICS { get; set; }
         public virtual DbSet<MdmWeights> MDM_WEIGHTS { get; set; }
         //public virtual DbSet<MdmCatalog> MDM_CATALOGS { get; set; }
 
@@ -126,8 +127,35 @@ namespace CMdm.Data
         public DbSet<MdmDqRunException> MdmDqRunExceptions { get; set; }
         public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
         public DbSet<MdmRegex> MdmRegex { get; set; }
+        public DbSet<CDMA_COUNTRIES> CDMA_COUNTRIES { get; set; }
+        public DbSet<CDMA_RELIGION> CDMA_RELIGION { get; set; }
+        public DbSet<SRC_CDMA_STATE> SRC_CDMA_STATE { get; set; }
+        public DbSet<SRC_CDMA_LGA> SRC_CDMA_LGA { get; set; }
+        public DbSet<CDMA_IDENTIFICATION_TYPE> CDMA_IDENTIFICATION_TYPE { get; set; }
+ 
 
+
+        
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_DATA> CDMA_INDIVIDUAL_BIO_DATA { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_ADDRESS_DETAIL> CDMA_INDIVIDUAL_ADDRESS_DETAIL { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_DETAIL> CDMA_INDIVIDUAL_CONTACT_DETAIL { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_IDENTIFICATION> CDMA_INDIVIDUAL_IDENTIFICATION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_OTHER_DETAILS> CDMA_INDIVIDUAL_OTHER_DETAILS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_DATA_LOG> CDMA_INDIVIDUAL_BIO_DATA_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG> CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_DETAIL_LOG> CDMA_INDIVIDUAL_CONTACT_DETAIL_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_IDENTIFICATION_LOG> CDMA_INDIVIDUAL_IDENTIFICATION_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_OTHER_DETAILS_LOG> CDMA_INDIVIDUAL_OTHER_DETAILS_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_PROFILE_LOG> CDMA_INDIVIDUAL_PROFILE_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_LOG> CDMA_INDIVIDUAL_BIO_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_LOG> CDMA_INDIVIDUAL_CONTACT_LOG { get; set; }
+
+        //
+
+ 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
+ 
     }
 
 }

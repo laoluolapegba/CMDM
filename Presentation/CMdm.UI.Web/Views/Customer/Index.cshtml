@@ -1,0 +1,183 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Customer.cDMA_INDIVIDUAL_IDENTIFICATION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SURNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FIRST_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OTHER_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NICKNAME_ALIAS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATE_OF_BIRTH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PLACE_OF_BIRTH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COUNTRY_OF_BIRTH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SEX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AGE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MARITAL_STATUS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NATIONALITY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATE_OF_ORIGIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MOTHER_MAIDEN_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISABILITY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMPLEXION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NUMBER_OF_CHILDREN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RELIGION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCH_CODE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SURNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FIRST_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OTHER_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NICKNAME_ALIAS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATE_OF_BIRTH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PLACE_OF_BIRTH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COUNTRY_OF_BIRTH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SEX)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AGE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MARITAL_STATUS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NATIONALITY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATE_OF_ORIGIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MOTHER_MAIDEN_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISABILITY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMPLEXION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NUMBER_OF_CHILDREN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RELIGION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCH_CODE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTOMER_NO })
+        </td>
+    </tr>
+}
+
+</table>

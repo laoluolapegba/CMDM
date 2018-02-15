@@ -170,8 +170,8 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.112.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
@@ -258,7 +258,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionFilters\AuthorizeAttribute.cs" />
     <Compile Include="ActionFilters\HandleErrorWithElmahAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -281,24 +280,24 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
+    <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\DqExceptionsController.cs" />
     <Compile Include="Controllers\DQIController.cs" />
     <Compile Include="Controllers\DQQueController.cs" />
+    <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ElementsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndIdentificationController.cs" />
+    <Compile Include="Controllers\IndividualAddressController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ManageCustController.cs" />
-    <Compile Include="Controllers\MdmCatalogsController.cs" />
-    <Compile Include="Controllers\MdmDimensionsController.cs" />
-    <Compile Include="Controllers\MdmValidatorsController.cs" />
-    <Compile Include="Controllers\MdmWeightsController.cs" />
-    <Compile Include="Controllers\ParamsController.cs" />
+    <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
@@ -486,7 +485,6 @@
       <DependentUpon>ValidityDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ClaimsExtensions.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -518,17 +516,11 @@
       <DependentUpon>LogOff.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
-    <Compile Include="Models\Dashboard\CommonStats.cs" />
-    <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
-    <Compile Include="Models\DqParam\DqParamListModel.cs" />
     <Compile Include="Models\DqQue\DqquebrnListModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
-    <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -582,6 +574,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminLTE\bootstrap\css\bootstrap-datepicker.min.css" />
     <Content Include="AdminLTE\bootstrap\css\bootstrap.css" />
     <Content Include="AdminLTE\bootstrap\css\bootstrap.min.css" />
     <Content Include="AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -589,6 +582,7 @@
     <Content Include="AdminLTE\bootstrap\js\bootstrap.min.js" />
     <Content Include="AdminLTE\dist\css\admin-lte.css" />
     <Content Include="AdminLTE\dist\css\admin-lte.min.css" />
+    <Content Include="AdminLTE\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black-light.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black-light.min.css" />
     <Content Include="AdminLTE\dist\css\skins\skin-black.css" />
@@ -625,6 +619,7 @@
     <Content Include="AdminLTE\dist\img\default-50x50.gif" />
     <Content Include="AdminLTE\dist\img\defaultavatar.png" />
     <Content Include="AdminLTE\dist\img\icons.png" />
+    <Content Include="AdminLTE\dist\img\loading.gif" />
     <Content Include="AdminLTE\dist\img\photo1.png" />
     <Content Include="AdminLTE\dist\img\photo2.png" />
     <Content Include="AdminLTE\dist\img\photo3.jpg" />
@@ -632,6 +627,7 @@
     <Content Include="AdminLTE\dist\img\user.svg" />
     <Content Include="AdminLTE\dist\js\app.js" />
     <Content Include="AdminLTE\dist\js\app.min.js" />
+    <Content Include="AdminLTE\bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="AdminLTE\documentation\css\style.css" />
     <Content Include="AdminLTE\documentation\js\docs.js" />
     <Content Include="AdminLTE\plugins\bootstrap-slider\css\slider.css" />
@@ -806,7 +802,6 @@
     <Content Include="Content\customlogin\slick.grid.css" />
     <Content Include="Content\customlogin\toastr.css" />
     <Content Include="Content\customlogin\toastr.min.css" />
-    <Content Include="Content\customstyle.css" />
     <Content Include="Content\easyquery\easychart.css" />
     <Content Include="Content\easyquery\easyquery.css" />
     <Content Include="Content\easyquery\eq-icons-default.css" />
@@ -1162,6 +1157,47 @@
     <Content Include="Content\kendo\2017.3.1026\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2017.3.1026\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\summarystyle.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\wizstyle.css" />
     <Content Include="CustomerInfo\AuditReport.aspx" />
     <Content Include="CustomerInfo\AuthCorpCustInfo.aspx" />
@@ -1284,8 +1320,6 @@
     <Content Include="Scripts\Forms\General-menu.js" />
     <Content Include="Scripts\Home\DashboardV1-menu.js" />
     <Content Include="Scripts\Home\DashboardV1.js" />
-    <Content Include="Scripts\Home\bankdashv2.js" />
-    <Content Include="Scripts\Home\bankdash-menu.js" />
     <Content Include="Scripts\Home\DashboardV2-menu.js" />
     <Content Include="Scripts\Home\DashboardV2.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1390,9 +1424,13 @@
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.ttf" />
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1581,60 +1619,6 @@
     <Content Include="Styles\Elements\General.css" />
     <Content Include="Styles\Elements\Icons.css" />
     <Content Include="Styles\Elements\Modals.css" />
-    <Content Include="Themes\DefaultClean\Content\css\ie8.css" />
-    <Content Include="Themes\DefaultClean\Content\css\nopcss.css" />
-    <Content Include="Themes\DefaultClean\Content\css\print.css" />
-    <Content Include="Themes\DefaultClean\Content\css\styles.css" />
-    <Content Include="Themes\DefaultClean\Content\css\styles.rtl.css" />
-    <Content Include="Themes\DefaultClean\Content\images\ajax-loader-small.gif" />
-    <Content Include="Themes\DefaultClean\Content\images\back-button.png" />
-    <Content Include="Themes\DefaultClean\Content\images\calendar-next.png" />
-    <Content Include="Themes\DefaultClean\Content\images\calendar-prev.png" />
-    <Content Include="Themes\DefaultClean\Content\images\close.png" />
-    <Content Include="Themes\DefaultClean\Content\images\compare-button.png" />
-    <Content Include="Themes\DefaultClean\Content\images\details.png" />
-    <Content Include="Themes\DefaultClean\Content\images\discontinued-product-icon.png" />
-    <Content Include="Themes\DefaultClean\Content\images\download-button.png" />
-    <Content Include="Themes\DefaultClean\Content\images\edit.png" />
-    <Content Include="Themes\DefaultClean\Content\images\edit_.png" />
-    <Content Include="Themes\DefaultClean\Content\images\email-button.png" />
-    <Content Include="Themes\DefaultClean\Content\images\first.png" />
-    <Content Include="Themes\DefaultClean\Content\images\ie_warning.jpg" />
-    <Content Include="Themes\DefaultClean\Content\images\last.png" />
-    <Content Include="Themes\DefaultClean\Content\images\loading.gif" />
-    <Content Include="Themes\DefaultClean\Content\images\logo.png" />
-    <Content Include="Themes\DefaultClean\Content\images\menu-icon.png" />
-    <Content Include="Themes\DefaultClean\Content\images\move.png" />
-    <Content Include="Themes\DefaultClean\Content\images\new.png" />
-    <Content Include="Themes\DefaultClean\Content\images\next.png" />
-    <Content Include="Themes\DefaultClean\Content\images\pointer.png" />
-    <Content Include="Themes\DefaultClean\Content\images\prev.png" />
-    <Content Include="Themes\DefaultClean\Content\images\rating1.png" />
-    <Content Include="Themes\DefaultClean\Content\images\rating2.png" />
-    <Content Include="Themes\DefaultClean\Content\images\remove.png" />
-    <Content Include="Themes\DefaultClean\Content\images\remove_.png" />
-    <Content Include="Themes\DefaultClean\Content\images\reply.png" />
-    <Content Include="Themes\DefaultClean\Content\images\retry.png" />
-    <Content Include="Themes\DefaultClean\Content\images\return.png" />
-    <Content Include="Themes\DefaultClean\Content\images\rss.png" />
-    <Content Include="Themes\DefaultClean\Content\images\shipping.png" />
-    <Content Include="Themes\DefaultClean\Content\images\shopping-bag.png" />
-    <Content Include="Themes\DefaultClean\Content\images\social-sprite.png" />
-    <Content Include="Themes\DefaultClean\Content\images\subscribe-button.png" />
-    <Content Include="Themes\DefaultClean\Content\images\toggle-black.png" />
-    <Content Include="Themes\DefaultClean\Content\images\toggle-gray.png" />
-    <Content Include="Themes\DefaultClean\Content\images\toggle-white.png" />
-    <Content Include="Themes\DefaultClean\Content\images\topic-type1.png" />
-    <Content Include="Themes\DefaultClean\Content\images\topic-type2.png" />
-    <Content Include="Themes\DefaultClean\Content\images\topic-type3.png" />
-    <Content Include="Themes\DefaultClean\Content\images\view-grid.png" />
-    <Content Include="Themes\DefaultClean\Content\images\view-list.png" />
-    <Content Include="Themes\DefaultClean\Content\images\vote-down-selected.png" />
-    <Content Include="Themes\DefaultClean\Content\images\vote-down.png" />
-    <Content Include="Themes\DefaultClean\Content\images\vote-up-selected.png" />
-    <Content Include="Themes\DefaultClean\Content\images\vote-up.png" />
-    <Content Include="Themes\DefaultClean\Content\images\watch.png" />
-    <Content Include="Themes\DefaultClean\Content\images\wishlist-button.png" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Web.config">
@@ -1710,7 +1694,6 @@
     <Content Include="Scripts\vegas\vegas.min.js.map" />
     <Content Include="Scripts\customlogin\jquery-3.1.1.min.map" />
     <Content Include="Views\Account\Login1.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Loginnew.cshtml" />
     <Content Include="Views\Elements\Course\List.cshtml" />
@@ -1878,43 +1861,35 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
-    <Content Include="Views\DQQue\BrnIssueList.cshtml" />
-    <Content Include="Views\ManageCust\Create.cshtml" />
-    <Content Include="Views\ManageCust\Delete.cshtml" />
-    <Content Include="Views\ManageCust\Details.cshtml" />
-    <Content Include="Views\ManageCust\Edit.cshtml" />
-    <Content Include="Views\ManageCust\Index.cshtml" />
-    <Content Include="Views\ManageCust\Unauthorized.cshtml" />
-    <Content Include="tsconfig.json" />
-    <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateTimeNullable.cshtml" />
-    <Content Include="Views\Home\BankDash.cshtml" />
-    <Content Include="Views\Home\DashboardV2 - Copy.cshtml" />
-    <Content Include="Views\Params\ParamList.cshtml" />
-    <Content Include="Views\DQI\ListParams.cshtml" />
-    <Content Include="Views\MdmDimensions\Create.cshtml" />
-    <Content Include="Views\MdmDimensions\Delete.cshtml" />
-    <Content Include="Views\MdmDimensions\Details.cshtml" />
-    <Content Include="Views\MdmDimensions\Edit.cshtml" />
-    <Content Include="Views\MdmDimensions\Index.cshtml" />
-    <Content Include="Views\MdmWeights\Create.cshtml" />
-    <Content Include="Views\MdmWeights\Delete.cshtml" />
-    <Content Include="Views\MdmWeights\Details.cshtml" />
-    <Content Include="Views\MdmWeights\Edit.cshtml" />
-    <Content Include="Views\MdmWeights\Index.cshtml" />
-    <Content Include="Views\MdmValidators\Create.cshtml" />
-    <Content Include="Views\MdmValidators\Delete.cshtml" />
-    <Content Include="Views\MdmValidators\Details.cshtml" />
-    <Content Include="Views\MdmValidators\Edit.cshtml" />
-    <Content Include="Views\MdmValidators\Index.cshtml" />
-    <Content Include="Views\MdmCatalogs\Create.cshtml" />
-    <Content Include="Views\MdmCatalogs\Delete.cshtml" />
-    <Content Include="Views\MdmCatalogs\Details.cshtml" />
-    <Content Include="Views\MdmCatalogs\Edit.cshtml" />
-    <Content Include="Views\MdmCatalogs\Index.cshtml" />
-    <Content Include="Views\MdmCatalogs\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\MdmValidators\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Dynamic\EditCustomer.cshtml" />
+    <Content Include="Views\IndividualAddress\Create.cshtml" />
+    <Content Include="Views\IndividualAddress\Delete.cshtml" />
+    <Content Include="Views\IndividualAddress\Details.cshtml" />
+    <Content Include="Views\IndividualAddress\Edit.cshtml" />
+    <Content Include="Views\IndividualAddress\Index.cshtml" />
+    <Content Include="Views\ContactDetails\Create.cshtml" />
+    <Content Include="Views\ContactDetails\Delete.cshtml" />
+    <Content Include="Views\ContactDetails\Details.cshtml" />
+    <Content Include="Views\ContactDetails\Edit.cshtml" />
+    <Content Include="Views\ContactDetails\Index.cshtml" />
+    <Content Include="Views\IndIdentification\Create.cshtml" />
+    <Content Include="Views\IndIdentification\Delete.cshtml" />
+    <Content Include="Views\IndIdentification\Details.cshtml" />
+    <Content Include="Views\IndIdentification\Edit.cshtml" />
+    <Content Include="Views\IndIdentification\Index.cshtml" />
+    <Content Include="Views\OtherDetails\Create.cshtml" />
+    <Content Include="Views\OtherDetails\Delete.cshtml" />
+    <Content Include="Views\OtherDetails\Details.cshtml" />
+    <Content Include="Views\OtherDetails\Edit.cshtml" />
+    <Content Include="Views\OtherDetails\Index.cshtml" />
+    <Content Include="Views\Dynamic\SaveBioData.cshtml" />
+    <Content Include="Views\Dynamic\loadlga.cshtml" />
+    <Content Include="Views\Dynamic\validateData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
@@ -1922,7 +1897,6 @@
     <Folder Include="exceptions\" />
     <Folder Include="font\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Themes\DefaultClean\Views\Shared\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\DataSources\" />
   </ItemGroup>

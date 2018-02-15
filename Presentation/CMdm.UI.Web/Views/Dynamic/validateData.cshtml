@@ -1,0 +1,1090 @@
+﻿@model CMdm.Entities.ViewModels.DynamicViewModel
+ 
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+}
+@*@Styles.Render("~/AdminLTE/plugins/font-awesome/css")
+        @Styles.Render("~/AdminLTE/plugins/ionicons/css")
+        @Styles.Render("~/AdminLTE/bootstrap/css")
+        @Styles.Render("~/AdminLTE/dist/css")
+        @Styles.Render("~/AdminLTE/dist/css/skins")
+        @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+
+    @Scripts.Render("~/AdminLTE/bootstrap/js") *@
+@*@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/Content/kendo/css")
+@Styles.Render("~/Content/customstyle.css")
+@Scripts.Render("~/Scripts/common.js")*@
+
+ 
+ <script>
+    
+     var date = $('#BioData_DATE_OF_BIRTH').datepicker({ dateFormat: 'mm-yy-dd' }).val();
+</script>
+
+  
+
+<style>
+    .nav-tabs-custom > .tab-content {
+        color: black;
+    }
+   label
+    {
+       display:block;       
+
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 24px;
+        padding: 2px 4px; 
+    }
+    br 
+    {
+        display:block;
+    }
+
+   
+</style> 
+
+
+
+
+    <!-- Custom Tabs (Pulled to the right) -->
+    <div class="nav-tabs-custom" style=" width:850px;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+        <ul class="nav nav-tabs pull-right">
+            <li class="active"><a href="#tab_1-1" data-toggle="tab">Edit Profile</a></li>
+            <li><a href="#tab_2-2" data-toggle="tab">Change History</a></li>
+          <!--<li><a href="#tab_3-2" data-toggle="tab">Other Details</a></li>-->
+             
+            <li class="pull-left header"><i class="fa fa-th"></i>@ViewBag.record.SURNAME @ViewBag.record.FIRST_NAME @ViewBag.record.OTHER_NAME</ li >
+        </ul>
+        <div class="tab-content" >
+            <div class="tab-pane active"  id="tab_1-1">
+                
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "biodata" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4 style="color:#dd4b39;">CUSTOMER BIO DATA RECORD VALIDATION</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.BioData.CUSTOMER_NO)
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Title  
+                                   
+                                    @{
+
+                                        foreach (var item in ViewBag.changeIndex)
+                                        {
+                                            if (@item == 25)
+                                            {
+                                                @Html.Raw("***")
+                                            }
+                                        }
+
+                                    }  
+                                     
+                                    
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.TITLE, new { htmlAttributes = new { @class = "form-control" , @disable = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.TITLE, "", new { @class = "text-danger " })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Surname
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 24)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.SURNAME, new { htmlAttributes = new { @class = "form-control", @disable = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.SURNAME, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>First Name
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 13)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.FIRST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.FIRST_NAME, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Other Name
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 19)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.OTHER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.OTHER_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Nickname
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 17)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.NICKNAME_ALIAS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.NICKNAME_ALIAS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Date of Birth
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 10)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                  
+                                     
+                                    <!-- /.form group -->
+                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.DATE_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Place of Birth
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 20)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.PLACE_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Country of Birth
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 27)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                   
+                                   <!-- @Html.EditorFor(model => model.BioData.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })-->
+                                    @Html.ValidationMessageFor(model => model.BioData.COUNTRY_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Sex
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 22)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                 
+                                  <span> Male @Html.RadioButtonFor(model => model.BioData.SEX, "Male") </span>
+                                  <span> Female  @Html.RadioButtonFor(model => model.BioData.SEX, "Female") </span>
+
+
+                                @*@Html.EditorFor(model => model.BioData.SEX, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.SEX, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> Age 
+                                    @{
+
+                                        foreach (var item in ViewBag.changeIndex)
+                                        {
+                                            if (@item == 0)
+                                            {
+                                                @Html.Raw("***")
+                                            }
+                                        }
+
+                                    }  </label>
+                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Marital Status
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 14)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.MARITAL_STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Nationality
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 16)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.BioData.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.BioData.NATIONALITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label> State of Origin
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 23)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.BioData.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Mother Maiden Name
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 15)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Disability
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 11)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.EditorFor(model => model.BioData.DISABILITY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.DISABILITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>Complexion
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == -1)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.BioData.COMPLEXION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.COMPLEXION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Number of Children
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 18)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN,
+new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Religion
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 21)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.BioData.RELIGION, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.BioData.RELIGION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>Branch Code 
+                                    
+                                     @{
+
+                                        foreach (var item in ViewBag.changeIndex)
+                                        {
+                                            if (@item == 25)
+                                            {
+                                                @Html.Raw("***")
+                                            }
+                                        }
+
+                                    }  </label>
+                                    
+                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+
+
+                                    @*@Html.EditorFor(model => model.BioData.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.BioData.BRANCH_CODE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <h4 style="color:#3c8dbc">ADDRESS DETAILS  </h4>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*State of Residence
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 34)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();" })
+
+
+                                    @*@Html.EditorFor(model => model.AddressDetails.STATE_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.STATE_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*LGA of Residence
+                                    
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 30)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    <div id="lgloading"><img style="width:100px;height:100px;display:none;" src="~/AdminLTE/dist/img/loading.gif"></div>
+                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*Nearest bus stop/Landmark
+                                    
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 31)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*Residential Address
+                                    
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 33)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*Country of Residence
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 29)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    
+                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @*@Html.EditorFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Residence owned or rented 
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 32)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    <label>
+                                        @Html.RadioButtonFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "Owned")
+                                        <span>Owned</span>
+
+                                        @Html.RadioButtonFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "Rented")
+                                        <span>Rented</span>
+
+                                        @*<input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned 
+                                   
+                                        <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Rented" type="radio"> Rented*@
+                                    </label>
+                                    @*@Html.EditorFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "", new { @class = "text-danger" })*@
+
+
+                                    <div class="iradio_minimal-blue disabled" aria-checked="false" aria-disabled="true" style="position: relative;"><input type="radio" name="r1" class="minimal" disabled="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*City/Town of Residence
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 28)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+
+                                        
+                                    
+                                    </label>
+                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label> Zip Postal Code
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 35)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <h4 style="color:#3c8dbc">CONTACT DETAILS</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*Mobile No
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 8)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+
+                                        
+                                    
+                                    </label>
+                                    @Html.EditorFor(model => model.contact.MOBILE_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.contact.MOBILE_NO, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Email
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 9)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.contact.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.contact.EMAIL_ADDRESS, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>Mailing Address 
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 7)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.contact.MAILING_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.contact.MAILING_ADDRESS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <h4 style="color:blueviolet">IDENTIFICATION DETAILS</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*Identification Type
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 2)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+
+                                    
+                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+
+
+                                   @*@Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
+                                   @Html.ValidationMessageFor(model => model.identification.IDENTIFICATION_TYPE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*Identification No
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 5)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+
+                                        
+                                    
+                                    </label>
+                                    @Html.EditorFor(model => model.identification.ID_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.identification.ID_NO, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*ID Issue Date 
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 3)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                    @Html.EditorFor(model => model.identification.ID_ISSUE_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.identification.ID_ISSUE_DATE, "", new { @class = "text-danger" }) 
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <label>*ID Expiry Date
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 3)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+
+                                        
+                                    
+                                    </label>
+                                    @Html.EditorFor(model => model.identification.ID_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.identification.ID_EXPIRY_DATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <label>*Place of Issuance
+                                    
+                                        @{
+
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 6)
+                                                {
+                                                    @Html.Raw("***")
+                                                }
+                                            }
+
+                                        }
+                                        
+                                    </label>
+                                   @Html.EditorFor(model => model.identification.PLACE_OF_ISSUANCE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.identification.PLACE_OF_ISSUANCE, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            </div>
+                            <h4 style="color:darkblue">Other Details</h4>
+                            <hr style="background-color:darkblue"/>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <label >TIN No
+                                        
+                                            @{
+
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 1)
+                                                    {
+                                                        @Html.Raw("***")
+                                                    }
+                                                }
+
+                                            }
+                                            
+                                        </label>
+                                        @Html.EditorFor(model => model.otherdetails.TIN_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.otherdetails.TIN_NO, "", new { @class = "text-danger" })
+                                    
+                                   </div>
+                                </div>
+                                
+                            </div>
+
+
+
+
+
+
+
+
+                            <br/>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                           
+                            <button type="button" class="btn btn-warning pull-right" onclick="ApproveData()">Approve Record</button> 
+                            
+                        </div>
+                <!--  
+                    <input type="submit" value="Save" class="btn btn-outline" />
+                     <div class="row">
+                        <div style="float:right;" class="col-lg-6">
+                            <div class="input-group">
+                                <br />
+                                <input type="submit" value="Save" class="btn btn-default" />
+
+                            </div>
+                        </div>
+                    </div>
+               -->
+
+                }
+
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2-2">
+                
+                
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Change Logs</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="box-group" id="accordion">
+                            <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it ViewBag.profile_log -->
+@{ 
+    CMdm.Data.AppDbContext _db = new CMdm.Data.AppDbContext() ;
+    var getdetails = new CMdm.UI.Web.Controllers.DynamicController();
+
+
+}
+@foreach (var log in ViewBag.profile_log)
+{
+    //for (var i = 0; i < myMoney.Count; i++)
+    //{
+    //    Console.WriteLine("Amount is {0} and type is {1}", myMoney[i].amount, myMoney[i].type);
+
+                            <div class="panel box box-primary">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#@log.TIED" aria-expanded="false" class="collapsed">
+                                            @{ 
+
+                                                var userd = getdetails.getUserDetails(log.LOGGED_BY);
+
+                                            }
+                                               Edited By  @userd.DISPLAY_NAME [@log.LOGGED_DATE]
+                                                    
+
+                                                    
+
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="@log.TIED" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="box-body">
+                                        <ul>
+                                        @if (!String.IsNullOrEmpty(log.COMMENTS))
+                                        {
+                                            @Html.Raw(@log.COMMENTS)
+                                        }
+                                            else
+                                            {
+
+                                           <text> No Changed were made on this log</text>
+    }
+
+                                            </ul>
+</div>
+                                </div>
+                            </div>
+
+}
+
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+
+
+            </div>
+            <!-- /.tab-pane -->
+            
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+</div>
+<!-- /.col -->
+ 

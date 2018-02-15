@@ -1,0 +1,122 @@
+﻿@model CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_IDENTIFICATION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CDMA_INDIVIDUAL_IDENTIFICATION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDENTIFICATION_TYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDENTIFICATION_TYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_NO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_EXPIRY_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_EXPIRY_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_ISSUE_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_ISSUE_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PLACE_OF_ISSUANCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PLACE_OF_ISSUANCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP_ADDRESS)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CUSTOMER_NO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
