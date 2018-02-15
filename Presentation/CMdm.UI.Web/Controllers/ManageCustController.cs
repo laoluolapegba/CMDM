@@ -23,7 +23,7 @@ namespace CMdm.UI.Web.Controllers
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             string brnId = identity.BranchId.ToString();
-            return View(db.IndCustomerBioDatas.Where(a => a.BRANCH_CODE == brnId).ToList());
+            return View(db.CDMA_INDIVIDUAL_BIO_DATA.Where(a => a.BRANCH_CODE == brnId).ToList());
         }
         public ActionResult Unauthorized()
         {
@@ -31,7 +31,7 @@ namespace CMdm.UI.Web.Controllers
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             string brnId = identity.BranchId.ToString();
-            return View(db.IndCustomerBioDatas.Where(a =>a.BRANCH_CODE == brnId).ToList());
+            return View(db.CDMA_INDIVIDUAL_BIO_DATA.Where(a =>a.BRANCH_CODE == brnId).ToList());
         }
         // GET: ManageCust/Details/5
         public ActionResult Details(string id)
@@ -40,7 +40,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IndCustomerBioData indCustomerBioData = db.IndCustomerBioDatas.Find(id);
+            CDMA_INDIVIDUAL_BIO_DATA indCustomerBioData = db.CDMA_INDIVIDUAL_BIO_DATA.Find(id);
             if (indCustomerBioData == null)
             {
                 return HttpNotFound();
@@ -59,11 +59,11 @@ namespace CMdm.UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CUSTOMER_NO,TITLE,SURNAME,FIRST_NAME,OTHER_NAME,NICKNAME_ALIAS,DATE_OF_BIRTH,PLACE_OF_BIRTH,COUNTRY_OF_BIRTH,SEX,AGE,MARITAL_STATUS,NATIONALITY,STATE_OF_ORIGIN,MOTHER_MAIDEN_NAME,DISABILITY,COMPLEXION,NUMBER_OF_CHILDREN,RELIGION,CREATED_DATE,CREATED_BY,LAST_MODIFIED_DATE,LAST_MODIFIED_BY,AUTHORISED,AUTHORISED_BY,AUTHORISED_DATE,IP_ADDRESS,BRANCH_CODE")] IndCustomerBioData indCustomerBioData)
+        public ActionResult Create([Bind(Include = "CUSTOMER_NO,TITLE,SURNAME,FIRST_NAME,OTHER_NAME,NICKNAME_ALIAS,DATE_OF_BIRTH,PLACE_OF_BIRTH,COUNTRY_OF_BIRTH,SEX,AGE,MARITAL_STATUS,NATIONALITY,STATE_OF_ORIGIN,MOTHER_MAIDEN_NAME,DISABILITY,COMPLEXION,NUMBER_OF_CHILDREN,RELIGION,CREATED_DATE,CREATED_BY,LAST_MODIFIED_DATE,LAST_MODIFIED_BY,AUTHORISED,AUTHORISED_BY,AUTHORISED_DATE,IP_ADDRESS,BRANCH_CODE")] CDMA_INDIVIDUAL_BIO_DATA indCustomerBioData)
         {
             if (ModelState.IsValid)
             {
-                db.IndCustomerBioDatas.Add(indCustomerBioData);
+                db.CDMA_INDIVIDUAL_BIO_DATA.Add(indCustomerBioData);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -78,7 +78,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IndCustomerBioData indCustomerBioData = db.IndCustomerBioDatas.Find(id);
+            CDMA_INDIVIDUAL_BIO_DATA indCustomerBioData = db.CDMA_INDIVIDUAL_BIO_DATA.Find(id);
             if (indCustomerBioData == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IndCustomerBioData indCustomerBioData = db.IndCustomerBioDatas.Find(id);
+            CDMA_INDIVIDUAL_BIO_DATA indCustomerBioData = db.CDMA_INDIVIDUAL_BIO_DATA.Find(id);
             if (indCustomerBioData == null)
             {
                 return HttpNotFound();
@@ -122,8 +122,8 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            IndCustomerBioData indCustomerBioData = db.IndCustomerBioDatas.Find(id);
-            db.IndCustomerBioDatas.Remove(indCustomerBioData);
+            CDMA_INDIVIDUAL_BIO_DATA indCustomerBioData = db.CDMA_INDIVIDUAL_BIO_DATA.Find(id);
+            db.CDMA_INDIVIDUAL_BIO_DATA.Remove(indCustomerBioData);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

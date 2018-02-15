@@ -44,5 +44,7 @@ namespace CMdm.Entities.Domain.Dqi
         //public virtual Mdm MdmDqRule { get; set; }
         [DisplayName("Table Name")]
         public string CATALOG_TABLE_NAME { get; set; }
+        [DisplayName("Exception reason")]
+        public string REASON { get; set; }
     }
 }

@@ -151,11 +151,9 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_LOG> CDMA_INDIVIDUAL_BIO_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_LOG> CDMA_INDIVIDUAL_CONTACT_LOG { get; set; }
 
-        //
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
+        //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
 
- 
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
- 
     }
 
 }

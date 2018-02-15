@@ -53,6 +53,8 @@ namespace CMdm.UI.Web.Models.DqQue
 
         public int PRIORITY_CODE { get; set; }
         public int STATUS_CODE { get; set; }
+        [DisplayName("Exception reason")]
+        public string REASON { get; set; }
         public IList<SelectListItem> Priorities { get; set; }
         public IList<SelectListItem> Statuses { get; set; }
         public IList<SelectListItem> Branches { get; set; }

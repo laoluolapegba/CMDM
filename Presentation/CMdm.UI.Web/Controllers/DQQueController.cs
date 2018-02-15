@@ -161,7 +161,8 @@ namespace CMdm.UI.Web.Controllers
                     BRANCH_NAME = x.BRANCH_NAME,
                     CREATED_DATE = x.CREATED_DATE,
                     PRIORITY_CODE = x.ISSUE_PRIORITY,
-                    STATUS_CODE = x.ISSUE_STATUS
+                    STATUS_CODE = x.ISSUE_STATUS,
+                    REASON = x.REASON
 
                 }),
                 Total = items.TotalCount

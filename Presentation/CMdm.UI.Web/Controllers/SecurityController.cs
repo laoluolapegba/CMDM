@@ -19,11 +19,14 @@ namespace CMdm.UI.Web.Controllers
                 //_logger.Information(string.Format("Access denied to anonymous request on {0}", pageUrl));
                 return View();
             }
-
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             //_logger.Information(string.Format("Access denied to user #{0} '{1}' on {2}", currentCustomer.Email, currentCustomer.Email, pageUrl));
 
 
-            return View();
+            
         }
 
     }
