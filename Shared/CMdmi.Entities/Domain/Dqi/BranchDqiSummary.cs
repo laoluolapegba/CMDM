@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CMdm.Entities.Domain.Dqi
 {
-    [Table("INDIVIDUAL_BRANCH_DQI")]
+    [Table("CDMA_INDIVIDUAL_BRANCH_DQI")]
     public partial class BranchDqiSummary
     {
         [Key]

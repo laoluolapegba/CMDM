@@ -47,7 +47,7 @@ namespace CMdm.UI.Web.Controllers
             decimal brnPct = openbrnExceptions/totalExceptions * 100;
             ViewBag.brnPct = brnPct;
 
-            decimal brnDQI = dashdata.BranchDqiSummaries.Where(a => a.BRANCH_CODE == identity.BranchId).Select(a => a.DQI).SingleOrDefault();
+            decimal brnDQI = dashdata.BranchDqiSummaries.Where(a => a.BRANCH_CODE == identity.BranchId).Select(a => a.DQI).Average(); //.SingleOrDefault();
             ViewBag.brnDQI = brnDQI;
             string brnString = identity.BranchId.ToString();
             int brnCustomers = dashdata.CDMA_INDIVIDUAL_BIO_DATA.Where(a => a.BRANCH_CODE == brnString).Count();
