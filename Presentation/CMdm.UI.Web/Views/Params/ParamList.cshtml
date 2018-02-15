@@ -1,0 +1,93 @@
+﻿@using CMdm.Framework;
+@model CMdm.UI.Web.Models.DqParam.DqParamListModel
+@*ViewBag.Title = "Data Quality Rules";
+    ViewBag.SubTitle = "List";*@
+@{
+    ViewBag.Title = "Data Quality Issues";
+    ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 15;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+<div id="grid"></div>
+<script>
+    $("#grid").kendoGrid({
+        height: 400,
+        columns: [
+            {field: "ENTITY_TAB_NAME"},
+            {field: "ENTITY_COL_NAME"},
+            {field: "FLG_MANDATORY"},
+            {field: "RECORD_STATUS"},
+            {field: "DEFAULT_VALUE"},
+            {field: "COLUMN_ORDER"},
+            {field: "USE_FOR_DQI"}
+        ],
+        dataSource: {
+            type: "aspnetmvc-ajax", 
+            transport: {
+                read: {
+                     url: "EntityDetails_Read"
+                }
+			},
+            schema: {
+                data: "Data",
+                model: {
+                    id: "ENTITY_DETAIL_ID",
+					fields: {
+						ENTITY_DETAIL_ID: { type: "number"},
+						"SearchName": {
+							type: "string"
+						},
+						"ENTITY_ID": {
+							type: "number"
+						},
+						"ENTITY_TAB_NAME": {
+							type: "string",
+							validation: {required: true}
+						},
+						"ENTITY_COL_NAME": {
+							type: "string"
+						},
+						"FLG_MANDATORY": {
+							type: "boolean"
+						},
+						"WEIGHT_ID": {
+							type: "number"
+						},
+						
+						"RECORD_STATUS": {
+							type: "boolean"
+						},
+						"REGEX": {
+							type: "number"
+						},
+						"DEFAULT_VALUE": {
+							type: "string"
+						},
+						"COLUMN_ORDER": {
+							type: "number"
+						},
+						"CATALOG_ID": {
+							type: "number"
+						},
+						"USE_FOR_DQI": {
+							type: "boolean"
+						},
+						"DQ_DIMENSION": {
+							type: "number"
+						},
+						
+						"CustomProperties": {
+							type: "number"
+						}
+					}
+                }
+            }, 
+			serverPaging: true,
+			serverSorting: true,
+			serverSorting: true,
+        },
+        scrollable: true
+    })
+
+</script>
