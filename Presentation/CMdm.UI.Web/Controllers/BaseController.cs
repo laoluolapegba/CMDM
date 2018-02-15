@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using CMdm.Framework.UI;
 using CMdm.Framework.Kendoui;
 using System.Text;
+using CMdm.Framework.Mvc;
+using Newtonsoft.Json.Converters;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -191,14 +193,32 @@ namespace CMdm.UI.Web.Controllers
         /// <param name="behavior">The JSON request behavior</param>
         protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
         {
-            return new JsonResult()
-            {
-                Data = data,
-                ContentType = contentType,
-                ContentEncoding = contentEncoding,
-                JsonRequestBehavior = behavior,
-                MaxJsonLength = Int32.MaxValue // Use this value to set your maximum size for all of your Requests
-            };
+            //return new JsonResult()
+            //{
+            //    Data = data,
+            //    ContentType = contentType,
+            //    ContentEncoding = contentEncoding,
+            //    JsonRequestBehavior = behavior,
+            //    MaxJsonLength = Int32.MaxValue // Use this value to set your maximum size for all of your Requests
+            //};
+            //Json fix issue with dates in KendoUI grid
+            //use json with IsoDateTimeConverter
+            bool UseIsoDateTimeConverterInJson = true;
+            var result = UseIsoDateTimeConverterInJson ? new ConverterJsonResult(new IsoDateTimeConverter()) : new JsonResult();
+
+            result.Data = data;
+            result.ContentType = contentType;
+            result.ContentEncoding = contentEncoding;
+            result.JsonRequestBehavior = behavior;
+
+            //Json fix for admin area
+            //sometime our entities have big text values returned (e.g. product desriptions)
+            //of course, we can set and return them as "empty" (we already do it so). Furthermore, it's a perfoemance optimization
+            //but it's better to avoid exceptions for other entities and allow maximum JSON length
+            result.MaxJsonLength = int.MaxValue;
+
+            return result;
+            //return base.Json(data, contentType, contentEncoding, behavior);
         }
 
         /// <summary>

@@ -96,13 +96,13 @@ namespace CMdm.Data.DAC
                     int stat = (int)catalogId.Value;
                     query = query.Where(d => d.CATALOG_ID == stat);
                 }
-                
+
                 // Append filters.
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.CREATED_DATE)//    //OrderBy(a => a.CREATED_DATE)  //
-                        .Skip(startRowIndex).Take(maximumRows);
+                query = query.OrderBy(a => a.CREATED_DATE);//    //OrderBy(a => a.CREATED_DATE)  //
+                        //.Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
                 return query.ToList();

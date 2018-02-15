@@ -132,7 +132,7 @@ namespace CMdm.Data.DAC
             return query;
         }
         //
-        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int ? BranchId = null, int? status = null, int? priority = null)
+        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int ? BranchId = null, IssueStatus? status = null , int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             using (var db = new AppDbContext())
@@ -157,7 +157,7 @@ namespace CMdm.Data.DAC
                     int brnId = (int)BranchId.Value;
                     query = query.Where(d => d.BRANCH_CODE == brnId);
                 }
-                if (status.HasValue && status>0)
+                if (status.HasValue) // && status>0
                 {
                     int stat = (int)status.Value;
                     query = query.Where(d => d.ISSUE_STATUS == stat);
@@ -166,13 +166,14 @@ namespace CMdm.Data.DAC
                 {
                     int prior = (int)priority.Value;
                     query = query.Where(d => d.ISSUE_PRIORITY == prior);
+                    
                 }
                 // Append filters.
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.RUN_DATE)//    //OrderBy(a => a.CREATED_DATE)  //
-                        .Skip(startRowIndex).Take(maximumRows);
+                query = query.OrderBy(a => a.RUN_DATE); //    //OrderBy(a => a.CREATED_DATE)  //
+                        //.Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
                 return query.ToList();

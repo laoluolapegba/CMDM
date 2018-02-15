@@ -147,7 +147,8 @@ namespace CMdm.UI.Web.Controllers
             DateTime? endDateValue = (model.CreatedOnTo == null) ? null
                             : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
             //startDateValue, endDateValue,
-            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, model.RULE_ID,  model.BRANCH_CODE,model.STATUS_CODE, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            IssueStatus? issueStatus = model.STATUS_CODE > 0 ? (IssueStatus?)(model.STATUS_CODE) : null;
+            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, model.RULE_ID,  model.BRANCH_CODE, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new DqquebrnListModel
