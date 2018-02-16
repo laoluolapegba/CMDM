@@ -18,7 +18,8 @@
         public string FIRST_NAME { get; set; }
         public string OTHER_NAME { get; set; }
         public string NICKNAME_ALIAS { get; set; }
-
+        public string LAST_MODIFIED_BY { get; set; }
+        
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> DATE_OF_BIRTH { get; set; }

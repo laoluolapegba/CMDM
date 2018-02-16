@@ -74,7 +74,7 @@ namespace CMdm.Data.Rbac
         [StringLength(50)]
         public string EMAIL_ADDRESS { get; set; }
 
-        public decimal BRANCH_ID { get; set; }
+        public string BRANCH_ID { get; set; }
 
         public virtual CM_USER_ROLES CM_USER_ROLES { get; set; }
 

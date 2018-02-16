@@ -15,7 +15,7 @@ namespace CMdm.Data.Rbac
         }
 
         [Key]
-        public decimal BRANCH_ID { get; set; }
+        public string BRANCH_ID { get; set; }
         public string BRANCH_NAME { get; set; }
         public Nullable<decimal> VAULT_LIMIT { get; set; }
         public Nullable<decimal> REGION_ID { get; set; }
