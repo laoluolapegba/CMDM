@@ -18,7 +18,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         public string UserRoleName { get; set; }
 
         public string DisplayName { get; set; }
-        public int BranchId { get; set; }
+        public string BranchId { get; set; }
         public string BranchName { get; set; }
         public int ProfileId { get; set; }
 
@@ -34,7 +34,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             UserRoleName = user.CM_USER_ROLES.ROLE_NAME;
             DisplayName = user.DISPLAY_NAME;
             ProfileId = (int)user.PROFILE_ID;
-            BranchId = (int)user.BRANCH_ID;
+            BranchId = user.BRANCH_ID;
             BranchName = user.CM_BRANCH.BRANCH_NAME;
 
         }

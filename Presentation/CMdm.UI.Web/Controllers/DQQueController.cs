@@ -161,7 +161,8 @@ namespace CMdm.UI.Web.Controllers
                     BRANCH_NAME = x.BRANCH_NAME,
                     CREATED_DATE = x.CREATED_DATE,
                     PRIORITY_CODE = x.ISSUE_PRIORITY,
-                    STATUS_CODE = x.ISSUE_STATUS
+                    STATUS_CODE = x.ISSUE_STATUS,
+                    REASON = x.REASON
 
                 }),
                 Total = items.TotalCount
@@ -185,7 +186,7 @@ namespace CMdm.UI.Web.Controllers
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
             return View(mdmDQQues.ToList());
         }
-        public ActionResult DqDetails(int ruleid, int branchid)
+        public ActionResult DqDetails(int ruleid, string branchid)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();

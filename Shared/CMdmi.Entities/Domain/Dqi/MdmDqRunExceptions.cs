@@ -24,7 +24,7 @@ namespace CMdm.Entities.Domain.Dqi
         [DisplayName("Customer Id")]
         public string CUST_ID { get; set; }
         [DisplayName("Branch Code")]
-        public int BRANCH_CODE { get; set; }
+        public string BRANCH_CODE { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_NAME { get; set; }
         [DisplayName("Last Run Date")]
@@ -44,5 +44,7 @@ namespace CMdm.Entities.Domain.Dqi
         //public virtual Mdm MdmDqRule { get; set; }
         [DisplayName("Table Name")]
         public string CATALOG_TABLE_NAME { get; set; }
+        [DisplayName("Exception reason")]
+        public string REASON { get; set; }
     }
 }
