@@ -12,7 +12,7 @@ namespace CMdm.Entities.Domain.Dqi
     public partial class BranchDqiSummary
     {
         [Key]
-        public int BRANCH_CODE { get; set; }
+        public string BRANCH_CODE { get; set; }
         public string TABLE_NAME { get; set; }
         public string ATTRIBUTE { get; set; }
         public decimal DQI { get; set; }

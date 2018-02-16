@@ -122,7 +122,7 @@ namespace CMdm.Services.DqQue
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? ruleId =null, int? BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+        public virtual IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? ruleId =null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")  //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
         {
             List<MdmDqRunException> result = default(List<MdmDqRunException>);

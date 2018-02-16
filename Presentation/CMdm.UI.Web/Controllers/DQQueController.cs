@@ -186,7 +186,7 @@ namespace CMdm.UI.Web.Controllers
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
             return View(mdmDQQues.ToList());
         }
-        public ActionResult DqDetails(int ruleid, int branchid)
+        public ActionResult DqDetails(int ruleid, string branchid)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();

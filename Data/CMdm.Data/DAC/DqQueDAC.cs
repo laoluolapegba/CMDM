@@ -132,7 +132,7 @@ namespace CMdm.Data.DAC
             return query;
         }
         //
-        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int ? BranchId = null, IssueStatus? status = null , int? priority = null)
+        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, string BranchId = null, IssueStatus? status = null , int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             using (var db = new AppDbContext())
@@ -152,10 +152,10 @@ namespace CMdm.Data.DAC
                     int rule = (int)ruleId.Value;
                     query = query.Where(d => d.RULE_ID == rule);
                 }
-                if (BranchId.HasValue && BranchId > 0)
+                if (!string.IsNullOrWhiteSpace(BranchId))
                 {
-                    int brnId = (int)BranchId.Value;
-                    query = query.Where(d => d.BRANCH_CODE == brnId);
+                    //string brnId = (string)BranchId.Value;
+                    query = query.Where(d => d.BRANCH_CODE == BranchId);
                 }
                 if (status.HasValue) // && status>0
                 {

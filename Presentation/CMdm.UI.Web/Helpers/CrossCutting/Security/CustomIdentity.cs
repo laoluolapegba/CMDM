@@ -26,7 +26,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         public string UserRoleName { get; set; }
         public string DisplayName { get; set; }
 
-        public int BranchId { get; set; }
+        public string BranchId { get; set; }
         public string BranchName { get; set; }
 
         public int ProfileId { get; set; }

@@ -14,7 +14,7 @@ namespace CMdm.UI.Web.BLL
         private OracleConnection conn = new OracleConnection(connString);
         public AppDbContext _db = new AppDbContext();
 
-        public int GetDQQuesCountbyBrn(int BranchCode)
+        public int GetDQQuesCountbyBrn(string BranchCode)
         {
             //var entity = from n in _db.MdmDQQues
             //             where n.BRANCH_CODE == BranchCode
