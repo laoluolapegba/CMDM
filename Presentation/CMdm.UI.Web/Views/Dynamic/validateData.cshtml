@@ -1050,7 +1050,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                 </div>
                                 <div id="@log.TIED" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                     <div class="box-body">
-                                        <ul>
+                                        <table>
                                         @if (!String.IsNullOrEmpty(log.COMMENTS))
                                         {
                                             @Html.Raw(@log.COMMENTS)
@@ -1061,7 +1061,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                            <text> No Changed were made on this log</text>
     }
 
-                                            </ul>
+                                            </table>
 </div>
                                 </div>
                             </div>

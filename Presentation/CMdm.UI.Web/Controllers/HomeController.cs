@@ -37,14 +37,16 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
 
             int statusCode = (int)IssueStatus.Open;
-            int openbrnExceptions = dashdata.MdmDqRunExceptions.Where(a=>a.BRANCH_CODE == identity.BranchId && a.ISSUE_STATUS == statusCode).Count();
+            //int openbrnExceptions = dashdata.MdmDqRunExceptions.Where(a=>a.BRANCH_CODE == identity.BranchId && a.ISSUE_STATUS == statusCode).Count();
+            int openbrnExceptions = 1;
                 //_dqQueService.GetAllBrnQueIssues("", null, identity.BranchId, IssueStatus.Open, null,
             //0, int.MaxValue, "").Count;
             ViewBag.openbrnExceptions = openbrnExceptions;
             int totalExceptions = dashdata.MdmDqRunExceptions.Where(a => a.ISSUE_STATUS == statusCode).Count();
             //_dqQueService.GetAllBrnQueIssues("", null, null, IssueStatus.Open, null,
             // 0, int.MaxValue, "").Count;
-            decimal brnPct = openbrnExceptions/totalExceptions * 100;
+            // decimal brnPct = openbrnExceptions/totalExceptions * 100;
+            decimal brnPct = 1;
             ViewBag.brnPct = brnPct;
 
             decimal brnDQI = dashdata.BranchDqiSummaries.Where(a => a.BRANCH_CODE == identity.BranchId).Select(a => a.DQI).Average(); //.SingleOrDefault();

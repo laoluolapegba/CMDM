@@ -31,6 +31,7 @@
         public string NATIONALITY { get; set; }
         public string STATE_OF_ORIGIN { get; set; }
         public string MOTHER_MAIDEN_NAME { get; set; }
+        [Required(AllowEmptyStrings = true)]
         public string DISABILITY { get; set; }
         public string COMPLEXION { get; set; }
         public Nullable<int> NUMBER_OF_CHILDREN { get; set; }
