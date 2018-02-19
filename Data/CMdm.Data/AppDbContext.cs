@@ -35,7 +35,9 @@ namespace CMdm.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Conventions.Remove<DecimalPropertyConvention>();
-            modelBuilder.Conventions.Add(new DecimalPropertyConvention(38, 40));
+            //precision of decimal is 28 significant figures any thing more gives oracle dataaccess specified cast is not valid
+            //https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/decimal
+            modelBuilder.Conventions.Add(new DecimalPropertyConvention(28, 28));
 
             modelBuilder.Entity<MdmDQQue>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmDQQues).HasForeignKey(e => e.QUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDQQue>().HasRequired(e => e.MdmDQImpacts).WithMany(t => t.MdmDQQues).HasForeignKey(e => e.IMPACT_LEVEL).WillCascadeOnDelete(false);
