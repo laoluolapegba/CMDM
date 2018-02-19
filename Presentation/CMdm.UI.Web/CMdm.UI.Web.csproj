@@ -30,7 +30,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -298,7 +298,6 @@
     <Compile Include="Controllers\IndividualAddressController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ManageCustController.cs" />
     <Compile Include="Controllers\MdmCatalogsController.cs" />
     <Compile Include="Controllers\MdmDimensionsController.cs" />
     <Compile Include="Controllers\MdmValidatorsController.cs" />

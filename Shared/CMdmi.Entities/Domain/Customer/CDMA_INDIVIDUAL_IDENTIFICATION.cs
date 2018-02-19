@@ -35,7 +35,7 @@
 
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        public string AUTHORISED_DATE { get; set; }
+        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
 
