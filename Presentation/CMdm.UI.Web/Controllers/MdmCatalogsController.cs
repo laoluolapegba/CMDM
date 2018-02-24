@@ -21,20 +21,36 @@ namespace CMdm.UI.Web.Controllers
         // GET: MdmCatalogs
         public ActionResult Index()
         {
-            IQueryable<MdmCatalog> catalogs = db.MdmCatalogs;
+            //IQueryable<MdmCatalog> catalogs = db.MdmCatalogs;
 
-            var result = catalogs.Select(c => new DqCatalogListModel
-            {
-                CATALOG_ID = c.CATALOG_ID,
+            var result = (from c in db.MdmCatalogs
+                          join u in db.CM_USER_PROFILE on c.CREATED_BY equals u.PROFILE_ID
+                          //join u2 in db.CM_USER_PROFILE on c.LAST_MODIFIED_BY equals u2.PROFILE_ID into uu2
+                          //from u2 in uu2.DefaultIfEmpty()
+                          select new DqCatalogListModel
+                          {
+                              CATALOG_ID = c.CATALOG_ID,
 
-                CATALOG_NAME = c.CATALOG_NAME,
-                CATEGORY_ID = c.CATEGORY_ID,
-                CREATED_BY = c.CREATED_BY,
-                CREATED_DATE = c.CREATED_DATE,
-                LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
-                LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
-                //RECORD_STATUS = c.RECORD_STATUS,
-            });
+                              CATALOG_NAME = c.CATALOG_NAME,
+                              CATEGORY_ID = c.CATEGORY_ID,
+                              CREATED_BY = u.FIRSTNAME + " " + u.LASTNAME,
+                              CREATED_DATE = c.CREATED_DATE,
+                              LAST_MODIFIED_BY = "", // u2.FIRSTNAME + " " + u2.LASTNAME,
+                              LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                          }).AsQueryable();
+
+                              //var result = catalogs.Select(c => new DqCatalogListModel
+                              //{
+                              //    CATALOG_ID = c.CATALOG_ID,
+
+                              //    CATALOG_NAME = c.CATALOG_NAME,
+                              //    CATEGORY_ID = c.CATEGORY_ID,
+                              //    CREATED_BY = "",
+                              //    CREATED_DATE = c.CREATED_DATE,
+                              //    LAST_MODIFIED_BY = "",
+                              //    LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                              //    //RECORD_STATUS = c.RECORD_STATUS,
+                              //});
 
             return View( result.ToList());
             //return View(db.MdmCatalogs.ToList());
@@ -84,7 +100,7 @@ namespace CMdm.UI.Web.Controllers
                 {
                     CATEGORY_ID = mdmCatalog.CATEGORY_ID,
                     CATALOG_NAME = mdmCatalog.CATALOG_NAME,
-                    CREATED_BY = identity.ProfileId.ToString(),
+                    CREATED_BY = identity.ProfileId,
                     CREATED_DATE = DateTime.Now
 
                 };
@@ -110,8 +126,25 @@ namespace CMdm.UI.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            MdmCatalog mdmCatalog = db.MdmCatalogs.Find(id);
+            //MdmCatalog mdmCatalog = db.MdmCatalogs.Find(id);
 
+            
+            var mdmCatalog = (from c in db.MdmCatalogs
+                          join u in db.CM_USER_PROFILE on c.CREATED_BY equals u.PROFILE_ID
+                              //join u2 in db.CM_USER_PROFILE on c.LAST_MODIFIED_BY equals u2.PROFILE_ID into uu2
+                              //from u2 in uu2.DefaultIfEmpty()
+                              where c.CATALOG_ID == id
+                          select new DqCatalogListModel
+                          {
+                              CATALOG_ID = c.CATALOG_ID,
+
+                              CATALOG_NAME = c.CATALOG_NAME,
+                              CATEGORY_ID = c.CATEGORY_ID,
+                              CREATED_BY = u.FIRSTNAME + " " + u.LASTNAME,
+                              CREATED_DATE = c.CREATED_DATE,
+                              LAST_MODIFIED_BY = "",
+                              LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                          }).FirstOrDefault();
             if (mdmCatalog == null)
             {
                 return HttpNotFound();
@@ -155,7 +188,7 @@ namespace CMdm.UI.Web.Controllers
                     {
                         entity.CATALOG_NAME = mdmCatalog.CATALOG_NAME;
                         entity.CATEGORY_ID = mdmCatalog.CATEGORY_ID;
-                        entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                        entity.LAST_MODIFIED_BY = identity.ProfileId;
                         entity.LAST_MODIFIED_DATE = DateTime.Now;
                         db.MdmCatalogs.Attach(entity);
                         db.Entry(entity).State = EntityState.Modified;
@@ -233,6 +266,7 @@ namespace CMdm.UI.Web.Controllers
                 Value = "0"
             });
         }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

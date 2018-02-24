@@ -11,6 +11,8 @@ namespace CMdm.UI.Web.Models.DqQue
 {
     public partial class DqQueListModel : BaseModel
     {
+        
+
         [DisplayName("Search")]
         [AllowHtml]
         public string SearchName { get; set; }
@@ -45,6 +47,8 @@ namespace CMdm.UI.Web.Models.DqQue
         [DisplayName("Branch Code")]
         public string BRANCH_CODE { get; set; }
         public decimal PCT_COMPLETION { get; set; }
-
+        public string DaysonQue { get; set; }
+        public int CATALOG_ID { get; set; }
+        public string ISSUE_PRIORITY_DESC;
     }
 }

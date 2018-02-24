@@ -72,7 +72,7 @@ namespace CMdm.Data.DAC
             {
                 // Store the query.
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
-                var query = db.MdmDQQues.Select(q => q);
+                var query = db.MdmDQQues.Select(q => q).Include(a => a.MdmDQPriorities);
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.ERROR_DESC.Contains(name));

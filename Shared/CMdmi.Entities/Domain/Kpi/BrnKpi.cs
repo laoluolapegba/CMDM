@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace CMdm.Entities.Domain.Kpi
 {
-    public class BrnKpi
+    [Table("CMDM_COMMON_KPI")]
+    public partial class BrnKpi
     {
+        
+        
         public DateTime TRAN_DATE { get; set; }
+        [Key]
         public string BRANCH_CODE { get; set; }
         public int BRN_CUST_COUNT { get; set; }
         public decimal BRN_DQI { get; set; }

@@ -37,13 +37,14 @@ namespace CMdm.UI.Web.Controllers
         #region Que list / create / edit / delete
         public ActionResult Index()
         {
+            /*
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
-            return View(mdmDQQues.ToList().OrderBy(a => a.RECORD_ID));
-            //return RedirectToAction("List");
+            return View(mdmDQQues.ToList().OrderBy(a => a.RECORD_ID));*/
+            return RedirectToAction("List");
         }
         // GET: MdmDQQues
         public ActionResult Index_()
@@ -72,6 +73,7 @@ namespace CMdm.UI.Web.Controllers
             var items = _dqQueService.GetAllQueItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
+            DateTime _today = DateTime.Now.Date;
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new DqQueListModel
@@ -79,7 +81,12 @@ namespace CMdm.UI.Web.Controllers
                     RECORD_ID = x.RECORD_ID,
                     DATA_SOURCE = x.DATA_SOURCE,
                     CATALOG_NAME = x.CATALOG_NAME,
+                    DQ_PROCESS_NAME = x.DQ_PROCESS_NAME,
                     ERROR_DESC = x.ERROR_DESC,
+                    DaysonQue = Math.Round((_today - x.CREATED_DATE).Value.TotalDays) + " days",
+                    PCT_COMPLETION = x.PCT_COMPLETION,
+                    PRIORITY = x.PRIORITY,
+                    ISSUE_PRIORITY_DESC = x.MdmDQPriorities.PRIORITY_DESCRIPTION,
                     CREATED_DATE = x.CREATED_DATE// _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
                 }),
                 Total = items.TotalCount

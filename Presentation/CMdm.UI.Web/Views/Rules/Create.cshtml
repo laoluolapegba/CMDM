@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create Data Quality Rule</h2>
-
-
 @section Styles{
       <!--EasyQuery CSS files -->
 <link href="~/Content/easyquery/jquery-ui.css" rel="stylesheet" />
@@ -20,8 +17,22 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Data Quality Rules</h4>
-    <hr />
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Add a new Rule
+            <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "List")</small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save and Continue
+            </button>
+        </div>
+    </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <!-- INLINE FORM -->
     <div class="row">
@@ -62,7 +73,6 @@
         </div>
     </div>
 
-								<!-- END INLINE FORM -->
 
     <!-- EasyQuery widgets settings -->
     <script type="text/javascript">
@@ -261,119 +271,14 @@
         </div>
 
     </div>
-    <div class="form-horizontal">
-       
-        @*<div class="widget-content">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#home2" role="tab" data-toggle="tab"><i class="fa fa-flash"></i> Exception Query</a></li>
-                <li><a href="#profile2" role="tab" data-toggle="tab"><i class="fa fa-group"></i> Population Query</a></li>
-                <li><a href="#settings2" role="tab" data-toggle="tab"><i class="fa fa-cog"></i> Settings</a></li>
-                
-
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade in active" id="home2">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-head">Query Editor</div>
-                        <div class="panel-body">
-                           
-                            <div class="form-group">
-                                
-                                <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.EXCEPTION_QUERY, new { htmlAttributes = new { @class = "form-control", @row = 20 } })
-                                    @Html.ValidationMessageFor(model => model.EXCEPTION_QUERY, "", new { @class = "text-danger" })
-
-                                </div>
-                                <div>
-                                    
-                                    <input type="submit" value="Validate Query" id="preview" name="action:Preview" class="btn btn-success" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                   
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-head">Data Preview</div>
-                        <div class="panel-body">
-
-                            <div class="form-group">
-
-                                <div class="col-md-8">
-                                    Dynamic Data
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="profile2">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-head">Query Editor</div>
-                        <div class="panel-body">
-
-                            <div class="form-group">
-
-                                <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.POP_QUERY, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.POP_QUERY, "", new { @class = "text-danger" })
-                                </div>
-                                <div>
-                                    @*<input type="button" value="Preview Data" class="btn btn-success" />
-                                    <input type="submit" value="Validate Query" id="previewpop" name="action:Preview" class="btn btn-success" />
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-head">Data Preview</div>
-                        <div class="panel-body">
-
-                            <div class="form-group">
-
-                                <div class="col-md-8">
-                                    Dynamic Data
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                   
-                   
-                </div>
-                <div class="tab-pane fade" id="settings2">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-head">Schedule</div>
-                        <div class="panel-body">
-
-                            <div class="form-group">
-
-                                <div class="col-md-10">
-                                    @Html.DropDownList("RUN_SCHEDULE", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.RUN_SCHEDULE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>*@
-
-       
-    </div>
-    <div class="form-group">
+    
+    @*<div class="form-group">
         <div>
             <input type="submit" value="Create Rule" id="save" name="action:Create"   class="btn btn-default" />
         </div>
-    </div>
+    </div>*@
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 
 @section Scripts {

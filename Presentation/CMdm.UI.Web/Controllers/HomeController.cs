@@ -40,6 +40,10 @@ namespace CMdm.UI.Web.Controllers
         {
             return View();
         }
+        public ActionResult BranchDqi()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
@@ -123,6 +127,70 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult BankDash()
         {
             return View();
+        }
+        public ActionResult GetBranches()
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            
+            var cashdb = new AppDbContext();
+            if (User.IsInRole("Cash Officer"))
+            {
+                var branches = (from o in cashdb.CM_BRANCH
+                                    //join r in cashdb.Region on o.REGION_ID equals r.REGION_ID
+                                where o.BRANCH_ID == identity.BranchId
+                                select new
+                                {
+                                    BranchId = o.BRANCH_ID,
+                                    BranchName = o.BRANCH_NAME,
+                                    BranchSchedulerColor = "#F9722E"
+                                });
+                return Json(branches, JsonRequestBehavior.AllowGet);
+
+            }
+           
+            else
+            {
+                var branches = (from o in cashdb.CM_BRANCH
+                                select new
+                                {
+                                    BranchId = o.BRANCH_ID,
+                                    BranchName = o.BRANCH_NAME,
+                                    BranchSchedulerColor = "#F9722E"
+                                });
+
+                return Json(branches, JsonRequestBehavior.AllowGet);
+            }
+
+            //return View();
+        }
+        public ActionResult GetBrnDQI(string BranchCode)
+        {
+            string brnCode = string.Empty;
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (BranchCode == null || BranchCode == string.Empty)
+            {
+                brnCode = identity.BranchId.ToString();
+            }
+            else
+            {
+                brnCode = BranchCode;
+            }
+            
+            var brnDQI =
+            (
+             from p in dashdata.BrnKpis
+             where p.BRANCH_CODE == "205"
+             select (decimal)p.BRN_DQI
+            ).SingleOrDefault();
+
+                       
+            var v_util = new[]
+            {
+                new { limit = 100,
+                      dqi = brnDQI }
+            };
+           
+            return Json(v_util, JsonRequestBehavior.AllowGet);
         }
     }
 }

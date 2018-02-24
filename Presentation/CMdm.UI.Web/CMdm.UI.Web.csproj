@@ -1247,6 +1247,7 @@
     <Content Include="Modules\WebForm2.aspx" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
+    <Content Include="Scripts\admin.common.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Calendar\Calendar-menu.js" />
@@ -1992,6 +1993,11 @@
     <Content Include="Views\MdmWeights\Index.cshtml" />
     <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Params\ParamList.cshtml" />
+    <Content Include="Views\DQI\ListParams.cshtml" />
+    <Content Include="Views\Home\BranchDqi.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTimeNullable.cshtml" />
+    <Content Include="Views\Shared\_Layoutdash.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
