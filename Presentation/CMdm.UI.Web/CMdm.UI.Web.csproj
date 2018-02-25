@@ -513,6 +513,7 @@
     <Compile Include="Helpers\CrossCutting\ExceptionHandler\ExceptionDude.cs" />
     <Compile Include="Helpers\CrossCutting\Logging\Logger.cs" />
     <Compile Include="Helpers\CrossCutting\Logging\LogHelper.cs" />
+    <Compile Include="Helpers\CrossCutting\Security\AuthenticationType.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomIdentity.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomMembershipProvider.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomMembershipUser.cs" />

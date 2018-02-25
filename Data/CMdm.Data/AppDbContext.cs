@@ -157,6 +157,8 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Kpi.BrnKpi> BrnKpis { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Configuration.Setting> Settings { get; set; }
+
         //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
 
 

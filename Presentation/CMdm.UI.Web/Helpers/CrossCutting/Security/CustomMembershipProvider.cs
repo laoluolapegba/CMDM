@@ -15,8 +15,8 @@ using System.Web.Routing;
 using System.Configuration;
 //using CMdm.Business;
 using System.Data;
-
-
+using CMdm.Services.Authentication;
+using Elmah;
 
 namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 {
@@ -70,46 +70,71 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return false;
             //Authenticate _auth = new Authenticate();
-            int LDAPAuth = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
-            if (LDAPAuth > 0)
+            int authSetting = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
+            string domainName = db.Settings.Where(a => a.SettingName == "DOMAIN_NAME").Select(a=>a.SETTING_VALUE).FirstOrDefault();
+            string serverName = db.Settings.Where(a => a.SettingName == "LDAP_SERVER").Select(a => a.SETTING_VALUE).FirstOrDefault();
+
+            AuthenticationType authType = (AuthenticationType)(authSetting);
+            switch (authType)
             {
-
-                #region LDAPAuth
-                var user = (from u in db.CM_USER_PROFILE
-                            where u.USER_ID.ToLower() == username.ToLower()
-                            select u).FirstOrDefault();
-
-                //String.Compare(u.COD_PASSWORD, password, StringComparison.OrdinalIgnoreCase) == 0Session["LastLoginDate"] = dtLastLogin;
-
-                return user != null;
-                #endregion
-            }
-            else
-            {
-                #region ApplicationAuth
-                using (var context = new AppDbContext())
-                {
-                    var user = (from u in context.CM_USER_PROFILE
-                                where u.USER_ID.ToLower() == username.ToLower()
-                                //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
-
-                                //&& !u.Deleted
-                                select u).FirstOrDefault();
-
-                    if (user != null)
+                case AuthenticationType.LDAP:
+                    #region LDAPAuth
+                    String adPath = serverName + "://" + domainName; //LDAP://corp.com"; //Fully-qualified Domain Name
+                    LDAPAuthenticationService adAuth = new LDAPAuthenticationService(adPath);
+                    bool authenticated = false;
+                    try
                     {
-                        if (!pwdManager.IsPasswordMatch(password, user.PASSWORDSALT, user.COD_PASSWORD))
+                        if (true == adAuth.IsAuthenticated(adPath, username, password))
                         {
-                            user = null;
+                            //String groups = adAuth.GetGroups(); we dont need d groups yet
+                            //var user = (from u in db.CM_USER_PROFILE
+                            //            where u.USER_ID.ToLower() == username.ToLower()
+                            //            select u).FirstOrDefault();
+                            authenticated = true;
+
                         }
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                     }
 
-                    //String.Compare(u.COD_PASSWORD, password, StringComparison.OrdinalIgnoreCase) == 0Session["LastLoginDate"] = dtLastLogin;
-                    return user != null;
-                }
-                #endregion
+                    
+                    return authenticated;
+                #endregion;
+                case AuthenticationType.OpenAuth:
+                    break;
+                case AuthenticationType.ApplicationAuth:
+                    #region ApplicationAuth
+                    using (var context = new AppDbContext())
+                    {
+                        var localuser = (from u in context.CM_USER_PROFILE
+                                    where u.USER_ID.ToLower() == username.ToLower()
+                                    //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
+
+                                    //&& !u.Deleted
+                                    select u).FirstOrDefault();
+
+                        if (localuser != null)
+                        {
+                            if (!pwdManager.IsPasswordMatch(password, localuser.PASSWORDSALT, localuser.COD_PASSWORD))
+                            {
+                                localuser = null;
+                            }
+                        }
+
+                        //String.Compare(u.COD_PASSWORD, password, StringComparison.OrdinalIgnoreCase) == 0Session["LastLoginDate"] = dtLastLogin;
+                        return localuser != null;
+                    }
+                    #endregion
+                    break;
+                default:
+                    return false;
+                    break;
             }
 
+            return false;
         }
 
         public bool CreateUser(string username, string password, string RoleId, string FName, string LName, string Email)
