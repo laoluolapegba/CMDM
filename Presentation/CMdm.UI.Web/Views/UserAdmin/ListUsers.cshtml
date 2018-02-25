@@ -1,0 +1,376 @@
+﻿@using CMdm.Framework;
+@model CMdm.UI.Web.Models.UserAdmin.UsersListViewModel
+
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 20;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Users
+        </h1>
+        <div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Add New
+            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success">
+                    <i class="fa fa-download"></i>
+                    Export
+                </button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">&nbsp;</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <button type="submit" name="exportxml-all">
+                            <i class="fa fa-file-code-o"></i>
+                           Export All to XML
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportxml-selected">
+                            <i class="fa fa-file-code-o"></i>
+                            Export Selected to XML
+                        </button>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <button type="submit" name="exportexcel-all">
+                            <i class="fa fa-file-excel-o"></i>
+                            Export All to Excel
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportexcel-selected">
+                            <i class="fa fa-file-excel-o"></i>
+                            Export Selected to Excel
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default panel-search">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.SearchEmail)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.SearchEmail)
+                                    </div>
+                                </div>
+                               
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(model => model.SearchUsername)
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.CMdmEditorFor(model => model.SearchUsername)
+                                        </div>
+                                    </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.SearchFirstName)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.SearchFirstName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.SearchLastName)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.SearchLastName)
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-7">
+                                
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.SearchRoleIds)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.SearchRoleIds, new { SelectList = Model.AvailableRoles })
+                                        <script>
+                                            $(document).ready(function() {
+                                                var rolesIdsInput = $('#@Html.FieldIdFor(model => model.SearchRoleIds)').data("kendoMultiSelect");
+                                                rolesIdsInput.setOptions({
+                                                    autoClose: false
+                                                });
+
+                                                @if (Model.AvailableRoles.Count == 0)
+                                                {
+                                                    <text>
+                                                rolesIdsInput.setOptions({
+                                                    enable: false,
+                                                    placeholder: 'No Roles'
+                                                });
+                                                rolesIdsInput._placeholder();
+                                                rolesIdsInput._enable();
+                                                </text>
+                                                }
+                                            });
+                                        </script>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-5">
+                                <button type="button" id="search-customers" class="btn btn-primary btn-search">
+                                    <i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="users-grid"></div>
+
+                        <script>
+                            $(document).ready(function() {
+                                $("#users-grid").kendoGrid({
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("ListUsers", "UserAdmin"))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: additionalData
+                                            }
+                                        },
+                                        schema: {
+                                            data: "Data",
+                                            total: "Total",
+                                            errors: "Errors"
+                                        },
+                                        error: function(e) {
+                                            display_kendoui_grid_error(e);
+                                            // Cancel the changes
+                                            this.cancelChanges();
+                                        },
+                                        pageSize: @(defaultGridPageSize),
+                                        serverPaging: true,
+                                        serverFiltering: true,
+                                        serverSorting: true
+                                    },
+                                    pageable: {
+                                        refresh: true,
+                                        pageSizes: [@(gridPageSizes)],
+                                        @Html.Partial("_GridPagerMessages")
+                                    },
+                                    scrollable: false,
+                                    dataBound: onDataBound,
+                                    columns: [
+                                        {
+                                            field: "PROFILE_ID",
+                                            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                                            headerAttributes: { style: "text-align:center" },
+                                            attributes: { style: "text-align:center" },
+                                            template: "<input type='checkbox' value='#=PROFILE_ID#' class='checkboxGroups'/>",
+                                            width: 50
+                                        }, {
+                                            field: "EMAIL_ADDRESS",
+                                            title: "Email",
+                                            width: 200
+                                        },
+                                        @if (1==1)
+                                        {
+                                            <text>{
+                                            field: "USER_ID",
+                                            title: "Username",
+                                            width: 200
+                                        },</text>
+                                        }
+                                        {
+                                            field: "FULLNAME",
+                                            title: "FullName",
+                                            width: 200
+                                        }, {
+                                            field: "ROLE_NAME",
+                                            title: "Role",
+                                            width: 200
+                                        },
+
+                                        {
+                                            field: "BRANCH_NAME",
+                                            title: "Branch",
+                                            width: 120
+                                        },
+                                        {
+                                            field: "ISLOCKED",
+                                            title: "Active",
+                                            width: 100,
+                                            headerAttributes: { style: "text-align:center" },
+                                            attributes: { style: "text-align:center" },
+                                            template: '# if (ISLOCKED>0) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                        }, {
+                                            field: "CREATED_DATE",
+                                            title: "Created Date",
+                                            width: 200,
+                                            type: "date",
+                                            format: "{0:G}"
+                                        }, {
+                                            field: "LASTLOGINDATE",
+                                            title: "LastActivityDate",
+                                            width: 200,
+                                            type: "date",
+                                            format: "{0:G}"
+                                        }, {
+                                            field: "PROFILE_ID",
+                                            title: "Edit",
+                                            width: 50,
+                                            headerAttributes: { style: "text-align:center" },
+                                            attributes: { style: "text-align:center" },
+                                            template: '<a class="btn btn-default" href="Edit/#=PROFILE_ID#"><i class="fa fa-pencil"></i>Edit</a>'
+                                        }
+                                    ]
+                                });
+                            });
+                        </script>
+
+                        <script type="text/javascript">
+                            var selectedIds = [];
+
+                            $(document).ready(function() {
+                                //search button
+                                $('#search-customers').click(function() {
+                                    var grid = $('#users-grid').data('kendoGrid');
+                                    grid.dataSource.page(1); //new search. Set page size to 1
+                                    //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                    //clear selected checkboxes
+                                    $('.checkboxGroups').attr('checked', false).change();
+                                    selectedIds = [];
+                                    return false;
+                                });
+                                $("#@Html.FieldIdFor(model => model.SearchEmail)").keydown(function (event) {
+                                    if (event.keyCode == 13) {
+                                        $("#search-customers").click();
+                                        return false;
+                                    }
+                                });
+                                
+
+                                $('#mastercheckbox').click(function() {
+                                    $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                                });
+
+                                //wire up checkboxes.
+                                $('#users-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
+                                    var $check = $(this);
+                                    if ($check.is(":checked") == true) {
+                                        var checked = jQuery.inArray($check.val(), selectedIds);
+                                        if (checked == -1) {
+                                            //add id to selectedIds.
+                                            selectedIds.push($check.val());
+                                        }
+                                    } else {
+                                        var checked = jQuery.inArray($check.val(), selectedIds);
+                                        if (checked > -1) {
+                                            //remove id from selectedIds.
+                                            selectedIds = $.grep(selectedIds, function(item, index) {
+                                                return item != $check.val();
+                                            });
+                                        }
+                                    }
+                                    updateMasterCheckbox();
+                                });
+                            });
+
+                            function onDataBound(e) {
+                                $('#users-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function() {
+                                    var currentId = $(this).val();
+                                    var checked = jQuery.inArray(currentId, selectedIds);
+                                    //set checked based on if current checkbox's value is in selectedIds.
+                                    $(this).attr('checked', checked > -1);
+                                });
+
+                                updateMasterCheckbox();
+                            }
+
+                            function updateMasterCheckbox() {
+                                var numChkBoxes = $('#users-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+                                var numChkBoxesChecked = $('#users-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+                                $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                            }
+
+                            function additionalData() {
+                                var data = {
+                                    SearchRoleIds: $('#@Html.FieldIdFor(model => model.SearchRoleIds)').val(),
+                                    SearchEmail: $('#@Html.FieldIdFor(model => model.SearchEmail)').val(),
+                                    SearchUsername: $('#@Html.FieldIdFor(model => model.SearchUsername)').val(),
+                                    SearchFirstName: $('#@Html.FieldIdFor(model => model.SearchFirstName)').val(),
+                                    SearchLastName: $('#@Html.FieldIdFor(model => model.SearchLastName)').val()
+                                };
+                                addAntiForgeryToken(data);
+                                return data;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                }
+
+@*export selected (XML). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+@using (Html.BeginForm("ExportXmlSelected", "UserAdmin", FormMethod.Post, new { id = "export-xml-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#exportxml-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            $('#export-xml-selected-form #selectedIds').val(ids);
+            $('#export-xml-selected-form').submit();
+            return false;
+        });
+    });
+</script>
+
+@*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+@using (Html.BeginForm("ExportExcelSelected", "UserAdmin", FormMethod.Post, new { id = "export-excel-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#exportexcel-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            $('#export-excel-selected-form #selectedIds').val(ids);
+            $('#export-excel-selected-form').submit();
+            return false;
+        });
+    });
+</script>

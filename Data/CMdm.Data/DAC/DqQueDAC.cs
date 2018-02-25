@@ -80,8 +80,8 @@ namespace CMdm.Data.DAC
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.CREATED_DATE)//    //OrderBy(a => a.CREATED_DATE)  //
-                        .Skip(startRowIndex).Take(maximumRows);
+                query = query.OrderBy(a => a.CREATED_DATE);//    //OrderBy(a => a.CREATED_DATE)  //
+                      //  .Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
                 return query.ToList();

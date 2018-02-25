@@ -32,7 +32,7 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult Index()
         {
             return RedirectToAction("ListParams");
-            return View(db.MDM_WEIGHTS.ToList());
+            //return View(db.MDM_WEIGHTS.ToList());
         }
 
         // GET: DQI/Details/5
@@ -134,7 +134,7 @@ namespace CMdm.UI.Web.Controllers
             var dqiParams = db.MdmDqiParams.Include(m => m.MdmWeights); //.Include(m => m.MdmRegex);
             return View(dqiParams.ToList());
         }
-        public ActionResult ListParams(int CatalogId)
+        public ActionResult ListParams(int? CatalogId)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -174,7 +174,7 @@ namespace CMdm.UI.Web.Controllers
             return View(model);
         }
 
-        public ActionResult ListParams()
+        public ActionResult ListParams_()
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();

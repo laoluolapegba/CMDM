@@ -1,0 +1,146 @@
+﻿@model CMdm.UI.Web.Models.UserAdmin.UsersListViewModel
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.PROFILE_ID)
+<div class="content">
+    <div class="form-horizontal">
+        <div id="customer-edit" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab">User Profile</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.USER_ID)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CMdmEditorFor(model => model.USER_ID)
+                                            @Html.ValidationMessageFor(model => model.USER_ID)
+                                        </div>
+                                    </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.EMAIL_ADDRESS)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.EMAIL_ADDRESS)
+                                        @Html.ValidationMessageFor(model => model.EMAIL_ADDRESS)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.COD_PASSWORD)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            @Html.CMdmEditorFor(model => model.COD_PASSWORD)
+                                            <div class="input-group-btn">
+                                                @if (Model.PROFILE_ID > 0)
+                                                {
+                                                    <button type="submit" name="changepassword" class="btn btn-info">
+                                                       Change
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.COD_PASSWORD)
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.ROLE_ID)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmDropDownListFor(model => model.ROLE_ID, Model.UserRoles)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.BRANCH_ID)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmDropDownListFor(model => model.BRANCH_ID, Model.Branches)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.FIRSTNAME)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.FIRSTNAME)
+                                        @Html.ValidationMessageFor(model => model.FIRSTNAME)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.LASTNAME)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.LASTNAME)
+                                        @Html.ValidationMessageFor(model => model.LASTNAME)
+                                    </div>
+                                </div>
+                               
+                                
+                                
+                               
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.ISLOCKED)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.ISACTIVE)
+                                        @Html.ValidationMessageFor(model => model.ISLOCKED)
+                                    </div>
+                                </div>
+                                
+                                @if (Model.PROFILE_ID > 0)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.CREATED_DATE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.DisplayFor(model => model.CREATED_DATE)
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.PROFILE_ID > 0)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.LASTLOGINDATE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.DisplayFor(model => model.LASTLOGINDATE)
+                                        </div>
+                                    </div>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
