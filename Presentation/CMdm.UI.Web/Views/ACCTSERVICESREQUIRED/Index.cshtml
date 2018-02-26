@@ -1,0 +1,147 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Customer.CDMA_ACCT_SERVICES_REQUIRED>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_NUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CARD_PREFERENCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ELECTRONIC_BANKING_PREFERENCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATEMENT_PREFERENCES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TRANSACTION_ALERT_PREFERENCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATEMENT_FREQUENCY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHEQUE_BOOK_REQUISITION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHEQUE_LEAVES_REQUIRED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHEQUE_CONFIRMATION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHEQUE_CONFIRMATION_THRESHOLD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ONLINE_TRANSFER_LIMIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TOKEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_SIGNATORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_NUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CARD_PREFERENCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ELECTRONIC_BANKING_PREFERENCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATEMENT_PREFERENCES)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TRANSACTION_ALERT_PREFERENCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATEMENT_FREQUENCY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHEQUE_BOOK_REQUISITION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHEQUE_LEAVES_REQUIRED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHEQUE_CONFIRMATION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHEQUE_CONFIRMATION_THRESHOLD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ONLINE_TRANSFER_LIMIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TOKEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_SIGNATORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTOMER_NO })
+        </td>
+    </tr>
+}
+
+</table>

@@ -837,7 +837,6 @@ namespace CMdm.UI.Web.Controllers
                     ViewBag.COUNTRY_OF_BIRTH = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME", cDMA_INDIVIDUAL_BIO_DATA.COUNTRY_OF_BIRTH);
                     ViewBag.BioData_NATIONALITY = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ABBREVIATION", "COUNTRY_NAME", cDMA_INDIVIDUAL_BIO_DATA.NATIONALITY);
                     ViewBag.RELIGION = new SelectList(db.CDMA_RELIGION, "CODE", "RELIGION", cDMA_INDIVIDUAL_BIO_DATA.RELIGION);
-                    ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME", cDMA_INDIVIDUAL_BIO_DATA.BRANCH_CODE);
                     ViewBag.STATES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
 
                     ViewBag.STATES_RES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
@@ -890,7 +889,7 @@ namespace CMdm.UI.Web.Controllers
                     {
                         return HttpNotFound();
                     }
-
+                    ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME", cDMA_INDIVIDUAL_BIO_DATA.BRANCH_CODE);
                     var viewModel = new DynamicViewModel(); //Create an instance of the above view model
                     viewModel.BioData = cDMA_INDIVIDUAL_BIO_DATA;
                     viewModel.AddressDetails = cDMA_INDIVIDUAL_ADDRESS_DETAIL;
@@ -900,12 +899,7 @@ namespace CMdm.UI.Web.Controllers
                     //return PartialView("EditCustomer", viewModel);
                     return PartialView("validateData", viewModel);
                 case "Beet Armyworm":
-                case "Indian Meal Moth":
-                case "Ash Pug":
-                case "Latticed Heath":
-                case "Ribald Wave":
-                case "The Streak":
-                    return JavaScript("alert('No more images');");
+                 
                 default:
                     return JavaScript("alert('No more images');");
             }
@@ -933,14 +927,20 @@ namespace CMdm.UI.Web.Controllers
             string table_cat = "";
             string[] biodata_array = { "CDMA_INDIVIDUAL_BIO_DATA", "CDMA_INDIVIDUAL_CONTACT_DETAIL",
                                          "CDMA_INDIVIDUAL_ADDRESS_DETAIL", "CDMA_INDIVIDUAL_IDENTIFICATION" , "CDMA_INDIVIDUAL_OTHER_DETAILS"};
+            string[] accinfo_array = { "CDMA_ACCOUNT_INFO", "CDMA_ACCT_SERVICES_REQUIRED"};
 
 
             if (biodata_array.Contains(table))
             {
-                  table_cat = "biodata";
+                table_cat = "biodata";
 
             }
+            else if (accinfo_array.Contains(table))
+            {
+                table_cat = "accinfo";
+            }
 
+            var viewModel = new DynamicViewModel(); //Create an instance of the above view model
 
 
 
@@ -1026,13 +1026,13 @@ namespace CMdm.UI.Web.Controllers
                     this.Session["cDMA_INDIVIDUAL_CONTACT_DETAIL"] = cDMA_INDIVIDUAL_CONTACT_DETAIL;
                     this.Session["cDMA_INDIVIDUAL_IDENTIFICATION"] = cDMA_INDIVIDUAL_IDENTIFICATION;
                     this.Session["cDMA_INDIVIDUAL_OTHER_DETAILS"] = cDMA_INDIVIDUAL_OTHER_DETAILS;
-
+                   
                     if (cDMA_INDIVIDUAL_BIO_DATA == null)
                     {
                         return HttpNotFound();
                     }
 
-                    var viewModel = new DynamicViewModel(); //Create an instance of the above view model
+
                     viewModel.BioData = cDMA_INDIVIDUAL_BIO_DATA;  
                     viewModel.AddressDetails = cDMA_INDIVIDUAL_ADDRESS_DETAIL;
                     viewModel.contact = cDMA_INDIVIDUAL_CONTACT_DETAIL;
@@ -1040,7 +1040,156 @@ namespace CMdm.UI.Web.Controllers
                     viewModel.otherdetails = cDMA_INDIVIDUAL_OTHER_DETAILS;
                     //return PartialView("EditCustomer", viewModel);
                     return PartialView("EditCustomer", viewModel);
-                case "Beet Armyworm":
+              
+                    
+                case "accinfo":
+                    if (c_id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
+                    CDMA_ACCT_SERVICES_REQUIRED cDMA_ACCT_SERVICES_REQUIRED = db.CDMA_ACCT_SERVICES_REQUIRED.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
+                    CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
+                    ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME", cDMA_ACCOUNT_INFO.BRANCH);
+                    ViewBag.biorecord = biorecord;
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ORIGINATING_BRANCH != null)
+                    {
+                        ViewBag.OringinBranch = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME", cDMA_ACCOUNT_INFO.ORIGINATING_BRANCH);
+                    }
+                    else
+                    {
+                        ViewBag.OringinBranch = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
+                    }
+
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BRANCH_CLASS != null)
+                    {
+                        ViewBag.BranchClass = new SelectList(db.CDMA_BRANCH_CLASS, "ID", "CLASS", cDMA_ACCOUNT_INFO.BRANCH_CLASS);
+                    }
+                    else
+                    {
+                        ViewBag.BranchClass = new SelectList(db.CDMA_BRANCH_CLASS, "ID", "CLASS");
+                    }
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.CUSTOMER_SEGMENT != null)
+                    {
+                        ViewBag.CustomerSegment = new SelectList(db.CDMA_CUSTOMER_SEGMENT, "ID", "SEGMENT", cDMA_ACCOUNT_INFO.CUSTOMER_SEGMENT);
+                    }
+                    else
+                    {
+                        ViewBag.CustomerSegment = new SelectList(db.CDMA_CUSTOMER_SEGMENT, "ID", "SEGMENT");
+                    }
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.CUSTOMER_TYPE != null)
+                    {
+                        ViewBag.CustomerType = new SelectList(db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE", cDMA_ACCOUNT_INFO.CUSTOMER_TYPE);
+                    }
+                    else
+                    {
+                        ViewBag.CustomerType = new SelectList(db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE");
+                    }
+
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
+                    }
+                    else
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
+                    }
+
+
+                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
+                    {
+                        ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE", cDMA_ACCOUNT_INFO.BUSINESS_SIZE);
+                    }
+                    else
+                    {
+                        ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD != null)
+                    {
+                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
+                    }
+                    else
+                    {
+                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT != null)
+                    {
+                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME", cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT);
+                    }
+                    else
+                    {
+                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                    }
+                    else
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION");
+                    }
+
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_SEGMENT != null)
+                    {
+                        ViewBag.BUSINESS_SEGMENT = new SelectList(db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT", cDMA_ACCOUNT_INFO.BUSINESS_SEGMENT);
+                    }
+                    else
+                    {
+                        ViewBag.BUSINESS_SEGMENT = new SelectList(db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT");
+                    }
+
+
+                    //CDMA_BUSINESS_SEGMENT
+
+
+
+
+
+
+
+                    //CDMA_CUSTOMER_TYPE
+                    ViewBag.record = biorecord;
+
+
+                    //save current data into session variable for future usage
+                    //set the customer value incase of empty record 
+                    if (cDMA_ACCOUNT_INFO != null)
+                    {
+                        this.Session["cDMA_ACCOUNT_INFO"] = cDMA_ACCOUNT_INFO;
+                    }
+                    else
+                    {
+                        this.Session["cDMA_ACCOUNT_INFO"] = null;
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null)
+                    {
+                        this.Session["cDMA_ACCT_SERVICES_REQUIRED"] = cDMA_ACCT_SERVICES_REQUIRED;
+                    }
+                    else
+                    {
+                        this.Session["cDMA_ACCT_SERVICES_REQUIRED"] = null;
+                    }
+
+                    //get all customer changes log  
+                    ViewBag.profile_log = db.CDMA_INDIVIDUAL_PROFILE_LOG.Where(b => b.CUSTOMER_NO == c_id).ToList().Where(b => b.AFFECTED_CATEGORY == "biodata").OrderBy(i => i.LOG_ID).ToList();
+
+                    //  var viewAccInfoModel = new DynamicViewModel(); //Create an instance of the above view model CONFIRM_THRESHOLD
+                    viewModel.AccInfo = cDMA_ACCOUNT_INFO;
+                    viewModel.ServiceInfo = cDMA_ACCT_SERVICES_REQUIRED;
+                    return PartialView("EditAccInfo", viewModel);
+
+
+
                 case "Indian Meal Moth":
                 case "Ash Pug":
                 case "Latticed Heath":
