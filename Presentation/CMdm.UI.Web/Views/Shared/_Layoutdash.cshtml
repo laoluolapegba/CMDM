@@ -1,4 +1,5 @@
-﻿@using CMdm.UI.Web.Extensions
+﻿
+@using CMdm.UI.Web.Extensions
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +9,39 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @if (IsSectionDefined("Styles"))
     {@RenderSection("Styles", required: false)}
+
     @Styles.Render("~/AdminLTE/plugins/font-awesome/css")
     @Styles.Render("~/AdminLTE/plugins/ionicons/css")
     @Styles.Render("~/AdminLTE/bootstrap/css")
     @Styles.Render("~/AdminLTE/dist/css")
-    @Styles.Render("~/AdminLTE/dist/css/skins")    
+    @Styles.Render("~/AdminLTE/dist/css/skins")
     @Scripts.Render("~/AdminLTE/plugins/jquery/js")
-    @Scripts.Render("~/Scripts/admin.common.js")
     @RenderSection("menu", required: false)
     @Scripts.Render("~/AdminLTE/bootstrap/js")
-    @Scripts.Render("~/bundles/kendo")
-    @Styles.Render("~/Content/kendo/css")
+
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jquery.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.web.min.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.core.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.data.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.userevents.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.color.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.popup.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.drawing.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.core.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.chart.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.themes.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.sparkline.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.gauge.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.pdf.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.aspnetmvc.min.js")"></script>
+
     @Styles.Render("~/Content/customstyle.css")
     @Scripts.Render("~/Scripts/common.js")
     @Styles.Render("~/Themes/DefaultClean/Content/css/nopcss.css")
@@ -31,17 +54,17 @@
             animation: fa-spin 5s infinite linear reverse;
         }
     </style>
-   @* @{
-        var browser = Request.Browser;
-        if (browser.Browser == "IE" && browser.MajorVersion == 8)
-        {
-            Styles.Render("~/Themes/DefaultClean/Content/css/ie8.css");
-        }
+    @*@{
+            var browser = Request.Browser;
+            if (browser.Browser == "IE" && browser.MajorVersion == 8)
+            {
+                Styles.Render("~/Themes/DefaultClean/Content/css/ie8.css");
+            }
 
 
-    }*@
-    
-  
+        }*@
+
+
     <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
     @*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
 </head>
@@ -55,7 +78,7 @@
                     <b>CMDM</b>
                 </span>
             </a>
-            @Html.Partial("_TopBarPartial")            
+            @Html.Partial("_TopBarPartial")
 
         </header>
         <aside class="main-sidebar">
@@ -104,13 +127,13 @@
             <strong>Copyrights | Bluechip Technologies Ltd &copy; 2017 <a href="http://www.bluechiptech.biz">Bluechip Technologies Ltd</a>.</strong> All rights
             reserved.
         </footer>
-        
+
         <div class="control-sidebar-bg"></div>
     </div>
 
-   @* @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+    @* @Scripts.Render("~/AdminLTE/plugins/jquery/js")
 
-    @Scripts.Render("~/AdminLTE/bootstrap/js")*@
+        @Scripts.Render("~/AdminLTE/bootstrap/js")*@
 
     @Scripts.Render("~/AdminLTE/plugins/slimscroll/js")
     @Scripts.Render("~/AdminLTE/plugins/fastclick/js")

@@ -35,7 +35,9 @@ namespace CMdm.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Conventions.Remove<DecimalPropertyConvention>();
-            modelBuilder.Conventions.Add(new DecimalPropertyConvention(38, 40));
+            //precision of decimal is 28 significant figures any thing more gives oracle dataaccess specified cast is not valid
+            //https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/decimal
+            modelBuilder.Conventions.Add(new DecimalPropertyConvention(28, 28));
 
             modelBuilder.Entity<MdmDQQue>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmDQQues).HasForeignKey(e => e.QUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDQQue>().HasRequired(e => e.MdmDQImpacts).WithMany(t => t.MdmDQQues).HasForeignKey(e => e.IMPACT_LEVEL).WillCascadeOnDelete(false);
@@ -65,6 +67,8 @@ namespace CMdm.Data
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmRegex).WithMany(t => t.EntityDetails).HasForeignKey(e => e.REGEX).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmAggrDimensions).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.DQ_DIMENSION).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.EntityMast).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<MdmCatalog>().HasRequired(e => e.CREATED_BY).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
 
         }
         #region Utilities
@@ -179,12 +183,15 @@ namespace CMdm.Data
 
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Kpi.BrnKpi> BrnKpis { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Configuration.Setting> Settings { get; set; }
+
         //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
 
- 
-       // public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
- 
- 
+
+        // public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
+
+
     }
 
 }

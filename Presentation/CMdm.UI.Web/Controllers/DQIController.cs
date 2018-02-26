@@ -31,7 +31,8 @@ namespace CMdm.UI.Web.Controllers
         // GET: DQI
         public ActionResult Index()
         {
-            return View(db.MDM_WEIGHTS.ToList());
+            return RedirectToAction("ListParams");
+            //return View(db.MDM_WEIGHTS.ToList());
         }
 
         // GET: DQI/Details/5
@@ -133,7 +134,47 @@ namespace CMdm.UI.Web.Controllers
             var dqiParams = db.MdmDqiParams.Include(m => m.MdmWeights); //.Include(m => m.MdmRegex);
             return View(dqiParams.ToList());
         }
-        public ActionResult ListParams()
+        public ActionResult ListParams(int? CatalogId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var model = new DqParamListModel();
+            model.CATALOG_ID = CatalogId;
+
+            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME").ToList();
+            //model.RegexList = new SelectList(db.MdmRegex, "REGEX_ID", "REGEX_NAME").ToList();
+            model.EntityList = new SelectList(db.EntityMast, "ENTITY_ID", "ENTITY_NAME").ToList();
+            model.Dimensions = new SelectList(db.MDM_AGGR_DIMENSION, "DIMENSIONID", "DIMENSION_NAME").ToList();
+            model.Catalogs.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+
+            model.EntityList.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            model.Dimensions.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            //var weights = from Weights in db.MDM_WEIGHTS
+            //              select new WeightsViewModel
+            //              {
+            //                  WEIGHT_ID = Weights.WEIGHT_ID,
+            //                  WEIGHT_DESC = Weights.WEIGHT_DESC
+            //              };
+
+            //model.Weights = weights.ToList();
+            PopulateWeights();
+            return View(model);
+        }
+
+        public ActionResult ListParams_()
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -171,6 +212,7 @@ namespace CMdm.UI.Web.Controllers
             PopulateWeights();
             return View(model);
         }
+
         [HttpPost]
         public virtual ActionResult ListParams(DataSourceRequest command, DqParamListModel model, string sort, string sortDir)
         {

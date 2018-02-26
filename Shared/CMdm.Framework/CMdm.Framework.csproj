@@ -94,6 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mvc\CommaSeparatedModelBinder.cs" />
     <Compile Include="Mvc\ConverterJsonResult.cs" />
     <Compile Include="UI\Paging\BasePageableModel.cs" />
     <Compile Include="UI\Paging\IPageableModel.cs" />

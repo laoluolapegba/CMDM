@@ -1,0 +1,189 @@
+﻿@{
+    ViewBag.Title = "Branch Dashboard";
+    Layout = "~/Views/Shared/_Layoutdash.cshtml";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Home/DashboardV2/menu")
+@*<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.core.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.data.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.userevents.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.color.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.popup.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.drawing.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.core.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.chart.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.themes.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.gauge.min.js")"></script>*@
+}
+<script type="text/javascript">
+
+    function onTrendDataBound() {
+        var items = this.dataSource.data().length;
+        $("#NoData").toggle(items === 0);
+    }
+    function createGauge(labelPosition) {
+        var branchCode = $("#Branch").data("kendoDropDownList");
+ 
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            data: { BranchCode: branchCode.value() },
+            url: '@Url.Action("GetBrnDQI", "Home")',
+            success: function (data) {
+
+                $("#dqigauge").kendoRadialGauge({
+                    scale: {
+                        minorUnit: 10,
+                        startAngle: -20,
+                        endAngle: 100,
+                        max: 100,
+                        labels: {
+                            position: labelPosition || "inside"
+                        },
+                        ranges: [
+                                    {
+                                        from: 0,
+                                        to: 25,
+                                        color: "#c20000"
+                                    },
+                                    {
+                                        from: 26,
+                                        to: 80,
+                                        color: "#ffc700"
+                                    },
+                                    {
+                                        from: 80,
+                                        to: 100,
+                                        color: "#2ecc71"
+                                    }
+                                    
+                        ]
+                    }
+                });
+                var dqiGauge = $("#dqigauge").data("kendoRadialGauge");
+                dqiGauge.value(data[0].dqi);
+                dqiGauge.redraw();
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function onCriteriaChange() {
+        var cataloglist = $("#Catalog").data("kendoDropDownList"),
+            branchCode = $("#Branch").data("kendoDropDownList");
+    }
+
+</script>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Total DQ Score</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <div class="row">
+                    <div class="col-md-9 col-sm-8">
+                        <div class="chartgoeshere">
+                            <div id="dqigauge">
+                                <a data-toggle="tooltip" title="Tooltip"></a>
+                            </div>
+
+                            <p class="text-center">DQI Score (%)</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="col-md-8">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Branch DQI Breakdown</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <div class="row">
+                    <div class="col-md-9 col-sm-8">
+                        <div class="chart2goeshere">
+                            <div id="criteria">
+                                @(
+                             Html.Kendo().DropDownList()
+                                .Name("Branch")
+                                    .HtmlAttributes(new { @style = "width:250px" })
+                                        .Filter(FilterType.Contains)
+                                .DataSource(datasource => datasource
+                                              .Read(read => read.Action("GetBranches", "Home")
+                                              )).DataTextField("BranchName").DataValueField("BranchId")
+                                                      .Events(ev => ev.Change("onCriteriaChange"))
+                                                            )
+                                @(
+                                 Html.Kendo().DropDownList()
+                                    .Name("Catalog")
+                                        .HtmlAttributes(new { @style = "width:250px" })
+                                            .Filter(FilterType.Contains)
+                                    .DataSource(datasource => datasource
+                                                  .Read(read => read.Action("GetCatalogs", "MdmCatalogs")
+                                                  )).DataTextField("CATALOG_NAME")
+                                                  .DataValueField("CATALOG_ID")
+                                     .Events(ev => ev.Change("onCriteriaChange"))
+                                )
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+   
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        createGauge();        
+        onCriteriaChange();
+
+    });
+
+
+    function onListDataBound(e) {
+        //this.value(0);
+    }
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    @*<script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/chartjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/jvectormap/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Home/DashboardV2")*@
+}

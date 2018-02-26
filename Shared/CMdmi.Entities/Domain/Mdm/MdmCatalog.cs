@@ -22,12 +22,12 @@ namespace CMdm.Entities.Domain.Mdm
         public int CATALOG_ID { get; set; }  //,,,
         public string CATALOG_NAME { get; set; }
         public int CATEGORY_ID { get; set; }
-        public string CREATED_BY { get; set; }
+        public int CREATED_BY { get; set; }
 
         public DateTime? CREATED_DATE { get; set; }
 
-        [StringLength(20)]
-        public string LAST_MODIFIED_BY { get; set; }
+        //[StringLength(20)]
+        public int? LAST_MODIFIED_BY { get; set; }
 
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public virtual ICollection<MdmDqRule> MdmDqRules { get; set; }

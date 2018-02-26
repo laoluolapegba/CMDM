@@ -309,6 +309,7 @@
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
       <DependentUpon>AuditReport.aspx</DependentUpon>
@@ -337,6 +338,20 @@
     </Compile>
     <Compile Include="CustomerInfo\CorporateCustInfo.aspx.designer.cs">
       <DependentUpon>CorporateCustInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateRoles.aspx.cs">
+      <DependentUpon>CreateRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateRoles.aspx.designer.cs">
+      <DependentUpon>CreateRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateUser.aspx.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateUser.aspx.designer.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerInfo\CustomerReports.aspx.cs">
       <DependentUpon>CustomerReports.aspx</DependentUpon>
@@ -500,6 +515,7 @@
     <Compile Include="Helpers\CrossCutting\ExceptionHandler\ExceptionDude.cs" />
     <Compile Include="Helpers\CrossCutting\Logging\Logger.cs" />
     <Compile Include="Helpers\CrossCutting\Logging\LogHelper.cs" />
+    <Compile Include="Helpers\CrossCutting\Security\AuthenticationType.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomIdentity.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomMembershipProvider.cs" />
     <Compile Include="Helpers\CrossCutting\Security\CustomMembershipUser.cs" />
@@ -536,6 +552,7 @@
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
+    <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -828,8 +845,12 @@
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
     <Content Include="Content\ico\kingadmin-favicon57x57.png" />
     <Content Include="Content\ico\kingadmin-favicon72x72.png" />
+    <Content Include="Content\images\ico-delete.png" />
+    <Content Include="Content\images\ico-edit.png" />
+    <Content Include="Content\images\logo-48x48.png" />
     <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo1.png" />
     <Content Include="Content\images\slides\slide1.jpg" />
     <Content Include="Content\images\slides\slide2.jpg" />
     <Content Include="Content\images\slides\slide3.jpg" />
@@ -1219,6 +1240,8 @@
     <Content Include="CustomerInfo\AuthCorpCustInfo.aspx" />
     <Content Include="CustomerInfo\AuthIndividualCust.aspx" />
     <Content Include="CustomerInfo\CorporateCustInfo.aspx" />
+    <Content Include="CustomerInfo\CreateRoles.aspx" />
+    <Content Include="CustomerInfo\CreateUser.aspx" />
     <Content Include="CustomerInfo\CustomerReports.aspx" />
     <Content Include="CustomerInfo\IndividualCustomer.aspx" />
     <Content Include="CustomerInfo\ManageUsers.aspx" />
@@ -1249,6 +1272,7 @@
     <Content Include="Modules\WebForm2.aspx" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
+    <Content Include="Scripts\admin.common.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Calendar\Calendar-menu.js" />
@@ -1994,6 +2018,7 @@
     <Content Include="Views\MdmWeights\Index.cshtml" />
     <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Params\ParamList.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\ACCOUNTINFO\Create.cshtml" />
     <Content Include="Views\ACCOUNTINFO\Delete.cshtml" />
     <Content Include="Views\ACCOUNTINFO\Details.cshtml" />
@@ -2005,6 +2030,18 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
+=======
+    <Content Include="Views\DQI\ListParams.cshtml" />
+    <Content Include="Views\Home\BranchDqi.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTimeNullable.cshtml" />
+    <Content Include="Views\Shared\_Layoutdash.cshtml" />
+    <Content Include="Views\UserAdmin\ListUsers.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultiSelect.cshtml" />
+    <Content Include="Views\UserAdmin\Create.cshtml" />
+    <Content Include="Views\UserAdmin\Edit.cshtml" />
+    <Content Include="Views\UserAdmin\_CreateOrUpdate.cshtml" />
+>>>>>>> 50f26b6000847903a2f76e32a5b24d710f64f259
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

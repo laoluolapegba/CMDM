@@ -1,0 +1,29 @@
+﻿@model CMdm.UI.Web.Models.UserAdmin.UsersListViewModel
+
+@{
+    //page title
+    ViewBag.Title = "AddNew";
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Add New User
+            <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("To List", "ListUsers")</small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+               Save and Continue Edit
+            </button>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}

@@ -72,7 +72,7 @@ namespace CMdm.Data.DAC
             {
                 // Store the query.
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
-                var query = db.MdmDQQues.Select(q => q);
+                var query = db.MdmDQQues.Select(q => q).Include(a => a.MdmDQPriorities);
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.ERROR_DESC.Contains(name));
@@ -80,8 +80,8 @@ namespace CMdm.Data.DAC
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.CREATED_DATE)//    //OrderBy(a => a.CREATED_DATE)  //
-                        .Skip(startRowIndex).Take(maximumRows);
+                query = query.OrderBy(a => a.CREATED_DATE);//    //OrderBy(a => a.CREATED_DATE)  //
+                      //  .Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
                 return query.ToList();

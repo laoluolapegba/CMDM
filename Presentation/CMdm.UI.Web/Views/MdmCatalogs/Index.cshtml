@@ -14,9 +14,9 @@
 
 @Styles.Render("~/AdminLTE/plugins/datatables/css")
 <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Data Catalogs
-        </h1>
+        </h1>*@
         <div class="pull-right">
             <a href="@Url.Action("Create")" class="btn bg-blue">
                 <i class="fa fa-plus-square"></i>
@@ -99,7 +99,7 @@
                         </td>*@
                                     <td>
 
-                                        <a href="@Url.Action("ListParams", "DQI", new { CatalogId = item.CATALOG_ID })"> <b>Details</b></a>
+                                        <a class="btn btn-default" href="@Url.Action("ListParams", "DQI", new { CatalogId = item.CATALOG_ID })"><i class="fa fa-eye"></i> <b>Details</b></a>
 
                                         @*@Html.ActionLink("Details", "Details", new { id = item.CATALOG_ID }) |*@
 

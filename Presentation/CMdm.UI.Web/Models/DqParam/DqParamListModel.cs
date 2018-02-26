@@ -64,7 +64,7 @@ namespace CMdm.UI.Web.Models.DqParam
         public string DEFAULT_VALUE { get; set; }
         public int COLUMN_ORDER { get; set; }
         [DisplayName("Data Catalog")]
-        public int CATALOG_ID { get; set; }
+        public int? CATALOG_ID { get; set; }
         [DisplayName("Use for Dqi")]
         public bool USE_FOR_DQI { get; set; }
         [DisplayName("Quality Dimension")]

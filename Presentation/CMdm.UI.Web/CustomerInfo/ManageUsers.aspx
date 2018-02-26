@@ -181,7 +181,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="lnkEdit" runat="server" RecId='<%#Eval("PROFILE_ID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;" OnClick="OnEdit_User" >
-                                        <asp:Image ID="imgEdit" ImageUrl="../Content/assets/img/ico-edit.png" runat="server" />
+                                        <asp:Image ID="imgEdit" ImageUrl="../Content/images/ico-edit.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -194,7 +194,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="LinkButton1" runat="server" RecId='<%#Eval("PROFILE_ID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;" OnClick="OnDelete_User" >
-                                        <asp:Image ID="Image1" ImageUrl="../Content/assets/img/ico-delete.png" runat="server" />
+                                        <asp:Image ID="Image1" ImageUrl="../Content/images/ico-delete.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -449,7 +449,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="lnkEdit" runat="server" RecId='<%#Eval("PermID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;"  >
-                                        <asp:Image ID="imgEdit" ImageUrl="../Content/assets/img/ico-edit.png" runat="server" />
+                                        <asp:Image ID="imgEdit" ImageUrl="../Content/images/ico-edit.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -462,7 +462,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="LinkButton1" runat="server" RecId='<%#Eval("PermID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;" OnClick="OnDelete_Permission" >
-                                        <asp:Image ID="Image1" ImageUrl="../Content/assets/img/ico-delete.png" runat="server" />
+                                        <asp:Image ID="Image1" ImageUrl="../Content/images/ico-delete.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -580,7 +580,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="lnkEdit" runat="server" RecId='<%#Eval("recordID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;"  >
-                                        <asp:Image ID="imgEdit" ImageUrl="../Content/assets/img/ico-edit.png" runat="server" />
+                                        <asp:Image ID="imgEdit" ImageUrl="../Content/images/ico-edit.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -593,7 +593,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="LinkButton1" runat="server" RecId='<%#Eval("recordID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;" OnClick="OnDelete_AssignedPermission" >
-                                        <asp:Image ID="Image1" ImageUrl="../Content/assets/img/ico-delete.png" runat="server" />
+                                        <asp:Image ID="Image1" ImageUrl="../Content/images/ico-delete.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
@@ -728,7 +728,7 @@
                                 <div style="white-space: nowrap; clear: none; width: auto; display: inline;">
                                     <asp:LinkButton ID="LinkButton1" runat="server" RecId='<%#Eval("RECORD_ID")%>' Style="margin: 0px 0px 0px 5px;
                                         white-space: nowrap; clear: none; display: inline;" OnClick="OnDelete_AssignedUser" >
-                                        <asp:Image ID="Image1" ImageUrl="../Content/assets/img/ico-delete.png" runat="server" />
+                                        <asp:Image ID="Image1" ImageUrl="../Content/images/ico-delete.png" runat="server" />
                                     </asp:LinkButton>
                                 </div>
                             </ItemTemplate>
