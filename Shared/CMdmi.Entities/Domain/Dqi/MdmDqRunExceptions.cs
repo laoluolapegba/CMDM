@@ -38,6 +38,9 @@ namespace CMdm.Entities.Domain.Dqi
         public int ISSUE_STATUS { get; set; }
         [DisplayName("Priority")]
         public int ISSUE_PRIORITY { get; set; }
+        public int CATALOG_ID { get; set; }
+        public int? RELATED_ENTITY_ID { get; set; }
+        public string CATALOG_TAB_COL { get; set; }
         public virtual MdmDQPriority MdmDQPriorities { get; set; }
         public virtual MdmDQQueStatus MdmDQQueStatuses { get; set; }
         //public virtual MdmDqRule MdmDqRule { get; set; }

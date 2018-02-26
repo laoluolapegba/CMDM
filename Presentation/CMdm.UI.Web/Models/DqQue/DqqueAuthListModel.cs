@@ -9,23 +9,23 @@ using System.Web.Mvc;
 namespace CMdm.UI.Web.Models.DqQue
 {
     
-    public partial class DqquebrnListModel
+    public partial class DqqueAuthListModel
     {
-        public DqquebrnListModel()
+        public DqqueAuthListModel()
         {
             Priorities = new List<SelectListItem>();
             Statuses = new List<SelectListItem>();
             Branches = new List<SelectListItem>();
             Catalogs = new List<SelectListItem>();
         }
-        [DisplayName("Search")]
+        [DisplayName("Customer ID")]
         [AllowHtml]
         public string SearchName { get; set; }
-        [DisplayName("FromDate")]
+        [DisplayName("Modified FromDate")]
         [UIHint("DateNullable")]
         public DateTime? CreatedOnFrom { get; set; }
 
-        [DisplayName("ToDate")]
+        [DisplayName("Modified ToDate")]
         [UIHint("DateNullable")]
         public DateTime? CreatedOnTo { get; set; }
         [DisplayName("Exception Id")]
@@ -34,7 +34,7 @@ namespace CMdm.UI.Web.Models.DqQue
         public int RULE_ID { get; set; }
         [DisplayName("Rule name")]
         public string RULE_NAME { get; set; }
-        [DisplayName("Error Description")]
+        [DisplayName("Customer Id")]
         public string CUST_ID { get; set; }
         [DisplayName("Branch Code")]
         public string BRANCH_CODE { get; set; }
@@ -58,7 +58,11 @@ namespace CMdm.UI.Web.Models.DqQue
         public string REASON { get; set; }
         [DisplayName("Table Name")]
         public string CATALOG_TABLE_NAME { get; set; }
+        [DisplayName("Catalog")]
         public int CATALOG_ID { get; set; }
+        public string FIRSTNAME { get; set; }
+        public string SURNAME { get; set; }
+        public string OTHERNAME { get; set; }
         public IList<SelectListItem> Branches { get; set; }
         public IList<SelectListItem> Priorities { get; set; }
         public IList<SelectListItem> Statuses { get; set; }
