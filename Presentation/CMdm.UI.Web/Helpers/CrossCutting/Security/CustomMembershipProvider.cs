@@ -71,8 +71,8 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                 return false;
             //Authenticate _auth = new Authenticate();
             int authSetting = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
-            string domainName = db.Settings.Where(a => a.SettingName == "DOMAIN_NAME").Select(a=>a.SETTING_VALUE).FirstOrDefault();
-            string serverName = db.Settings.Where(a => a.SettingName == "LDAP_SERVER").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string domainName = db.Settings.Where(a => a.SETTING_NAME == "DOMAIN_NAME").Select(a=>a.SETTING_VALUE).FirstOrDefault();
+            string serverName = db.Settings.Where(a => a.SETTING_NAME == "LDAP_SERVER").Select(a => a.SETTING_VALUE).FirstOrDefault();
 
             AuthenticationType authType = (AuthenticationType)(authSetting);
             switch (authType)

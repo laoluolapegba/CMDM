@@ -14,7 +14,7 @@ namespace CMdm.Entities.Domain.Configuration
         
         [Key]
         public int ID { get; set; }
-        public string SettingName { get; set; }
+        public string SETTING_NAME { get; set; }
         public string SETTING_VALUE { get; set; }
     }
 }
