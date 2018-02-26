@@ -278,6 +278,8 @@
     <Compile Include="BLL\MessageFormatter.cs" />
     <Compile Include="BLL\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ACCOUNTINFOController.cs" />
+    <Compile Include="Controllers\ACCTSERVICESREQUIREDController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
@@ -1992,6 +1994,17 @@
     <Content Include="Views\MdmWeights\Index.cshtml" />
     <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Params\ParamList.cshtml" />
+    <Content Include="Views\ACCOUNTINFO\Create.cshtml" />
+    <Content Include="Views\ACCOUNTINFO\Delete.cshtml" />
+    <Content Include="Views\ACCOUNTINFO\Details.cshtml" />
+    <Content Include="Views\ACCOUNTINFO\Edit.cshtml" />
+    <Content Include="Views\ACCOUNTINFO\Index.cshtml" />
+    <Content Include="Views\ACCTSERVICESREQUIRED\Create.cshtml" />
+    <Content Include="Views\ACCTSERVICESREQUIRED\Delete.cshtml" />
+    <Content Include="Views\ACCTSERVICESREQUIRED\Details.cshtml" />
+    <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
+    <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
+    <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

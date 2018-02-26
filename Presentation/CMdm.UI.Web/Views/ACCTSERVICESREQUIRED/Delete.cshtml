@@ -1,0 +1,184 @@
+﻿@model CMdm.Entities.Domain.Customer.CDMA_ACCT_SERVICES_REQUIRED
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CDMA_ACCT_SERVICES_REQUIRED</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ACCOUNT_NUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACCOUNT_NUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CARD_PREFERENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARD_PREFERENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ELECTRONIC_BANKING_PREFERENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ELECTRONIC_BANKING_PREFERENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATEMENT_PREFERENCES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATEMENT_PREFERENCES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TRANSACTION_ALERT_PREFERENCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TRANSACTION_ALERT_PREFERENCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATEMENT_FREQUENCY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATEMENT_FREQUENCY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHEQUE_BOOK_REQUISITION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHEQUE_BOOK_REQUISITION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHEQUE_LEAVES_REQUIRED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHEQUE_LEAVES_REQUIRED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHEQUE_CONFIRMATION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHEQUE_CONFIRMATION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHEQUE_CONFIRMATION_THRESHOLD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHEQUE_CONFIRMATION_THRESHOLD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_TRANSFER_LIMIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_TRANSFER_LIMIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOKEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOKEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACCOUNT_SIGNATORY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACCOUNT_SIGNATORY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_MODIFIED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTHORISED_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP_ADDRESS)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

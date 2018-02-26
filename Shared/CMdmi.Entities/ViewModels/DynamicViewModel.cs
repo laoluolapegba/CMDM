@@ -24,6 +24,10 @@ namespace CMdm.Entities.ViewModels
         public CDMA_INDIVIDUAL_OTHER_DETAILS_LOG otherdetails_LOG { get; set; }
         public CDMA_INDIVIDUAL_CONTACT_DETAIL_LOG contact_LOG { get; set; }
 
+        //account info
+        public CDMA_ACCOUNT_INFO AccInfo { get; set; }
+        public CDMA_ACCT_SERVICES_REQUIRED ServiceInfo { get; set; }
+
     }
 
     public class LogViewModel

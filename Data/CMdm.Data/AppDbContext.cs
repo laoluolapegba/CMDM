@@ -150,6 +150,33 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_PROFILE_LOG> CDMA_INDIVIDUAL_PROFILE_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_LOG> CDMA_INDIVIDUAL_BIO_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_LOG> CDMA_INDIVIDUAL_CONTACT_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO> CDMA_ACCOUNT_INFO { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCT_SERVICES_REQUIRED> CDMA_ACCT_SERVICES_REQUIRED { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BRANCH_CLASS> CDMA_BRANCH_CLASS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_SEGMENT> CDMA_CUSTOMER_SEGMENT { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_TYPE> CDMA_CUSTOMER_TYPE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.Limit_Range> Limit_Range { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SIZE> CDMA_BUSINESS_SIZE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CONFIRM_THRESHOLD> CONFIRM_THRESHOLD { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.BusinessDivision> BUSINESSDIVISION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SEGMENT> CDMA_BUSINESS_SEGMENT { get; set; }
+        
+
+
+
+
+
+
+        //CDMA_ACCOUNT_TYPE
+
+        //
+
+        //
+
+
+
+
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
         //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }

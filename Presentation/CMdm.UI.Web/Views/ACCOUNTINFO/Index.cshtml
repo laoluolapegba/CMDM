@@ -1,0 +1,183 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TYPE_OF_ACCOUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_NUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_OFFICER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCH_CLASS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUSINESS_DIVISION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUSINESS_SEGMENT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUSINESS_SIZE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BVN_NUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CAV_REQUIRED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHEQUE_CONFIRM_THRESHLDRANGE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ONLINE_TRANSFER_LIMIT_RANGE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_IC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_SEGMENT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_TYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OPERATING_INSTRUCTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ORIGINATING_BRANCH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TYPE_OF_ACCOUNT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_NUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_OFFICER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCH_CLASS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUSINESS_DIVISION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUSINESS_SEGMENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUSINESS_SIZE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BVN_NUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAV_REQUIRED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHEQUE_CONFIRM_THRESHLDRANGE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ONLINE_TRANSFER_LIMIT_RANGE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUSTOMER_IC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUSTOMER_SEGMENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUSTOMER_TYPE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OPERATING_INSTRUCTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ORIGINATING_BRANCH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTOMER_NO })
+        </td>
+    </tr>
+}
+
+</table>
