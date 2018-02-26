@@ -13,8 +13,8 @@ namespace CMdm.Entities.Domain.Dqi
     {
         Open = 1,
         Closed = 2,
-        Inprogress = 3,
-        Acknowledged = 4,
-        Completed = 5
+        Inprogress = 3
+        //Completed = 5
+        //        Acknowledged = 4,
     }
 }

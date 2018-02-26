@@ -544,6 +544,8 @@
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
     <Compile Include="Models\DqParam\DqParamListModel.cs" />
+    <Compile Include="Models\DqQue\ChangedCustomerModel.cs" />
+    <Compile Include="Models\DqQue\DqqueAuthListModel.cs" />
     <Compile Include="Models\DqQue\DqquebrnListModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
@@ -2026,6 +2028,7 @@
     <Content Include="Views\UserAdmin\Create.cshtml" />
     <Content Include="Views\UserAdmin\Edit.cshtml" />
     <Content Include="Views\UserAdmin\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\DQQue\AuthList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

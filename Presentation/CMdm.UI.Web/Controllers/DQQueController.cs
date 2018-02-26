@@ -87,6 +87,7 @@ namespace CMdm.UI.Web.Controllers
                     PCT_COMPLETION = x.PCT_COMPLETION,
                     PRIORITY = x.PRIORITY,
                     ISSUE_PRIORITY_DESC = x.MdmDQPriorities.PRIORITY_DESCRIPTION,
+                    CATALOG_ID = x.CATALOG_ID,
                     CREATED_DATE = x.CREATED_DATE// _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
                 }),
                 Total = items.TotalCount
@@ -105,7 +106,7 @@ namespace CMdm.UI.Web.Controllers
 
             return Json(gridModel);
         }
-        public ActionResult BrnIssueList(int? ruleid, int? branchid)
+        public ActionResult BrnIssueList(int? CatalogId, int? branchid)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -114,7 +115,7 @@ namespace CMdm.UI.Web.Controllers
             var model = new DqquebrnListModel();
             
 
-            model.RULE_ID = ruleid == null ? 0: Convert.ToInt32(ruleid);
+            model.CATALOG_ID = CatalogId == null ? 0: Convert.ToInt32(CatalogId);
             //foreach (var at in _dqService.GetAllActivityTypes())
             //{
             //    model.ActivityLogType.Add(new SelectListItem
@@ -128,12 +129,18 @@ namespace CMdm.UI.Web.Controllers
             
             model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
+            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", CatalogId).ToList();
             model.Statuses.Add(new SelectListItem
             {
                 Value = "0",
                 Text = "All"
             });
             model.Priorities.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            model.Catalogs.Add(new SelectListItem
             {
                 Value = "0",
                 Text = "All"
@@ -155,7 +162,10 @@ namespace CMdm.UI.Web.Controllers
                             : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
             //startDateValue, endDateValue,
             IssueStatus? issueStatus = model.STATUS_CODE > 0 ? (IssueStatus?)(model.STATUS_CODE) : null;
-            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, model.RULE_ID,  model.BRANCH_CODE, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, model.CATALOG_ID, model.RULE_ID,  identity.BranchId, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new DqquebrnListModel
@@ -169,7 +179,9 @@ namespace CMdm.UI.Web.Controllers
                     CREATED_DATE = x.CREATED_DATE,
                     PRIORITY_CODE = x.ISSUE_PRIORITY,
                     STATUS_CODE = x.ISSUE_STATUS,
-                    REASON = x.REASON
+                    REASON = x.REASON,
+                    CATALOG_ID = x.CATALOG_ID,
+                    CATALOG_TABLE_NAME =x.CATALOG_TABLE_NAME
 
                 }),
                 Total = items.TotalCount
@@ -188,6 +200,95 @@ namespace CMdm.UI.Web.Controllers
 
             return Json(gridModel);
         }
+
+        public ActionResult AuthList()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var model = new DqqueAuthListModel();
+            //foreach (var at in _dqService.GetAllActivityTypes())
+            //{
+            //    model.ActivityLogType.Add(new SelectListItem
+            //    {
+            //        Value = at.Id.ToString(),
+            //        Text = at.Name
+            //    });
+            //}
+            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+            model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
+            model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
+            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME").ToList();
+            model.Statuses.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            model.Priorities.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            model.Catalogs.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All"
+            });
+            //model.Branches.Add(new SelectListItem
+            //{
+            //    Value = "0",
+            //    Text = "All"
+            //});
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AuthList(DataSourceRequest command, DqqueAuthListModel model, string sort, string sortDir)
+        {
+            DateTime? startDateValue = (model.CreatedOnFrom == null) ? null
+                : (DateTime?)model.CreatedOnFrom.Value;
+
+            DateTime? endDateValue = (model.CreatedOnTo == null) ? null
+                            : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
+            //startDateValue, endDateValue,
+            IssueStatus? issueStatus = model.STATUS_CODE > 0 ? (IssueStatus?)(model.STATUS_CODE) : null;
+
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var items = _dqQueService.GetAllBrnUnAuthIssues(model.SearchName, model.CATALOG_ID, model.RULE_ID, identity.BranchId, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new DqqueAuthListModel
+                {
+                    CUST_ID = x.CUST_ID,
+                    RULE_NAME = x.RULE_NAME,
+                    BRANCH_CODE = x.BRANCH_CODE,
+                    ISSUE_STATUS_DESC = x.ISSUE_STATUS_DESC,
+                    ISSUE_PRIORITY_DESC = x.ISSUE_PRIORITY_DESC,
+                    RUN_DATE = x.RUN_DATE,
+                    BRANCH_NAME = x.BRANCH_NAME,
+                    CREATED_DATE = x.CREATED_DATE,
+                    PRIORITY_CODE = x.ISSUE_PRIORITY,
+                    STATUS_CODE = x.ISSUE_STATUS,
+                    REASON = x.REASON,
+                    FIRSTNAME = x.FIRST_NAME,
+                    SURNAME = x.SURNAME,
+                    OTHERNAME = x.OTHERNAME,
+                    CATALOG_ID = x.CATALOG_ID,
+                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME
+
+                }),
+                Total = items.TotalCount
+            };
+
+            
+
+            return Json(gridModel);
+        }
+
         public ActionResult Indexa()
         {
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
