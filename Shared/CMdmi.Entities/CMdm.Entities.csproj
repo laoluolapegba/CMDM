@@ -44,11 +44,12 @@
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_INFO.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_REQUIRED.cs" />
-    <Compile Include="Domain\Customer\CDMA_BRANCH_CLASS.cs" />
+    <Compile Include="Domain\Customer\CDMA_BRANCH_ClASS.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
     <Compile Include="Domain\Customer\CDMA_COUNTRIES.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_SEGMENT.cs" />
+    <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS _LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
-    <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Customer\Limit_Range.cs" />

@@ -546,6 +546,8 @@
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
     <Compile Include="Models\DqParam\DqParamListModel.cs" />
+    <Compile Include="Models\DqQue\ChangedCustomerModel.cs" />
+    <Compile Include="Models\DqQue\DqqueAuthListModel.cs" />
     <Compile Include="Models\DqQue\DqquebrnListModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
@@ -2018,7 +2020,6 @@
     <Content Include="Views\MdmWeights\Index.cshtml" />
     <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Params\ParamList.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\ACCOUNTINFO\Create.cshtml" />
     <Content Include="Views\ACCOUNTINFO\Delete.cshtml" />
     <Content Include="Views\ACCOUNTINFO\Details.cshtml" />
@@ -2030,7 +2031,6 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
-=======
     <Content Include="Views\DQI\ListParams.cshtml" />
     <Content Include="Views\Home\BranchDqi.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
@@ -2041,7 +2041,7 @@
     <Content Include="Views\UserAdmin\Create.cshtml" />
     <Content Include="Views\UserAdmin\Edit.cshtml" />
     <Content Include="Views\UserAdmin\_CreateOrUpdate.cshtml" />
->>>>>>> 50f26b6000847903a2f76e32a5b24d710f64f259
+    <Content Include="Views\DQQue\AuthList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

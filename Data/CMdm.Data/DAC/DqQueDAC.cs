@@ -197,17 +197,20 @@ namespace CMdm.Data.DAC
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
                 //var data = northwind.CM_DISTRIBUTION_SCHEDULE.Join(northwind.CM_BRANCH,
                 //c => c.BRANCH_ID, o => o.BRANCH_ID, (o, c) => new { Sched = o, Branch = c }).ToList();
+                string authStatus = "U";
                 var data = db.MdmDqRunExceptions
                     .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
                     e => e.CUST_ID, c => c.CUSTOMER_NO,
-                    (e, c) => new { Excp = e, Cust = c }).Include(e=>e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses);
+                    (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
+                    .Where(x => x.Cust.AUTHORISED == authStatus);
 
                 var query = data.Select(o => new CustExceptionsModel
                 {
                     EXCEPTION_ID = o.Excp.EXCEPTION_ID,
                     RULE_ID = o.Excp.RULE_ID,
                     RULE_NAME = o.Excp.RULE_NAME,
-                    CUST_ID = o.Excp.BRANCH_CODE,
+                    CUST_ID = o.Excp.CUST_ID,
+                    BRANCH_CODE = o.Excp.BRANCH_CODE,
                     BRANCH_NAME = o.Excp.BRANCH_NAME,
                     ISSUE_PRIORITY_DESC = o.Excp.MdmDQPriorities.PRIORITY_DESCRIPTION,
                     ISSUE_STATUS_DESC = o.Excp.MdmDQQueStatuses.STATUS_DESCRIPTION,

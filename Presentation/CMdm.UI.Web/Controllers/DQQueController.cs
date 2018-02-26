@@ -263,6 +263,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 Data = items.Select(x => new DqqueAuthListModel
                 {
+                    EXCEPTION_ID = x.EXCEPTION_ID,
                     CUST_ID = x.CUST_ID,
                     RULE_NAME = x.RULE_NAME,
                     BRANCH_CODE = x.BRANCH_CODE,
