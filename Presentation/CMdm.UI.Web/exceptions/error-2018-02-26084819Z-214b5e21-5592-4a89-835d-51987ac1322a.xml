@@ -1,0 +1,180 @@
+﻿<error errorId="214b5e21-5592-4a89-835d-51987ac1322a" application="/LM/W3SVC/3/ROOT" host="DESKTOP-147GJ4S" type="System.Web.HttpException" message="The controller for path '/plugins/dataTables' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/plugins/dataTables' was not found or does not implement IController.&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="omniuser" time="2018-02-26T08:48:19.1643371Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:__cwjWsTr=1490609104751; ciNav=no; __distillery=3825a08_5e2447a3-5457-48c8-a634-458bdfa8289c-21c32ac32-e4816e628895-c2a3; _ga=GA1.1.427404047.1495093180; PHPSESSID=armd4kojilo368t4irn1g5ga37; __RequestVerificationToken=9cYiqOFiFQUXvFGA5ibMsv_W2rc-IMboj9D3jKCuhuaM2lUWVN65qWv51ZkOir6EaCWGTjacoIqBoizcfnJstvhi7gZ8ARYtHMSavKNGbuc1; .ASPXAUTH=6974928933DF763F7B12068948D06056723969394DAA73DB5B7602036623BA03DB76A25CEBE5B174340EA9CBC371BBBF315E1BE2B7692C05A4F747AC95E5603CDFDC6F89915120F91DAB9E9D1756CD6AEB1EF750814069E8FC42FF69877CE625&#xD;&#xA;HTTP_HOST:localhost:18459&#xD;&#xA;HTTP_REFERER:http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: __cwjWsTr=1490609104751; ciNav=no; __distillery=3825a08_5e2447a3-5457-48c8-a634-458bdfa8289c-21c32ac32-e4816e628895-c2a3; _ga=GA1.1.427404047.1495093180; PHPSESSID=armd4kojilo368t4irn1g5ga37; __RequestVerificationToken=9cYiqOFiFQUXvFGA5ibMsv_W2rc-IMboj9D3jKCuhuaM2lUWVN65qWv51ZkOir6EaCWGTjacoIqBoizcfnJstvhi7gZ8ARYtHMSavKNGbuc1; .ASPXAUTH=6974928933DF763F7B12068948D06056723969394DAA73DB5B7602036623BA03DB76A25CEBE5B174340EA9CBC371BBBF315E1BE2B7692C05A4F747AC95E5603CDFDC6F89915120F91DAB9E9D1756CD6AEB1EF750814069E8FC42FF69877CE625&#xD;&#xA;Host: localhost:18459&#xD;&#xA;Referer: http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/3/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\Abass\Source\Repos\CMDM\Presentation\CMdm.UI.Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="3" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/3" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\Abass\Source\Repos\CMDM\Presentation\CMdm.UI.Web\plugins\dataTables" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="25167" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="18459" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__cwjWsTr=1490609104751; ciNav=no; __distillery=3825a08_5e2447a3-5457-48c8-a634-458bdfa8289c-21c32ac32-e4816e628895-c2a3; _ga=GA1.1.427404047.1495093180; PHPSESSID=armd4kojilo368t4irn1g5ga37; __RequestVerificationToken=9cYiqOFiFQUXvFGA5ibMsv_W2rc-IMboj9D3jKCuhuaM2lUWVN65qWv51ZkOir6EaCWGTjacoIqBoizcfnJstvhi7gZ8ARYtHMSavKNGbuc1; .ASPXAUTH=6974928933DF763F7B12068948D06056723969394DAA73DB5B7602036623BA03DB76A25CEBE5B174340EA9CBC371BBBF315E1BE2B7692C05A4F747AC95E5603CDFDC6F89915120F91DAB9E9D1756CD6AEB1EF750814069E8FC42FF69877CE625" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:18459" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__cwjWsTr">
+      <value string="1490609104751" />
+    </item>
+    <item name="ciNav">
+      <value string="no" />
+    </item>
+    <item name="__distillery">
+      <value string="3825a08_5e2447a3-5457-48c8-a634-458bdfa8289c-21c32ac32-e4816e628895-c2a3" />
+    </item>
+    <item name="_ga">
+      <value string="GA1.1.427404047.1495093180" />
+    </item>
+    <item name="PHPSESSID">
+      <value string="armd4kojilo368t4irn1g5ga37" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="9cYiqOFiFQUXvFGA5ibMsv_W2rc-IMboj9D3jKCuhuaM2lUWVN65qWv51ZkOir6EaCWGTjacoIqBoizcfnJstvhi7gZ8ARYtHMSavKNGbuc1" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="6974928933DF763F7B12068948D06056723969394DAA73DB5B7602036623BA03DB76A25CEBE5B174340EA9CBC371BBBF315E1BE2B7692C05A4F747AC95E5603CDFDC6F89915120F91DAB9E9D1756CD6AEB1EF750814069E8FC42FF69877CE625" />
+    </item>
+  </cookies>
+</error>
