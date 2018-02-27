@@ -200,7 +200,7 @@
                         </li>
                         
                         <li class="user-footer">
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
+                            @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @*<div class="pull-left">

@@ -171,7 +171,21 @@
                                         template: "<input type='checkbox' value='#=EXCEPTION_ID#' class='checkboxGroups'/>",
                                         width: 50
                                     },
-                                    {command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' ><span class='fa fa-edit'>Modify</span></a>", }, title: "Operation", width: "100px" },
+                                    {  template: function (dataItem) {
+                                        //console.log(dataItem);
+                                        //var button = $(this);
+                                        //var row = $(this).select().closest("tr"); 
+                                        //var dataRow = grid.dataItem(row);
+                                        buttons = '<div style="width:80px">';
+                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
+                                        //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
+                                        buttons += '</div>';
+                                        //let $button = $(buttons);
+                                      
+                                        // $button.find('.open-modal').on('click', _modifyProfile(dataItem));
+                                        return buttons;
+                                    }
+                                    },
                                 {
                                     field: "REASON",
                                     title: "Exception Reason",
@@ -359,7 +373,7 @@
                             });
 
                             //wire up checkboxes.
-                            $('#productreviews-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
+                            $('#dqauth-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
                                 var $check = $(this);
                                 if ($check.is(":checked") == true) {
                                     var checked = jQuery.inArray($check.val(), selectedIds);

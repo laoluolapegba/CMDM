@@ -175,6 +175,7 @@ namespace CMdm.UI.Web.Controllers
                     ISSUE_STATUS_DESC = x.MdmDQQueStatuses.STATUS_DESCRIPTION,
                     ISSUE_PRIORITY_DESC = x.MdmDQPriorities.PRIORITY_DESCRIPTION,
                     RUN_DATE = x.RUN_DATE,
+                    BRANCH_CODE = x.BRANCH_CODE,
                     BRANCH_NAME = x.BRANCH_NAME,
                     CREATED_DATE = x.CREATED_DATE,
                     PRIORITY_CODE = x.ISSUE_PRIORITY,
