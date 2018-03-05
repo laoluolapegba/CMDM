@@ -82,7 +82,7 @@ namespace CMdm.UI.Web.Models.UserAdmin
         [DisplayName("Role")]
         public int ROLE_ID { get; set; }
 
-        [Required]
+        //[Required]
         [StringLength(100)]
         public string DISPLAY_NAME { get; set; }
 

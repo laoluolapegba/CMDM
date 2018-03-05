@@ -66,7 +66,7 @@ namespace Cdma.Web.CustomerInfo
                   // con.Dispose();
                 }
 /////////////////////////////////////////////////////////////////////////////////////////////
-                //string Branch = ddlBranch.SelectedItem.Value == null ? "001" : ddlBranch.SelectedItem.Value;
+                string Branch = ddlBranch.SelectedItem.Value == null ? "001" : ddlBranch.SelectedItem.Value;
                
                 DQIBeforeBVNCompletenessPageDataBind(ddlCategory.SelectedItem.Value, ddlBranch.SelectedItem.Value);
                 DQIAfterBVNCompletenessPageDataBind(ddlCat2.SelectedItem.Value, ddlbranch2.SelectedItem.Value);

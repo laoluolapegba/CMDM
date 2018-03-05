@@ -16,7 +16,7 @@ namespace CMdm.UI.Web
             Session.Clear();
             Session.RemoveAll();
             FormsAuthentication.SignOut();
-            Response.Redirect("~/Login");
+            Response.Redirect("~/Account/Login");
             
             //FormsAuthentication.RedirectToLoginPage();
 

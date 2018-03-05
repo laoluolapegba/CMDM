@@ -71,7 +71,7 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                             dataType: "json",
                                             data: additionalData
                                         }
-                                        
+
                                     },
                                     schema: {
                                         data: "Data",
@@ -102,7 +102,7 @@ var gridPageSizes = "10, 15, 20, 50, 100";
                                     field: "RULE_NAME",
                                     title: "Rulename",
                                     width: 200,
-                                    template: '<a href="@Url.Content("/DQQUe/BrnIssueList?ruleid=")#=RECORD_ID#">#:RULE_NAME#</a>'
+                                    template: '<a href="@Url.Action("BrnIssueList", "DQQue", new { ruleid = "#=RECORD_ID#" })">#=RULE_NAME#</a>'
                                 }, {
                                     field: "DIMENSION",
                                     title: "Quality Dimension",

@@ -1,4 +1,5 @@
-﻿@{
+﻿@*@model  IEnumerable<CMdm.Entities.Domain.Kpi.BrnKpi>*@
+@{
     ViewBag.Title = "Branch Dashboard";
     Layout = "~/Views/Shared/_Layoutdash.cshtml";
 }
@@ -42,7 +43,7 @@
                     scale: {
                         minorUnit: 10,
                         startAngle: -20,
-                        endAngle: 100,
+                        endAngle: 200,
                         max: 100,
                         labels: {
                             position: labelPosition || "inside"
@@ -68,6 +69,7 @@
                     }
                 });
                 var dqiGauge = $("#dqigauge").data("kendoRadialGauge");
+                //console.log('dqi:' + data[0].dqi);
                 dqiGauge.value(data[0].dqi);
                 dqiGauge.redraw();
             },
@@ -76,8 +78,12 @@
         });
     }
     function onCriteriaChange() {
-        var cataloglist = $("#Catalog").data("kendoDropDownList"),
-            branchCode = $("#Branch").data("kendoDropDownList");
+        var catalogId = $("#Catalog").data("kendoDropDownList"),
+            branchCode = $("#Branch").data("kendoDropDownList"),
+        dqibreakdownChart = $("#dqibreakdown").data("kendoChart");
+        dqibrkdwnfilter = { 'BranchCode': branchCode.value(), 'CatalogId': catalogId.value() };
+        dqibreakdownChart.dataSource.read(dqibrkdwnfilter);
+        $('#dqibreakdown').data().kendoChart.refresh();
     }
 
 </script>
@@ -103,7 +109,8 @@
                                 <a data-toggle="tooltip" title="Tooltip"></a>
                             </div>
 
-                            <p class="text-center">DQI Score (%)</p>
+                            
+                            <p class="text-center">DQI Score (@ViewBag.brnDQI %)</p>
                         </div>
                     </div>
                     
@@ -129,9 +136,11 @@
                     <div class="col-md-9 col-sm-8">
                         <div class="chart2goeshere">
                             <div id="criteria">
-                                @(
-                             Html.Kendo().DropDownList()
+                                @(Html.Kendo().DropDownList()
+                             .OptionLabel("Select Branch Code...")
                                 .Name("Branch")
+                                .ValuePrimitive(true)
+                                .Value(ViewData["BranchId"].ToString())
                                     .HtmlAttributes(new { @style = "width:250px" })
                                         .Filter(FilterType.Contains)
                                 .DataSource(datasource => datasource
@@ -139,9 +148,11 @@
                                               )).DataTextField("BranchName").DataValueField("BranchId")
                                                       .Events(ev => ev.Change("onCriteriaChange"))
                                                             )
-                                @(
-                                 Html.Kendo().DropDownList()
+                                @(Html.Kendo().DropDownList()
+                                 .OptionLabel("Select Catalog...")
                                     .Name("Catalog")
+                                    .ValuePrimitive(true)
+                                    .Value(ViewData["CatalogId"].ToString())
                                         .HtmlAttributes(new { @style = "width:250px" })
                                             .Filter(FilterType.Contains)
                                     .DataSource(datasource => datasource
@@ -151,6 +162,47 @@
                                      .Events(ev => ev.Change("onCriteriaChange"))
                                 )
                             </div>
+
+                            <div class="barchart-wrapper">
+                                @(Html.Kendo().Chart<CMdm.Entities.Domain.Dqi.BranchDqiSummary>()
+                                 .Name("dqibreakdown")
+                                 .Title("DQI Score Breakdown")
+                                  .Transitions(false)
+                                  .AutoBind(false)
+                                        .Legend(legend => legend
+                                        .Visible(true)
+                                            .Position(ChartLegendPosition.Top)
+                                        )
+                                                .ChartArea(chartArea => chartArea
+                                                .Background("transparent")
+                                                        )
+                                                .DataSource(ds => ds.Read(read => read.Action("GetBranchDqiSummary", "Home"))
+                                                          )
+
+                                        .Series(series =>
+                                        {
+                                            series.Column(model => model.DQI).Name("Attribute").Axis("").Color("#2E1A47");
+
+                                        })
+                                          .CategoryAxis(axis => axis
+                                                .Categories("Sex", "Title", "Surname", "Firstname", "Othername", "DOB", "Marital Status")
+                                                .MajorGridLines(lines => lines.Visible(false))
+                                            )
+                                         .ValueAxis(axis => axis.Numeric("Percent")
+                                         .Title("Percent")
+                                         .MajorGridLines(m => m.Visible(false))
+                                         .Line(line => line.Visible(false))
+                                         .MajorUnit(10)
+                                         .Max(100)
+                                        )
+                                                .Tooltip(tooltip => tooltip
+                                                    .Visible(true)
+                                                    .Template("#= series.name #: #= value #%")
+                                                    )
+                                )
+                                <div id="NoData" class="overlay"><div></div></div>
+                            </div>
+
                         </div>
                     </div>
 

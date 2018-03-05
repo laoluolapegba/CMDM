@@ -45,6 +45,7 @@ namespace CMdm.Entities.Domain.Entity
         [StringLength(1)]
         public string RECORD_STATUS { get; set; }
 
+        public int CATALOG_ID { get; set; }
         public virtual ICollection<MdmEntityDetails> EntityDetails { get; set; }
     }
 }

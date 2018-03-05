@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CMdm.Data.Rbac.CM_USER_ROLES>
+
+
+@{
+    ViewBag.Title = "Data Catalogs";
+    ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 15;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+    <div class="content-header clearfix">
+        @*<h1 class="pull-left">
+                Data Catalogs
+            </h1>*@
+        <div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Add New
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ROLE_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PSWD_LIFE_DAYS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USER_LEVEL)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.IS_DEFAULT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PARENT_ID)
+        </th>
+        <th></th>
+    </tr>
+                            </thead>
+                            <tbody>
+
+                               @foreach (var item in Model)
+                               {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ROLE_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PSWD_LIFE_DAYS)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.USER_LEVEL)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IS_DEFAULT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PARENT_ID)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ROLE_ID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.ROLE_ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ROLE_ID })
+                                    </td>
+                                </tr>
+                               }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                    
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}
