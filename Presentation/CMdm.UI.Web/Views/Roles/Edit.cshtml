@@ -1,9 +1,8 @@
-﻿@model CMdm.UI.Web.Models.UserAdmin.UsersListViewModel
+﻿@model CMdm.Data.Rbac.CM_USER_ROLES
 
 @{
-    //page title
     ViewBag.Title = "Edit";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using (Html.BeginForm())
@@ -11,8 +10,8 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Edit New User
-            <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("To List", "ListUsers")</small>
+            Edit Role - @Model.ROLE_NAME
+            <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>
         </h1>
         <div class="pull-right">
             <button type="submit" name="save" class="btn bg-blue">
@@ -21,9 +20,9 @@
             </button>
             <button type="submit" name="save-continue" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                Save and Continue Edit
+                SaveContinue
             </button>
-            <span id="user-delete" class="btn bg-red">
+            <span id="store-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
                 Delete
             </span>

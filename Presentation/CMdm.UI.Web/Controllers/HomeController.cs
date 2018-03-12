@@ -42,6 +42,13 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult BranchDqi()
         {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            ViewData["BranchId"] = identity.BranchId;
+            ViewData["CatalogId"] = 1;
             return View();
         }
         public ActionResult Index()
@@ -126,6 +133,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult BankDash()
         {
+           
             return View();
         }
         public ActionResult GetBranches()
@@ -133,8 +141,8 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
             
             var cashdb = new AppDbContext();
-            if (User.IsInRole("Cash Officer"))
-            {
+            //if (User.IsInRole("Admin"))
+            //{
                 var branches = (from o in cashdb.CM_BRANCH
                                     //join r in cashdb.Region on o.REGION_ID equals r.REGION_ID
                                 where o.BRANCH_ID == identity.BranchId
@@ -142,24 +150,24 @@ namespace CMdm.UI.Web.Controllers
                                 {
                                     BranchId = o.BRANCH_ID,
                                     BranchName = o.BRANCH_NAME,
-                                    BranchSchedulerColor = "#F9722E"
+                                 //   BranchSchedulerColor = "#F9722E"
                                 });
                 return Json(branches, JsonRequestBehavior.AllowGet);
 
-            }
+            //}
            
-            else
-            {
-                var branches = (from o in cashdb.CM_BRANCH
-                                select new
-                                {
-                                    BranchId = o.BRANCH_ID,
-                                    BranchName = o.BRANCH_NAME,
-                                    BranchSchedulerColor = "#F9722E"
-                                });
+            //else
+            //{
+            //    var branches = (from o in cashdb.CM_BRANCH
+            //                    select new
+            //                    {
+            //                        BranchId = o.BRANCH_ID,
+            //                        BranchName = o.BRANCH_NAME,
+            //                        BranchSchedulerColor = "#F9722E"
+            //                    });
 
-                return Json(branches, JsonRequestBehavior.AllowGet);
-            }
+            //    return Json(branches, JsonRequestBehavior.AllowGet);
+            //}
 
             //return View();
         }
@@ -179,7 +187,7 @@ namespace CMdm.UI.Web.Controllers
             var brnDQI =
             (
              from p in dashdata.BrnKpis
-             where p.BRANCH_CODE == "205"
+             where p.BRANCH_CODE == brnCode
              select (decimal)p.BRN_DQI
             ).SingleOrDefault();
 
@@ -191,6 +199,35 @@ namespace CMdm.UI.Web.Controllers
             };
            
             return Json(v_util, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetBranchDqiSummary(string BranchCode, string CatalogId)
+        {
+            int catId = CatalogId == string.Empty ? 0 : Convert.ToInt32(CatalogId);
+
+            var dqidata = (from o in dashdata.BranchDqiSummaries 
+                           join e in dashdata.EntityMast on o.TABLE_NAME equals e.ENTITY_TAB_NAME
+                           where e.CATALOG_ID == catId
+                           where o.BRANCH_CODE == BranchCode
+                            
+
+                           select new 
+                        {
+                               BRANCH_CODE = o.BRANCH_CODE,
+                            TABLENAME = o.TABLE_NAME,
+                            ATTRIBUTE = o.ATTRIBUTE,
+                            DQI = o.DQI
+                        }).AsEnumerable();
+            //using (FileStream fs = System.IO.File.Open(@"c:\temp\utildata3" + DateTime.Now.Ticks + ".json", FileMode.Append))
+            //using (StreamWriter sw = new StreamWriter(fs))
+            //using (JsonWriter jw = new JsonTextWriter(sw))
+            //{
+            //    jw.Formatting = Formatting.Indented;
+
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    serializer.Serialize(jw, cash);
+            //}
+
+            return Json(dqidata, JsonRequestBehavior.AllowGet);  //, JsonRequestBehavior.AllowGet  //Content(JsonConvert.SerializeObject(cash))
         }
     }
 }

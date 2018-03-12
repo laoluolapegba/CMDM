@@ -547,6 +547,7 @@ namespace CMdm.UI.Web.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
             Session.Abandon();

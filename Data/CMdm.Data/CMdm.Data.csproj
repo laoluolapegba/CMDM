@@ -74,6 +74,10 @@
     <Compile Include="DAC\DqRuleDAC.cs" />
     <Compile Include="DAC\DqQueDAC.cs" />
     <Compile Include="DAC\KPIDAC.cs" />
+<<<<<<< .merge_file_a46992
+=======
+    <Compile Include="DAC\PermissionsDAC.cs" />
+>>>>>>> .merge_file_a11960
     <Compile Include="DAC\UserAdminDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />
     <Compile Include="EfRepository.cs" />

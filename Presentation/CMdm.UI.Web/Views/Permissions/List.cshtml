@@ -1,25 +1,22 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.DqQue.DqQueListModel
+@model CMdm.UI.Web.Models.UserAdmin.PermissionListModel
 
 @{
-    ViewBag.Title = "Data Quality Issues";
+    ViewBag.Title = "Permissions";
     ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 20;
     var gridPageSizes = "10, 15, 20, 50, 100";
 }
-
-@*<div class="content-header clearfix">
-    <h1 class="pull-left">
-        Data Quality QUe
-    </h1>
-    <div class="pull-right">
-        <a href="@Url.Action("Create")" class="btn bg-blue">
-            <i class="fa fa-plus-square"></i>
-            Add New
-        </a>
+<div class="content-header clearfix">
+       
+        <div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Add New
+            </a>
+        </div>
     </div>
-</div>*@
 @Html.AntiForgeryToken()
 <div class="content">
     <div class="form-horizontal">
@@ -30,10 +27,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    Process Description
+                                    Permission Description
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.CMdmEditorFor(model => model.SearchName)
+                                    @Html.CMdmEditorFor(model => model.SearchPermission)
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,7 +57,7 @@
                                     type: "json",
                                     transport: {
                                         read: {
-                                            url: "@Html.Raw(Url.Action("List", "DQQue"))",
+                                            url: "@Html.Raw(Url.Action("List", "Permissions"))",
                                             type: "POST",
                                             dataType: "json",
                                             data: additionalData
@@ -91,70 +88,50 @@
                                     mode: "inline"
                                 },
                                 scrollable: false,
-                                columns: [
-                                    @if (1==1)
-                                {
-                                        <text>{
-                                        field: "PRIORITY",
-                                            title: "Priority",
-                                            width: 50,
-                                            template: '<span class="grid-report-item ' +
-                                                '# if(PRIORITY == 1) {# red #} #' +
-                                                '# if(PRIORITY == 2) {# yellow #} #' +
-                                                '# if(PRIORITY == 3) {# blue #} #' +
-                                                '# if(PRIORITY == 4) {# green #} #' +
-                                                '# if(PRIORITY == 5) {# green #} #' +
-                                                '">#=ISSUE_PRIORITY_DESC#</span>'
-                                        },</text>
-                                    } 
+                                columns: [                                    
                                     {
-                                    field: "DQ_PROCESS_NAME",
-                                    title: "Process Name",
-                                    width: 250,
-                                    template: '<a href="@Url.Action("BrnIssueList", "DQQue", new { CatalogId = "#=CATALOG_ID#" })">#=DQ_PROCESS_NAME#</a>'
-                                    }, {
-                                    field: "CATALOG_NAME",
-                                    title: "Cataog name",
-                                    width: 200,
+                                        field: "PERMISSIONDESCRIPTION",
+                                        title: "Permission Description",
+                                        width: 200
+                                    },{
+                                        field: "ACTION_NAME",
+                                    title: "Action",
+                                    width: 150,     
+
+                                    },{
+                                        field: "CONTROLLER_NAME",
+                                        title: "Controller",
+                                        width: 150,     
+
+                                    },{
+                                        field: "FORM_URL",
+                                        title: "Form Url",
+                                        width: 150,     
+
+                                    },
+                                {
+                                    field: "PARENT_PERMISSION",
+                                    title: "Parent Permission",
+                                    width: 80,
                                     headerAttributes: { style: "text-align:left" },
                                     attributes: { style: "text-align:left" },
-
-                                    }, {
-                                        field: "DATA_SOURCE",
-                                        title: "Data Source",
-                                        width: 100
-                                    },{
-                                    field: "CREATED_DATE",
-                                    title: "Run Date",
-                                    width: 150,
-                                    type: "date",
-                                    format: "{0:G}",
+                                    
+                                },
+                                {
+                                    field: "ISACTIVE",
+                                    title: "Display on menu?",
+                                    width: 80,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-
-                                },
-                                {
-                                    field: "PCT_COMPLETION",
-                                    title: "% Resolved",
-                                    width: 80,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
-                                    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
-                                },
-                                {
-                                    field: "DaysonQue",
-                                    title: "Days",
-                                    width: 80,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
+                                    template: '# if (ISACTIVE) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
 
                                 },{
-                                    field: "RECORD_ID",
-                                    title: "Id",
-                                    width: 100,
+                                    field: "Id",
+                                    title: "Edit",
+                                    width: 50,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-                                    template: '<a class="btn btn-default" href="Details/#=RECORD_ID#"><i class="fa fa-pencil"></i>Details</a>' }]
+                                    template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Edit</a>' }]
                             });
                         });
                     </script>
@@ -169,7 +146,7 @@
                                 return false;
                             });
 
-                            $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                            $("#@Html.FieldIdFor(model => model.SearchPermission)").keydown(function (event) {
                                 if (event.keyCode == 13) {
                                     $("#search-que").click();
                                     return false;
@@ -179,7 +156,7 @@
 
                         function additionalData() {
                             var data = {
-                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+                                SearchPermission: $('#@Html.FieldIdFor(model => model.SearchPermission)').val()
                             };
                             addAntiForgeryToken(data);
                             return data;

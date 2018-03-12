@@ -20,6 +20,28 @@
 </style>
 
 @Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+       Pending Authorizations
+    </h1>
+    @*@if (!Model.IsLoggedInAsApprover)
+    {*@
+        <div class="pull-right">
+            <button type="button" id="approve-selected" class="btn bg-green">
+                <i class="fa fa-check-square-o"></i>
+                Approve Selected
+            </button>
+            <button type="button" id="disapprove-selected" class="btn bg-navy">
+                <i class="fa fa-minus-square-o"></i>
+                Dissaprove Selected
+            </button>
+            <button type="button" id="delete-selected" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+                Cancel Selected
+            </button>
+        </div>
+    
+</div>
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group">
@@ -99,11 +121,11 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div id="dqrule-grid"></div>
+                    <div id="dqauth-grid"></div>
 
                     <script>
                         $(document).ready(function () {
-                            $("#dqrule-grid").kendoGrid({
+                            $("#dqauth-grid").kendoGrid({
                                 dataSource: {
                                     type: "json",
                                     transport: {
@@ -139,9 +161,32 @@
                                     mode: "inline"
                                 },
                                 scrollable: false,
+                                dataBound: onDataBound,
                                 columns: [
-                                { command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' ><span class='fa fa-edit'>Modify</span></a>", }, title: "Operation", width: "100px" },
-                                  {
+                                    {
+                                        field: "EXCEPTION_ID",
+                                        headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: "<input type='checkbox' value='#=EXCEPTION_ID#' class='checkboxGroups'/>",
+                                        width: 50
+                                    },
+                                    {  template: function (dataItem) {
+                                        //console.log(dataItem);
+                                        //var button = $(this);
+                                        //var row = $(this).select().closest("tr"); 
+                                        //var dataRow = grid.dataItem(row);
+                                        buttons = '<div style="width:80px">';
+                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
+                                        //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
+                                        buttons += '</div>';
+                                        //let $button = $(buttons);
+                                      
+                                        // $button.find('.open-modal').on('click', _modifyProfile(dataItem));
+                                        return buttons;
+                                    }
+                                    },
+                                {
                                     field: "REASON",
                                     title: "Exception Reason",
                                     width: 200
@@ -157,12 +202,13 @@
                                     field: "CUST_ID",
                                     title: "Customer Id",
                                     width: 100
-                                },{
+                                },
+                                {
                                     field: "FIRSTNAME",
                                     title: "Firstname",
                                     width: 150
                                 },
-                                ,{
+                                {
                                     field: "SURNAME",
                                     title: "Lastname",
                                     width: 150
@@ -212,27 +258,139 @@
                         function showDetails(e) {
                             var row = e.select().closest("tr");
                             // or e.parent().parent();
-                            var grid = $('#dqrule-grid').data('kendoGrid');
+                            var grid = $('#dqauth-grid').data('kendoGrid');
                             console.log(grid.dataItem(row));
                             var dataItem = grid.dataItem(row);
                         }
                     </script>
+                   
                     <script type="text/javascript">
-                        $(document).ready(function () {
+                        var selectedIds = [];
+
+                        $(document).ready(function() {
                             //search button
-                            $('#search-rule').click(function () {
+                            $('#search-rule').click(function() {
                                 //search
-                                var grid = $('#dqrule-grid').data('kendoGrid');
+                                var grid = $('#dqauth-grid').data('kendoGrid');
                                 grid.dataSource.page(1); //new search. Set page size to 1
                                 //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                //clear selected checkboxes
+                                $('.checkboxGroups').attr('checked', false).change();
+                                selectedIds = [];
                                 return false;
                             });
-
                             $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
                                 if (event.keyCode == 13) {
                                     $("#search-rule").click();
                                     return false;
                                 }
+                            });
+
+                            //"approve selected" button
+                            $('#approve-selected').click(function(e) {
+                                e.preventDefault();
+
+                                var postData = {
+                                    selectedIds: selectedIds
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("ApproveSelected", "DQQue"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });
+
+                            //"disapprove selected" button
+                            $('#disapprove-selected').click(function(e) {
+                                e.preventDefault();
+
+                                var postData = {
+                                    selectedIds: selectedIds
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("DisapproveSelected", "DQQUe"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });
+
+                            //"delete selected" button
+                            $('#delete-selected').click(function(e) {
+                                e.preventDefault();
+
+                                var postData = {
+                                    selectedIds: selectedIds
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("CancelSelected", "DQQue"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });
+
+
+                            $('#mastercheckbox').click(function() {
+                                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                            });
+
+                            //wire up checkboxes.
+                            $('#dqauth-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
+                                var $check = $(this);
+                                if ($check.is(":checked") == true) {
+                                    var checked = jQuery.inArray($check.val(), selectedIds);
+                                    if (checked == -1) {
+                                        //add id to selectedIds.
+                                        selectedIds.push($check.val());
+                                    }
+                                } else {
+                                    var checked = jQuery.inArray($check.val(), selectedIds);
+                                    if (checked > -1) {
+                                        //remove id from selectedIds.
+                                        selectedIds = $.grep(selectedIds, function(item, index) {
+                                            return item != $check.val();
+                                        });
+                                    }
+                                }
+                                updateMasterCheckbox();
                             });
                         });
 
@@ -252,6 +410,25 @@
                             addAntiForgeryToken(data);
                             return data;
                         }
+
+                        function onDataBound(e) {
+
+                            $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function() {
+                                var currentId = $(this).val();
+                                var checked = jQuery.inArray(currentId, selectedIds);
+                                //set checked based on if current checkbox's value is in selectedIds.
+                                $(this).attr('checked', checked > -1);
+                            });
+
+                            updateMasterCheckbox();
+                        }
+
+                        function updateMasterCheckbox() {
+                            var numChkBoxes = $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+                            var numChkBoxesChecked = $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+                            $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                        }
+
                     </script>
                 </div>
             </div>

@@ -71,7 +71,10 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                 return false;
             //Authenticate _auth = new Authenticate();
             int authSetting = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
+<<<<<<< HEAD
   
+=======
+>>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
             AuthenticationType authType = (AuthenticationType)(authSetting);
             switch (authType)
             {
@@ -145,7 +148,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             ICollection<CM_USER_ROLE_XREF> UserRoleColl = new Collection<CM_USER_ROLE_XREF>();
             CM_USER_PROFILE up = new CM_USER_PROFILE();
             string passwordHash = pwdManager.GeneratePasswordHash(password, out salt);
-            decimal profileId = 0;
+            int profileId = 0;
             using (var cdma = new AppDbContext())
             {
                 var usr = new CM_USER_PROFILE

@@ -152,6 +152,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            decimal isActive = Convert.ToDecimal(x.ISACTIVE);
             if (ModelState.IsValid)
             {
                 string salt = string.Empty;
@@ -165,9 +166,10 @@ namespace CMdm.UI.Web.Controllers
                     LASTNAME = x.LASTNAME,
                     BRANCH_ID = x.BRANCH_ID,
                     COD_PASSWORD = passwordHash,
+                    ISAPPROVED = 1,
                     PASSWORDSALT = salt,
                     LASTLOGINDATE = x.LASTLOGINDATE,
-                    ISLOCKED = x.ISLOCKED,
+                    ISLOCKED = isActive,
                     ROLE_ID = x.ROLE_ID,
                     DISPLAY_NAME = x.FIRSTNAME + " " + x.LASTNAME,
                     CREATED_DATE = DateTime.Now
@@ -180,7 +182,7 @@ namespace CMdm.UI.Web.Controllers
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
                 SuccessNotification("New User has been Added");
                 //do activity log
-                return continueEditing ? RedirectToAction("Edit", new { id = mdmUser.PROFILE_ID }) : RedirectToAction("Index");
+                return continueEditing ? RedirectToAction("Edit", new { PROFILE_ID  = mdmUser.PROFILE_ID }) : RedirectToAction("Index");
                 //return RedirectToAction("Index");
             }
             x.UserRoles = new SelectList(database.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();
@@ -188,12 +190,16 @@ namespace CMdm.UI.Web.Controllers
             return View(x);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var item = _userService.GetItembyId(id);
+            if (item == null)
+                //No store found with the specified id
+                return RedirectToAction("Index");
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
 
            
             var mdmUser = (from x in database.CM_USER_PROFILE

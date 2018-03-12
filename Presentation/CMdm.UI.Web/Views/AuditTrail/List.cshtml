@@ -1,8 +1,8 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.DqQue.DqQueListModel
+@model CMdm.UI.Web.Models.Audit.AuditTrailListModel
 
 @{
-    ViewBag.Title = "Data Quality Issues";
+    ViewBag.Title = "Audit Trail";
     ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 20;
@@ -10,16 +10,16 @@
 }
 
 @*<div class="content-header clearfix">
-    <h1 class="pull-left">
-        Data Quality QUe
-    </h1>
-    <div class="pull-right">
-        <a href="@Url.Action("Create")" class="btn bg-blue">
-            <i class="fa fa-plus-square"></i>
-            Add New
-        </a>
-    </div>
-</div>*@
+        <h1 class="pull-left">
+            Data Quality QUe
+        </h1>
+        <div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                Add New
+            </a>
+        </div>
+    </div>*@
 @Html.AntiForgeryToken()
 <div class="content">
     <div class="form-horizontal">
@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    Process Description
+                                    Error Description
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmEditorFor(model => model.SearchName)
@@ -60,7 +60,7 @@
                                     type: "json",
                                     transport: {
                                         read: {
-                                            url: "@Html.Raw(Url.Action("List", "DQQue"))",
+                                            url: "@Html.Raw(Url.Action("List", "AuditTrail"))",
                                             type: "POST",
                                             dataType: "json",
                                             data: additionalData
@@ -92,69 +92,56 @@
                                 },
                                 scrollable: false,
                                 columns: [
-                                    @if (1==1)
-                                {
-                                        <text>{
-                                        field: "PRIORITY",
-                                            title: "Priority",
-                                            width: 50,
-                                            template: '<span class="grid-report-item ' +
-                                                '# if(PRIORITY == 1) {# red #} #' +
-                                                '# if(PRIORITY == 2) {# yellow #} #' +
-                                                '# if(PRIORITY == 3) {# blue #} #' +
-                                                '# if(PRIORITY == 4) {# green #} #' +
-                                                '# if(PRIORITY == 5) {# green #} #' +
-                                                '">#=ISSUE_PRIORITY_DESC#</span>'
-                                        },</text>
-                                    } 
                                     {
-                                    field: "DQ_PROCESS_NAME",
+                                        field: "CustNo",
+                                        title: "Customer Id",
+                                        width: 100,
+                                   
+                                    },
+                                    {
+                                        field: "AffectedCat",
                                     title: "Process Name",
-                                    width: 250,
-                                    template: '<a href="@Url.Action("BrnIssueList", "DQQue", new { CatalogId = "#=CATALOG_ID#" })">#=DQ_PROCESS_NAME#</a>'
+                                    width: 100,
+                                   
                                     }, {
-                                    field: "CATALOG_NAME",
-                                    title: "Cataog name",
-                                    width: 200,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
+                                        field: "Firstname",
+                                    title: "Firstname",
+                                    width: 100,
 
                                     }, {
-                                        field: "DATA_SOURCE",
-                                        title: "Data Source",
-                                        width: 100
-                                    },{
-                                    field: "CREATED_DATE",
-                                    title: "Run Date",
+                                        field: "Lastname",
+                                        title: "Lastname",
+                                        width: 150
+                                    },
+                                     {
+                                         field: "Comments",
+                                         title: "Change Description",
+                                         width: 300
+                                     },
+                                     {
+                                         field: "LoggedDate",
+                                    title: "Changed Date",
                                     width: 150,
                                     type: "date",
                                     format: "{0:G}",
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
 
-                                },
+                                    },
                                 {
-                                    field: "PCT_COMPLETION",
-                                    title: "% Resolved",
+                                    field: "Loggedby",
+                                    title: "Changed by",
                                     width: 80,
                                     headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
-                                    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
+                                    attributes: { style: "text-align:left" }
+                                    
                                 },
                                 {
-                                    field: "DaysonQue",
-                                    title: "Days",
-                                    width: 80,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
-
-                                },{
-                                    field: "RECORD_ID",
+                                
+                                    field: "LogId",
                                     title: "Id",
-                                    width: 100,
+                                    width: 50,
                                     headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<a class="btn btn-default" href="Details/#=RECORD_ID#"><i class="fa fa-pencil"></i>Details</a>' }]
+                                    attributes: { style: "text-align:center" }
+                                }]
                             });
                         });
                     </script>

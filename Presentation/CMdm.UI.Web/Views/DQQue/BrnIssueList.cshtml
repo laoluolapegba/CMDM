@@ -100,9 +100,18 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="dqrule-grid"></div>
-
+                    <div id="details"></div>
                     <script>
+                        var wnd,
+                        detailsTemplate;
                         $(document).ready(function () {
+
+                            let _modifyProfile = function(dataItem){
+                                console.log(JSON.stringify(dataItem));
+
+                                modifyProfile(dataItem.CUST_ID, dataItem.BRANCH_CODE, dataItem.RULE_ID,  908098);
+                            };
+
                             $("#dqrule-grid").kendoGrid({
                                 dataSource: {
                                     type: "json",
@@ -140,12 +149,34 @@
                                 },
                                 scrollable: false,
                                 columns: [
-                                { command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' ><span class='fa fa-edit'>Modify</span></a>", }, title: "Operation", width: "100px" },
-                                  {
+                                    {  template: function (dataItem) {
+                                        //console.log(dataItem);
+                                        //var button = $(this);
+                                        //var row = $(this).select().closest("tr"); 
+                                        //var dataRow = grid.dataItem(row);
+                                        buttons = '<div style="width:80px">';
+                                        buttons += '<button onclick="modifyProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-primary">Modify</button>'
+                                        //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
+                                        buttons += '</div>';
+                                        //let $button = $(buttons);
+                                      
+                                        // $button.find('.open-modal').on('click', _modifyProfile(dataItem));
+                                        return buttons;
+                                    }
+                                    },
+                                    {
+                                    //command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' >Modify</a>", }, title: "Operation", width: "100px" },
+                                  
                                     field: "REASON",
                                     title: "Exception Reason",
                                     width: 200
+<<<<<<< HEAD
                                 }, {
+=======
+                                  },
+                                  
+                                    {
+>>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
                                     field: "RULE_NAME",
                                     title: "Rulename",
                                     width: 200
@@ -195,6 +226,16 @@
                                     }
                                    ]
                             });
+                            wnd = $("#details")
+                                    .kendoWindow({
+                                        title: "Data Details",
+                                        modal: true,
+                                        visible: false,
+                                        resizable: false,
+                                        width: 300
+                                    }).data("kendoWindow");
+
+                            detailsTemplate = kendo.template($("#template").html());
                         });
                         function showDetails(e) {
                             var row = e.select().closest("tr");
@@ -202,7 +243,19 @@
                             var grid = $('#dqrule-grid').data('kendoGrid');
                             console.log(grid.dataItem(row));
                             var dataItem = grid.dataItem(row);
+                            wnd.content(detailsTemplate(dataItem));
+                            wnd.center().open();
                         }
+                    </script>
+                    <script type="text/x-kendo-template" id="template">
+                        <div id="details-container">
+                            <h2>#= BRANCH_CODE #</h2>
+                            <em>#= CATALOG_TABLE_NAME #</em>
+                            <dl>
+                                <dt>Rule: #= RULE_ID #</dt>
+                                
+                            </dl>
+                        </div>
                     </script>
                     <script type="text/javascript">
                         $(document).ready(function () {

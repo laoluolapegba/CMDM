@@ -2,6 +2,7 @@ namespace CMdm.Data.Rbac
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,9 +23,14 @@ namespace CMdm.Data.Rbac
 
         [Required]
         [StringLength(120)]
+        [DisplayName("Role name")]
         public string ROLE_NAME { get; set; }
+        [DisplayName("Password Lifetime")]
+
 
         public int PSWD_LIFE_DAYS { get; set; }
+        [DisplayName("User Authorization Level")]
+
 
         public long? USER_LEVEL { get; set; }
 
@@ -37,10 +43,13 @@ namespace CMdm.Data.Rbac
         public string LAST_MODIFIED_BY { get; set; }
 
         public DateTime? LAST_MODIFIED_DATE { get; set; }
+        [DisplayName("Default role?")]
+
 
         public bool IS_DEFAULT { get; set; }
+        [DisplayName("Parent Role Id")]
 
-        public decimal? PARENT_ID { get; set; }
+        public int? PARENT_ID { get; set; }
 
         public virtual ICollection<CM_ROLE_PERM_XREF> CM_ROLE_PERM_XREF { get; set; }
 

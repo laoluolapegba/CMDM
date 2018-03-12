@@ -280,6 +280,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ACCOUNTINFOController.cs" />
     <Compile Include="Controllers\ACCTSERVICESREQUIREDController.cs" />
+    <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
@@ -307,9 +308,12 @@
     <Compile Include="Controllers\MdmWeightsController.cs" />
     <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\ParamsController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
       <DependentUpon>AuditReport.aspx</DependentUpon>
@@ -338,6 +342,20 @@
     </Compile>
     <Compile Include="CustomerInfo\CorporateCustInfo.aspx.designer.cs">
       <DependentUpon>CorporateCustInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateRoles.aspx.cs">
+      <DependentUpon>CreateRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateRoles.aspx.designer.cs">
+      <DependentUpon>CreateRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateUser.aspx.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerInfo\CreateUser.aspx.designer.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerInfo\CustomerReports.aspx.cs">
       <DependentUpon>CustomerReports.aspx</DependentUpon>
@@ -527,6 +545,7 @@
       <DependentUpon>LogOff.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Audit\AuditTrailListModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
@@ -540,6 +559,8 @@
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
+    <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
+    <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -834,8 +855,12 @@
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
     <Content Include="Content\ico\kingadmin-favicon57x57.png" />
     <Content Include="Content\ico\kingadmin-favicon72x72.png" />
+    <Content Include="Content\images\ico-delete.png" />
+    <Content Include="Content\images\ico-edit.png" />
+    <Content Include="Content\images\logo-48x48.png" />
     <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo1.png" />
     <Content Include="Content\images\slides\slide1.jpg" />
     <Content Include="Content\images\slides\slide2.jpg" />
     <Content Include="Content\images\slides\slide3.jpg" />
@@ -1225,6 +1250,8 @@
     <Content Include="CustomerInfo\AuthCorpCustInfo.aspx" />
     <Content Include="CustomerInfo\AuthIndividualCust.aspx" />
     <Content Include="CustomerInfo\CorporateCustInfo.aspx" />
+    <Content Include="CustomerInfo\CreateRoles.aspx" />
+    <Content Include="CustomerInfo\CreateUser.aspx" />
     <Content Include="CustomerInfo\CustomerReports.aspx" />
     <Content Include="CustomerInfo\IndividualCustomer.aspx" />
     <Content Include="CustomerInfo\ManageUsers.aspx" />
@@ -1255,6 +1282,7 @@
     <Content Include="Modules\WebForm2.aspx" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
+    <Content Include="Scripts\admin.common.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Calendar\Calendar-menu.js" />
@@ -2011,6 +2039,7 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
     <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
     <Content Include="Views\CustomerIncome\Create.cshtml" />
@@ -2019,6 +2048,32 @@
     <Content Include="Views\CustomerIncome\Edit.cshtml" />
     <Content Include="Views\CustomerIncome\Index.cshtml" />
     <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
+=======
+    <Content Include="Views\DQI\ListParams.cshtml" />
+    <Content Include="Views\Home\BranchDqi.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTimeNullable.cshtml" />
+    <Content Include="Views\Shared\_Layoutdash.cshtml" />
+    <Content Include="Views\UserAdmin\ListUsers.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultiSelect.cshtml" />
+    <Content Include="Views\UserAdmin\Create.cshtml" />
+    <Content Include="Views\UserAdmin\Edit.cshtml" />
+    <Content Include="Views\UserAdmin\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\DQQue\AuthList.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\AuditTrail\List.cshtml" />
+    <Content Include="Views\Permissions\Create.cshtml" />
+    <Content Include="Views\Permissions\Delete.cshtml" />
+    <Content Include="Views\Permissions\Details.cshtml" />
+    <Content Include="Views\Permissions\Edit.cshtml" />
+    <Content Include="Views\Permissions\List.cshtml" />
+    <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
+>>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
