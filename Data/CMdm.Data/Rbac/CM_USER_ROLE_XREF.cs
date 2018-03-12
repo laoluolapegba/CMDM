@@ -12,7 +12,7 @@ namespace CMdm.Data.Rbac
         [Key]
         [ForeignKey("CM_USER_PROFILE")]
         [Column(Order = 0)]
-        public decimal USER_ID { get; set; }
+        public int USER_ID { get; set; }
 
         [Key]
         [Column(Order = 1)]

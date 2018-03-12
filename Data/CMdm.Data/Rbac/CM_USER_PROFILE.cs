@@ -16,7 +16,7 @@ namespace CMdm.Data.Rbac
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public decimal PROFILE_ID { get; set; }
+        public int PROFILE_ID { get; set; }
 
         [Required]
         [StringLength(50)]

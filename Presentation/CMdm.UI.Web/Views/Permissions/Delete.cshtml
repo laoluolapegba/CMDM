@@ -1,0 +1,112 @@
+﻿@model CMdm.Data.Rbac.CM_PERMISSIONS
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>CM_PERMISSIONS</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PERMISSIONDESCRIPTION)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PERMISSIONDESCRIPTION)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ACTION_NAME)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ACTION_NAME)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CONTROLLER_NAME)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CONTROLLER_NAME)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PARENT_PERMISSION)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PARENT_PERMISSION)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FORM_URL)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FORM_URL)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.IMAGE_URL)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IMAGE_URL)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ICON_CLASS)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ICON_CLASS)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ISOPEN_CLASS)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ISOPEN_CLASS)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TOGGLE_ICON)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TOGGLE_ICON)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ISACTIVE)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ISACTIVE)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

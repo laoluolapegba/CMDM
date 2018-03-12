@@ -307,6 +307,7 @@
     <Compile Include="Controllers\MdmWeightsController.cs" />
     <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\ParamsController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -557,6 +558,7 @@
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
+    <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
     <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2052,6 +2054,12 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\_CreateOrUpdate.cshtml" />
     <Content Include="Views\AuditTrail\List.cshtml" />
+    <Content Include="Views\Permissions\Create.cshtml" />
+    <Content Include="Views\Permissions\Delete.cshtml" />
+    <Content Include="Views\Permissions\Details.cshtml" />
+    <Content Include="Views\Permissions\Edit.cshtml" />
+    <Content Include="Views\Permissions\List.cshtml" />
+    <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

@@ -1,0 +1,109 @@
+﻿@model CMdm.UI.Web.Models.UserAdmin.PermissionListModel
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+<div class="content">
+    <div class="form-horizontal">
+        <div id="customer-edit" class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab">Permissions</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.PERMISSIONDESCRIPTION)
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group input-group-required">
+                                                @Html.CMdmEditorFor(model => model.PERMISSIONDESCRIPTION)
+                                                @Html.ValidationMessageFor(model => model.PERMISSIONDESCRIPTION)
+                                                <div class="input-group-btn">
+                                                    @Html.RequiredHint()
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.ACTION_NAME)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmEditorFor(model => model.ACTION_NAME)
+                                            @Html.ValidationMessageFor(model => model.ACTION_NAME)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CONTROLLER_NAME)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmEditorFor(model => model.CONTROLLER_NAME)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CONTROLLER_NAME)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.FORM_URL)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmEditorFor(model => model.FORM_URL)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.FORM_URL)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.PARENT_PERMISSION)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmDropDownListFor(model => model.PARENT_PERMISSION, Model.Permissions)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.ISACTIVE)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.ISACTIVE)
+                                        @Html.ValidationMessageFor(model => model.ISACTIVE)
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
