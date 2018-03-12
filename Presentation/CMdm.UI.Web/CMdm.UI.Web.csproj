@@ -2039,7 +2039,7 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
-<<<<<<< HEAD
+ 
     <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
     <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
     <Content Include="Views\CustomerIncome\Create.cshtml" />
@@ -2048,7 +2048,7 @@
     <Content Include="Views\CustomerIncome\Edit.cshtml" />
     <Content Include="Views\CustomerIncome\Index.cshtml" />
     <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
-=======
+ 
     <Content Include="Views\DQI\ListParams.cshtml" />
     <Content Include="Views\Home\BranchDqi.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
@@ -2073,7 +2073,7 @@
     <Content Include="Views\Permissions\Edit.cshtml" />
     <Content Include="Views\Permissions\List.cshtml" />
     <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
->>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
+ 
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

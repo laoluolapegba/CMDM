@@ -71,10 +71,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                 return false;
             //Authenticate _auth = new Authenticate();
             int authSetting = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
-<<<<<<< HEAD
-  
-=======
->>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
+ 
             AuthenticationType authType = (AuthenticationType)(authSetting);
             switch (authType)
             {
