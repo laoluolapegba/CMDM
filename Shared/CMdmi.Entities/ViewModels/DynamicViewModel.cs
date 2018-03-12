@@ -27,7 +27,7 @@ namespace CMdm.Entities.ViewModels
         //account info
         public CDMA_ACCOUNT_INFO AccInfo { get; set; }
         public CDMA_ACCT_SERVICES_REQUIRED ServiceInfo { get; set; }
-
+        public CDMA_CUSTOMER_INCOME CusIncomeInfo { get; set; }
     }
 
     public class LogViewModel

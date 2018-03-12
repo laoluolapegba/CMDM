@@ -5,8 +5,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
      
-    [Table("CDMA_ACCOUNT_INFO")]
-    public partial class CDMA_ACCOUNT_INFO
+    [Table("CDMA_ACCOUNT_INFO_LOG")]
+    public partial class CDMA_ACCOUNT_INFO_LOG
     {
         [Key]
         public string CUSTOMER_NO { get; set; }
@@ -22,6 +22,11 @@
         public string BVN_NUMBER { get; set; }
         public string CAV_REQUIRED { get; set; }
         public string CHEQUE_CONFIRM_THRESHLDRANGE { get; set; }
+
+        public string TIED { get; set; }
+
+
+
         public string ONLINE_TRANSFER_LIMIT_RANGE { get; set; }
         public string CUSTOMER_IC { get; set; }
         public string CUSTOMER_SEGMENT { get; set; }

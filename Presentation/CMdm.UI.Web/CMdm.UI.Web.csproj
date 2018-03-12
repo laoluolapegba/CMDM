@@ -285,6 +285,7 @@
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerIncomeController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\DqExceptionsController.cs" />
@@ -531,6 +532,8 @@
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
     <Compile Include="Models\DqParam\DqParamListModel.cs" />
+    <Compile Include="Models\DqQue\ChangedCustomerModel.cs" />
+    <Compile Include="Models\DqQue\DqqueAuthListModel.cs" />
     <Compile Include="Models\DqQue\DqquebrnListModel.cs" />
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
@@ -625,6 +628,7 @@
     <Content Include="AdminLTE\dist\css\skins\skin-yellow.min.css" />
     <Content Include="AdminLTE\dist\css\skins\_all-skins.css" />
     <Content Include="AdminLTE\dist\css\skins\_all-skins.min.css" />
+    <Content Include="AdminLTE\dist\img\attention.png" />
     <Content Include="AdminLTE\dist\img\avatar.png" />
     <Content Include="AdminLTE\dist\img\avatar04.png" />
     <Content Include="AdminLTE\dist\img\avatar2.png" />
@@ -824,6 +828,7 @@
     <Content Include="Content\easyquery\eq-icons-default.css" />
     <Content Include="Content\easyquery\eqview.css" />
     <Content Include="Content\easyquery\jquery-ui.css" />
+    <Content Include="Content\ico\attention.png" />
     <Content Include="Content\ico\favicon.png" />
     <Content Include="Content\ico\kingadmin-favicon114x114.png" />
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
@@ -2006,6 +2011,14 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
+    <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
+    <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
+    <Content Include="Views\CustomerIncome\Create.cshtml" />
+    <Content Include="Views\CustomerIncome\Delete.cshtml" />
+    <Content Include="Views\CustomerIncome\Details.cshtml" />
+    <Content Include="Views\CustomerIncome\Edit.cshtml" />
+    <Content Include="Views\CustomerIncome\Index.cshtml" />
+    <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

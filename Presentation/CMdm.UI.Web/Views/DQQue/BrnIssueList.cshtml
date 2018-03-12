@@ -145,7 +145,7 @@
                                     field: "REASON",
                                     title: "Exception Reason",
                                     width: 200
-                                },{
+                                }, {
                                     field: "RULE_NAME",
                                     title: "Rulename",
                                     width: 200
@@ -313,6 +313,7 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
+        alert(cus_id);
         $("#update").css({ 'display': 'none' });
         var queryString = "c_id=" + cus_id;
         queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
