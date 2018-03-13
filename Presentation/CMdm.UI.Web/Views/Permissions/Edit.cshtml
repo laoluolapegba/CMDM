@@ -31,4 +31,24 @@
     </div>
     @Html.Partial("_CreateOrUpdate", Model)
 }
+<div>
+    <br />
+    <fieldset>
+        <legend>
+            <h3>
+                Roles Associated with this Permission
+            </h3>
+        </legend>
+
+        <div id="RolesTable">
+            @Html.Partial("_ListRolesTable4Permission", Model)
+        </div>
+        <div>
+            @Html.Partial("_AddRole4Permission", Model)
+        </div>
+        <br />
+       
+    </fieldset>
+
+</div>
 @*@Html.DeleteConfirmation("perm-delete")*@

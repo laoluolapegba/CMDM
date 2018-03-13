@@ -559,6 +559,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
+    <Compile Include="Models\UserAdmin\RolesListModel.cs" />
     <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -852,6 +853,7 @@
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
     <Content Include="Content\ico\kingadmin-favicon57x57.png" />
     <Content Include="Content\ico\kingadmin-favicon72x72.png" />
+    <Content Include="Content\images\bin.png" />
     <Content Include="Content\images\ico-delete.png" />
     <Content Include="Content\images\ico-edit.png" />
     <Content Include="Content\images\logo-48x48.png" />
@@ -2060,6 +2062,8 @@
     <Content Include="Views\Permissions\Edit.cshtml" />
     <Content Include="Views\Permissions\List.cshtml" />
     <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\Permissions\_ListRolesTable4Permission.cshtml" />
+    <Content Include="Views\Permissions\_AddRole4Permission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

@@ -1,0 +1,161 @@
+﻿@model CMdm.UI.Web.Models.UserAdmin.PermissionListModel
+@using CMdm.UI.Web.Models.UserAdmin;
+
+<div class="panel-group">
+   
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Roles
+        </div>
+        <div class="panel-body">
+            <script type="text/javascript">
+                let deletePermissions = function (options) {
+                    console.log(options);
+
+                    //var _parameters = { permissionId: _permissionId, id: _roleId };
+                    $.ajax({
+                        url: "/Permissions/DeleteRoleFromPermissionReturnPartialView",
+                            type: "GET",
+                            data: options,
+                                success: function (data, textStatus, jqXHR) {
+                                    $('#RolesTable').html(data);
+                                }
+                            });
+                            //$(this).dialog('close');
+                    };
+                $(function () {
+                    //data-toggle="modal" data-target="#exampleModal"
+                    
+                    $('.deleteRole').on('click', function (e) {
+                        e.preventDefault();
+                        var dis = $(this);
+                        var roleId = dis.data('roleid'),
+                            permId = dis.data('permissionid');
+                        //console.log(roleId, permId);
+
+                        $('.deleteButton').on('click', function (e) {
+                            e.preventDefault();
+                            deletePermissions({ permissionId: permId, id: roleId })
+                            //console.log('Deleting: ', roleId, permId);
+
+                        });
+
+                    });
+                });
+    //$(document).ready(function () {
+    //    //Unbind the original image 'href' set by the controller...
+    //    $('.deleteRole').attr('href', 'javascript://');
+    //    $('.deleteRole').click(function () {
+    //        $dialog.data('permissionId', $(this).attr('permissionId')).data('roleId', $(this).attr('roleId')).dialog("open");
+    //    });
+
+    //    var $dialog = $('<div/>')
+    //    .html("Warning: This will remove the selected Role from this Permission.  Removing this Role may prevent users from accessing areas in the application.  Only remove this Role if you intend to restrict application access.<br/><br/>Do you wish to continue?")
+    //    .dialog({
+    //        autoOpen: false,
+    //        resizable: false,
+    //        height: 250,
+    //        modal: true,
+    //        title: 'Remove Role',
+    //        buttons: [
+    //                    {
+    //                        text: "Continue",
+    //                        id: "continuebtn",
+    //                        click: function () {
+    //                            var _permissionId = $(this).data('permissionId');
+    //                            var _roleId = $(this).data('roleId');
+
+    //                            var _parameters = { permissionId: _permissionId, id: _roleId };
+    //                            $.ajax({
+    //                                url: "/Admin/DeleteRoleFromPermissionReturnPartialView",
+    //                                type: "GET",
+    //                                data: _parameters,
+    //                                success: function (data, textStatus, jqXHR) {
+    //                                    $('#RolesTable').html(data);
+    //                                }
+    //                            });
+    //                            $(this).dialog('close');
+    //                        }
+    //                    },
+    //                    {
+    //                        text: "Cancel",
+    //                        id: "cancelbtn",
+    //                        click: function () {
+    //                            $(this).dialog("close");
+    //                        }
+    //                    }]
+    //    });
+    //});
+            </script>
+
+            @{
+                List<RolesListModel> PermRoles = ViewBag.PermRoles;
+                if (Enumerable.Count(PermRoles) == 0)
+                {
+                    <h2><font color="red">No Associated Roles...</font></h2>
+                    <br />
+                }
+                else
+                {
+                    <table id="PermissionTable" style="width: 65%">
+                        <thead>
+                        <th style="width:40%">
+                            Role
+                        </th>
+                        <th>
+                            Role Description
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                        </thead>
+                        @foreach (var role in PermRoles)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action( "Details", "Roles", new { id = role.ROLE_ID })">
+                                       @role.ROLE_NAME
+                                     </a>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <center>
+                                     
+                                        <a href="@Url.Action("DeletePermission", "Admin", new { id = role.ROLE_ID, permissionId = Model.Id })" data-toggle="modal" data-target="#exampleModal" class="deleteRole" data-permissionid=@Model.Id data-roleid=@role.ROLE_ID>
+                                            <img src="@Url.Content("~/Content/images/bin.png")" alt="Delete Permission" />
+                                        </a>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Role</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Warning: This will remove the selected Role from this Permission.  
+                                    Removing this Role may prevent users from accessing areas in the application.  
+                                    Only remove this Role if you intend to restrict application access.<br /><br />Do you wish to continue?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Close</button>
+                                    <button type="button" class="btn btn-primary deleteButton">Yes, Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                }
+            }
+
+        </div>
+    </div>
+    
+</div>

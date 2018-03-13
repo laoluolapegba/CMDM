@@ -1,4 +1,5 @@
-﻿using CMdm.Framework.Mvc;
+﻿using CMdm.Data.Rbac;
+using CMdm.Framework.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace CMdm.UI.Web.Models.UserAdmin
         public PermissionListModel()
         {
             Permissions = new List<SelectListItem>();
+            UserRoles = new List<CM_USER_ROLES>();
         }
         [DisplayName("Search Permission")]
         [AllowHtml]
@@ -52,5 +54,8 @@ namespace CMdm.UI.Web.Models.UserAdmin
         public bool ISACTIVE { get; set; }
 
         public IList<SelectListItem> Permissions { get; set; }
+
+        //public IList<SelectListItem> UserRoles { get; set; }
+        public ICollection<CM_USER_ROLES> UserRoles { get; set; }
     }
 }
