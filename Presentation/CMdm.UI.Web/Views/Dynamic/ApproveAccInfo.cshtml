@@ -11,7 +11,7 @@
         @Styles.Render("~/AdminLTE/dist/css/skins")
         @Scripts.Render("~/AdminLTE/plugins/jquery/js")
 
-@Scripts.Render("~/AdminLTE/bootstrap/js") *@
+    @Scripts.Render("~/AdminLTE/bootstrap/js") *@
 @*@Scripts.Render("~/bundles/kendo")
 @Styles.Render("~/Content/kendo/css")
 @Styles.Render("~/Content/customstyle.css")
@@ -78,9 +78,9 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4 style="color:#dd4b39;">Account Information</h4>
+            <h4 style="color:#dd4b39;">Account Information Approval</h4>
             <hr />
-            <input name="customer_no" value="@ViewBag.CUSTOMER_NO" id="customer_no" type="hidden" />
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.AccInfo.TYPE_OF_ACCOUNT)
             @Html.HiddenFor(model => model.AccInfo.CUSTOMER_NO, new { htmlAttributes = new { @class = "form-control" } })
@@ -91,8 +91,20 @@
                     <div class="input-group">
                         <label>
                             TYPE OF ACCOUNT
+
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 41)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
                         </label>
-                        @Html.DropDownList("TYPE_OF_ACCOUNT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @Html.DropDownList("TYPE_OF_ACCOUNT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                         @*@Html.EditorFor(model => model.AccInfo.TYPE_OF_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.AccInfo.TYPE_OF_ACCOUNT, "", new { @class = "text-danger" })
 
@@ -103,31 +115,56 @@
                     <div class="input-group">
                         <label>
                             ACCOUNT NUMBER
+                           
+
                         </label>
                         @Html.EditorFor(model => model.AccInfo.ACCOUNT_NUMBER, new { htmlAttributes = new { @class = "form-control", @disable = "disabled" } })
                         @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_NUMBER, "", new { @class = "text-danger" })
                     </div>
                 </div>*@
-                 
+
 
                 <div class="col-lg-4">
                     <div class="input-group">
                         <label>
                             BVN NUMBER
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 47)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
                         </label>
-                        @Html.EditorFor(model => model.AccInfo.BVN_NUMBER, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.AccInfo.BVN_NUMBER, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                         @Html.ValidationMessageFor(model => model.AccInfo.BVN_NUMBER, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
             <div class="row">
-               <!----> <div class="col-lg-4">
+                <div class="col-lg-4">
                     <div class="input-group">
                         <label>
                             ACCOUNT OFFICER
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 64)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
+
                         </label>
 
-                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_OFFICER, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_OFFICER, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                         @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_OFFICER, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -136,16 +173,43 @@
                     <div class="input-group">
                         <label>
                             ACCOUNT TITLE
+
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 65)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
                         </label>
 
-                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_TITLE, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                         @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_TITLE, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="input-group">
-                        <label>BRANCH </label>
-                        @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        <label>BRANCH
+                        
+
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 42)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
+                            
+                        </label>
+                        @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
 
 
                         @*@Html.EditorFor(model => model.AccInfo.BRANCH, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -162,8 +226,21 @@
                     <div class="input-group">
                         <label>
                             BRANCH CLASS
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 43)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
+
+
                         </label>
-                        @Html.DropDownList("BranchClass", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @Html.DropDownList("BranchClass", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                         @*@Html.EditorFor(model => model.AccInfo.BRANCH_CLASS, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.AccInfo.BRANCH_CLASS, "", new { @class = "text-danger" })
                     </div>
@@ -173,9 +250,19 @@
                     <div class="input-group">
                         <label>
                             OPERATING INSTRUCTION
+                            @{
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 40)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+                            }
+
                         </label>
 
-                        @Html.EditorFor(model => model.AccInfo.OPERATING_INSTRUCTION, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.AccInfo.OPERATING_INSTRUCTION, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                         @Html.ValidationMessageFor(model => model.AccInfo.OPERATING_INSTRUCTION, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -183,8 +270,17 @@
                     <div class="input-group">
                         <label>
                             ORIGINATING BRANCH
+                            @{
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 39)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+                            }
                         </label>
-                        @Html.DropDownList("OringinBranch", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @Html.DropDownList("OringinBranch", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                         @*@Html.EditorFor(model => model.AccInfo.ORIGINATING_BRANCH, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.AccInfo.ORIGINATING_BRANCH, "", new { @class = "text-danger" })
                     </div>
@@ -201,9 +297,18 @@
                 <div class="input-group">
                     <label>
                         BUSINESS DIVISION
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 44)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
 
-                    @Html.DropDownList("BUSINESSDIVISION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("BUSINESSDIVISION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
 
 
                     @*@Html.EditorFor(model => model.AccInfo.BUSINESS_DIVISION, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -215,9 +320,18 @@
                 <div class="input-group">
                     <label>
                         BUSINESS SEGMENT
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 45)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
 
-                    @Html.DropDownList("BUSINESS_SEGMENT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("BUSINESS_SEGMENT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                     @*@Html.EditorFor(model => model.AccInfo.BUSINESS_SEGMENT, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.AccInfo.BUSINESS_SEGMENT, "", new { @class = "text-danger" })
                 </div>
@@ -226,8 +340,17 @@
                 <div class="input-group">
                     <label>
                         BUSINESS SIZE
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 46)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
-                    @Html.DropDownList("BusinessSize", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("BusinessSize", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                     @*@Html.EditorFor(model => model.AccInfo.BUSINESS_SIZE, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.AccInfo.BUSINESS_SIZE, "", new { @class = "text-danger" })
                 </div>
@@ -241,6 +364,15 @@
                 <div class="input-group">
                     <label>
                         ONLINE TRANSFER LIMIT RANGE
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 50)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
 
                     <label>
@@ -268,8 +400,18 @@
                 <div class="input-group">
                     <label>
                         Online Transfer Limit Range
+
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 50)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
-                    @Html.DropDownList("RangeLimit", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("RangeLimit", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                     @*@Html.EditorFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, "", new { @class = "text-danger" })
                 </div>
@@ -279,9 +421,18 @@
                 <div class="input-group">
                     <label>
                         CUSTOMER IC
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 36)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
                     </label>
 
-                    @Html.EditorFor(model => model.AccInfo.CUSTOMER_IC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.AccInfo.CUSTOMER_IC, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                     @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_IC, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -294,13 +445,23 @@
                 <div class="input-group">
                     <label>
                         CAV Required
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 48)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
+
                     </label>
 
                     <label>
-                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "N")
+                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "N", new { disabled = "disabled" })
                         <span>NO</span>
 
-                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "Y")
+                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "Y", new { disabled = "disabled" })
                         <span>YES</span>
 
                         @*<input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned
@@ -318,8 +479,18 @@
                 <div class="input-group">
                     <label>
                         CUSTOMER SEGMENT
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 37)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
+
                     </label>
-                    @Html.DropDownList("CustomerSegment", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("CustomerSegment", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
                     @*@Html.EditorFor(model => model.AccInfo.CUSTOMER_SEGMENT, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_SEGMENT, "", new { @class = "text-danger" })
                 </div>
@@ -328,8 +499,18 @@
                 <div class="input-group">
                     <label>
                         CUSTOMER TYPE
+                        @{
+                            foreach (var item in ViewBag.changeIndex)
+                            {
+                                if (@item == 37)
+                                {
+                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                }
+                            }
+                        }
+
                     </label>
-                    @Html.DropDownList("CustomerType", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.DropDownList("CustomerType", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" , @readonly = "true" })
                     @*@Html.EditorFor(model => model.AccInfo.CUSTOMER_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_TYPE, "", new { @class = "text-danger" })
                 </div>
@@ -346,12 +527,21 @@
                                 <div class="input-group">
                                     <label>
                                         CARD PREFERENCE
+                                        @{
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 51)
+                                                {
+                                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                }
+                                            }
+                                        }
                                     </label>
                                     <label class="normal">
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "N")
+                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "N", new { disabled = "disabled" })
                                         <span>NO</span>
 
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "Y")
+                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "Y", new { disabled = "disabled" })
                                         <span>YES</span>
                                     </label>
 
@@ -364,12 +554,21 @@
                                 <div class="input-group">
                                     <label>
                                         ELECTRONIC BANKING PREFERENCE
+                                        @{
+                                            foreach (var item in ViewBag.changeIndex)
+                                            {
+                                                if (@item == 52)
+                                                {
+                                                    <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                }
+                                            }
+                                        }
                                     </label>
                                     <label class="normal">
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "N")
+                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "N", new { disabled = "disabled" })
                                         <span>NO</span>
 
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "Y")
+                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "Y", new { disabled = "disabled" })
                                         <span>YES</span>
                                     </label>
 
@@ -383,12 +582,21 @@
                                     <div class="input-group">
                                         <label>
                                             STATEMENT PREFERENCES
+                                            @{
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 53)
+                                                    {
+                                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                    }
+                                                }
+                                            }
                                         </label>
                                         <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "N")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "N", new { disabled = "disabled" })
                                             <span>NO</span>
 
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "Y")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "Y", new { disabled = "disabled" })
                                             <span>YES</span>
                                         </label>
 
@@ -401,12 +609,21 @@
                                     <div class="input-group">
                                         <label>
                                             TRANSACTION ALERT PREFERENCE
+                                            @{
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 54)
+                                                    {
+                                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                    }
+                                                }
+                                            }
                                         </label>
                                         <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "N")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "N", new { disabled = "disabled" })
                                             <span>NO</span>
 
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "Y")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "Y", new { disabled = "disabled" })
                                             <span>YES</span>
                                         </label>
                                         @*@Html.EditorFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -419,12 +636,21 @@
                                     <div class="input-group">
                                         <label >
                                             STATEMENT FREQUENCY
+                                            @{
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 55)
+                                                    {
+                                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                    }
+                                                }
+                                            }
                                         </label>
                                         <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "N")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "N", new { disabled = "disabled" })
                                             <span>NO</span>
 
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "Y")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "Y", new { disabled = "disabled" })
                                             <span>YES</span>
                                         </label>
                                         @*@Html.EditorFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -435,12 +661,21 @@
                                     <div class="input-group">
                                         <label>
                                             CHEQUE BOOK REQUISITION
+                                            @{
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 56)
+                                                    {
+                                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                    }
+                                                }
+                                            }
                                         </label>
                                         <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "N")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "N", new { disabled = "disabled" })
                                             <span>NO</span>
 
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "Y")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "Y", new { disabled = "disabled" })
                                             <span>YES</span>
                                         </label>
 
@@ -455,12 +690,21 @@
                                     <div class="input-group">
                                         <label>
                                             CHEQUE LEAVES REQUIRED
+                                            @{
+                                                foreach (var item in ViewBag.changeIndex)
+                                                {
+                                                    if (@item == 57)
+                                                    {
+                                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                    }
+                                                }
+                                            }
                                         </label>
                                         <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "N")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "N", new { disabled = "disabled" })
                                             <span>NO</span>
 
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "Y")
+                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "Y", new { disabled = "disabled" })
                                             <span>YES</span>
                                         </label>
 
@@ -472,13 +716,22 @@
                                         <div class="input-group">
                                             <label>
                                                 CHEQUE CONFIRMATION
+                                                @{
+                                                    foreach (var item in ViewBag.changeIndex)
+                                                    {
+                                                        if (@item == 58)
+                                                        {
+                                                            <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                        }
+                                                    }
+                                                }
                                             </label>
 
                                             <label class="normal">
-                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "N")
+                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "N", new { disabled = "disabled" })
                                                 <span>NO</span>
 
-                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "Y")
+                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "Y" ,new { disabled = "disabled" })
                                                 <span>YES</span>
                                             </label>
 
@@ -493,9 +746,18 @@
                                             <div class="input-group">
                                                 <label>
                                                     CHEQUE CONFIRM THRESHLDRANGE
+                                                    @{
+                                                        foreach (var item in ViewBag.changeIndex)
+                                                        {
+                                                            if (@item == 59)
+                                                            {
+                                                                <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                            }
+                                                        }
+                                                    }
                                                 </label>
 
-                                                @Html.DropDownList("threshold", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                                @Html.DropDownList("threshold", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = "true" })
 
 
                                                 @*@Html.EditorFor(model => model.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -506,12 +768,21 @@
                                             <div class="input-group">
                                                 <label>
                                                     ONLINE TRANSFER LIMIT
+                                                    @{
+                                                        foreach (var item in ViewBag.changeIndex)
+                                                        {
+                                                            if (@item == 60)
+                                                            {
+                                                                <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                            }
+                                                        }
+                                                    }
                                                 </label>
                                                 <label class="normal">
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "N")
+                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "N", new { disabled = "disabled" })
                                                     <span>NO</span>
 
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "Y")
+                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "Y", new { disabled = "disabled" })
                                                     <span>YES</span>
                                                 </label>
 
@@ -526,12 +797,21 @@
                                             <div class="input-group">
                                                 <label>
                                                     TOKEN
+                                                    @{
+                                                        foreach (var item in ViewBag.changeIndex)
+                                                        {
+                                                            if (@item == 60)
+                                                            {
+                                                                <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                            }
+                                                        }
+                                                    }
                                                 </label>
                                                 <label class="normal">
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "N")
+                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "N", new { disabled = "disabled" })
                                                     <span>NO</span>
 
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "Y")
+                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "Y", new { disabled = "disabled" })
                                                     <span>YES</span>
                                                 </label>
 
@@ -544,9 +824,18 @@
                                             <div class="input-group">
                                                 <label>
                                                     ACCOUNT SIGNATORY
+                                                    @{
+                                                        foreach (var item in ViewBag.changeIndex)
+                                                        {
+                                                            if (@item == 62)
+                                                            {
+                                                                <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                            }
+                                                        }
+                                                    }
                                                 </label>
                                                 
-                                                @Html.EditorFor(model => model.ServiceInfo.ACCOUNT_SIGNATORY, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.ServiceInfo.ACCOUNT_SIGNATORY, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                                                 @Html.ValidationMessageFor(model => model.ServiceInfo.ACCOUNT_SIGNATORY, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -557,8 +846,17 @@
                                             <div class="input-group">
                                                 <label>
                                                     SECOND SIGNATORY
+                                                    @{
+                                                        foreach (var item in ViewBag.changeIndex)
+                                                        {
+                                                            if (@item == 63)
+                                                            {
+                                                                <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                                            }
+                                                        }
+                                                    }
                                                 </label>
-                                                @Html.EditorFor(model => model.ServiceInfo.SECOND_SIGNATORY, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.ServiceInfo.SECOND_SIGNATORY, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                                                 @Html.ValidationMessageFor(model => model.ServiceInfo.SECOND_SIGNATORY, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -571,7 +869,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
 
-                                            <button type="button" class="btn btn-outline pull-right" onclick="submitAccInfo()">Update</button>
+                                            <button type="button" class="btn btn-outline pull-right" onclick="approveAccInfo()">Update</button>
 
                                         </div>
                                         <!--
@@ -669,3 +967,11 @@
 </div>
 <!-- /.col -->
  
+
+<script>
+    $(document).ready(function () {
+        $("input[type=radio]").attr('disabled', true);
+    });
+
+
+</script>

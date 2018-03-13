@@ -168,26 +168,18 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.BusinessDivision> BUSINESSDIVISION { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SEGMENT> CDMA_BUSINESS_SEGMENT { get; set; }
-        
-
-
-
-
-
-
-        //CDMA_ACCOUNT_TYPE
-
-        //
-
-        //
-
-
-
-
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO_LOG> CDMA_ACCOUNT_INFO_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_RECORD_LOG> CDMA_ACCOUNT_RECORD_LOG { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCT_SERVICES_LOG> CDMA_ACCT_SERVICES_LOG { get; set; }
+         
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Kpi.BrnKpi> BrnKpis { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Configuration.Setting> Settings { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_INCOME> CDMA_CUSTOMER_INCOME { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INCOME_BAND> CDMA_INCOME_BAND { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INITIAL_DEPOSIT_RANGE> CDMA_INITIAL_DEPOSIT_RANGE { get; set; }
 
         //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
 

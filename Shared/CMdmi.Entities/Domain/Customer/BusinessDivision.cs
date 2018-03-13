@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    [Table("BUSINESSDIVISION")]
+    [Table("CDMA_BUSINESS_DIVISION")]
     public partial class BusinessDivision
     {
         [Key]
