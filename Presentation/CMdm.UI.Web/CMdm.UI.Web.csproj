@@ -286,6 +286,7 @@
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerIncomeController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\DqExceptionsController.cs" />
@@ -649,6 +650,7 @@
     <Content Include="AdminLTE\dist\css\skins\skin-yellow.min.css" />
     <Content Include="AdminLTE\dist\css\skins\_all-skins.css" />
     <Content Include="AdminLTE\dist\css\skins\_all-skins.min.css" />
+    <Content Include="AdminLTE\dist\img\attention.png" />
     <Content Include="AdminLTE\dist\img\avatar.png" />
     <Content Include="AdminLTE\dist\img\avatar04.png" />
     <Content Include="AdminLTE\dist\img\avatar2.png" />
@@ -848,6 +850,7 @@
     <Content Include="Content\easyquery\eq-icons-default.css" />
     <Content Include="Content\easyquery\eqview.css" />
     <Content Include="Content\easyquery\jquery-ui.css" />
+    <Content Include="Content\ico\attention.png" />
     <Content Include="Content\ico\favicon.png" />
     <Content Include="Content\ico\kingadmin-favicon114x114.png" />
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
@@ -2064,6 +2067,14 @@
     <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Permissions\_ListRolesTable4Permission.cshtml" />
     <Content Include="Views\Permissions\_AddRole4Permission.cshtml" />
+    <Content Include="Views\CustomerIncome\Create.cshtml" />
+    <Content Include="Views\CustomerIncome\Delete.cshtml" />
+    <Content Include="Views\CustomerIncome\Details.cshtml" />
+    <Content Include="Views\CustomerIncome\Edit.cshtml" />
+    <Content Include="Views\CustomerIncome\Index.cshtml" />
+    <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
+    <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
+    <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

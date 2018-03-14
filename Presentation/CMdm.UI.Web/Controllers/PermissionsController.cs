@@ -12,6 +12,7 @@ using CMdm.UI.Web.Models.UserAdmin;
 using CMdm.Framework.Kendoui;
 using CMdm.Services.UserAdmin;
 using CMdm.Framework.Controllers;
+using CMdm.UI.Web.Helpers.CrossCutting.Security;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -387,6 +388,66 @@ namespace CMdm.UI.Web.Controllers
             //List<RolesListModel> llst = roles.Select(a => new { a.ROLE_ID, a.ROLE_NAME }).ToList();
 
             ViewBag.PermRoles = roles;
+            return PartialView("_ListRolesTable4Permission", mdmPerm);
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddRole2PermissionReturnPartialView(int permissionId, int roleId)
+        {
+            //CM_USER_PROFILE role = db.CM_USER_PROFILE.Find(roleId);
+            //CM_PERMISSIONS _permission = db.CM_PERMISSIONS.Find(permissionId);
+            //string temp = Request.QueryString[0];
+            //int id = Convert.ToInt32(RouteData.Values["id"]);
+
+            CM_ROLE_PERM_XREF rp = db.CM_ROLE_PERM_XREF.FirstOrDefault(a => a.PERMISSION_ID == permissionId && a.ROLE_ID == roleId);
+            if(rp == null)
+            {
+                var identity = ((CustomPrincipal)User).CustomIdentity;
+                CM_ROLE_PERM_XREF roleperm = new CM_ROLE_PERM_XREF();
+                roleperm.PERMISSION_ID = permissionId;
+                roleperm.ROLE_ID = roleId;
+                roleperm.CREATED_BY = identity.Name;
+                roleperm.CREATED_DATE = DateTime.Now;
+                db.CM_ROLE_PERM_XREF.Add(roleperm);
+                db.SaveChanges();
+            }
+
+            var mdmPerm = (from x in db.CM_PERMISSIONS
+                               //join rx in db.CM_ROLE_PERM_XREF on x.PERMISSION_ID equals rx.PERMISSION_ID 
+                               //join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID                
+                           where x.PERMISSION_ID == permissionId
+                           select new PermissionListModel
+                           {
+                               Id = (int)x.PERMISSION_ID,
+                               PERMISSIONDESCRIPTION = x.PERMISSIONDESCRIPTION,
+                               PARENT_PERMISSION = x.PARENT_PERMISSION,
+                               ISACTIVE = x.ISACTIVE,
+                               ACTION_NAME = x.ACTION_NAME,
+                               CONTROLLER_NAME = x.CONTROLLER_NAME,
+                               FORM_URL = x.FORM_URL,
+                               ICON_CLASS = x.ICON_CLASS,
+                               TOGGLE_ICON = x.TOGGLE_ICON,
+                               ISOPEN_CLASS = x.ISOPEN_CLASS,
+                               //UserRoles = rx.PermRoles
+                           }).FirstOrDefault();
+            var roles = (from rx in db.CM_ROLE_PERM_XREF
+                         join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID
+                         where rx.PERMISSION_ID == permissionId
+                         select new RolesListModel
+                         {
+                             ROLE_ID = r.ROLE_ID,
+                             ROLE_NAME = r.ROLE_NAME
+                         }).ToList();
+         
+            ViewBag.PermRoles = roles;
+
+
+            //if (!role.PERMISSIONS.Contains(_permission))
+            //{
+            //    role.PERMISSIONS.Add(_permission);
+            //    database.SaveChanges();
+            //}
             return PartialView("_ListRolesTable4Permission", mdmPerm);
         }
     }

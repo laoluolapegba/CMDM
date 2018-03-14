@@ -12,7 +12,7 @@
                 $(document).ready(function () {
                     $('#AddPermission').click(function () {
                         var _roleId = $('#RoleId').val();
-                        var _permissionId = $('#Permission_Id').val();
+                        var _permissionId = $('#Id').val();
 
 
                         if (_permissionId == '') {
@@ -21,7 +21,7 @@
 
                         var _parameters = { permissionId: _permissionId, roleId: _roleId };
                         $.ajax({
-                            url: "/Admin/AddRole2PermissionReturnPartialView",
+                            url: "/Permissions/AddRole2PermissionReturnPartialView",
                             type: "GET",
                             data: _parameters,
                             success: function (data, textStatus, jqXHR) {

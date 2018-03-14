@@ -168,10 +168,11 @@ namespace CMdm.UI.Web.Controllers
                     COD_PASSWORD = passwordHash,
                     ISAPPROVED = 1,
                     PASSWORDSALT = salt,
-                    LASTLOGINDATE = x.LASTLOGINDATE,
+                    LASTLOGINDATE = DateTime.Now,
                     ISLOCKED = isActive,
                     ROLE_ID = x.ROLE_ID,
                     DISPLAY_NAME = x.FIRSTNAME + " " + x.LASTNAME,
+                    
                     CREATED_DATE = DateTime.Now
 
                 };
