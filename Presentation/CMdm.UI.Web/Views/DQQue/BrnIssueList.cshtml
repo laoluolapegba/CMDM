@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <em>You have <span class="label label-success">4 Closed</span> issues, <span class="label label-warning">127 pending</span> and <span class="label label-default">2 in progress</span></em>
+            @*<em>You have <span class="label label-success">4 Closed</span> issues, <span class="label label-warning">127 pending</span> and <span class="label label-default">2 in progress</span></em>*@
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -164,19 +164,24 @@
                                         return buttons;
                                     }
                                     },
+                                     {
+                                         field: "CUST_ID",
+                                         title: "Customer Id",
+                                         width: 100
+
+                                     },
                                     {
                                     //command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' >Modify</a>", }, title: "Operation", width: "100px" },
                                   
                                     field: "REASON",
                                     title: "Exception Reason",
                                     width: 200
-<<<<<<< HEAD
+
                                 }, {
-=======
+
                                   },
                                   
                                     {
->>>>>>> c13ddda9c20e143a91378d3240f18602bd1d518c
                                     field: "RULE_NAME",
                                     title: "Rulename",
                                     width: 200

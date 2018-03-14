@@ -28,7 +28,7 @@ namespace CMdm.UI.Web.Controllers
         #region Constructors
         public DQQueController()
         {
-            bizrule = new DQQueBiz();
+            //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
         }
         #endregion

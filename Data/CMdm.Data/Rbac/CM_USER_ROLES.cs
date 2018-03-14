@@ -18,7 +18,7 @@ namespace CMdm.Data.Rbac
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ROLE_ID { get; set; }
 
         [Required]

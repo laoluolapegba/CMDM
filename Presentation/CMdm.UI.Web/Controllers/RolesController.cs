@@ -51,7 +51,7 @@ namespace CMdm.UI.Web.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CM_USER_ROLES cM_USER_ROLES, bool continueEditing)
+        public ActionResult Create([Bind(Exclude = "ROLE_ID")]CM_USER_ROLES cM_USER_ROLES, bool continueEditing)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -63,8 +63,10 @@ namespace CMdm.UI.Web.Controllers
                 cM_USER_ROLES.CREATED_DATE = DateTime.Now;
                 db.CM_USER_ROLES.Add(cM_USER_ROLES);
                 db.SaveChanges();
-                SuccessNotification("Role Updated");
-                return continueEditing ? RedirectToAction("Edit", new { id = cM_USER_ROLES.ROLE_ID }) : RedirectToAction("Index"); return RedirectToAction("Index");
+                db.Entry(cM_USER_ROLES).GetDatabaseValues();
+                SuccessNotification("Role Created");
+                return continueEditing ? RedirectToAction("Edit", new { id = cM_USER_ROLES.ROLE_ID }) : RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             return View(cM_USER_ROLES);
@@ -103,7 +105,8 @@ namespace CMdm.UI.Web.Controllers
 
                 db.SaveChanges();
                 SuccessNotification("Role Updated");
-                return continueEditing ? RedirectToAction("Edit", new { id = cM_USER_ROLES.ROLE_ID }) : RedirectToAction("Index"); return RedirectToAction("Index");
+                return continueEditing ? RedirectToAction("Edit", new { id = cM_USER_ROLES.ROLE_ID }) : RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             return View(cM_USER_ROLES);
