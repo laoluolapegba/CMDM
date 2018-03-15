@@ -131,7 +131,7 @@
                                   
                                      
                                     <!-- /.form group -->
-                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control",@onclick = "getAge()" } })
                                     @Html.ValidationMessageFor(model => model.BioData.DATE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -387,7 +387,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label>Email</label>
-                                    @Html.EditorFor(model => model.contact.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.contact.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control",@type="email" } })
                                     @Html.ValidationMessageFor(model => model.contact.EMAIL_ADDRESS, "", new { @class = "text-danger" })
 
                                 </div>

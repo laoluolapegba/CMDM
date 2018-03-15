@@ -307,6 +307,8 @@
   
     <script type="text/javascript">
 
+ 
+         
     //biodata
     function ApproveData() {
         //  alert('Hello');saving display
@@ -342,6 +344,7 @@
    function submitBioData() {
        //  alert('Hello');saving display
        // document.getElementById("display").innerHTML = "";
+        
        $("#display").css({ 'display': 'none' });
        $("#update").css({ 'display': 'none' });
        $("#saving").css({ 'display': 'block' });
@@ -493,4 +496,19 @@
 
     }
 
+
+    function getAge() {
+        var dateString  = $('#BioData_DATE_OF_BIRTH').val();
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        $('#BioData_AGE').val(age);
+        
+        
+    }
 </script>
