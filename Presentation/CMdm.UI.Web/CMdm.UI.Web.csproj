@@ -312,6 +312,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
@@ -547,6 +548,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Audit\AuditTrailListModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
+    <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -2075,6 +2077,8 @@
     <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
     <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
     <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
+    <Content Include="Views\Common\Index.cshtml" />
+    <Content Include="Views\Common\SystemInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
