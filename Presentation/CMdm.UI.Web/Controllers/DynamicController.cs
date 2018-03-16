@@ -873,8 +873,8 @@ namespace CMdm.UI.Web.Controllers
            cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
            cDMA_INDIVIDUAL_BIO_DATA.FIRST_NAME = DynamicModel.BioData.FIRST_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
-           //DynamicModel.BioData.LAST_MODIFIED_DATE;
-           cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = DynamicModel.BioData.MARITAL_STATUS;
+            //DynamicModel.BioData.LAST_MODIFIED_DATE;
+            cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = Request["MARITAL_STATUS"];//DynamicModel.BioData.MARITAL_STATUS;
            cDMA_INDIVIDUAL_BIO_DATA.MOTHER_MAIDEN_NAME = DynamicModel.BioData.MOTHER_MAIDEN_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.NATIONALITY = Request["BioData_NATIONALITY"];  //// DynamicModel.BioData.NATIONALITY;
            cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
@@ -1471,6 +1471,16 @@ namespace CMdm.UI.Web.Controllers
                     ViewBag.STATES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
 
                     ViewBag.STATES_RES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
+
+                    if (cDMA_INDIVIDUAL_BIO_DATA != null)
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS);
+                    }
+                    else
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS");
+                    }
+
 
                     if (cDMA_INDIVIDUAL_ADDRESS_DETAIL == null)
                     {

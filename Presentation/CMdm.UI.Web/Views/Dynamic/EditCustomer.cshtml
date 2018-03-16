@@ -131,7 +131,7 @@
                                   
                                      
                                     <!-- /.form group -->
-                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control",@onclick = "getAge()" } })
+                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control",@onchange = "getAge()" } })
                                     @Html.ValidationMessageFor(model => model.BioData.DATE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label> Age</label>
-                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -184,7 +184,9 @@
                                 <div class="input-group">
                                     <label> Marital Status</label>
 
-                                    @Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @*@Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.DropDownList("MARITAL_STATUS", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+
                                     @Html.ValidationMessageFor(model => model.BioData.MARITAL_STATUS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -360,7 +362,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label>*City/Town of Residence</label>
-                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
                                 </div>
                             </div>

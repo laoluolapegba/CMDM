@@ -306,9 +306,39 @@
 @section Scripts {
   
     <script type="text/javascript">
+        function validateKeyStrokes(event) {
+           // alert(event.which);
+            var charCode = (event.which) ? event.which : event.keyCode;
+            // charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105
+            if (charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105) {
+                $("#AddressDetails_CITY_TOWN_OF_RESIDENCE").after('<span class="text-red">Numberic is not allowed.</span>');
+                return false;
+            }
+            return true;
+        }
+        function validateMail()
+        {
 
- 
-         
+            var hasError = false;
+            var emailReg  =  /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,6})?$/;
+
+            var emailaddressVal = $("#contact_EMAIL_ADDRESS").val();
+            if(emailaddressVal == '') {
+                $("#contact_EMAIL_ADDRESS").after('<span class="text-red">Enter email address.</span>');
+                hasError = true;
+            }
+
+            else if(!emailReg.test(emailaddressVal)) {
+                $("#contact_EMAIL_ADDRESS").after('<span class="text-red">Enter a valid email address.</span>');
+                hasError = true;
+            }
+
+            if(hasError == true) { return false; }
+
+        
+        }
+
+
     //biodata
     function ApproveData() {
         //  alert('Hello');saving display
@@ -344,7 +374,19 @@
    function submitBioData() {
        //  alert('Hello');saving display
        // document.getElementById("display").innerHTML = "";
-        
+       validateMail();
+       //identification_ID_EXPIRY_DATE
+       //identification_ID_ISSUE_DATE
+       var ID_EXPIRY_DATE = new Date($( "#identification_ID_EXPIRY_DATE" ).val());
+       var ID_ISSUE_DATE = new Date($( "#identification_ID_ISSUE_DATE" ).val());
+
+       if(ID_EXPIRY_DATE.getTime() < ID_ISSUE_DATE.getTime())
+       {
+           alert('EXPIRY DATE should be less that EXPIRY DATE ');
+           return false;
+       }
+     
+
        $("#display").css({ 'display': 'none' });
        $("#update").css({ 'display': 'none' });
        $("#saving").css({ 'display': 'block' });
