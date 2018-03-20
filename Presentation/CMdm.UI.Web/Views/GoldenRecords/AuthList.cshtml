@@ -137,16 +137,21 @@
                                 },{
                                     field: "BVN",
                                     title: "BVN",
-                                    width: 200
+                                    width: 100
                                 },{
                                     field: "FULL_NAME",
                                     title: "Full name",
                                     width: 200
                                 },
                                 {
+                                    field: "RESIDENTIAL_ADDRESS",
+                                    title: "Address",
+                                    width: 200
+                                },
+                                {
                                     field: "CUSTOMER_TYPE",
                                     title: "Customer Type",
-                                    width: 150
+                                    width: 50
                                 },
                                 {
                                     field: "SEX",
@@ -155,7 +160,7 @@
                                 },
                                 {
                                     field: "DATE_OF_BIRTH",
-                                    title: "Last Run Date",
+                                    title: "Date of Birth",
                                     width: 150,
                                     type: "date",
                                     format: "{0:G}",
@@ -163,14 +168,7 @@
                                     attributes: { style: "text-align:center" },
 
                                 },
-                                {
-                                    field: "Id",
-                                    title: "View",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<a class="btn btn-default" href="View/#=Id#"><i class="fa fa-eye"></i>View</a>'
-                                }
+                                
                                    ]
                             });
                         });
@@ -339,6 +337,23 @@
             var ids = selectedIds.join(",");
             $('#approve-selected-form #selectedIds').val(ids);
             $('#approve-selected-form').submit();
+            return false;
+        });
+    });
+</script>
+@using (Html.BeginForm("DisapproveSelected", "GoldenRecords", FormMethod.Post, new { id = "disapprove-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#disapprove-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            $('#disapprove-selected-form #selectedIds').val(ids);
+            $('#disapprove-selected-form').submit();
             return false;
         });
     });

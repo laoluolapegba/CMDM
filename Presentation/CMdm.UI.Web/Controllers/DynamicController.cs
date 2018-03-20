@@ -2029,8 +2029,12 @@ namespace CMdm.UI.Web.Controllers
                 var current_val = "";
                 var previous_country = countryById(Convert.ToDecimal(previous.COUNTRY_OF_BIRTH));
                 var current_country = countryById(Convert.ToDecimal(current.COUNTRY_OF_BIRTH));
-                if (previous_country.COUNTRY_NAME != null) { previous_val = previous_country.COUNTRY_NAME; }
-                if (current_country == null) { current_val = current_country.COUNTRY_NAME; }
+                if(previous_country != null)
+                {
+                   if (previous_country.COUNTRY_NAME != null) { previous_val = previous_country.COUNTRY_NAME; }
+                }
+                if (current_country != null) { current_val = current_country.COUNTRY_NAME; }
+
                 result = result + "<tr><td> Title changed from <strong>"
                                 + previous_val + "</strong> To "
                                 + current_val + "</td></tr>";

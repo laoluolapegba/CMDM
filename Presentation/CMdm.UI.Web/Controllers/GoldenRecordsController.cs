@@ -194,13 +194,13 @@ namespace CMdm.UI.Web.Controllers
                     _dqQueService.UpdateQueItem(item);
                 }
 
-                return RedirectToAction("AuthList");
+                return RedirectToAction("List");
 
             }
             catch (Exception exc)
             {
                 ErrorNotification(exc);
-                return RedirectToAction("AuthList");
+                return RedirectToAction("List");
             }
         }
 
@@ -227,13 +227,13 @@ namespace CMdm.UI.Web.Controllers
                     item.RECORD_STATUS = "U";
                     _dqQueService.UpdateQueItem(item);
                 }
-                return RedirectToAction("AuthList");
+                return RedirectToAction("List");
 
             }
             catch (Exception exc)
             {
                 ErrorNotification(exc);
-                return RedirectToAction("AuthList");
+                return RedirectToAction("List");
             }
         }
         protected override void Dispose(bool disposing)

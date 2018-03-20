@@ -102,7 +102,7 @@ namespace CMdm.Data.DAC
             {
                 // Store the query.
                 //IQueryable<MdmDqRule> query = db.Set<MdmDqRule>();
-                var query = db.CdmaGoldenRecords.Select(q => q); //.Include(m => m.MdmAggrDimensions).Include(m => m.MdmCatalog).Include(m => m.MdmRegex).Include(m => m.MdmAggrDimensions).Include(m=>m.MDM_WEIGHTS);
+                var query = db.CdmaGoldenRecords.Where(a=>a.RECORD_STATUS == "N").Select(q => q); //.Include(m => m.MdmAggrDimensions).Include(m => m.MdmCatalog).Include(m => m.MdmRegex).Include(m => m.MdmAggrDimensions).Include(m=>m.MDM_WEIGHTS);
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.FULL_NAME.Contains(name));
