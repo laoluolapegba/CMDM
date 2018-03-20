@@ -118,6 +118,7 @@ namespace CMdm.UI.Web
                        join p in db.CM_PERMISSIONS on n.PERMISSION_ID equals p.PERMISSION_ID
                        join r in db.CM_USER_ROLES on n.ROLE_ID equals r.ROLE_ID
                        where n.ROLE_ID == roleID
+                       where p.ISACTIVE == true
                        //where n.CM_PERMISSIONS.PARENT_PERMISSION != 0
                        //orderby n.CM_PERMISSIONS.PERMISSIONDESCRIPTION
                        select new

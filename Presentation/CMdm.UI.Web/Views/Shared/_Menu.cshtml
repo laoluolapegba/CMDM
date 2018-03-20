@@ -14,6 +14,7 @@
             var menus = (from p in _db.CM_PERMISSIONS
                          join x in _db.CM_ROLE_PERM_XREF on p.PERMISSION_ID equals x.PERMISSION_ID
                          where x.ROLE_ID == identity.UserRoleId
+                         where p.ISACTIVE == true
                          select new
                          {
                              PermissionId = p.PERMISSION_ID,
