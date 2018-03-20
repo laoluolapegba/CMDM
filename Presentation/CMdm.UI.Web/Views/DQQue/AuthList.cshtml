@@ -435,6 +435,23 @@
         </div>
     </div>
 </div>
+@using (Html.BeginForm("ApproveSelected", "DQQue", FormMethod.Post, new { id = "approve-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#approve-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            $('#approve-selected-form #selectedIds').val(ids);
+            $('#approve-selected-form').submit();
+            return false;
+        });
+    });
+</script>
 @section Scripts {
   
     <script type="text/javascript">

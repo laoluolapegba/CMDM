@@ -1,0 +1,345 @@
+﻿@using CMdm.Framework;
+@model CMdm.UI.Web.Models.GoldenRecord.GoldenRecordModel
+@*ViewBag.Title = "Data Quality Rules";
+    ViewBag.SubTitle = "List";*@
+@{
+    ViewBag.Title = "Golden Record Merge";
+    //ViewBag.SubTitle = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 10;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+<style>
+    .nav-tabs-custom > .tab-content {
+        color: black;
+    }
+
+    .modal-dialog {
+        width: 900px;
+    }
+</style>
+
+@Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Merge Records
+    </h1>
+    @*@if (!Model.IsLoggedInAsApprover)
+        {*@
+    <div class="pull-right">
+        <button type="button" id="approve-selected" class="btn bg-green">
+            <i class="fa fa-check-square-o"></i>
+            Approve Selected
+        </button>
+        <button type="button" id="disapprove-selected" class="btn bg-navy">
+            <i class="fa fa-minus-square-o"></i>
+            Dissaprove Selected
+        </button>
+       
+    </div>
+
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.Label("Customer Name")
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmEditorFor(model => model.SearchName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.BRANCH_CODE)
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="dqauth-grid"></div>
+
+                    <script>
+                        
+                        $(document).ready(function () {
+                            $("#dqauth-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("AuthList", "GoldenRecords"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: additionalData
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors"
+                                    },
+                                    error: function(e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(defaultGridPageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(gridPageSizes)],
+                                    @Html.Partial("_GridPagerMessages")
+                                },
+                                editable: {
+                                    confirmation: "Delete?",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                dataBound: onDataBound,
+                                columns: [
+                                    {
+                                        field: "Id",
+                                        headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
+                                        width: 50
+                                    },                                    
+                                {
+                                    field: "CUSTOMER_NO",
+                                    title: "Customer Id",
+                                    width: 100
+                                },{
+                                    field: "BVN",
+                                    title: "BVN",
+                                    width: 200
+                                },{
+                                    field: "FULL_NAME",
+                                    title: "Full name",
+                                    width: 200
+                                },
+                                {
+                                    field: "CUSTOMER_TYPE",
+                                    title: "Customer Type",
+                                    width: 150
+                                },
+                                {
+                                    field: "SEX",
+                                    title: "Gender",
+                                    width: 100
+                                },
+                                {
+                                    field: "DATE_OF_BIRTH",
+                                    title: "Last Run Date",
+                                    width: 150,
+                                    type: "date",
+                                    format: "{0:G}",
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+
+                                },
+                                {
+                                    field: "Id",
+                                    title: "View",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '<a class="btn btn-default" href="View/#=Id#"><i class="fa fa-eye"></i>View</a>'
+                                }
+                                   ]
+                            });
+                        });
+                        function showDetails(e) {
+                            var row = e.select().closest("tr");
+                            // or e.parent().parent();
+                            var grid = $('#dqauth-grid').data('kendoGrid');
+                            console.log(grid.dataItem(row));
+                            var dataItem = grid.dataItem(row);
+                        }
+                    </script>
+
+                    <script type="text/javascript">
+                        var selectedIds = [];
+
+                        $(document).ready(function() {
+                            //search button
+                            $('#search-rule').click(function() {
+                                //search
+                                var grid = $('#dqauth-grid').data('kendoGrid');
+                                grid.dataSource.page(1); //new search. Set page size to 1
+                                //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                //clear selected checkboxes
+                                $('.checkboxGroups').attr('checked', false).change();
+                                selectedIds = [];
+                                return false;
+                            });
+                            $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                                if (event.keyCode == 13) {
+                                    $("#search-rule").click();
+                                    return false;
+                                }
+                            });
+
+                           
+                            //"approve selected" button
+                            $('#approve-selected').click(function(e) {
+                                e.preventDefault();
+
+                                var postData = {
+                                    selectedIds: selectedIds
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("ApproveSelected", "GoldenRecords"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });
+
+                            //"disapprove selected" button
+                            $('#disapprove-selected').click(function(e) {
+                                e.preventDefault();
+
+                                var postData = {
+                                    selectedIds: selectedIds
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("DisapproveSelected", "GoldenRecords"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });
+
+                            
+                            $('#mastercheckbox').click(function() {
+                                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                            });
+
+                            //wire up checkboxes.
+                            $('#dqauth-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
+                                var $check = $(this);
+                                if ($check.is(":checked") == true) {
+                                    var checked = jQuery.inArray($check.val(), selectedIds);
+                                    if (checked == -1) {
+                                        //add id to selectedIds.
+                                        selectedIds.push($check.val());
+                                    }
+                                } else {
+                                    var checked = jQuery.inArray($check.val(), selectedIds);
+                                    if (checked > -1) {
+                                        //remove id from selectedIds.
+                                        selectedIds = $.grep(selectedIds, function(item, index) {
+                                            return item != $check.val();
+                                        });
+                                    }
+                                }
+                                updateMasterCheckbox();
+                            });
+                        });
+
+                        function additionalData() {
+                            var data = {
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                BRANCH_CODE: $('#BRANCH_CODE').val()
+                                @*CreatedOnFrom: $('#@Html.FieldIdFor(model => model.CreatedOnFrom)').val(),
+                                CreatedOnTo: $('#@Html.FieldIdFor(model => model.CreatedOnTo)').val(),
+                                    Dates in kendo :https://blog.falafel.com/passing-dates-kendo-ui-aspnet/
+                                    *@
+
+                            };
+                            addAntiForgeryToken(data);
+                            return data;
+                        }
+
+                        function onDataBound(e) {
+
+                            $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function() {
+                                var currentId = $(this).val();
+                                var checked = jQuery.inArray(currentId, selectedIds);
+                                //set checked based on if current checkbox's value is in selectedIds.
+                                $(this).attr('checked', checked > -1);
+                            });
+
+                            updateMasterCheckbox();
+                        }
+
+                        function updateMasterCheckbox() {
+                            var numChkBoxes = $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+                            var numChkBoxesChecked = $('#dqauth-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+                            $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*export selected (XML). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+@using (Html.BeginForm("ApproveSelected", "GoldenRecords", FormMethod.Post, new { id = "approve-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#approve-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            $('#approve-selected-form #selectedIds').val(ids);
+            $('#approve-selected-form').submit();
+            return false;
+        });
+    });
+</script>

@@ -21,7 +21,7 @@ namespace CMdm.UI.Web.Models.Common
         [DisplayName("IsFullTrust")]
         public string IsFullTrust { get; set; }
 
-        [DisplayName("NopVersion")]
+        [DisplayName("CMDM Version")]
         public string Version { get; set; }
 
         [DisplayName("OperatingSystem")]

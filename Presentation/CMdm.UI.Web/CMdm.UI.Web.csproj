@@ -297,6 +297,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
+    <Compile Include="Controllers\GoldenRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndIdentificationController.cs" />
     <Compile Include="Controllers\IndividualAddressController.cs" />
@@ -559,6 +560,7 @@
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
+    <Compile Include="Models\GoldenRecord\GoldenRecordModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
@@ -2079,6 +2081,8 @@
     <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
     <Content Include="Views\Common\Index.cshtml" />
     <Content Include="Views\Common\SystemInfo.cshtml" />
+    <Content Include="Views\GoldenRecords\List.cshtml" />
+    <Content Include="Views\GoldenRecords\AuthList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
