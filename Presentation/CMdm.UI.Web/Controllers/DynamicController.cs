@@ -139,21 +139,21 @@ namespace CMdm.UI.Web.Controllers
         {
             var identity = ((CustomPrincipal)User).CustomIdentity;
             var dateAndTime = DateTime.Now;
-            var c_id = Request["customer_no"];
+            var c_id = DynamicModel.BioData.CUSTOMER_NO;//Request["customer_no"];
 
 
             //create a log before update
             string tied = DateTime.Now.ToString("hhmmssffffff");
             //var values = Request["AccInfo.CUSTOMER_NO"];
-            CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
-            CDMA_ACCT_SERVICES_REQUIRED cDMA_ACCT_SERVICES_REQUIRED = db.CDMA_ACCT_SERVICES_REQUIRED.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
-            CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
+            CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
+            CDMA_ACCT_SERVICES_REQUIRED cDMA_ACCT_SERVICES_REQUIRED = db.CDMA_ACCT_SERVICES_REQUIRED.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
+            CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
 
 
 
    
-                cDMA_ACCOUNT_INFO.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];                
-                cDMA_ACCOUNT_INFO.LAST_MODIFIED_DATE = dateAndTime;
+               cDMA_ACCOUNT_INFO.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];                
+               cDMA_ACCOUNT_INFO.LAST_MODIFIED_DATE = dateAndTime;
 
                 cDMA_ACCOUNT_INFO.AUTHORISED_BY = identity.ProfileId.ToString();
                 cDMA_ACCOUNT_INFO.AUTHORISED_DATE = dateAndTime;// DynamicModel.AccInfo.BRANCH;
@@ -162,12 +162,12 @@ namespace CMdm.UI.Web.Controllers
 
 
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED_BY = identity.ProfileId.ToString();               
-                cDMA_ACCT_SERVICES_REQUIRED.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
+               cDMA_ACCT_SERVICES_REQUIRED.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_ACCT_SERVICES_REQUIRED.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED_DATE = dateAndTime;
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED = "A";
                 db.SaveChanges();
-            return PartialView("SaveBioData", DynamicModel);
+            return PartialView("SaveBioData");
 
 
 
@@ -1184,6 +1184,15 @@ namespace CMdm.UI.Web.Controllers
 
                     }
 
+                    if (cDMA_INDIVIDUAL_BIO_DATA != null)
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS);
+                    }
+                    else
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS");
+                    }
+
                     //save current data into session variable for future usage
                     //set the customer value incase of empty record 
 
@@ -1214,6 +1223,7 @@ namespace CMdm.UI.Web.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
+
 
 
                     ViewBag.profile_log = db.CDMA_INDIVIDUAL_PROFILE_LOG.Where(b => b.CUSTOMER_NO == c_id).ToList().Where(b => b.AFFECTED_CATEGORY == "biodata").OrderBy(i => i.LOG_ID).ToList();

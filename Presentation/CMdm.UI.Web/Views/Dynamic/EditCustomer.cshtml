@@ -176,7 +176,7 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label> Age</label>
-                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true } })
+                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true, @min="0" } })
                                     @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -242,7 +242,7 @@
                                 <div class="input-group">
                                     <label> Number of Children</label>
                                     @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN,
-new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                                     @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
 
 
