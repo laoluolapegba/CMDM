@@ -1,5 +1,5 @@
 ﻿using CMdm.Core;
-using CMdm.Entities.Domain.Dqi;
+using CMdm.Entities.Domain.GoldenRecord;
 using CMdm.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,27 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMdm.Services.DqQue
+namespace CMdm.Services.GoldenRecord
 {
-    public interface IDqQueService
+    public interface IGoldenRecordService
     {
         /// <summary>
         /// Updates the queitem
         /// </summary>
         /// <param name="queitem">queitem</param>
-        void UpdateExceptionQueItem(MdmDqRunException queitem);
+        void UpdateQueItem(CdmaGoldenRecord queitem);
         /// <summary>
         /// Gets a queitem by item identifiers
         /// </summary>
         /// <param name="recordId">recordId identifier</param>
         /// <returns>Vendor</returns>
-        IList<MdmDqRunException> GetQueItembyIds(int[] recordIds);
+        IList<CdmaGoldenRecord> GetQueItembyIds(int[] recordIds);
         /// <summary>
         /// Gets a Queitem by item reference identifier
         /// </summary>
         /// <param name="recordId">que identifier</param>
         /// <returns>Vendor</returns>
-        MdmDQQue GetQueItembyId(int recordId);
+        CdmaGoldenRecord GetQueItembyId(int recordId);
         /// <summary>
         /// Gets all items
         /// </summary>
@@ -36,12 +36,8 @@ namespace CMdm.Services.DqQue
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<MdmDQQue> GetAllQueItems(string name = "",
+        IPagedList<CdmaGoldenRecord> GetAllQueItems(string name = "", int? recordId = null, string BranchId = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
-        IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId = null, int? ruleId = null,  string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
-        IPagedList<CustExceptionsModel> GetAllBrnUnAuthIssues(string name = "", int? catalogId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
-
+            
     }
 }

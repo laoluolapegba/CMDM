@@ -90,6 +90,8 @@
     <Compile Include="DqRule\DqRuleService.cs" />
     <Compile Include="DqRule\IDqRuleService.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GoldenRecord\GoldenRecordService.cs" />
+    <Compile Include="GoldenRecord\IGoldenRecordService.cs" />
     <Compile Include="Localization\ILocalizationService.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />

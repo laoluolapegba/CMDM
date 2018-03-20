@@ -182,7 +182,7 @@ namespace CMdm.UI.Web.Controllers
                     STATUS_CODE = x.ISSUE_STATUS,
                     REASON = x.REASON,
                     CATALOG_ID = x.CATALOG_ID,
-                    CATALOG_TABLE_NAME =x.CATALOG_TABLE_NAME
+                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME
 
                 }),
                 Total = items.TotalCount
@@ -412,7 +412,68 @@ namespace CMdm.UI.Web.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public virtual ActionResult ApproveSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
 
+            var goldenrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                goldenrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
+            }
+
+            try
+            {
+                foreach (var item in goldenrecords)
+                {
+                    //item. = "A";
+                    //_dqQueService.UpdateQueItem(item);
+                }
+
+                return RedirectToAction("List");
+
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        [HttpPost]
+        public virtual ActionResult DisapproveSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            var goldenrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                goldenrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
+            }
+
+            try
+            {
+
+                return RedirectToAction("List");
+
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

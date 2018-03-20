@@ -30,6 +30,19 @@ namespace CMdm.Data.DAC
             }
         }
 
+        public void UpdateExceptionQue(MdmDqRunException mdmdque)
+        {
+            using (var db = new AppDbContext())
+            {
+                var entry = db.Entry<MdmDqRunException>(mdmdque);
+
+                // Re-attach the entity.
+                entry.State = EntityState.Modified;
+
+                db.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Updates an existing row in the mdmdque table.
         /// </summary>
@@ -51,6 +64,34 @@ namespace CMdm.Data.DAC
         /// </summary>
         /// <param name="recordId">A recordId value.</param>
         /// <returns>A DQQUe object with data populated from the database.</returns>
+        /// /// <summary>
+        /// Get customers by identifiers
+        /// </summary>
+        /// <param name="customerIds">Customer identifiers</param>
+        /// <returns>Customers</returns>
+        public virtual IList<MdmDqRunException> SelectByIds(int[] recordIds)
+        {
+            if (recordIds == null || recordIds.Length == 0)
+                return new List<MdmDqRunException>();
+
+            using (var db = new AppDbContext())
+            {
+                var query = from c in db.MdmDqRunExceptions
+                            where recordIds.Contains(c.EXCEPTION_ID)
+                            select c;
+                var goldenrecords = query.ToList();
+                //sort by passed identifiers
+                var sortedCustomers = new List<MdmDqRunException>();
+                foreach (int id in recordIds)
+                {
+                    var goldenrecord = goldenrecords.Find(x => x.EXCEPTION_ID == id);
+                    if (goldenrecord != null)
+                        sortedCustomers.Add(goldenrecord);
+                }
+                return sortedCustomers;
+            }
+
+        }
         public MdmDQQue SelectById(int recordId)
         {
             using (var db = new AppDbContext())
