@@ -1404,7 +1404,7 @@ namespace CMdm.UI.Web.Controllers
                                          "CDMA_INDIVIDUAL_ADDRESS_DETAIL", "CDMA_INDIVIDUAL_IDENTIFICATION" , "CDMA_INDIVIDUAL_OTHER_DETAILS"};
             string[] accinfo_array = { "CDMA_ACCOUNT_INFO", "CDMA_ACCT_SERVICES_REQUIRED"};
 
-            string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME" };
+            string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME","CDMA_CUSTOMER_INCOME" };//CDMA_CUSTOMER_INCOME
             //CDMA_CUSTOMER_INCOME
 
             if (biodata_array.Contains(table))
@@ -1416,7 +1416,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 table_cat = "accinfo";
             }
-            else if (accinfo_array.Contains(table))
+            else if (cusinfo_array.Contains(table))
             {
                 table_cat = "cusinfo";
             }

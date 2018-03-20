@@ -1,0 +1,171 @@
+﻿<error errorId="0f2dd62b-de31-44f7-ba05-a0d59941de22" application="/LM/W3SVC/3/ROOT" host="ABASS" type="System.Web.HttpException" message="The controller for path '/plugins/dataTables' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/plugins/dataTables' was not found or does not implement IController.&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="omniuser" time="2018-03-14T09:48:48.2280411Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=q46Q20XYnvgypFMiSJ7Mhy-k-OwMuN6xMQL9iwzpmoT9RwSfaGXcCwKqz80uskez3qJ53239qYD9VLBrCRyxdlms7GkWLxmaOXxkO-9amDU1; ASP.NET_SessionId=o4kgrif0ex3fb2neravhzqwa; __AntiXsrfToken=ff6a1819b193459fb9d4ab8f2683a7e7; .ASPXAUTH=855A958EA191C0EE3FC6C182FA46C45C63811C1A61DA8C8DEE00BA0B748BDA8B6EC34829F8B0CAD471EBBEC581DF79FED4F3567BE20DA325E24456D1A0463FC2A89ED86A00A1C42F50CBF2BBA40BC72F006633BCEEA701D75134832B6E32DD07&#xD;&#xA;HTTP_HOST:localhost:18459&#xD;&#xA;HTTP_REFERER:http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: __RequestVerificationToken=q46Q20XYnvgypFMiSJ7Mhy-k-OwMuN6xMQL9iwzpmoT9RwSfaGXcCwKqz80uskez3qJ53239qYD9VLBrCRyxdlms7GkWLxmaOXxkO-9amDU1; ASP.NET_SessionId=o4kgrif0ex3fb2neravhzqwa; __AntiXsrfToken=ff6a1819b193459fb9d4ab8f2683a7e7; .ASPXAUTH=855A958EA191C0EE3FC6C182FA46C45C63811C1A61DA8C8DEE00BA0B748BDA8B6EC34829F8B0CAD471EBBEC581DF79FED4F3567BE20DA325E24456D1A0463FC2A89ED86A00A1C42F50CBF2BBA40BC72F006633BCEEA701D75134832B6E32DD07&#xD;&#xA;Host: localhost:18459&#xD;&#xA;Referer: http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/3/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\Abass\Documents\Visual Studio 2017\Projects\CMDM\Presentation\CMdm.UI.Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="omniuser" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="3" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/3" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\Abass\Documents\Visual Studio 2017\Projects\CMDM\Presentation\CMdm.UI.Web\plugins\dataTables" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="56676" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="18459" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/plugins/dataTables" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=q46Q20XYnvgypFMiSJ7Mhy-k-OwMuN6xMQL9iwzpmoT9RwSfaGXcCwKqz80uskez3qJ53239qYD9VLBrCRyxdlms7GkWLxmaOXxkO-9amDU1; ASP.NET_SessionId=o4kgrif0ex3fb2neravhzqwa; __AntiXsrfToken=ff6a1819b193459fb9d4ab8f2683a7e7; .ASPXAUTH=855A958EA191C0EE3FC6C182FA46C45C63811C1A61DA8C8DEE00BA0B748BDA8B6EC34829F8B0CAD471EBBEC581DF79FED4F3567BE20DA325E24456D1A0463FC2A89ED86A00A1C42F50CBF2BBA40BC72F006633BCEEA701D75134832B6E32DD07" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:18459" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:18459/DQQue/DqDetails?ruleid=22&amp;branchid=205" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="q46Q20XYnvgypFMiSJ7Mhy-k-OwMuN6xMQL9iwzpmoT9RwSfaGXcCwKqz80uskez3qJ53239qYD9VLBrCRyxdlms7GkWLxmaOXxkO-9amDU1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="o4kgrif0ex3fb2neravhzqwa" />
+    </item>
+    <item name="__AntiXsrfToken">
+      <value string="ff6a1819b193459fb9d4ab8f2683a7e7" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="855A958EA191C0EE3FC6C182FA46C45C63811C1A61DA8C8DEE00BA0B748BDA8B6EC34829F8B0CAD471EBBEC581DF79FED4F3567BE20DA325E24456D1A0463FC2A89ED86A00A1C42F50CBF2BBA40BC72F006633BCEEA701D75134832B6E32DD07" />
+    </item>
+  </cookies>
+</error>
