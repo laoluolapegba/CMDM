@@ -46,6 +46,7 @@ namespace CMdm.UI.Web.Models.UserAdmin
 
         [Required]
         [StringLength(128)]
+        [DataType(DataType.Password)]
         [DisplayName("Password")]
         public string COD_PASSWORD { get; set; }
 

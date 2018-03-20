@@ -1,0 +1,51 @@
+﻿@model CMdm.UI.Web.Models.UserAdmin.PermissionListModel
+<div class="panel-group">
+    <p>
+        
+    </p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Add Role
+        </div>
+        <div class="panel-body">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#AddPermission').click(function () {
+                        var _roleId = $('#RoleId').val();
+                        var _permissionId = $('#Id').val();
+
+
+                        if (_permissionId == '') {
+                            return false;
+                        }
+
+                        var _parameters = { permissionId: _permissionId, roleId: _roleId };
+                        $.ajax({
+                            url: "/Permissions/AddRole2PermissionReturnPartialView",
+                            type: "GET",
+                            data: _parameters,
+                            success: function (data, textStatus, jqXHR) {
+                                $('#RolesTable').html(data);
+                                $('#RoleId').val("");
+                            }
+                        });
+                    });
+                });
+            </script>
+            @Html.HiddenFor(model => model.Id)
+            <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 850px">
+                <legend><strong>Add Permission To Role</strong></legend>
+                <br />
+                <label>
+                    Role:
+                </label>
+                @*@Html.CMdmDropDownList("RoleId", Model.UserRoles)*@
+                @Html.DropDownList("RoleId", null, string.Empty, new { style = "width:350px" })
+                <input type="button" id="AddPermission" value="Add Permission" />
+            </fieldset>
+
+        </div>
+    </div>
+
+</div>

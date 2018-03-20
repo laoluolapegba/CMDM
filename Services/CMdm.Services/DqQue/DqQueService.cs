@@ -22,9 +22,23 @@ namespace CMdm.Services.DqQue
         {
            _dqqueDAC = new DqQueDAC();
         }
-        
+
         #endregion
         #region Methods
+        /// <summary>
+        /// Updates the queitem
+        /// </summary>
+        /// <param name="queitem">queitem</param>
+        public virtual void UpdateExceptionQueItem(MdmDqRunException queitem)
+        {
+            if (queitem == null)
+                throw new ArgumentNullException("queitem");
+
+            _dqqueDAC.UpdateExceptionQue(queitem);
+
+            //event notification
+            //_eventPublisher.EntityUpdated(vendor);
+        }
         /// <summary>
         /// Delete an item
         /// </summary>
@@ -67,6 +81,18 @@ namespace CMdm.Services.DqQue
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
+        }
+        /// <summary>
+        /// Gets a queitem by item identifiers
+        /// </summary>
+        /// <param name="recordId">recordId identifier</param>
+        /// <returns>Vendor</returns>
+        public virtual IList<MdmDqRunException> GetQueItembyIds(int[] recordIds)
+        {
+            if (recordIds == null || recordIds.Length == 0)
+                return null;
+
+            return _dqqueDAC.SelectByIds(recordIds);
         }
         /// <summary>
         /// Gets a queitem by item identifier

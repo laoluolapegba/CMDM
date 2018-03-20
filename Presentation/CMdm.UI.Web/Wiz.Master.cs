@@ -136,7 +136,8 @@ namespace CMdm.UI.Web
         {
             bool status; int rID = roleID;
             int menu = (from n in db.CM_ROLE_PERM_XREF
-                        where n.ROLE_ID == rID && n.CM_PERMISSIONS.FORM_URL.Contains(path)
+                        join p in db.CM_PERMISSIONS on n.PERMISSION_ID equals p.PERMISSION_ID
+                        where n.ROLE_ID == rID && p.FORM_URL.Contains(path)
                         select n).Count();
             //{
             //    URL = n.CM_PERMISSIONS.FORM_URL,
@@ -205,24 +206,39 @@ namespace CMdm.UI.Web
             //CM_ROLE_PERM_XREF rpx = new CM_ROLE_PERM_XREF();
             //List<MenuViewModel> menuList = null;
             var menu = from n in db.CM_ROLE_PERM_XREF
+                       join p in db.CM_PERMISSIONS on n.PERMISSION_ID equals p.PERMISSION_ID
+                       join r in db.CM_USER_ROLES on n.ROLE_ID equals r.ROLE_ID
                        where n.ROLE_ID == roleID
                        //where n.CM_PERMISSIONS.PARENT_PERMISSION != 0
-                       orderby n.CM_PERMISSIONS.PERMISSIONDESCRIPTION
+                       //orderby n.CM_PERMISSIONS.PERMISSIONDESCRIPTION
                        select new
                        {
-                           PermissionId = n.CM_PERMISSIONS.PERMISSION_ID,
-                           MenuDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
-                           URL = n.CM_PERMISSIONS.FORM_URL,
-                           ControllerName = n.CM_PERMISSIONS.CONTROLLER_NAME,
-                           ParentPermission = n.CM_PERMISSIONS.PARENT_PERMISSION,
-                           PermissionDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
-                           ActionName = n.CM_PERMISSIONS.ACTION_NAME,
+                           PermissionId = n.PERMISSION_ID,
+                           MenuDesc = p.PERMISSIONDESCRIPTION,
+                           URL = p.FORM_URL,
+                           ControllerName = p.CONTROLLER_NAME,
+                           ParentPermission = p.PARENT_PERMISSION,
+                           PermissionDesc = p.PERMISSIONDESCRIPTION,
+                           ActionName = p.ACTION_NAME,
                            RoleID = n.ROLE_ID,
-                           RoleName = n.CM_USER_ROLES.ROLE_NAME,
-                           IconClass = n.CM_PERMISSIONS.ICON_CLASS,
-                           IsopenClass = n.CM_PERMISSIONS.ISOPEN_CLASS,
-                           ToggleIconClass = n.CM_PERMISSIONS.TOGGLE_ICON,
-                           Url = n.CM_PERMISSIONS.FORM_URL
+                           RoleName = r.ROLE_NAME,
+                           IconClass = p.ICON_CLASS,
+                           IsopenClass = p.ISOPEN_CLASS,
+                           ToggleIconClass = p.TOGGLE_ICON,
+                           Url = p.FORM_URL
+                           //PermissionId = n.CM_PERMISSIONS.PERMISSION_ID,
+                           //MenuDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
+                           //URL = n.CM_PERMISSIONS.FORM_URL,
+                           //ControllerName = n.CM_PERMISSIONS.CONTROLLER_NAME,
+                           //ParentPermission = n.CM_PERMISSIONS.PARENT_PERMISSION,
+                           //PermissionDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
+                           //ActionName = n.CM_PERMISSIONS.ACTION_NAME,
+                           //RoleID = n.ROLE_ID,
+                           //RoleName = n.CM_USER_ROLES.ROLE_NAME,
+                           //IconClass = n.CM_PERMISSIONS.ICON_CLASS,
+                           //IsopenClass = n.CM_PERMISSIONS.ISOPEN_CLASS,
+                           //ToggleIconClass = n.CM_PERMISSIONS.TOGGLE_ICON,
+                           //Url = n.CM_PERMISSIONS.FORM_URL
                        };
 
             var menuData = menu.Select(o => new MenuViewModel

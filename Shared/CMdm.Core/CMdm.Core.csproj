@@ -50,6 +50,7 @@
     <Compile Include="IPagedList.cs" />
     <Compile Include="IWebHelper.cs" />
     <Compile Include="MimeTypes.cs" />
+    <Compile Include="CmdmVersion.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHelper.cs" />

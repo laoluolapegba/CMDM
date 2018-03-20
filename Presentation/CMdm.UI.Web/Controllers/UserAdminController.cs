@@ -168,10 +168,11 @@ namespace CMdm.UI.Web.Controllers
                     COD_PASSWORD = passwordHash,
                     ISAPPROVED = 1,
                     PASSWORDSALT = salt,
-                    LASTLOGINDATE = x.LASTLOGINDATE,
+                    LASTLOGINDATE = DateTime.Now,
                     ISLOCKED = isActive,
                     ROLE_ID = x.ROLE_ID,
                     DISPLAY_NAME = x.FIRSTNAME + " " + x.LASTNAME,
+                    
                     CREATED_DATE = DateTime.Now
 
                 };
@@ -182,7 +183,7 @@ namespace CMdm.UI.Web.Controllers
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
                 SuccessNotification("New User has been Added");
                 //do activity log
-                return continueEditing ? RedirectToAction("Edit", new { PROFILE_ID  = mdmUser.PROFILE_ID }) : RedirectToAction("Index");
+                return continueEditing ? RedirectToAction("Edit", new { id  = mdmUser.PROFILE_ID }) : RedirectToAction("Index");
                 //return RedirectToAction("Index");
             }
             x.UserRoles = new SelectList(database.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();

@@ -79,13 +79,16 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     #region LDAPAuth
                     string domainName = db.Settings.Where(a => a.SETTING_NAME == "DOMAIN_NAME").Select(a => a.SETTING_VALUE).FirstOrDefault();
                     string serverName = db.Settings.Where(a => a.SETTING_NAME == "LDAP_SERVER").Select(a => a.SETTING_VALUE).FirstOrDefault();
+                    string loginDomain = db.Settings.Where(a => a.SETTING_NAME == "LOGIN_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();
+                    string ldapPort = db.Settings.Where(a => a.SETTING_NAME == "LDAP_PORT").Select(a => a.SETTING_VALUE).FirstOrDefault();
 
-                    String adPath = serverName + "://" + domainName; //LDAP://corp.com"; //Fully-qualified Domain Name
+                    //String adPath = serverName + "://" + domainName; //LDAP://corp.com"; //Fully-qualified Domain Name
+                    String adPath = "LDAP://" + serverName + ":" +  ldapPort + "/" + domainName;
                     LDAPAuthenticationService adAuth = new LDAPAuthenticationService(adPath);
                     bool authenticated = false;
                     try
                     {
-                        if (true == adAuth.IsAuthenticated(adPath, username, password))
+                        if (true == adAuth.IsAuthenticated(loginDomain, username, password))
                         {
                             //String groups = adAuth.GetGroups(); we dont need d groups yet
                             //var user = (from u in db.CM_USER_PROFILE
@@ -112,6 +115,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     {
                         var localuser = (from u in context.CM_USER_PROFILE
                                     where u.USER_ID.ToLower() == username.ToLower()
+                                    where u.ISLOCKED == 0
                                     //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
 
                                     //&& !u.Deleted

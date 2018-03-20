@@ -245,6 +245,8 @@ namespace Cdma.Web.CustomerInfo
                                           select new
                                           {
                                               recordID = u.RECORD_ID,
+                                              //Roles = u.PermRoles,
+                                              //Permission = u.Permissions,
                                               Role = u.CM_USER_ROLES.ROLE_NAME,
                                               Permission = u.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
                                               Createdby = u.CREATED_BY,

@@ -20,7 +20,7 @@
                 <i class="fa fa-plus-square"></i>
                 Add New
             </a>
-            <div class="btn-group">
+            @*<div class="btn-group">
                 <button type="button" class="btn btn-success">
                     <i class="fa fa-download"></i>
                     Export
@@ -56,7 +56,7 @@
                         </button>
                     </li>
                 </ul>
-            </div>
+            </div>*@
         </div>
     </div>
 
@@ -228,7 +228,7 @@
                                             width: 100,
                                             headerAttributes: { style: "text-align:center" },
                                             attributes: { style: "text-align:center" },
-                                            template: '# if (ISLOCKED>0) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                            template: '# if (ISACTIVE>0) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
                                         }, {
                                             field: "CREATED_DATE",
                                             title: "Created Date",

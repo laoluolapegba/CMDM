@@ -70,6 +70,7 @@
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS _LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_INITIAL_DEPOSIT_RANGE.cs" />
+    <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
+    <Compile Include="Domain\GoldenRecord\CdmaGoldenRecord.cs" />
     <Compile Include="Domain\Kpi\BrnKpi.cs" />
     <Compile Include="Domain\Localization\Language.cs" />
     <Compile Include="Domain\Localization\LocaleStringResource.cs" />

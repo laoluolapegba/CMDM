@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <em>You have <span class="label label-success">4 Closed</span> issues, <span class="label label-warning">127 pending</span> and <span class="label label-default">2 in progress</span></em>
+            @*<em>You have <span class="label label-success">4 Closed</span> issues, <span class="label label-warning">127 pending</span> and <span class="label label-default">2 in progress</span></em>*@
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -164,12 +164,19 @@
                                         return buttons;
                                     }
                                     },
+                                     {
+                                         field: "CUST_ID",
+                                         title: "Customer Id",
+                                         width: 100
+
+                                     },
                                     {
                                     //command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' >Modify</a>", }, title: "Operation", width: "100px" },
                                   
                                     field: "REASON",
                                     title: "Exception Reason",
                                     width: 200
+<<<<<<< HEAD
  
                                 }, {
  
@@ -177,6 +184,14 @@
                                   
                                     {
  
+=======
+
+                                }, {
+
+                                  },
+                                  
+                                    {
+>>>>>>> 4c106a63f5e942e0c91d0e648e633c79aee71060
                                     field: "RULE_NAME",
                                     title: "Rulename",
                                     width: 200
@@ -301,6 +316,38 @@
 @section Scripts {
   
     <script type="text/javascript">
+        function validateKeyStrokes(event) {
+           // alert(event.which);
+            var charCode = (event.which) ? event.which : event.keyCode;
+            // charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105
+            if (charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105) {
+                $("#AddressDetails_CITY_TOWN_OF_RESIDENCE").after('<span class="text-red">Numberic is not allowed.</span>');
+                return false;
+            }
+            return true;
+        }
+        function validateMail()
+        {
+
+            var hasError = false;
+            var emailReg  =  /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,6})?$/;
+
+            var emailaddressVal = $("#contact_EMAIL_ADDRESS").val();
+            if(emailaddressVal == '') {
+                $("#contact_EMAIL_ADDRESS").after('<span class="text-red">Enter email address.</span>');
+                hasError = true;
+            }
+
+            else if(!emailReg.test(emailaddressVal)) {
+                $("#contact_EMAIL_ADDRESS").after('<span class="text-red">Enter a valid email address.</span>');
+                hasError = true;
+            }
+
+            if(hasError == true) { return false; }
+
+        
+        }
+
 
     //biodata
     function ApproveData() {
@@ -337,6 +384,19 @@
    function submitBioData() {
        //  alert('Hello');saving display
        // document.getElementById("display").innerHTML = "";
+       validateMail();
+       //identification_ID_EXPIRY_DATE
+       //identification_ID_ISSUE_DATE
+       var ID_EXPIRY_DATE = new Date($( "#identification_ID_EXPIRY_DATE" ).val());
+       var ID_ISSUE_DATE = new Date($( "#identification_ID_ISSUE_DATE" ).val());
+
+       if(ID_EXPIRY_DATE.getTime() < ID_ISSUE_DATE.getTime())
+       {
+           alert('EXPIRY DATE cannot be earlier than ISSUE DATE ');
+           return false;
+       }
+     
+
        $("#display").css({ 'display': 'none' });
        $("#update").css({ 'display': 'none' });
        $("#saving").css({ 'display': 'block' });
@@ -366,7 +426,7 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
-        alert(cus_id);
+       // alert(cus_id);
         $("#update").css({ 'display': 'none' });
         var queryString = "c_id=" + cus_id;
         queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
@@ -487,5 +547,86 @@
 
 
     }
+
+
+    function getAge() {
+        var dateString  = $('#BioData_DATE_OF_BIRTH').val();
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        if(age<0)
+        {
+            age = 0;
+        }
+
+        $('#BioData_AGE').val(age);
+        
+        
+    }
+    function ApproveBioData(){
+    
+        //  alert('Hello');saving display
+        // document.getElementById("display").innerHTML = "";
+        $("#display").css({ 'display': 'none' });
+        $("#update").css({ 'display': 'none' });
+        $("#saving").css({ 'display': 'block' });
+
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("ApproveBioData", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    
+    
+    
+    }
+
+    function approveAccInfo() {
+
+        //  alert('Hello');saving display
+        // document.getElementById("display").innerHTML = "";
+        $("#display").css({ 'display': 'none' });
+        $("#update").css({ 'display': 'none' });
+        $("#saving").css({ 'display': 'block' });
+
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("approveAccInfodata", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    }
+
 
 </script>

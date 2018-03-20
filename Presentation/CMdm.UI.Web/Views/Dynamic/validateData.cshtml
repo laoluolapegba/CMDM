@@ -98,7 +98,7 @@
                                     
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.TITLE, new { htmlAttributes = new { @class = "form-control" , @disable = "disabled" } })
+                                    @Html.EditorFor(model => model.BioData.TITLE, new { htmlAttributes = new { @class = "form-control" , @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.TITLE, "", new { @class = "text-danger " })
 
                                 </div>
@@ -120,7 +120,7 @@
                                         
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.SURNAME, new { htmlAttributes = new { @class = "form-control", @disable = "disabled" } })
+                                    @Html.EditorFor(model => model.BioData.SURNAME, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.SURNAME, "", new { @class = "text-danger" })
 
                                 </div>
@@ -142,7 +142,7 @@
                                         
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.FIRST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.FIRST_NAME, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.FIRST_NAME, "", new { @class = "text-danger" })
 
                                 </div>
@@ -169,7 +169,7 @@
                                         
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.OTHER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.OTHER_NAME, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.OTHER_NAME, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                         
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.NICKNAME_ALIAS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.NICKNAME_ALIAS, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.NICKNAME_ALIAS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                   
                                      
                                     <!-- /.form group -->
-                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.EditorFor(model => model.BioData.DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.DATE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -241,7 +241,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.PLACE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -262,7 +262,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
                                    
                                    <!-- @Html.EditorFor(model => model.BioData.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })-->
                                     @Html.ValidationMessageFor(model => model.BioData.COUNTRY_OF_BIRTH, "", new { @class = "text-danger" })
@@ -313,7 +313,7 @@
                                         }
 
                                     }  </label>
-                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true , @min = "0" } })
                                     @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -334,8 +334,10 @@
                                         }
                                         
                                     </label>
+                                    @Html.DropDownList("MARITAL_STATUS", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = true })
 
-                                    @Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+
+                                   @* @Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.MARITAL_STATUS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -356,7 +358,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
                                     @*@Html.EditorFor(model => model.BioData.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.NATIONALITY, "", new { @class = "text-danger" })
                                 </div>
@@ -383,7 +385,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.BioData.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -404,7 +406,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
 
 
@@ -428,7 +430,7 @@
                                         
                                     </label>
 
-                                    @Html.EditorFor(model => model.BioData.DISABILITY, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.DISABILITY, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.DISABILITY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -452,7 +454,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.BioData.COMPLEXION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.COMPLEXION, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.BioData.COMPLEXION, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -474,8 +476,8 @@
                                         
                                     </label>
                                     @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN,
-new { htmlAttributes = new { @class = "form-control", @type = "number" } })
-                                    @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
+new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true } })
+                                    @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger",@min = "0" })
 
 
                                 </div>
@@ -497,7 +499,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control",  @readonly = true })
                                     @*@Html.EditorFor(model => model.BioData.RELIGION, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.RELIGION, "", new { @class = "text-danger" })
                                 </div>
@@ -521,7 +523,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
 
                                     }  </label>
                                     
-                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
 
 
                                     @*@Html.EditorFor(model => model.BioData.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -553,7 +555,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     </label>
 
-                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();" })
+                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();", @readonly = true })
 
 
                                     @*@Html.EditorFor(model => model.AddressDetails.STATE_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -581,7 +583,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     </label>
                                     <div id="lgloading"><img style="width:100px;height:100px;display:none;" src="~/AdminLTE/dist/img/loading.gif"></div>
-                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @readonly = true })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -604,7 +606,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -631,7 +633,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -656,7 +658,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     </label>
                                     
-                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
                                     @*@Html.EditorFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
 
@@ -723,7 +725,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     
                                     </label>
-                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -744,7 +746,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -773,7 +775,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     
                                     </label>
-                                    @Html.EditorFor(model => model.contact.MOBILE_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.contact.MOBILE_NO, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.contact.MOBILE_NO, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -794,7 +796,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.contact.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.contact.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.contact.EMAIL_ADDRESS, "", new { @class = "text-danger" })
 
                                 </div>
@@ -816,7 +818,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.contact.MAILING_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.contact.MAILING_ADDRESS, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.contact.MAILING_ADDRESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -846,7 +848,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                     </label>
 
                                     
-                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = true })
 
 
                                    @*@Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -872,7 +874,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     
                                     </label>
-                                    @Html.EditorFor(model => model.identification.ID_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.identification.ID_NO, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.identification.ID_NO, "", new { @class = "text-danger" })
 
                                 </div>
@@ -894,7 +896,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                    @Html.EditorFor(model => model.identification.ID_ISSUE_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.EditorFor(model => model.identification.ID_ISSUE_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.identification.ID_ISSUE_DATE, "", new { @class = "text-danger" }) 
                                 </div>
                             </div>
@@ -920,7 +922,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         
                                     
                                     </label>
-                                    @Html.EditorFor(model => model.identification.ID_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.EditorFor(model => model.identification.ID_EXPIRY_DATE, new { htmlAttributes = new { @class = "form-control", @type = "date", @readonly = true } })
                                     @Html.ValidationMessageFor(model => model.identification.ID_EXPIRY_DATE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -941,7 +943,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                         }
                                         
                                     </label>
-                                   @Html.EditorFor(model => model.identification.PLACE_OF_ISSUANCE, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.EditorFor(model => model.identification.PLACE_OF_ISSUANCE, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                 @Html.ValidationMessageFor(model => model.identification.PLACE_OF_ISSUANCE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -968,7 +970,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                                             }
                                             
                                         </label>
-                                        @Html.EditorFor(model => model.otherdetails.TIN_NO, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.otherdetails.TIN_NO, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                                         @Html.ValidationMessageFor(model => model.otherdetails.TIN_NO, "", new { @class = "text-danger" })
                                     
                                    </div>
@@ -988,7 +990,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
                            
-                            <button type="button" class="btn btn-warning pull-right" onclick="approveAccInfo()">Approve Record</button> 
+                            <button type="button" class="btn btn-warning pull-right" onclick="ApproveData()">Approve Record</button> 
                             
                         </div>
                 <!--  

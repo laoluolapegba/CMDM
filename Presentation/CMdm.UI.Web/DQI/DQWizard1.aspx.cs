@@ -190,18 +190,26 @@ namespace Cdma.Web
             CM_ROLE_PERM_XREF rpx = new CM_ROLE_PERM_XREF();
 
             var menu = from n in db.CM_ROLE_PERM_XREF
-                       where n.ROLE_ID == roleID
-                       orderby n.CM_PERMISSIONS.PERMISSIONDESCRIPTION
+                                  join p in db.CM_PERMISSIONS on n.PERMISSION_ID equals p.PERMISSION_ID
+                                  join r in db.CM_USER_ROLES on n.ROLE_ID equals r.ROLE_ID
+                                  where n.ROLE_ID == roleID
+                                  orderby p.PERMISSIONDESCRIPTION
                        select new
                        {
-                           MenuDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
-                           URL = n.CM_PERMISSIONS.FORM_URL,
-                           Controller = n.CM_PERMISSIONS.CONTROLLER_NAME,
-                           Action = n.CM_PERMISSIONS.ACTION_NAME,
+                           MenuDesc = p.PERMISSIONDESCRIPTION,
+                           URL = p.FORM_URL,
+                           Controller = p.CONTROLLER_NAME,
+                           Action = p.ACTION_NAME,
                            RoleID = n.ROLE_ID,
-                           RoleName = n.CM_USER_ROLES.ROLE_NAME
+                           RoleName = r.ROLE_NAME
+                           //MenuDesc = n.CM_PERMISSIONS.PERMISSIONDESCRIPTION,
+                           //URL = n.CM_PERMISSIONS.FORM_URL,
+                           //Controller = n.CM_PERMISSIONS.CONTROLLER_NAME,
+                           //Action = n.CM_PERMISSIONS.ACTION_NAME,
+                           //RoleID = n.ROLE_ID,
+                           //RoleName = n.CM_USER_ROLES.ROLE_NAME
                        };
-
+            
             this.Repeater1.DataSource = menu.ToList();
             this.Repeater1.DataBind();
         }
@@ -209,7 +217,8 @@ namespace Cdma.Web
         {
             bool status; int rID = roleID;
             int menu = (from n in db.CM_ROLE_PERM_XREF
-                        where n.ROLE_ID == rID && n.CM_PERMISSIONS.FORM_URL.Contains(path)
+                        join p in db.CM_PERMISSIONS on n.PERMISSION_ID equals p.PERMISSION_ID
+                        where n.ROLE_ID == rID && p.FORM_URL.Contains(path)
                         select n).Count();
             //{
             //    URL = n.CM_PERMISSIONS.FORM_URL,

@@ -12,6 +12,7 @@ using CMdm.UI.Web.Models.UserAdmin;
 using CMdm.Framework.Kendoui;
 using CMdm.Services.UserAdmin;
 using CMdm.Framework.Controllers;
+using CMdm.UI.Web.Helpers.CrossCutting.Security;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -108,9 +109,27 @@ namespace CMdm.UI.Web.Controllers
             if (item == null)
                 //No store found with the specified id
                 return RedirectToAction("List");
-
-
+            /*
+            var model = new PermissionListModel
+            {
+                Id = (int)item.PERMISSION_ID,
+                PERMISSIONDESCRIPTION = item.PERMISSIONDESCRIPTION,
+                PARENT_PERMISSION = item.PARENT_PERMISSION,
+                ISACTIVE = item.ISACTIVE,
+                ACTION_NAME = item.ACTION_NAME,
+                CONTROLLER_NAME = item.CONTROLLER_NAME,
+                FORM_URL = item.FORM_URL,
+                ICON_CLASS = item.ICON_CLASS,
+                TOGGLE_ICON = item.TOGGLE_ICON,
+                ISOPEN_CLASS = item.ISOPEN_CLASS,
+                UserRoles = item.CM_USER_ROLES
+            };
+            */
+            
+            //db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             var mdmPerm = (from x in db.CM_PERMISSIONS
+                           //join rx in db.CM_ROLE_PERM_XREF on x.PERMISSION_ID equals rx.PERMISSION_ID 
+                           //join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID                
                            where x.PERMISSION_ID == id
                            select new PermissionListModel
                            {
@@ -123,9 +142,10 @@ namespace CMdm.UI.Web.Controllers
                                FORM_URL = x.FORM_URL,
                                ICON_CLASS = x.ICON_CLASS,
                                TOGGLE_ICON = x.TOGGLE_ICON,
-                               ISOPEN_CLASS = x.ISOPEN_CLASS
+                               ISOPEN_CLASS = x.ISOPEN_CLASS,
+                               //UserRoles = rx.PermRoles
                            }).FirstOrDefault();
-
+            /*
             var model = new PermissionListModel
             {
                 Id = mdmPerm.Id,
@@ -137,10 +157,28 @@ namespace CMdm.UI.Web.Controllers
                 FORM_URL = mdmPerm.FORM_URL,
                 ICON_CLASS = mdmPerm.ICON_CLASS,
                 TOGGLE_ICON = mdmPerm.TOGGLE_ICON,
-                ISOPEN_CLASS = mdmPerm.ISOPEN_CLASS
+                ISOPEN_CLASS = mdmPerm.ISOPEN_CLASS,
+                //UserRoles = mdmPerm.UserRoles
             };
+
+            */
+            
             //AppDbContext db = new AppDbContext();
-            model.Permissions = new SelectList(db.CM_PERMISSIONS, "PERMISSION_ID", "PERMISSIONDESCRIPTION").ToList();
+            var roles = (from rx in db.CM_ROLE_PERM_XREF
+                         join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID
+                         where rx.PERMISSION_ID == id
+                         select new RolesListModel
+                         {
+                             ROLE_ID = r.ROLE_ID,
+                             ROLE_NAME = r.ROLE_NAME
+                         }).ToList();
+            //IEnumerable<CM_USER_ROLES> r = roles;
+            //List<RolesListModel> llst = roles.Select(a => new { a.ROLE_ID, a.ROLE_NAME }).ToList();
+
+            ViewBag.PermRoles = roles;
+            mdmPerm.Permissions = new SelectList(db.CM_PERMISSIONS, "PERMISSION_ID", "PERMISSIONDESCRIPTION").ToList();
+            ViewBag.RoleId = new SelectList(db.CM_USER_ROLES.OrderBy(p => p.ROLE_NAME), "ROLE_ID", "ROLE_NAME");
+
 
             //if (id == null)
             //{
@@ -152,7 +190,7 @@ namespace CMdm.UI.Web.Controllers
             //{
             //    return HttpNotFound();
             //}
-            return View(model );
+            return View(mdmPerm );
         }
 
         // POST: Permissions/Edit/5
@@ -201,6 +239,7 @@ namespace CMdm.UI.Web.Controllers
                 //return RedirectToAction("Index");
             }
             model.Permissions = new SelectList(db.CM_PERMISSIONS, "PERMISSION_ID", "PERMISSIONDESCRIPTION").ToList();
+            ViewBag.RoleId = new SelectList(db.CM_USER_ROLES.OrderBy(p => p.ROLE_NAME), "ROLE_ID", "ROLE_NAME");
             return View(model);
         }
 
@@ -302,6 +341,114 @@ namespace CMdm.UI.Web.Controllers
                 Total = items.TotalCount
             };
             return Json(gridModel);
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult DeleteRoleFromPermissionReturnPartialView(int id, int permissionId)
+        {
+            //CM_USER_ROLES role = db.CM_USER_ROLES.Find(id);
+            //CM_PERMISSIONS permission = db.CM_PERMISSIONS.Find(permissionId);
+
+            CM_ROLE_PERM_XREF rp = db.CM_ROLE_PERM_XREF.FirstOrDefault(a => a.PERMISSION_ID == permissionId && a.ROLE_ID == id);
+            db.CM_ROLE_PERM_XREF.Remove(rp);
+            db.SaveChanges();
+            //if (role.PERMISSIONS.Contains(permission))
+            //{
+            //    role.PERMISSIONS.Remove(permission);
+            //    database.SaveChanges();
+            //}
+            var mdmPerm = (from x in db.CM_PERMISSIONS
+                               //join rx in db.CM_ROLE_PERM_XREF on x.PERMISSION_ID equals rx.PERMISSION_ID 
+                               //join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID                
+                           where x.PERMISSION_ID == id
+                           select new PermissionListModel
+                           {
+                               Id = (int)x.PERMISSION_ID,
+                               PERMISSIONDESCRIPTION = x.PERMISSIONDESCRIPTION,
+                               PARENT_PERMISSION = x.PARENT_PERMISSION,
+                               ISACTIVE = x.ISACTIVE,
+                               ACTION_NAME = x.ACTION_NAME,
+                               CONTROLLER_NAME = x.CONTROLLER_NAME,
+                               FORM_URL = x.FORM_URL,
+                               ICON_CLASS = x.ICON_CLASS,
+                               TOGGLE_ICON = x.TOGGLE_ICON,
+                               ISOPEN_CLASS = x.ISOPEN_CLASS,
+                               //UserRoles = rx.PermRoles
+                           }).FirstOrDefault();
+            var roles = (from rx in db.CM_ROLE_PERM_XREF
+                         join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID
+                         where rx.PERMISSION_ID == id
+                         select new RolesListModel
+                         {
+                             ROLE_ID = r.ROLE_ID,
+                             ROLE_NAME = r.ROLE_NAME
+                         }).ToList();
+            //IEnumerable<CM_USER_ROLES> r = roles;
+            //List<RolesListModel> llst = roles.Select(a => new { a.ROLE_ID, a.ROLE_NAME }).ToList();
+
+            ViewBag.PermRoles = roles;
+            return PartialView("_ListRolesTable4Permission", mdmPerm);
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddRole2PermissionReturnPartialView(int permissionId, int roleId)
+        {
+            //CM_USER_PROFILE role = db.CM_USER_PROFILE.Find(roleId);
+            //CM_PERMISSIONS _permission = db.CM_PERMISSIONS.Find(permissionId);
+            //string temp = Request.QueryString[0];
+            //int id = Convert.ToInt32(RouteData.Values["id"]);
+
+            CM_ROLE_PERM_XREF rp = db.CM_ROLE_PERM_XREF.FirstOrDefault(a => a.PERMISSION_ID == permissionId && a.ROLE_ID == roleId);
+            if(rp == null)
+            {
+                var identity = ((CustomPrincipal)User).CustomIdentity;
+                CM_ROLE_PERM_XREF roleperm = new CM_ROLE_PERM_XREF();
+                roleperm.PERMISSION_ID = permissionId;
+                roleperm.ROLE_ID = roleId;
+                roleperm.CREATED_BY = identity.Name;
+                roleperm.CREATED_DATE = DateTime.Now;
+                db.CM_ROLE_PERM_XREF.Add(roleperm);
+                db.SaveChanges();
+            }
+
+            var mdmPerm = (from x in db.CM_PERMISSIONS
+                               //join rx in db.CM_ROLE_PERM_XREF on x.PERMISSION_ID equals rx.PERMISSION_ID 
+                               //join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID                
+                           where x.PERMISSION_ID == permissionId
+                           select new PermissionListModel
+                           {
+                               Id = (int)x.PERMISSION_ID,
+                               PERMISSIONDESCRIPTION = x.PERMISSIONDESCRIPTION,
+                               PARENT_PERMISSION = x.PARENT_PERMISSION,
+                               ISACTIVE = x.ISACTIVE,
+                               ACTION_NAME = x.ACTION_NAME,
+                               CONTROLLER_NAME = x.CONTROLLER_NAME,
+                               FORM_URL = x.FORM_URL,
+                               ICON_CLASS = x.ICON_CLASS,
+                               TOGGLE_ICON = x.TOGGLE_ICON,
+                               ISOPEN_CLASS = x.ISOPEN_CLASS,
+                               //UserRoles = rx.PermRoles
+                           }).FirstOrDefault();
+            var roles = (from rx in db.CM_ROLE_PERM_XREF
+                         join r in db.CM_USER_ROLES on rx.ROLE_ID equals r.ROLE_ID
+                         where rx.PERMISSION_ID == permissionId
+                         select new RolesListModel
+                         {
+                             ROLE_ID = r.ROLE_ID,
+                             ROLE_NAME = r.ROLE_NAME
+                         }).ToList();
+         
+            ViewBag.PermRoles = roles;
+
+
+            //if (!role.PERMISSIONS.Contains(_permission))
+            //{
+            //    role.PERMISSIONS.Add(_permission);
+            //    database.SaveChanges();
+            //}
+            return PartialView("_ListRolesTable4Permission", mdmPerm);
         }
     }
 }

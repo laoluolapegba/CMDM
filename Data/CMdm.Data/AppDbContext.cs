@@ -68,6 +68,9 @@ namespace CMdm.Data
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmAggrDimensions).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.DQ_DIMENSION).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.EntityMast).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<CM_ROLE_PERM_XREF>().HasRequired(e => e.CM_USER_ROLES).WithMany(t => t.CM_ROLE_PERM_XREF).HasForeignKey(e => e.ROLE_ID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CM_ROLE_PERM_XREF>().HasRequired(e => e.CM_PERMISSIONS).WithMany(t => t.CM_ROLE_PERM_XREF).HasForeignKey(e => e.PERMISSION_ID).WillCascadeOnDelete(false);
+
             //modelBuilder.Entity<MdmCatalog>().HasRequired(e => e.CREATED_BY).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
 
         }
@@ -178,7 +181,8 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INCOME_BAND> CDMA_INCOME_BAND { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INITIAL_DEPOSIT_RANGE> CDMA_INITIAL_DEPOSIT_RANGE { get; set; }
 
-        //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_MARITALSTATUS> CDMA_MARITALSTATUS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.CdmaGoldenRecord> CdmaGoldenRecords { get; set; }
 
 
         // public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }

@@ -297,6 +297,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
+    <Compile Include="Controllers\GoldenRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndIdentificationController.cs" />
     <Compile Include="Controllers\IndividualAddressController.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
@@ -547,6 +549,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Audit\AuditTrailListModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
+    <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -557,9 +560,11 @@
     <Compile Include="Models\DqQue\DqQueListModel.cs" />
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
+    <Compile Include="Models\GoldenRecord\GoldenRecordModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
+    <Compile Include="Models\UserAdmin\RolesListModel.cs" />
     <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -855,6 +860,7 @@
     <Content Include="Content\ico\kingadmin-favicon144x144.png" />
     <Content Include="Content\ico\kingadmin-favicon57x57.png" />
     <Content Include="Content\ico\kingadmin-favicon72x72.png" />
+    <Content Include="Content\images\bin.png" />
     <Content Include="Content\images\ico-delete.png" />
     <Content Include="Content\images\ico-edit.png" />
     <Content Include="Content\images\logo-48x48.png" />
@@ -2039,16 +2045,6 @@
     <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
     <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
- 
-    <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
-    <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
-    <Content Include="Views\CustomerIncome\Create.cshtml" />
-    <Content Include="Views\CustomerIncome\Delete.cshtml" />
-    <Content Include="Views\CustomerIncome\Details.cshtml" />
-    <Content Include="Views\CustomerIncome\Edit.cshtml" />
-    <Content Include="Views\CustomerIncome\Index.cshtml" />
-    <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
- 
     <Content Include="Views\DQI\ListParams.cshtml" />
     <Content Include="Views\Home\BranchDqi.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateNullable.cshtml" />
@@ -2073,7 +2069,20 @@
     <Content Include="Views\Permissions\Edit.cshtml" />
     <Content Include="Views\Permissions\List.cshtml" />
     <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
- 
+    <Content Include="Views\Permissions\_ListRolesTable4Permission.cshtml" />
+    <Content Include="Views\Permissions\_AddRole4Permission.cshtml" />
+    <Content Include="Views\CustomerIncome\Create.cshtml" />
+    <Content Include="Views\CustomerIncome\Delete.cshtml" />
+    <Content Include="Views\CustomerIncome\Details.cshtml" />
+    <Content Include="Views\CustomerIncome\Edit.cshtml" />
+    <Content Include="Views\CustomerIncome\Index.cshtml" />
+    <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
+    <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
+    <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
+    <Content Include="Views\Common\Index.cshtml" />
+    <Content Include="Views\Common\SystemInfo.cshtml" />
+    <Content Include="Views\GoldenRecords\List.cshtml" />
+    <Content Include="Views\GoldenRecords\AuthList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

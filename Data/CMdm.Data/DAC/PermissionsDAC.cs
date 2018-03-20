@@ -46,15 +46,21 @@ namespace CMdm.Data.DAC
             }
         }
         /// <summary>
-        /// Returns a row from the CM_USER_PROFILE table.
+        /// Returns a row from the PERMISSION table.
         /// </summary>
         /// <param name="recordId">A recordId value.</param>
-        /// <returns>A DQQUe object with data populated from the database.</returns>
+        /// <returns>A Permission object with data populated from the database.</returns>
         public CM_PERMISSIONS SelectById(int recordId)
         {
             using (var db = new AppDbContext())
             {
+                //db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+                //db.Database.Log = Console.Write;
                 return db.Set<CM_PERMISSIONS>().Find(recordId);
+
+                //return db.CM_PERMISSIONS.Select(q => q).Include(a => a.CM_ROLE_PERM_XREF)  -- table or view does not exist
+                //.Include(a=>a.CM_USER_ROLES).FirstOrDefault(a=>a.PERMISSION_ID == recordId); 
+
             }
         }
 
@@ -72,7 +78,7 @@ namespace CMdm.Data.DAC
             {
                 // Store the query.
                 //IQueryable<CM_USER_PROFILE> query = db.Set<CM_USER_PROFILE>();
-                var query = db.CM_PERMISSIONS.Select(q => q); //.Include(a => a.CM_USER_ROLES).Include(b=>b.CM_BRANCH);
+                var query = db.CM_PERMISSIONS.Select(q => q); //.Include(a => a.CM_USER_ROLES); //.Include(a => a.CM_USER_ROLES).Include(b=>b.CM_BRANCH);
                     //query = query.Where(u => userRoleIds.Contains(u.ROLE_ID));
                 //query = query.Where(c => c.CM_USER_ROLES.Select(cr => cr.ROLE_ID).Intersect(userRoleIds).Any());
                 if (!String.IsNullOrWhiteSpace(permdesc))

@@ -139,21 +139,21 @@ namespace CMdm.UI.Web.Controllers
         {
             var identity = ((CustomPrincipal)User).CustomIdentity;
             var dateAndTime = DateTime.Now;
-            var c_id = Request["customer_no"];
+            var c_id = DynamicModel.BioData.CUSTOMER_NO;//Request["customer_no"];
 
 
             //create a log before update
             string tied = DateTime.Now.ToString("hhmmssffffff");
             //var values = Request["AccInfo.CUSTOMER_NO"];
-            CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
-            CDMA_ACCT_SERVICES_REQUIRED cDMA_ACCT_SERVICES_REQUIRED = db.CDMA_ACCT_SERVICES_REQUIRED.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
-            CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.AccInfo.CUSTOMER_NO);
+            CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
+            CDMA_ACCT_SERVICES_REQUIRED cDMA_ACCT_SERVICES_REQUIRED = db.CDMA_ACCT_SERVICES_REQUIRED.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
+            CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == DynamicModel.BioData.CUSTOMER_NO);
 
 
 
    
-                cDMA_ACCOUNT_INFO.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];                
-                cDMA_ACCOUNT_INFO.LAST_MODIFIED_DATE = dateAndTime;
+               cDMA_ACCOUNT_INFO.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];                
+               cDMA_ACCOUNT_INFO.LAST_MODIFIED_DATE = dateAndTime;
 
                 cDMA_ACCOUNT_INFO.AUTHORISED_BY = identity.ProfileId.ToString();
                 cDMA_ACCOUNT_INFO.AUTHORISED_DATE = dateAndTime;// DynamicModel.AccInfo.BRANCH;
@@ -162,12 +162,12 @@ namespace CMdm.UI.Web.Controllers
 
 
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED_BY = identity.ProfileId.ToString();               
-                cDMA_ACCT_SERVICES_REQUIRED.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
+               cDMA_ACCT_SERVICES_REQUIRED.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_ACCT_SERVICES_REQUIRED.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED_DATE = dateAndTime;
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED = "A";
                 db.SaveChanges();
-            return PartialView("SaveBioData", DynamicModel);
+            return PartialView("SaveBioData");
 
 
 
@@ -205,7 +205,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.CUSTOMER_NO = DynamicModel.BioData.CUSTOMER_NO;
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.AUTHORISED = "U";
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.LGA_OF_RESIDENCE = retrunValue(Request["LGA"]); // DynamicModel.AddressDetails.LGA_OF_RESIDENCE;
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.NEAREST_BUS_STOP_LANDMARK = retrunValue(DynamicModel.AddressDetails.NEAREST_BUS_STOP_LANDMARK);
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.RESIDENCE_OWNED_OR_RENT = retrunValue(Request["RESIDENCE_OWNED_OR_RENT"]);
@@ -232,7 +232,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.STATE_OF_RESIDENCE = retrunValue(Request["STATES_RES"]);  //DynamicModel.AddressDetails.STATE_OF_RESIDENCE;
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.ZIP_POSTAL_CODE = retrunValue(DynamicModel.AddressDetails.ZIP_POSTAL_CODE);
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL.RESIDENCE_OWNED_OR_RENT = retrunValue(DynamicModel.AddressDetails.RESIDENCE_OWNED_OR_RENT);
-                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED = "U";
                 db.SaveChanges();
 
 
@@ -280,7 +280,7 @@ namespace CMdm.UI.Web.Controllers
             cDMA_INDIVIDUAL_BIO_DATA.RELIGION = Request["RELIGION"];
             cDMA_INDIVIDUAL_BIO_DATA.COUNTRY_OF_BIRTH = Request["COUNTRY_OF_BIRTH"];
             cDMA_INDIVIDUAL_BIO_DATA.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED = "N";
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED = "U";
             db.SaveChanges();
 
             CDMA_INDIVIDUAL_BIO_DATA bio_data = (CDMA_INDIVIDUAL_BIO_DATA)this.Session["cDMA_INDIVIDUAL_BIO_DATA"];
@@ -313,7 +313,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.EMAIL_ADDRESS = DynamicModel.contact.EMAIL_ADDRESS;
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Add(cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE);
                 db.SaveChanges();
 
@@ -327,7 +327,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_CONTACT_DETAIL.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_CONTACT_DETAIL.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                 cDMA_INDIVIDUAL_CONTACT_DETAIL.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED = "U";
                 db.SaveChanges();
                 CDMA_INDIVIDUAL_CONTACT_DETAIL contact_data = (CDMA_INDIVIDUAL_CONTACT_DETAIL)this.Session["cDMA_INDIVIDUAL_CONTACT_DETAIL"];
 
@@ -357,7 +357,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
-                cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_IDENTIFICATION.Add(cDMA_INDIVIDUAL_IDENTIFICATION_SAVE);
                 db.SaveChanges();
 
@@ -378,7 +378,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
-                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "U";
                 CDMA_INDIVIDUAL_IDENTIFICATION identification_data = (CDMA_INDIVIDUAL_IDENTIFICATION)this.Session["cDMA_INDIVIDUAL_IDENTIFICATION"];
 
 
@@ -408,7 +408,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.TIN_NO = DynamicModel.otherdetails.TIN_NO;
-                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_OTHER_DETAILS.Add(cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE);
                 db.SaveChanges();
             }
@@ -423,7 +423,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_OTHER_DETAILS.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_OTHER_DETAILS.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_OTHER_DETAILS.TIN_NO = DynamicModel.otherdetails.TIN_NO;
-                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "U";
                 db.SaveChanges();
                 CDMA_INDIVIDUAL_OTHER_DETAILS other_data = (CDMA_INDIVIDUAL_OTHER_DETAILS)this.Session["cDMA_INDIVIDUAL_OTHER_DETAILS"];
 
@@ -603,7 +603,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO_SAVE.OPERATING_INSTRUCTION = DynamicModel.AccInfo.OPERATING_INSTRUCTION;
                 cDMA_ACCOUNT_INFO_SAVE.ORIGINATING_BRANCH = Request["OringinBranch"];//DynamicModel.AccInfo.ORIGINATING_BRANCH;
 
-                cDMA_ACCOUNT_INFO_SAVE.AUTHORISED = "N";
+                cDMA_ACCOUNT_INFO_SAVE.AUTHORISED = "U";
 
 
                 db.CDMA_ACCOUNT_INFO.Add(cDMA_ACCOUNT_INFO_SAVE);
@@ -635,7 +635,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO.OPERATING_INSTRUCTION = DynamicModel.AccInfo.OPERATING_INSTRUCTION;
                 cDMA_ACCOUNT_INFO.ORIGINATING_BRANCH = Request["OringinBranch"] ;//DynamicModel.AccInfo.ORIGINATING_BRANCH;
                 cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
-                cDMA_ACCOUNT_INFO.AUTHORISED = "N";
+                cDMA_ACCOUNT_INFO.AUTHORISED = "U";
                 db.SaveChanges();
 
                 CDMA_ACCOUNT_INFO accountInfo = (CDMA_ACCOUNT_INFO)this.Session["cDMA_ACCOUNT_INFO"];
@@ -677,7 +677,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.ACCOUNT_SIGNATORY = DynamicModel.ServiceInfo.ACCOUNT_SIGNATORY;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.SECOND_SIGNATORY = DynamicModel.ServiceInfo.SECOND_SIGNATORY;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.AUTHORISED = DynamicModel.ServiceInfo.AUTHORISED;
-                cDMA_ACCT_SERVICES_REQUIRED_SAVE.AUTHORISED = "N";
+                cDMA_ACCT_SERVICES_REQUIRED_SAVE.AUTHORISED = "U";
 
                 db.CDMA_ACCT_SERVICES_REQUIRED.Add(cDMA_ACCT_SERVICES_REQUIRED_SAVE);
                 db.SaveChanges();
@@ -705,7 +705,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED.ACCOUNT_SIGNATORY = DynamicModel.ServiceInfo.ACCOUNT_SIGNATORY;
                 cDMA_ACCT_SERVICES_REQUIRED.SECOND_SIGNATORY = DynamicModel.ServiceInfo.SECOND_SIGNATORY;
                 cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED = DynamicModel.ServiceInfo.AUTHORISED;
-                cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED = "N";
+                cDMA_ACCT_SERVICES_REQUIRED.AUTHORISED = "U";
                 db.SaveChanges();
 
 
@@ -821,7 +821,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.RESIDENTIAL_ADDRESS = DynamicModel.AddressDetails.CITY_TOWN_OF_RESIDENCE;
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.STATE_OF_RESIDENCE = Request["STATES"];  //DynamicModel.AddressDetails.STATE_OF_RESIDENCE;
                 cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.ZIP_POSTAL_CODE = DynamicModel.AddressDetails.ZIP_POSTAL_CODE;
-                
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE.AUTHORISED = "U";
+
                 db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Add(cDMA_INDIVIDUAL_ADDRESS_DETAIL_SAVE);
                 db.SaveChanges();
             }
@@ -840,7 +841,8 @@ namespace CMdm.UI.Web.Controllers
             cDMA_INDIVIDUAL_ADDRESS_DETAIL.STATE_OF_RESIDENCE = Request["STATES_RES"];  //DynamicModel.AddressDetails.STATE_OF_RESIDENCE;
             cDMA_INDIVIDUAL_ADDRESS_DETAIL.ZIP_POSTAL_CODE = DynamicModel.AddressDetails.ZIP_POSTAL_CODE;
             cDMA_INDIVIDUAL_ADDRESS_DETAIL.RESIDENCE_OWNED_OR_RENT = DynamicModel.AddressDetails.RESIDENCE_OWNED_OR_RENT;
-            db.SaveChanges();
+            cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED = "U";
+                db.SaveChanges();
 
                
             var address = (CDMA_INDIVIDUAL_ADDRESS_DETAIL)this.Session["cDMA_INDIVIDUAL_ADDRESS_DETAIL"];
@@ -871,8 +873,8 @@ namespace CMdm.UI.Web.Controllers
            cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
            cDMA_INDIVIDUAL_BIO_DATA.FIRST_NAME = DynamicModel.BioData.FIRST_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
-           //DynamicModel.BioData.LAST_MODIFIED_DATE;
-           cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = DynamicModel.BioData.MARITAL_STATUS;
+            //DynamicModel.BioData.LAST_MODIFIED_DATE;
+            cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = Request["MARITAL_STATUS"];//DynamicModel.BioData.MARITAL_STATUS;
            cDMA_INDIVIDUAL_BIO_DATA.MOTHER_MAIDEN_NAME = DynamicModel.BioData.MOTHER_MAIDEN_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.NATIONALITY = Request["BioData_NATIONALITY"];  //// DynamicModel.BioData.NATIONALITY;
            cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
@@ -887,6 +889,7 @@ namespace CMdm.UI.Web.Controllers
            cDMA_INDIVIDUAL_BIO_DATA.RELIGION = Request["RELIGION"];
            cDMA_INDIVIDUAL_BIO_DATA.COUNTRY_OF_BIRTH = Request["COUNTRY_OF_BIRTH"];
             cDMA_INDIVIDUAL_BIO_DATA.LAST_MODIFIED_DATE = dateAndTime;
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED = "U";
             db.SaveChanges();
 
            CDMA_INDIVIDUAL_BIO_DATA bio_data = (CDMA_INDIVIDUAL_BIO_DATA)this.Session["cDMA_INDIVIDUAL_BIO_DATA"];
@@ -919,6 +922,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.EMAIL_ADDRESS = DynamicModel.contact.EMAIL_ADDRESS;
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Add(cDMA_INDIVIDUAL_CONTACT_DETAIL_SAVE);
                 db.SaveChanges();
 
@@ -930,7 +934,8 @@ namespace CMdm.UI.Web.Controllers
               cDMA_INDIVIDUAL_CONTACT_DETAIL.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
               cDMA_INDIVIDUAL_CONTACT_DETAIL.LAST_MODIFIED_BY = identity.ProfileId.ToString();
               cDMA_INDIVIDUAL_CONTACT_DETAIL.LAST_MODIFIED_DATE = dateAndTime;
-              db.SaveChanges();
+              cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED = "U";
+                db.SaveChanges();
               CDMA_INDIVIDUAL_CONTACT_DETAIL contact_data = (CDMA_INDIVIDUAL_CONTACT_DETAIL)this.Session["cDMA_INDIVIDUAL_CONTACT_DETAIL"];
 
               var contact_changes = compareContactRecord(cDMA_INDIVIDUAL_CONTACT_DETAIL, contact_data);
@@ -959,7 +964,9 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_IDENTIFICATION.Add(cDMA_INDIVIDUAL_IDENTIFICATION_SAVE);
+                
                 db.SaveChanges();
 
             }else { 
@@ -977,6 +984,7 @@ namespace CMdm.UI.Web.Controllers
                   cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                   cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_DATE = dateAndTime;
                   cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                  cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "U";
                 CDMA_INDIVIDUAL_IDENTIFICATION identification_data = (CDMA_INDIVIDUAL_IDENTIFICATION)this.Session["cDMA_INDIVIDUAL_IDENTIFICATION"];
 
                 var identification_changes = compareIdentificationRecord(cDMA_INDIVIDUAL_IDENTIFICATION, identification_data);
@@ -1005,7 +1013,9 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.LAST_MODIFIED_DATE = dateAndTime;
                 cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.TIN_NO = DynamicModel.otherdetails.TIN_NO;
+                cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_OTHER_DETAILS.Add(cDMA_INDIVIDUAL_OTHER_DETAILS_SAVE);
+
                 db.SaveChanges();
             }
             else
@@ -1018,7 +1028,8 @@ namespace CMdm.UI.Web.Controllers
               cDMA_INDIVIDUAL_OTHER_DETAILS.CUSTOMER_NO = DynamicModel.BioData.CUSTOMER_NO;
               cDMA_INDIVIDUAL_OTHER_DETAILS.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
               cDMA_INDIVIDUAL_OTHER_DETAILS.LAST_MODIFIED_DATE = dateAndTime;
-              cDMA_INDIVIDUAL_OTHER_DETAILS.TIN_NO = DynamicModel.otherdetails.TIN_NO;
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "U";
+                cDMA_INDIVIDUAL_OTHER_DETAILS.TIN_NO = DynamicModel.otherdetails.TIN_NO;
               db.SaveChanges();
               CDMA_INDIVIDUAL_OTHER_DETAILS other_data = (CDMA_INDIVIDUAL_OTHER_DETAILS)this.Session["cDMA_INDIVIDUAL_OTHER_DETAILS"];
 
@@ -1173,6 +1184,15 @@ namespace CMdm.UI.Web.Controllers
 
                     }
 
+                    if (cDMA_INDIVIDUAL_BIO_DATA != null)
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS);
+                    }
+                    else
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS");
+                    }
+
                     //save current data into session variable for future usage
                     //set the customer value incase of empty record 
 
@@ -1203,6 +1223,7 @@ namespace CMdm.UI.Web.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
+
 
 
                     ViewBag.profile_log = db.CDMA_INDIVIDUAL_PROFILE_LOG.Where(b => b.CUSTOMER_NO == c_id).ToList().Where(b => b.AFFECTED_CATEGORY == "biodata").OrderBy(i => i.LOG_ID).ToList();
@@ -1460,6 +1481,16 @@ namespace CMdm.UI.Web.Controllers
                     ViewBag.STATES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
 
                     ViewBag.STATES_RES = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN);
+
+                    if (cDMA_INDIVIDUAL_BIO_DATA != null)
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS);
+                    }
+                    else
+                    {
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS");
+                    }
+
 
                     if (cDMA_INDIVIDUAL_ADDRESS_DETAIL == null)
                     {
@@ -1754,18 +1785,23 @@ namespace CMdm.UI.Web.Controllers
         public string compareIdentificationRecord(CDMA_INDIVIDUAL_IDENTIFICATION current, CDMA_INDIVIDUAL_IDENTIFICATION previous)
         {
             string result = "";
-            if (!(retrunValue(current.IDENTIFICATION_TYPE).Equals(retrunValue(previous.IDENTIFICATION_TYPE))))
+            if (!((previous.IDENTIFICATION_TYPE == null) || (current.IDENTIFICATION_TYPE == null)))
             {
-                var previous_idtype = IdType(Convert.ToDecimal(previous.IDENTIFICATION_TYPE));
-                var current_idtype = IdType(Convert.ToDecimal(current.IDENTIFICATION_TYPE));
-                var prev_id = "";
-                index_id.Add(2);
-                if (!(previous_idtype == null)) {
-                    prev_id = previous_idtype.ID_TYPE;
+               if (!(retrunValue(current.IDENTIFICATION_TYPE).Equals(retrunValue(previous.IDENTIFICATION_TYPE))))
+                {
+                    var previous_idtype = IdType(Convert.ToDecimal(previous.IDENTIFICATION_TYPE));
+                    var current_idtype = IdType(Convert.ToDecimal(current.IDENTIFICATION_TYPE));
+                    var prev_id = "";
+                    index_id.Add(2);
+                    if (!(previous_idtype == null))
+                    {
+                        prev_id = previous_idtype.ID_TYPE;
+                    }
+                    result = result + "<tr><td> Identification Type changed from <strong>"
+                                    + prev_id + "</strong> To "
+                                    + current_idtype.ID_TYPE + "</td></tr>";
                 }
-                result = result + "<tr><td> Identification Type changed from <strong>"
-                                + prev_id + "</strong> To "
-                                + current_idtype.ID_TYPE + "</td></tr>";
+
             }
             if (!(current.ID_EXPIRY_DATE.Equals(previous.ID_EXPIRY_DATE)))
             {
@@ -1993,8 +2029,12 @@ namespace CMdm.UI.Web.Controllers
                 var current_val = "";
                 var previous_country = countryById(Convert.ToDecimal(previous.COUNTRY_OF_BIRTH));
                 var current_country = countryById(Convert.ToDecimal(current.COUNTRY_OF_BIRTH));
-                if (previous_country == null) { previous_val = previous_country.COUNTRY_NAME; }
-                if (current_country == null) { current_val = current_country.COUNTRY_NAME; }
+                if(previous_country != null)
+                {
+                   if (previous_country.COUNTRY_NAME != null) { previous_val = previous_country.COUNTRY_NAME; }
+                }
+                if (current_country != null) { current_val = current_country.COUNTRY_NAME; }
+
                 result = result + "<tr><td> Title changed from <strong>"
                                 + previous_val + "</strong> To "
                                 + current_val + "</td></tr>";
@@ -2455,7 +2495,7 @@ namespace CMdm.UI.Web.Controllers
             cDMA_ACCT_SERVICES_LOG.ACCOUNT_SIGNATORY = accountInfo.ACCOUNT_SIGNATORY;
             cDMA_ACCT_SERVICES_LOG.SECOND_SIGNATORY = accountInfo.SECOND_SIGNATORY;
             cDMA_ACCT_SERVICES_LOG.AUTHORISED = accountInfo.AUTHORISED;
-            cDMA_ACCT_SERVICES_LOG.AUTHORISED = "N"; 
+            cDMA_ACCT_SERVICES_LOG.AUTHORISED = "U"; 
 
             return cDMA_ACCT_SERVICES_LOG;
 

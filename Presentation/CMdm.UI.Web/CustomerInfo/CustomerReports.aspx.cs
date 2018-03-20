@@ -33,7 +33,7 @@ namespace Cdma.Web.CustomerInfo
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
             
-                String strQuery2 = "SELECT branch_code from src_sttm_branch";
+                String strQuery2 = "SELECT branch_code from CDMA_CUSTOMER_BRANCHES";
                 ddlBranch.AppendDataBoundItems = true;
                 //OracleCommand objCmd = new OracleCommand();
                 OracleCommand objCmd2 = new OracleCommand();
@@ -54,6 +54,15 @@ namespace Cdma.Web.CustomerInfo
                     ddlbranch2.DataValueField = "branch_code";
                     ddlbranch2.DataBind();
                     //ddlBranch.Items.Add(new ListItem("001", "001"));
+
+                    string Branch = ddlBranch.SelectedItem.Value == null ? "001" : ddlBranch.SelectedItem.Value;
+
+                    DQIBeforeBVNCompletenessPageDataBind(ddlCategory.SelectedItem.Value, ddlBranch.SelectedItem.Value);
+                    DQIAfterBVNCompletenessPageDataBind(ddlCat2.SelectedItem.Value, ddlbranch2.SelectedItem.Value);
+                    DQIBeforeBVNCorrectnessPageDataBind(ddlCategory.SelectedItem.Value, ddlBranch.SelectedItem.Value);
+                    DQIAfterBVNCorrectnessPageDataBind(ddlCat2.SelectedItem.Value, ddlbranch2.SelectedItem.Value);
+                    DQIBE4BVNPageDataBind();
+                    DQIAfterBVNPageDataBind();
                 }
                 catch (Exception ex)
                 {
@@ -66,14 +75,7 @@ namespace Cdma.Web.CustomerInfo
                   // con.Dispose();
                 }
 /////////////////////////////////////////////////////////////////////////////////////////////
-                string Branch = ddlBranch.SelectedItem.Value == null ? "001" : ddlBranch.SelectedItem.Value;
-               
-                DQIBeforeBVNCompletenessPageDataBind(ddlCategory.SelectedItem.Value, ddlBranch.SelectedItem.Value);
-                DQIAfterBVNCompletenessPageDataBind(ddlCat2.SelectedItem.Value, ddlbranch2.SelectedItem.Value);
-                DQIBeforeBVNCorrectnessPageDataBind(ddlCategory.SelectedItem.Value, ddlBranch.SelectedItem.Value);
-                DQIAfterBVNCorrectnessPageDataBind(ddlCat2.SelectedItem.Value, ddlbranch2.SelectedItem.Value);
-                DQIBE4BVNPageDataBind();
-                DQIAfterBVNPageDataBind();
+                
                 //BuzContactDetailPageDataBind();
                 
             }
