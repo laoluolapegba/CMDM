@@ -186,6 +186,8 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.CdmaGoldenRecord> CdmaGoldenRecords { get; set; }
         
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
+
 
         // public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }
 
