@@ -171,7 +171,8 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO_LOG> CDMA_ACCOUNT_INFO_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_RECORD_LOG> CDMA_ACCOUNT_RECORD_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCT_SERVICES_LOG> CDMA_ACCT_SERVICES_LOG { get; set; }
-         
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_PHONEVALIDATION_RESULTS> CMDM_PHONEVALIDATION_RESULTS { get; set; }
+
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.BranchDqiSummary> BranchDqiSummaries { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Kpi.BrnKpi> BrnKpis { get; set; }
@@ -183,6 +184,7 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_MARITALSTATUS> CDMA_MARITALSTATUS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.CdmaGoldenRecord> CdmaGoldenRecords { get; set; }
+        
 
 
         // public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.IndCustomerBioData> IndCustomerBioDatas { get; set; }

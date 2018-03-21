@@ -190,6 +190,12 @@
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -310,6 +316,7 @@
     <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\ParamsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
+    <Compile Include="Controllers\PhoneValidationController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -1209,6 +1216,7 @@
     <Content Include="Content\kendo\2017.3.1026\Uniform\sprite_2x.png" />
     <Content Include="Content\kendo\2017.3.1026\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2017.3.1026\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\summarystyle.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -2083,6 +2091,11 @@
     <Content Include="Views\Common\SystemInfo.cshtml" />
     <Content Include="Views\GoldenRecords\List.cshtml" />
     <Content Include="Views\GoldenRecords\AuthList.cshtml" />
+    <Content Include="Views\PhoneValidation\Create.cshtml" />
+    <Content Include="Views\PhoneValidation\Delete.cshtml" />
+    <Content Include="Views\PhoneValidation\Details.cshtml" />
+    <Content Include="Views\PhoneValidation\Edit.cshtml" />
+    <Content Include="Views\PhoneValidation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
