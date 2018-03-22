@@ -70,7 +70,7 @@ namespace CMdm.UI.Web.Controllers
                     Lastname = c.Cust.SURNAME,
                     Firstname = c.Cust.FIRST_NAME,
                     Loggedby = c.Actor.FIRSTNAME + " " + c.Actor.LASTNAME,
-                    Comments = c.Log.COMMENTS,
+                    Comments = c.Log.COMMENTS.Replace("<td>","").Replace("</td>","").Replace("<tr>", "").Replace("</tr>", "").Replace("<strong>", "").Replace("</strong>", ""),
                     LoggedDate = c.Log.LOGGED_DATE
 
                     //Weights = new WeightsViewModel()

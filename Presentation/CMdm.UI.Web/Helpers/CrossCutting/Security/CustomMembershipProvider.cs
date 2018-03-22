@@ -83,7 +83,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     string ldapPort = db.Settings.Where(a => a.SETTING_NAME == "LDAP_PORT").Select(a => a.SETTING_VALUE).FirstOrDefault();
 
                     //String adPath = serverName + "://" + domainName; //LDAP://corp.com"; //Fully-qualified Domain Name
-                    String adPath = "LDAP://" + serverName + ":" +  ldapPort + "/" + domainName;
+                    String adPath = "LDAP://" + serverName + ":" + ldapPort; // + "/" + domainName;
                     LDAPAuthenticationService adAuth = new LDAPAuthenticationService(adPath);
                     bool authenticated = false;
                     try

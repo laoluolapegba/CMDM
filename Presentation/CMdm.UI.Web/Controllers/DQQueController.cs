@@ -106,7 +106,7 @@ namespace CMdm.UI.Web.Controllers
 
             return Json(gridModel);
         }
-        public ActionResult BrnIssueList(int? CatalogId, int? branchid)
+        public ActionResult BrnIssueList(int? Id, int? branchid)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -115,7 +115,7 @@ namespace CMdm.UI.Web.Controllers
             var model = new DqquebrnListModel();
             
 
-            model.CATALOG_ID = CatalogId == null ? 0: Convert.ToInt32(CatalogId);
+            model.CATALOG_ID = Id == null ? 0: Convert.ToInt32(Id);
             //foreach (var at in _dqService.GetAllActivityTypes())
             //{
             //    model.ActivityLogType.Add(new SelectListItem
@@ -129,7 +129,7 @@ namespace CMdm.UI.Web.Controllers
             
             model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
-            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", CatalogId).ToList();
+            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", Id).ToList();
             model.Statuses.Add(new SelectListItem
             {
                 Value = "0",
@@ -165,7 +165,14 @@ namespace CMdm.UI.Web.Controllers
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
 
-            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, model.CATALOG_ID, model.RULE_ID,  identity.BranchId, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+            //RouteValueDictionary routeValues;
+
+            int catalogId = 0;
+            if (routeValues.ContainsKey("id"))
+                catalogId = int.Parse((string)routeValues["id"]);
+
+            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, catalogId, model.RULE_ID,  identity.BranchId, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new DqquebrnListModel

@@ -12,7 +12,7 @@
     <ul class="nav nav-tabs nav-tabs-custom-colored" role="tablist" id="myTabs">
         <li id="Report1" runat="server" ><a href="#tab1" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-user"></i>Customer DQI Report Before BVN(by Branch)</a></li>
         <li id="Report2" runat="server"><a href="#tab2" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-binoculars"></i>Customer DQI Report after BVN(by Branch)</a></li>
-        <li id="Report3" runat="server"><a href="#tab3" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-dashboard"></i>Customer DQI Report at Enterise level</a></li>
+        <li id="Report3" runat="server"><a href="#tab3" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-dashboard"></i>Customer DQI Report at Enterprise level</a></li>
       <%--  <li id="Report4" runat="server"><a href="#tab4" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-unlock"></i>Report4</a></li>
         <li id="Report5" runat="server" ><a href="#tab5" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-user"></i>Report5</a></li>
         <li id="Report6" runat="server"><a href="#tab6" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-cogs"></i>Report6</a></li>

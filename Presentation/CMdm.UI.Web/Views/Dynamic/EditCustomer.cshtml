@@ -2,7 +2,14 @@
  
 
 @section Scripts {
-@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(document).ready(function () {
+            $('#zip').keyup(function (e) {
+                $('#zip').val().replace(/\-/g, '');
+            });
+        });
+</script>
 }
 @*@Styles.Render("~/AdminLTE/plugins/font-awesome/css")
         @Styles.Render("~/AdminLTE/plugins/ionicons/css")
@@ -369,7 +376,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label> Zip Postal Code</label>
-                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @id = "zip" } })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
 
                                 </div>

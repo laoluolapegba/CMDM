@@ -111,7 +111,7 @@
                                     field: "DQ_PROCESS_NAME",
                                     title: "Process Name",
                                     width: 250,
-                                    template: '<a href="@Url.Action("BrnIssueList", "DQQue", new { CatalogId = "#=CATALOG_ID#" })">#=DQ_PROCESS_NAME#</a>'
+                                    template: '<a href="@Url.Content("~/DQQue/BrnIssueList/")#=CATALOG_ID#">#:DQ_PROCESS_NAME#</a>'                                   
                                     }, {
                                     field: "CATALOG_NAME",
                                     title: "Cataog name",
