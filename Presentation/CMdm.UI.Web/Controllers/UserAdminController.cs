@@ -266,6 +266,11 @@ namespace CMdm.UI.Web.Controllers
                     {
                         entity.BRANCH_ID = mdmUser.BRANCH_ID;
                         entity.ROLE_ID = mdmUser.ROLE_ID;
+                        entity.USER_ID = mdmUser.USER_ID;
+                        entity.FIRSTNAME = mdmUser.FIRSTNAME;
+                        entity.LASTNAME = mdmUser.LASTNAME;
+                        //Still defaulting
+                        entity.ISLOCKED = Convert.ToDecimal(!mdmUser.ISACTIVE);
                         //entity.USER_ID = mdmUser.USER_ID;
                         db.CM_USER_PROFILE.Attach(entity);
                         db.Entry(entity).State = EntityState.Modified;
