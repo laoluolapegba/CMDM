@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,31 +17,37 @@ namespace CMdm.UI.Web.Controllers
     public class PhoneValidationController : Controller
     {
         private AppDbContext db = new AppDbContext();
-      
+
         // GET: PhoneValidation
         public ActionResult Index(int? page)
         {
             ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
-           
 
-            int pageSize = 10;
+
+            int pageSize = 50;
             int pageNumber = (page ?? 1);
-            
-            if (Request != null && (page ==null))
+            if (page == null)
+            {
+
+                this.Session["BRANCH"] = null;
+
+            }
+
+            if (Request["BRANCH"] != null && (page == null))
             {
                 this.Session["BRANCH"] = Request["BRANCH"];
             }
-            else
-            {
-                this.Session["BRANCH"] = null;
-            }
-           
+
+
+
+            var BRANCH = this.Session["BRANCH"];
 
             if (this.Session["BRANCH"] != null)
             {
-                var BRANCH = this.Session["BRANCH"];
-               return  View(db.CMDM_PHONEVALIDATION_RESULTS.Where(s => s.BRANCH_CODE == BRANCH.ToString()).OrderBy(i => i.CUSTOMER_NO).ToPagedList(page ?? 1, pageSize));
-                 
+
+                var result = db.CMDM_PHONEVALIDATION_RESULTS.Where(s => s.BRANCH_CODE == BRANCH.ToString()).OrderBy(i => i.CUSTOMER_NO).ToPagedList(page ?? 1, pageSize);
+                return View(result);
+
             }
             else
             {
@@ -47,7 +55,53 @@ namespace CMdm.UI.Web.Controllers
 
             }
 
-             
+
+        }
+
+
+        public void WriteTsv<T>(IEnumerable<T> data, TextWriter output)
+        {
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            foreach (PropertyDescriptor prop in props)
+            {
+                output.Write(prop.DisplayName); // header
+                output.Write("\t");
+            }
+            output.WriteLine();
+            foreach (T item in data)
+            {
+                foreach (PropertyDescriptor prop in props)
+                {
+                    output.Write(prop.Converter.ConvertToString(
+                         prop.GetValue(item)));
+                    output.Write("\t");
+                }
+                output.WriteLine();
+            }
+        }
+
+        public void ExportListFromTsv()
+        {
+            //   CMDM_PHONEVALIDATION_RESULTS data = new CMDM_PHONEVALIDATION_RESULTS();
+            List<CMDM_PHONEVALIDATION_RESULTS> data = new List<CMDM_PHONEVALIDATION_RESULTS>();
+            if (this.Session["BRANCH"] != null)
+            {
+                var BRANCH = this.Session["BRANCH"];
+                data = db.CMDM_PHONEVALIDATION_RESULTS.Where(s => s.BRANCH_CODE == BRANCH.ToString()).ToList();
+                //return View(result);
+
+            }
+            else
+            {
+                data = db.CMDM_PHONEVALIDATION_RESULTS.ToList();
+
+
+            }
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment;filename=Customers.xls");
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            WriteTsv(data, Response.Output);
+            Response.End();
         }
 
         // GET: PhoneValidation/Details/5

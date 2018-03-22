@@ -24,6 +24,8 @@ namespace CMdm.Entities.Domain.Customer
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> LAST_RUN_DATE { get; set; }
         public string REASON { get; set; }
-        
+        public string PHONE_NO { get; set; }
+
+
     }
 }

@@ -2093,16 +2093,16 @@
     <Content Include="Views\Common\SystemInfo.cshtml" />
     <Content Include="Views\GoldenRecords\List.cshtml" />
     <Content Include="Views\GoldenRecords\AuthList.cshtml" />
-<<<<<<< HEAD
+ 
     <Content Include="Views\PhoneValidation\Create.cshtml" />
     <Content Include="Views\PhoneValidation\Delete.cshtml" />
     <Content Include="Views\PhoneValidation\Details.cshtml" />
     <Content Include="Views\PhoneValidation\Edit.cshtml" />
     <Content Include="Views\PhoneValidation\Index.cshtml" />
-=======
+ 
     <Content Include="Views\OutStandingDocs\Create.cshtml" />
     <Content Include="Views\OutStandingDocs\List.cshtml" />
->>>>>>> a82bc71876ebd9589514b91f6e5515c5241590ae
+ 
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
