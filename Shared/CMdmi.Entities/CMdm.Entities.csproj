@@ -73,7 +73,6 @@
     <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
-    <Compile Include="Domain\Customer\CMDM_SRC_BRANCH.cs" />
     <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Customer\Limit_Range.cs" />
