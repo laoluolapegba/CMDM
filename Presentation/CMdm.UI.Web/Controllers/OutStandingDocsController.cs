@@ -12,6 +12,9 @@ using CMdm.Framework.Kendoui;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.CustomModule.Fcmb;
 using CMdm.UI.Web.Models.CustomModule.Fcmb;
+using CMdm.Framework.Controllers;
+using CMdm.Core;
+using CMdm.Services.ExportImport;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -19,11 +22,13 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext db = new AppDbContext();
         private ICustomService _dqQueService;
+        private IExportManager _exportManager;
         #region Constructors
         public OutStandingDocsController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new CustomService();
+            _exportManager = new ExportManager();
         }
         #endregion
         // GET: OutStandingDocs
@@ -83,7 +88,7 @@ namespace CMdm.UI.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public virtual ActionResult List(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
+        public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
             var items = _dqQueService.GetAllOutDocItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
@@ -94,6 +99,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 Data = items.Select(x => new OutstandingDocModel
                 {
+                    Id = x.ID,
                     ACCT_NAME = x.ACCT_NAME,
                     ACID = x.ACID,
                     FORACID = x.FORACID,
@@ -125,7 +131,60 @@ namespace CMdm.UI.Web.Controllers
 
             return Json(gridModel);
         }
+        #region Export / Import
 
+        [HttpPost, ActionName("List")]
+        [FormValueRequired("exportexcel-all")]
+        public virtual ActionResult ExportExcelAll(OutstandingDocModel model)
+        {
+
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName);
+
+           
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
+                return File(bytes, MimeTypes.TextXlsx, "outstandingDocs.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        [HttpPost]
+        public virtual ActionResult ExportExcelSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            var docs = new List<OutStandingDoc>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                docs.AddRange(_dqQueService.GetOutDocItembyIds(ids));
+            }
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                return File(bytes, MimeTypes.TextXlsx, "outstandingDocs.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+       #endregion
         protected override void Dispose(bool disposing)
         {
             if (disposing)

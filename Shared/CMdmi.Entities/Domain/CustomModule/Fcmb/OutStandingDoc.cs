@@ -15,6 +15,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
         public string FORACID { get; set; }
 
         [Required]

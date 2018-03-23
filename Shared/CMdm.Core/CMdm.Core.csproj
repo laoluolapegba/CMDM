@@ -47,6 +47,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IPagedList.cs" />
     <Compile Include="IWebHelper.cs" />
     <Compile Include="MimeTypes.cs" />

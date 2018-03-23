@@ -83,7 +83,18 @@ namespace CMdm.Services.CustomModule.Fcmb
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
         }
+        /// <summary>
+        /// Gets a queitem by item identifiers
+        /// </summary>
+        /// <param name="recordId">recordId identifier</param>
+        /// <returns>Vendor</returns>
+        public virtual IList<OutStandingDoc> GetOutDocItembyIds(int[] recordIds)
+        {
+            if (recordIds == null || recordIds.Length == 0)
+                return null;
 
+            return _dqqueDAC.SelectByIds(recordIds);
+        }
         /// <summary>
         /// Gets a queitem by item identifier
         /// </summary>
