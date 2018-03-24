@@ -98,6 +98,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 MdmCatalog mdmCat = new MdmCatalog
                 {
+                    CATALOG_ID = mdmCatalog.CATALOG_ID,
                     CATEGORY_ID = mdmCatalog.CATEGORY_ID,
                     CATALOG_NAME = mdmCatalog.CATALOG_NAME,
                     CREATED_BY = identity.ProfileId,
