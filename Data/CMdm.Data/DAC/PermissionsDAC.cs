@@ -82,7 +82,7 @@ namespace CMdm.Data.DAC
                     //query = query.Where(u => userRoleIds.Contains(u.ROLE_ID));
                 //query = query.Where(c => c.CM_USER_ROLES.Select(cr => cr.ROLE_ID).Intersect(userRoleIds).Any());
                 if (!String.IsNullOrWhiteSpace(permdesc))
-                    query = query.Where(c => c.PERMISSIONDESCRIPTION.Contains(permdesc));
+                    query = query.Where(c => c.PERMISSIONDESCRIPTION.ToUpper().Contains(permdesc.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
