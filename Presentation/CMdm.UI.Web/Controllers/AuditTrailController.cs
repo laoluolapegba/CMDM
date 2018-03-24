@@ -51,11 +51,13 @@ namespace CMdm.UI.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public virtual ActionResult List(DataSourceRequest command, AuditTrailListModel model, string sort, string sortDir)
+        public virtual ActionResult List(DataSourceRequest command, AuditTrailListModel model, string sort, string sortDir, string SearchName = "")
         {
+            SearchName = Request.Form.Get(0).ToString();
             var data = (from c in db.CDMA_INDIVIDUAL_BIO_DATA
                         join au in db.CDMA_INDIVIDUAL_PROFILE_LOG on c.CUSTOMER_NO equals au.CUSTOMER_NO
                         join u in db.CM_USER_PROFILE on au.LOGGED_BY equals u.PROFILE_ID
+                        where au.COMMENTS.Contains(SearchName)
                         select new { Cust = c, Log = au, Actor = u }
                         );
 
