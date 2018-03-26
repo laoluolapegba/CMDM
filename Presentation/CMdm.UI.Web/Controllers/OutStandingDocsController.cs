@@ -91,7 +91,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.ACID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -140,7 +140,7 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName);
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.ACID);
 
            
 

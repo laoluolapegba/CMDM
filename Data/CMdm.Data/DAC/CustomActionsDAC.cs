@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<OutStandingDoc> SelectOutStandingDoc(string name, int startRowIndex, int maximumRows, string sortExpression)
+        public List<OutStandingDoc> SelectOutStandingDoc(string name, string acctid, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,6 +96,8 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.ACCT_NAME.Contains(name));
+                if (!string.IsNullOrWhiteSpace(acctid))
+                    query = query.Where(v => v.ACID.Contains(acctid));
                 // Append filters.
                 //query = AppendFilters(query, name);
 

@@ -39,15 +39,21 @@ namespace CMdm.Services.ExportImport
             //property array
             var properties = new[]
             {
-                new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
-                new PropertyByName<OutStandingDoc>("AcctId", p => p.ACID),
-                new PropertyByName<OutStandingDoc>("Document Code", p => p.DOCUMENT_CODE),
-                new PropertyByName<OutStandingDoc>("Acct name", p => p.ACCT_NAME),
-                new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),
-                new PropertyByName<OutStandingDoc>("Product Desc", p => p.SCHM_DESC),
-                new PropertyByName<OutStandingDoc>("Prod Type", p => p.SCHM_TYPE),
+                
+                new PropertyByName<OutStandingDoc>("Account No", p => p.ACID),
+                new PropertyByName<OutStandingDoc>("Account Name", p => p.ACCT_NAME),
+
+                new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
+                new PropertyByName<OutStandingDoc>("Product Name", p => p.SCHM_DESC),
+                new PropertyByName<OutStandingDoc>("Schm Type", p => p.SCHM_TYPE),
+                new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),
+                
+                //new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),
+                
+                
                 new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE),
-                new PropertyByName<OutStandingDoc>("Reason", p => p.FREZ_REASON_CODE),
+                new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE)
+                //new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
             };
 
             return ExportToXlsx(properties, documents);

@@ -67,6 +67,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Account No")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ACID)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.LabelFor(model => model.BRANCH_CODE)
                                     </div>
                                     <div class="col-md-8">
@@ -142,22 +150,47 @@
                                             width: 50
                                         },
                                         {
+                                            field: "ACID",
+                                            title: "Account No",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "ACCT_NAME",
+                                            title: "Account  Name",
+                                            width: 200
+                                        },
+                                        {
                                        field: "SOL_ID",
-                                       title: "Record Id",
+                                       title: "Branch Code",
                                        width: 70,
-                                   },
-                                   {
-                                       field: "DOCUMENT_CODE",
-                                       title: "Document Code",
-                                       width: 80,
-                                       headerAttributes: { style: "text-align:left" },
-                                       attributes: { style: "text-align:left" },
-                                   },
+                                        },
+                                        
                                     {
-                                        field: "ACID",
-                                        title: "Account Id",
-                                        width: 100
+                                        field: "SCHM_CODE",
+                                        title: "Product Code",
+                                        width: 100,
                                     },
+                                    {
+                                        field: "SCHM_DESC",
+                                        title: "Product Description",
+                                        width: 200
+                                    },
+                                    {
+                                        field: "SCHM_TYPE",
+                                        title: "Type",
+                                        width: 70
+                                    },
+                                     {
+                                         field: "REF_DESC",
+                                         title: "OutStanding Document",
+                                         width: 200
+                                     },
+                                     
+                                    {
+                                        field: "DUE_DATE",
+                                        title: "Due date",
+                                        width: 80,
+                                    },                                    
                                     {
                                         field: "FREZ_REASON_CODE",
                                         title: "Reason",
@@ -169,33 +202,8 @@
                                         width: 100,
                                         headerAttributes: { style: "text-align:left" },
                                         attributes: { style: "text-align:left" },
-                                    },
-
-                                    {
-                                        field: "ACCT_NAME",
-                                        title: "Account  Name",
-                                        width: 150
-                                    },
-                                    {
-                                        field: "SCHM_CODE",
-                                        title: "Product Code",
-                                        width: 100,
-                                    },
-                                    {
-                                        field: "SCHM_DESC",
-                                        title: "Product Description",
-                                        width: 150
-                                    },
-                                    {
-                                        field: "SCHM_TYPE",
-                                        title: "Type",
-                                        width: 70
-                                    },
-                                    {
-                                        field: "DUE_DATE",
-                                        title: "Due date",
-                                        width: 80,
                                     }
+                                    
                                     ]
                                 });
                             });
@@ -261,6 +269,7 @@
                     var data = {
                         SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
+                        ACID: $('#ACID').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
