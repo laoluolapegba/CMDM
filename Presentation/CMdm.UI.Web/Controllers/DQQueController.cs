@@ -425,31 +425,41 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
-            var goldenrecords = new List<MdmDqRunException>();
+            var modifiedrecords = new List<MdmDqRunException>();
             if (selectedIds != null)
             {
                 var ids = selectedIds
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToInt32(x))
                     .ToArray();
-                goldenrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
+                modifiedrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
             }
 
             try
             {
-                foreach (var item in goldenrecords)
+                using (var db = new AppDbContext())
                 {
-                    //item. = "A";
-                    //_dqQueService.UpdateQueItem(item);
+                    foreach (var item in modifiedrecords)
+                    {
+                        var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                        if (entry != null)
+                        {
+                            entry.AUTHORISED = "A";
+                            db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                            db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+
                 }
 
-                return RedirectToAction("List");
+                return RedirectToAction("AuthList");
 
             }
             catch (Exception exc)
             {
                 ErrorNotification(exc);
-                return RedirectToAction("List");
+                return RedirectToAction("AuthList");
             }
         }
 
@@ -459,26 +469,40 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
-            var goldenrecords = new List<MdmDqRunException>();
+            var modifiedrecords = new List<MdmDqRunException>();
             if (selectedIds != null)
             {
                 var ids = selectedIds
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToInt32(x))
                     .ToArray();
-                goldenrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
+                modifiedrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
             }
 
             try
             {
+                using (var db = new AppDbContext())
+                {
+                    foreach (var item in modifiedrecords)
+                    {
+                        var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                        if (entry != null)
+                        {
+                            entry.AUTHORISED = "N";
+                            db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                            db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
 
-                return RedirectToAction("List");
+                }
+                return RedirectToAction("AuthList");
 
             }
             catch (Exception exc)
             {
                 ErrorNotification(exc);
-                return RedirectToAction("List");
+                return RedirectToAction("AuthList");
             }
         }
         protected override void Dispose(bool disposing)

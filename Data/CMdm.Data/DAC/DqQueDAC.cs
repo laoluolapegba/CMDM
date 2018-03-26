@@ -232,7 +232,7 @@ namespace CMdm.Data.DAC
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             //var db2 = new AppDbContext();
             
-            using (var db = new AppDbContext())
+            using (var db = new AppDbContext()) 
             {
                 // Store the query.
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
