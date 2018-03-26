@@ -117,7 +117,7 @@ namespace CMdm.Data.DAC
                 var query = db.MdmDQQues.Select(q => q).Include(a => a.MdmDQPriorities);
 
                 if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.ERROR_DESC.ToUpper().Contains(name.ToUpper()));
+                    query = query.Where(v => v.DQ_PROCESS_NAME.ToUpper().Contains(name.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
