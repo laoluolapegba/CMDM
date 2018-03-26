@@ -76,7 +76,7 @@ namespace CMdm.Data.DAC
                 var query = db.EntityDetails.Select(q => q).Include(m => m.MdmAggrDimensions).Include(m => m.MdmCatalog).Include(m => m.MdmRegex).Include(m => m.MdmAggrDimensions).Include(m=>m.MDM_WEIGHTS);
 
                 if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.ENTITY_COL_NAME.Contains(name));
+                    query = query.Where(v => v.ENTITY_COL_NAME.ToUpper().Contains(name.ToUpper()));
                 //if (createdOnFrom.HasValue)
                 //    query = query.Where(al => createdOnFrom.Value <= al.RUN_DATE);
                 //if (createdOnTo.HasValue)
