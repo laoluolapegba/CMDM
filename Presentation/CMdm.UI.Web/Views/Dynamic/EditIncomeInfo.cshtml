@@ -90,480 +90,30 @@
                 <div class="col-lg-4">
                     <div class="input-group">
                         <label>
-                            TYPE OF ACCOUNT
+                            Income Band
                         </label>
-                        @Html.DropDownList("TYPE_OF_ACCOUNT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @Html.DropDownList("INCOME_BAND", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
                         @*@Html.EditorFor(model => model.AccInfo.TYPE_OF_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.AccInfo.TYPE_OF_ACCOUNT, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.CusIncomeInfo.INCOME_BAND, "", new { @class = "text-danger" })
 
                     </div>
                 </div>
-
-                @*<div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            ACCOUNT NUMBER
-                        </label>
-                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_NUMBER, new { htmlAttributes = new { @class = "form-control", @disable = "disabled" } })
-                        @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_NUMBER, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-                 
-
+        
                 <div class="col-lg-4">
                     <div class="input-group">
                         <label>
-                            BVN NUMBER
+                            Initial Deposit
                         </label>
-                        @Html.EditorFor(model => model.AccInfo.BVN_NUMBER, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AccInfo.BVN_NUMBER, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-               <!----> <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            ACCOUNT OFFICER
-                        </label>
+                        @Html.DropDownList("INITIAL_DEPOSIT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        @*@Html.EditorFor(model => model.AccInfo.TYPE_OF_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.CusIncomeInfo.INITIAL_DEPOSIT, "", new { @class = "text-danger" })
 
-                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_OFFICER, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_OFFICER, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            ACCOUNT TITLE
-                        </label>
-
-                        @Html.EditorFor(model => model.AccInfo.ACCOUNT_TITLE, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AccInfo.ACCOUNT_TITLE, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>BRANCH </label>
-                        @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-
-
-                        @*@Html.EditorFor(model => model.AccInfo.BRANCH, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.AccInfo.BRANCH, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
 
             </div>
-            <div class="row">
 
-
-                <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            BRANCH CLASS
-                        </label>
-                        @Html.DropDownList("BranchClass", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                        @*@Html.EditorFor(model => model.AccInfo.BRANCH_CLASS, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.AccInfo.BRANCH_CLASS, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            OPERATING INSTRUCTION
-                        </label>
-
-                        @Html.EditorFor(model => model.AccInfo.OPERATING_INSTRUCTION, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AccInfo.OPERATING_INSTRUCTION, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="input-group">
-                        <label>
-                            ORIGINATING BRANCH
-                        </label>
-                        @Html.DropDownList("OringinBranch", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                        @*@Html.EditorFor(model => model.AccInfo.ORIGINATING_BRANCH, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.AccInfo.ORIGINATING_BRANCH, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        BUSINESS DIVISION
-                    </label>
-
-                    @Html.DropDownList("BUSINESSDIVISION", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-
-
-                    @*@Html.EditorFor(model => model.AccInfo.BUSINESS_DIVISION, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.BUSINESS_DIVISION, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        BUSINESS SEGMENT
-                    </label>
-
-                    @Html.DropDownList("BUSINESS_SEGMENT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @*@Html.EditorFor(model => model.AccInfo.BUSINESS_SEGMENT, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.BUSINESS_SEGMENT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        BUSINESS SIZE
-                    </label>
-                    @Html.DropDownList("BusinessSize", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @*@Html.EditorFor(model => model.AccInfo.BUSINESS_SIZE, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.BUSINESS_SIZE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        ONLINE TRANSFER LIMIT RANGE
-                    </label>
-
-                    <label>
-                        @Html.RadioButtonFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, "N")
-                        <span>NO</span>
-
-                        @Html.RadioButtonFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, "Y")
-                        <span>YES</span>
-
-                        @*<input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned
-
-                            <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Rented" type="radio"> Rented*@
-                    </label>
-
-                    @*@Html.EditorFor(model => model.AccInfo.CAV_REQUIRED, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-
-
-
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        Online Transfer Limit Range
-                    </label>
-                    @Html.DropDownList("RangeLimit", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @*@Html.EditorFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        CUSTOMER IC
-                    </label>
-
-                    @Html.EditorFor(model => model.AccInfo.CUSTOMER_IC, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_IC, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        CAV Required
-                    </label>
-
-                    <label>
-                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "N")
-                        <span>NO</span>
-
-                        @Html.RadioButtonFor(model => model.AccInfo.CAV_REQUIRED, "Y")
-                        <span>YES</span>
-
-                        @*<input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Owned" type="radio"> Owned
-
-                            <input name="RESIDENCE_OWNED_OR_RENT" id="RESIDENCE_OWNED_OR_RENT" value="Rented" type="radio"> Rented*@
-                    </label>
-
-                    @*@Html.EditorFor(model => model.AccInfo.CAV_REQUIRED, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.CAV_REQUIRED, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        CUSTOMER SEGMENT
-                    </label>
-                    @Html.DropDownList("CustomerSegment", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @*@Html.EditorFor(model => model.AccInfo.CUSTOMER_SEGMENT, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_SEGMENT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="input-group">
-                    <label>
-                        CUSTOMER TYPE
-                    </label>
-                    @Html.DropDownList("CustomerType", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-                    @*@Html.EditorFor(model => model.AccInfo.CUSTOMER_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.AccInfo.CUSTOMER_TYPE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-
-                        <h4 style="color:#3c8dbc">ACCOUNT SERVICES REQUIRED</h4>
-                        <hr />
-
-               
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <label>
-                                        CARD PREFERENCE
-                                    </label>
-                                    <label class="normal">
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "N")
-                                        <span>NO</span>
-
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.CARD_PREFERENCE, "Y")
-                                        <span>YES</span>
-                                    </label>
-
-                                        @*@Html.EditorFor(model => model.ServiceInfo.CARD_PREFERENCE, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        @Html.ValidationMessageFor(model => model.ServiceInfo.CARD_PREFERENCE, "", new { @class = "text-danger" })
-</div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <label>
-                                        ELECTRONIC BANKING PREFERENCE
-                                    </label>
-                                    <label class="normal">
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "N")
-                                        <span>NO</span>
-
-                                        @Html.RadioButtonFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "Y")
-                                        <span>YES</span>
-                                    </label>
-
-                                    @*@Html.EditorFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    @Html.ValidationMessageFor(model => model.ServiceInfo.ELECTRONIC_BANKING_PREFERENCE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <label>
-                                            STATEMENT PREFERENCES
-                                        </label>
-                                        <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "N")
-                                            <span>NO</span>
-
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "Y")
-                                            <span>YES</span>
-                                        </label>
-
-                                        @*@Html.EditorFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        @Html.ValidationMessageFor(model => model.ServiceInfo.STATEMENT_PREFERENCES, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <label>
-                                            TRANSACTION ALERT PREFERENCE
-                                        </label>
-                                        <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "N")
-                                            <span>NO</span>
-
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "Y")
-                                            <span>YES</span>
-                                        </label>
-                                        @*@Html.EditorFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        @Html.ValidationMessageFor(model => model.ServiceInfo.TRANSACTION_ALERT_PREFERENCE, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <label >
-                                            STATEMENT FREQUENCY
-                                        </label>
-                                        <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "N")
-                                            <span>NO</span>
-
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "Y")
-                                            <span>YES</span>
-                                        </label>
-                                        @*@Html.EditorFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        @Html.ValidationMessageFor(model => model.ServiceInfo.STATEMENT_FREQUENCY, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <label>
-                                            CHEQUE BOOK REQUISITION
-                                        </label>
-                                        <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "N")
-                                            <span>NO</span>
-
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "Y")
-                                            <span>YES</span>
-                                        </label>
-
-                                        @*@Html.EditorFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        @Html.ValidationMessageFor(model => model.ServiceInfo.CHEQUE_BOOK_REQUISITION, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <label>
-                                            CHEQUE LEAVES REQUIRED
-                                        </label>
-                                        <label class="normal">
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "N")
-                                            <span>NO</span>
-
-                                            @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "Y")
-                                            <span>YES</span>
-                                        </label>
-
-                                                @*@Html.EditorFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                @Html.ValidationMessageFor(model => model.ServiceInfo.CHEQUE_LEAVES_REQUIRED, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                        <div class="input-group">
-                                            <label>
-                                                CHEQUE CONFIRMATION
-                                            </label>
-
-                                            <label class="normal">
-                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "N")
-                                                <span>NO</span>
-
-                                                @Html.RadioButtonFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "Y")
-                                                <span>YES</span>
-                                            </label>
-
-                                            @*@Html.EditorFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.ValidationMessageFor(model => model.ServiceInfo.CHEQUE_CONFIRMATION, "", new { @class = "text-danger" })
-                                        </div>
-                                  </div>
-                            </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="input-group">
-                                                <label>
-                                                    CHEQUE CONFIRM THRESHLDRANGE
-                                                </label>
-
-                                                @Html.DropDownList("threshold", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
-
-
-                                                @*@Html.EditorFor(model => model.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                @Html.ValidationMessageFor(model => model.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="input-group">
-                                                <label>
-                                                    ONLINE TRANSFER LIMIT
-                                                </label>
-                                                <label class="normal">
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "N")
-                                                    <span>NO</span>
-
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "Y")
-                                                    <span>YES</span>
-                                                </label>
-
-                                                @*@Html.EditorFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                @Html.ValidationMessageFor(model => model.ServiceInfo.ONLINE_TRANSFER_LIMIT, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="input-group">
-                                                <label>
-                                                    TOKEN
-                                                </label>
-                                                <label class="normal">
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "N")
-                                                    <span>NO</span>
-
-                                                    @Html.RadioButtonFor(model => model.ServiceInfo.TOKEN, "Y")
-                                                    <span>YES</span>
-                                                </label>
-
-                                                @*@Html.EditorFor(model => model.ServiceInfo.TOKEN, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                @Html.ValidationMessageFor(model => model.ServiceInfo.TOKEN, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4">
-                                            <div class="input-group">
-                                                <label>
-                                                    ACCOUNT SIGNATORY
-                                                </label>
-                                                
-                                                @Html.EditorFor(model => model.ServiceInfo.ACCOUNT_SIGNATORY, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.ServiceInfo.ACCOUNT_SIGNATORY, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="input-group">
-                                                <label>
-                                                    SECOND SIGNATORY
-                                                </label>
-                                                @Html.EditorFor(model => model.ServiceInfo.SECOND_SIGNATORY, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.ServiceInfo.SECOND_SIGNATORY, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                        </div>
 
 
                                         <br />
@@ -571,7 +121,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
 
-                                            <button type="button" class="btn btn-outline pull-right" onclick="submitAccInfo()">Update</button>
+                                            <button type="button" class="btn btn-outline pull-right" onclick="submitIncomeInfo()">Update</button>
 
                                         </div>
                                         <!--
@@ -586,7 +136,8 @@
                                                  </div>
                                              </div>
                                         -->
-                                        }
+            </div>                          
+            }
 
                                     </div>
                                                 <!-- /.tab-pane -->
@@ -607,11 +158,13 @@
 
 
                                                                 }
-                                                                @foreach (var log in ViewBag.acc_info_log)
+                                                                @if (ViewBag.acc_info_log != null)
                                                                 {
-                                                                    //for (var i = 0; i < myMoney.Count; i++)
-                                                                    //{
-                                                                    //    Console.WriteLine("Amount is {0} and type is {1}", myMoney[i].amount, myMoney[i].type);
+                                                                    foreach (var log in ViewBag.acc_info_log)
+                                                                    {
+                                                                        //for (var i = 0; i < myMoney.Count; i++)
+                                                                        //{
+                                                                        //    Console.WriteLine("Amount is {0} and type is {1}", myMoney[i].amount, myMoney[i].type);
 
                                                                     <div class="panel box box-primary">
                                                                         <div class="box-header with-border">
@@ -648,8 +201,9 @@
                                                                         </div>
                                                                     </div>
 
-                                                                                        }
+                                                                                            }
 
+                                                                                        }
 
 
                                                             </div>

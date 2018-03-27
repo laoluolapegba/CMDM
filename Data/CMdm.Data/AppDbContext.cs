@@ -139,10 +139,12 @@ namespace CMdm.Data
         public DbSet<SRC_CDMA_STATE> SRC_CDMA_STATE { get; set; }
         public DbSet<SRC_CDMA_LGA> SRC_CDMA_LGA { get; set; }
         public DbSet<CDMA_IDENTIFICATION_TYPE> CDMA_IDENTIFICATION_TYPE { get; set; }
- 
-
-
+        public DbSet<CDMA_CUSTOMER_INCOME_LOG> CDMA_CUSTOMER_INCOME_LOG { get; set; }
         
+
+
+
+
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_BIO_DATA> CDMA_INDIVIDUAL_BIO_DATA { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_ADDRESS_DETAIL> CDMA_INDIVIDUAL_ADDRESS_DETAIL { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_CONTACT_DETAIL> CDMA_INDIVIDUAL_CONTACT_DETAIL { get; set; }
