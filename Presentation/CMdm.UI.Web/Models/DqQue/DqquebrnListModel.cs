@@ -53,11 +53,12 @@ namespace CMdm.UI.Web.Models.DqQue
         public string ISSUE_PRIORITY_DESC { get; set; }
 
         public int PRIORITY_CODE { get; set; }
-        public int STATUS_CODE { get; set; }
+        public int? STATUS_CODE { get; set; }
         [DisplayName("Exception reason")]
         public string REASON { get; set; }
         [DisplayName("Table Name")]
         public string CATALOG_TABLE_NAME { get; set; }
+        [DisplayName("Catalog Id")]
         public int CATALOG_ID { get; set; }
         public IList<SelectListItem> Branches { get; set; }
         public IList<SelectListItem> Priorities { get; set; }

@@ -127,10 +127,12 @@ namespace CMdm.UI.Web.Controllers
             var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
             int OpenIssues = (int)IssueStatus.Open;
+
             
             model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION", OpenIssues).ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
             model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", Id).ToList();
+
             model.Statuses.Add(new SelectListItem
             {
                 Value = "0",
@@ -162,6 +164,7 @@ namespace CMdm.UI.Web.Controllers
             DateTime? endDateValue = (model.CreatedOnTo == null) ? null
                             : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
             //startDateValue, endDateValue,
+  
             IssueStatus? issueStatus = model.STATUS_CODE > 0 ? (IssueStatus?)(model.STATUS_CODE) : null;
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
