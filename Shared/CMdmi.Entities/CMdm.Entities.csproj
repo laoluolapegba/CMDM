@@ -50,6 +50,7 @@
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
     <Compile Include="Domain\Customer\CDMA_COUNTRIES.cs" />
+    <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />

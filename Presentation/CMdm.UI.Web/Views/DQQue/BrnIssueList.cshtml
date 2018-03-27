@@ -53,6 +53,25 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
+                                    @Html.Label("Customer ID")
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmEditorFor(model => model.CUST_ID)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4">
                                     @Html.LabelFor(model => model.BRANCH_CODE)
                                 </div>
                                 <div class="col-md-8">
@@ -81,14 +100,6 @@
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmDropDownList("CATALOG_ID", Model.Catalogs)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
-                                        <i class="fa fa-search"></i>
-                                        Search
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -294,6 +305,7 @@
                         function additionalData() {
                             var data = {
                                 SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                CUST_ID: $('#@Html.FieldIdFor(model =>model.CUST_ID)').val(),
                                 BRANCH_CODE: $('#BRANCH_CODE').val(),
                                 PRIORITY_CODE: $('#PRIORITY_CODE').val(),
                                 STATUS_CODE: $('#STATUS_CODE').val(),
