@@ -30,7 +30,8 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -2093,16 +2094,14 @@
     <Content Include="Views\Common\SystemInfo.cshtml" />
     <Content Include="Views\GoldenRecords\List.cshtml" />
     <Content Include="Views\GoldenRecords\AuthList.cshtml" />
- 
     <Content Include="Views\PhoneValidation\Create.cshtml" />
     <Content Include="Views\PhoneValidation\Delete.cshtml" />
     <Content Include="Views\PhoneValidation\Details.cshtml" />
     <Content Include="Views\PhoneValidation\Edit.cshtml" />
     <Content Include="Views\PhoneValidation\Index.cshtml" />
- 
     <Content Include="Views\OutStandingDocs\Create.cshtml" />
     <Content Include="Views\OutStandingDocs\List.cshtml" />
- 
+    <Content Include="Views\OutStandingDocs\AuthList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
@@ -2182,7 +2181,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18459</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

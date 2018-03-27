@@ -75,7 +75,7 @@ namespace CMdm.Data.DAC
                 var query = db.MdmDqRules.Select(q => q).Include(m => m.MdmAggrDimensions).Include(m => m.MdmDQDataSources).Include(m => m.MdmDQPriorities).Include(m => m.MdmDqRunSchedules);
 
                 if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.RULE_NAME.Contains(name));
+                    query = query.Where(v => v.RULE_NAME.ToUpper().Contains(name.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 

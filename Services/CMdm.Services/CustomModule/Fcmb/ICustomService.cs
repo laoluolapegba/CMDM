@@ -1,6 +1,5 @@
 ﻿using CMdm.Core;
 using CMdm.Entities.Domain.CustomModule.Fcmb;
-using CMdm.Entities.Domain.Dqi;
 using CMdm.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,12 @@ namespace CMdm.Services.CustomModule.Fcmb
 {
     public interface ICustomService
     {
-
+        /// <summary>
+        /// Gets a queitem by item identifiers
+        /// </summary>
+        /// <param name="recordId">recordId identifier</param>
+        /// <returns>Vendor</returns>
+        IList<OutStandingDoc> GetOutDocItembyIds(int[] recordIds);
         /// <summary>
         /// Gets a Queitem by item reference identifier
         /// </summary>
@@ -27,7 +31,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "",
+        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string acctid= "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
           }
 }

@@ -18,8 +18,8 @@
             Outstanding Records
         </h1>
         <div class="pull-right">
-
-
+            
+           
             <div class="btn-group">
                 <button type="button" class="btn btn-success">
                     <i class="fa fa-download"></i>
@@ -30,12 +30,12 @@
                     <span class="sr-only">&nbsp;</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-
+                   
                     <li class="divider"></li>
                     <li>
                         <button type="submit" name="exportexcel-all">
                             <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel All
+                           ExportToExcel All
                         </button>
                     </li>
                     <li>
@@ -46,7 +46,7 @@
                     </li>
                 </ul>
             </div>
-
+            
         </div>
     </div>
 
@@ -67,14 +67,6 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Account No")
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.ACID)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
                                         @Html.LabelFor(model => model.BRANCH_CODE)
                                     </div>
                                     <div class="col-md-8">
@@ -83,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
-
+                                
                             </div>
                         </div>
                         <div class="row">
@@ -108,7 +100,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("DocumentsList", "OutStandingDocs"))",
+                                                url: "@Html.Raw(Url.Action("List", "OutStandingDocs"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -150,47 +142,22 @@
                                             width: 50
                                         },
                                         {
-                                            field: "ACID",
-                                            title: "Account No",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "ACCT_NAME",
-                                            title: "Account  Name",
-                                            width: 200
-                                        },
-                                        {
                                        field: "SOL_ID",
-                                       title: "Branch Code",
+                                       title: "Record Id",
                                        width: 70,
-                                        },
-                                        
+                                   },
+                                   {
+                                       field: "DOCUMENT_CODE",
+                                       title: "Document Code",
+                                       width: 80,
+                                       headerAttributes: { style: "text-align:left" },
+                                       attributes: { style: "text-align:left" },
+                                   },
                                     {
-                                        field: "SCHM_CODE",
-                                        title: "Product Code",
-                                        width: 100,
+                                        field: "ACID",
+                                        title: "Account Id",
+                                        width: 100
                                     },
-                                    {
-                                        field: "SCHM_DESC",
-                                        title: "Product Description",
-                                        width: 200
-                                    },
-                                    {
-                                        field: "SCHM_TYPE",
-                                        title: "Type",
-                                        width: 70
-                                    },
-                                     {
-                                         field: "REF_DESC",
-                                         title: "OutStanding Document",
-                                         width: 200
-                                     },
-                                     
-                                    {
-                                        field: "DUE_DATE",
-                                        title: "Due date",
-                                        width: 80,
-                                    },                                    
                                     {
                                         field: "FREZ_REASON_CODE",
                                         title: "Reason",
@@ -202,8 +169,33 @@
                                         width: 100,
                                         headerAttributes: { style: "text-align:left" },
                                         attributes: { style: "text-align:left" },
+                                    },
+
+                                    {
+                                        field: "ACCT_NAME",
+                                        title: "Account  Name",
+                                        width: 150
+                                    },
+                                    {
+                                        field: "SCHM_CODE",
+                                        title: "Product Code",
+                                        width: 100,
+                                    },
+                                    {
+                                        field: "SCHM_DESC",
+                                        title: "Product Description",
+                                        width: 150
+                                    },
+                                    {
+                                        field: "SCHM_TYPE",
+                                        title: "Type",
+                                        width: 70
+                                    },
+                                    {
+                                        field: "DUE_DATE",
+                                        title: "Due date",
+                                        width: 80,
                                     }
-                                    
                                     ]
                                 });
                             });
@@ -237,7 +229,7 @@
                         }
                     });
 
-
+                    
                     $('#mastercheckbox').click(function () {
                         $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
                     });
@@ -269,7 +261,6 @@
                     var data = {
                         SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
-                        ACID: $('#ACID').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;

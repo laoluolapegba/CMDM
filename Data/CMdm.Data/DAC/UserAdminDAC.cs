@@ -78,9 +78,13 @@ namespace CMdm.Data.DAC
                     query = query.Where(u => userRoleIds.Contains(u.ROLE_ID));
                 //query = query.Where(c => c.CM_USER_ROLES.Select(cr => cr.ROLE_ID).Intersect(userRoleIds).Any());
                 if (!String.IsNullOrWhiteSpace(email))
-                    query = query.Where(c => c.EMAIL_ADDRESS.Contains(email));
+                    query = query.Where(c => c.EMAIL_ADDRESS.ToUpper().Contains(email.ToUpper()));
                 if (!String.IsNullOrWhiteSpace(username))
-                    query = query.Where(c => c.USER_ID.Contains(username));
+                    query = query.Where(c => c.USER_ID.ToUpper().Contains(username.ToUpper()));
+                if (!String.IsNullOrWhiteSpace(firstName))
+                    query = query.Where(c => c.FIRSTNAME.ToUpper().Contains(firstName.ToUpper()));
+                if (!String.IsNullOrWhiteSpace(lastName))
+                    query = query.Where(c => c.LASTNAME.ToUpper().Contains(lastName.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 

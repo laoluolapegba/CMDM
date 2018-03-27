@@ -83,7 +83,18 @@ namespace CMdm.Services.CustomModule.Fcmb
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
         }
+        /// <summary>
+        /// Gets a queitem by item identifiers
+        /// </summary>
+        /// <param name="recordId">recordId identifier</param>
+        /// <returns>Vendor</returns>
+        public virtual IList<OutStandingDoc> GetOutDocItembyIds(int[] recordIds)
+        {
+            if (recordIds == null || recordIds.Length == 0)
+                return null;
 
+            return _dqqueDAC.SelectByIds(recordIds);
+        }
         /// <summary>
         /// Gets a queitem by item identifier
         /// </summary>
@@ -104,7 +115,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "",
+        public virtual IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string acctid = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<OutStandingDoc> result = default(List<OutStandingDoc>);
@@ -112,7 +123,7 @@ namespace CMdm.Services.CustomModule.Fcmb
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "DUE_DATE DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.SelectOutStandingDoc(name, pageIndex, pageSize, sortExpression);
+            result = _dqqueDAC.SelectOutStandingDoc(name, acctid, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

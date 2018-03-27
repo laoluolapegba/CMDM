@@ -117,7 +117,7 @@ namespace CMdm.Data.DAC
                 var query = db.MdmDQQues.Select(q => q).Include(a => a.MdmDQPriorities);
 
                 if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.ERROR_DESC.Contains(name));
+                    query = query.Where(v => v.DQ_PROCESS_NAME.ToUpper().Contains(name.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
@@ -174,7 +174,7 @@ namespace CMdm.Data.DAC
             return query;
         }
         //
-        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int? catalogId =null, string BranchId = null, IssueStatus? status = null , int? priority = null)
+        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, string customerID = null, int? ruleId = null, int? catalogId =null, string BranchId = null, IssueStatus? status = null , int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             using (var db = new AppDbContext())
@@ -193,6 +193,10 @@ namespace CMdm.Data.DAC
                 {
                     int rule = (int)ruleId.Value;
                     query = query.Where(d => d.RULE_ID == rule);
+                }
+                if(!string.IsNullOrWhiteSpace(customerID))
+                {
+                    query = query.Where(d => d.CUST_ID == customerID);
                 }
                 if (catalogId.HasValue && catalogId > 0)
                 {
@@ -227,12 +231,12 @@ namespace CMdm.Data.DAC
             }
         }
 
-        public List<CustExceptionsModel> SelectBrnUnauthIssues(string name, int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int? catalogId = null, string BranchId = null, IssueStatus? status = null, int? priority = null)
+        public List<CustExceptionsModel> SelectBrnUnauthIssues(string name, int startRowIndex, int maximumRows, string sortExpression, string customerId = null, int? ruleId = null, int? catalogId = null, string BranchId = null, IssueStatus? status = null, int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             //var db2 = new AppDbContext();
             
-            using (var db = new AppDbContext())
+            using (var db = new AppDbContext()) 
             {
                 // Store the query.
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
@@ -283,6 +287,10 @@ namespace CMdm.Data.DAC
                 {
                     int rule = (int)ruleId.Value;
                     query = query.Where(d => d.RULE_ID == rule);
+                }
+                if(!string.IsNullOrWhiteSpace(customerId))
+                {
+                    query = query.Where(d => d.CUST_ID == customerId);
                 }
                 if (catalogId.HasValue && catalogId > 0)
                 {
