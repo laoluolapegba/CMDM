@@ -231,6 +231,62 @@ namespace CMdm.Data.DAC
             }
         }
 
+        public void ApproveExceptionQues(List<MdmDqRunException> modifiedrecords)
+        {
+            using (var db = new AppDbContext())
+            {
+                foreach (var item in modifiedrecords)
+                {
+                    var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                    if (entry != null)
+                    {
+                        entry.AUTHORISED = "A";
+                        db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                        db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                    if (queitem != null)
+                    {
+                        queitem.ISSUE_STATUS = (int)IssueStatus.Closed;
+                        db.MdmDqRunExceptions.Attach(queitem);
+                        db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
+            }
+        }
+        public void DisApproveExceptionQues(List<MdmDqRunException> modifiedrecords)
+        {
+            using (var db = new AppDbContext())
+            {
+                foreach (var item in modifiedrecords)
+                {
+                    var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                    if (entry != null)
+                    {
+                        entry.AUTHORISED = "N";
+                        db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                        db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                    if (queitem != null)
+                    {
+                        queitem.ISSUE_STATUS = (int)IssueStatus.Rejected;
+                        db.MdmDqRunExceptions.Attach(queitem);
+                        db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+
+                }
+
+            }
+        }
+
         public List<CustExceptionsModel> SelectBrnUnauthIssues(string name, int startRowIndex, int maximumRows, string sortExpression, string customerId = null, int? ruleId = null, int? catalogId = null, string BranchId = null, IssueStatus? status = null, int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,

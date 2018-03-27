@@ -441,6 +441,7 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
+                /*
                 using (var db = new AppDbContext())
                 {
                     foreach (var item in modifiedrecords)
@@ -464,6 +465,8 @@ namespace CMdm.UI.Web.Controllers
                     }
 
                 }
+                */
+                _dqQueService.ApproveExceptionQueItems(modifiedrecords);
 
                 return RedirectToAction("AuthList");
 
@@ -493,32 +496,7 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
-                using (var db = new AppDbContext())
-                {
-                    foreach (var item in modifiedrecords)
-                    {
-                        var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
-                        if (entry != null)
-                        {
-                            entry.AUTHORISED = "N";
-                            db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
-                            db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-
-                        var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
-                        if (queitem != null)
-                        {
-                            queitem.ISSUE_STATUS = (int)IssueStatus.Rejected;
-                            db.MdmDqRunExceptions.Attach(queitem);
-                            db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-
-
-                    }
-
-                }
+                _dqQueService.DisApproveExceptionQueItems(modifiedrecords);
                 return RedirectToAction("AuthList");
 
             }
