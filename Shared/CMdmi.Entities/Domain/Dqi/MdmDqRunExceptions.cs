@@ -49,5 +49,6 @@ namespace CMdm.Entities.Domain.Dqi
         public string CATALOG_TABLE_NAME { get; set; }
         [DisplayName("Exception reason")]
         public string REASON { get; set; }
+        public string AUTH_REJECT_REASON { get; set; }
     }
 }

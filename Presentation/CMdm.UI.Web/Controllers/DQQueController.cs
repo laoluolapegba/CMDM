@@ -126,8 +126,9 @@ namespace CMdm.UI.Web.Controllers
             //}
             var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+            int OpenIssues = (int)IssueStatus.Open;
             
-            model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
+            model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION", OpenIssues).ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
             model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", Id).ToList();
             model.Statuses.Add(new SelectListItem
@@ -449,6 +450,14 @@ namespace CMdm.UI.Web.Controllers
                             db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
                         }
+                        var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                        if (queitem != null)
+                        {
+                            queitem.ISSUE_STATUS = (int)IssueStatus.Closed;
+                            db.MdmDqRunExceptions.Attach(queitem);
+                            db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
                     }
 
                 }
@@ -493,6 +502,17 @@ namespace CMdm.UI.Web.Controllers
                             db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
                         }
+
+                        var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                        if (queitem != null)
+                        {
+                            queitem.ISSUE_STATUS = (int)IssueStatus.Rejected;
+                            db.MdmDqRunExceptions.Attach(queitem);
+                            db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+
+
                     }
 
                 }
