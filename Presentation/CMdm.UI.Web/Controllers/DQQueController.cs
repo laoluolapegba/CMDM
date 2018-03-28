@@ -479,7 +479,7 @@ namespace CMdm.UI.Web.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult DisapproveSelected(string selectedIds)
+        public virtual ActionResult DisapproveSelected(string selectedIds, string comments)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -496,10 +496,10 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
-                _dqQueService.DisApproveExceptionQueItems(modifiedrecords);
+                _dqQueService.DisApproveExceptionQueItems(modifiedrecords, comments);
                 return RedirectToAction("AuthList");
-
             }
+
             catch (Exception exc)
             {
                 ErrorNotification(exc);

@@ -187,12 +187,12 @@ namespace CMdm.Services.DqQue
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
         }
-        public virtual void DisApproveExceptionQueItems(List<MdmDqRunException> queitems)
+        public virtual void DisApproveExceptionQueItems(List<MdmDqRunException> queitems, string comments)
         {
             if (queitems == null)
                 throw new ArgumentNullException("queitems");
 
-            _dqqueDAC.DisApproveExceptionQues(queitems);
+            _dqqueDAC.DisApproveExceptionQues(queitems, comments);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
