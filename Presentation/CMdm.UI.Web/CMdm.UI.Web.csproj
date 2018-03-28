@@ -292,6 +292,7 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\CustNokController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerIncomeController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
@@ -560,6 +561,7 @@
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
+    <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -2102,6 +2104,9 @@
     <Content Include="Views\OutStandingDocs\Create.cshtml" />
     <Content Include="Views\OutStandingDocs\List.cshtml" />
     <Content Include="Views\OutStandingDocs\AuthList.cshtml" />
+    <Content Include="Views\CustNok\Editx.cshtml" />
+    <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustNok\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

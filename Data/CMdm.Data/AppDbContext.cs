@@ -73,6 +73,13 @@ namespace CMdm.Data
 
             //modelBuilder.Entity<MdmCatalog>().HasRequired(e => e.CREATED_BY).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.IdTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.IDENTIFICATION_TYPE).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.RelationshipTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.RELATIONSHIP).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.TitleTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.TITLE).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.Countries).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.COUNTRY).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.States).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.STATE).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.LocalGovts).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.LGA).WillCascadeOnDelete(false);
+
         }
         #region Utilities
 
@@ -190,8 +197,12 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_TITLE> CDMA_CUST_TITLE { get; set; }
 
-      //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
+
+        //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
 
     }
