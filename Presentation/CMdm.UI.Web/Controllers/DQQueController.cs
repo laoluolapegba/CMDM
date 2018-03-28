@@ -193,7 +193,8 @@ namespace CMdm.UI.Web.Controllers
                     STATUS_CODE = x.ISSUE_STATUS,
                     REASON = x.REASON,
                     CATALOG_ID = x.CATALOG_ID,
-                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME
+                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME,
+                    AUTH_REJECT_REASON = x.AUTH_REJECT_REASON
 
                 }),
                 Total = items.TotalCount
@@ -479,7 +480,7 @@ namespace CMdm.UI.Web.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult DisapproveSelected(string selectedIds)
+        public virtual ActionResult DisapproveSelected(string selectedIds, string comments)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -496,10 +497,10 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
-                _dqQueService.DisApproveExceptionQueItems(modifiedrecords);
+                _dqQueService.DisApproveExceptionQueItems(modifiedrecords, comments);
                 return RedirectToAction("AuthList");
-
             }
+
             catch (Exception exc)
             {
                 ErrorNotification(exc);

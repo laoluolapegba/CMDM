@@ -12,7 +12,7 @@ namespace CMdm.Services.DqQue
     public interface IDqQueService
     {
         void ApproveExceptionQueItems(List<MdmDqRunException> queitems);
-        void DisApproveExceptionQueItems(List<MdmDqRunException> queitems);
+        void DisApproveExceptionQueItems(List<MdmDqRunException> queitems, string comments);
         /// <summary>
         /// Updates the queitem
         /// </summary>

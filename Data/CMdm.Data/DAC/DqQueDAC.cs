@@ -257,7 +257,7 @@ namespace CMdm.Data.DAC
 
             }
         }
-        public void DisApproveExceptionQues(List<MdmDqRunException> modifiedrecords)
+        public void DisApproveExceptionQues(List<MdmDqRunException> modifiedrecords, string comments)
         {
             using (var db = new AppDbContext())
             {
@@ -276,6 +276,8 @@ namespace CMdm.Data.DAC
                     if (queitem != null)
                     {
                         queitem.ISSUE_STATUS = (int)IssueStatus.Rejected;
+                        //Add reject reason here
+                        queitem.AUTH_REJECT_REASON = comments;
                         db.MdmDqRunExceptions.Attach(queitem);
                         db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
@@ -299,13 +301,13 @@ namespace CMdm.Data.DAC
                 //var data = northwind.CM_DISTRIBUTION_SCHEDULE.Join(northwind.CM_BRANCH,
                 //c => c.BRANCH_ID, o => o.BRANCH_ID, (o, c) => new { Sched = o, Branch = c }).ToList();
                 string authStatus = "U";
-                int issueStatus = (int)IssueStatus.Open;
+                //int issueStatus = (int)IssueStatus.Open;
                 var data = db.MdmDqRunExceptions
                     .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
                     e => e.CUST_ID, c => c.CUSTOMER_NO,
                     (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
-                    .Where(x => x.Cust.AUTHORISED == authStatus)
-                    .Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
+                    .Where(x => x.Cust.AUTHORISED == authStatus);
+                    //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
 
                 var query = data.Select(o => new CustExceptionsModel
                 {
@@ -363,7 +365,7 @@ namespace CMdm.Data.DAC
                 if (status.HasValue) // && status>0
                 {
                     int stat = (int)status.Value;
-                    query = query.Where(d => d.ISSUE_STATUS == stat);
+                    query = query.Where(d => d.STATUS_CODE == stat);
                 }
                 if (priority.HasValue && priority > 0)
                 {

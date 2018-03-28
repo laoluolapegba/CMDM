@@ -51,6 +51,8 @@ namespace CMdm.UI.Web.Models.DqQue
         public string ISSUE_STATUS_DESC { get; set; }
         [DisplayName("Priority")]
         public string ISSUE_PRIORITY_DESC { get; set; }
+        [DisplayName("Rejection Reason")]
+        public string AUTH_REJECT_REASON { get; set; }
 
         public int PRIORITY_CODE { get; set; }
         public int? STATUS_CODE { get; set; }
