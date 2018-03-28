@@ -186,21 +186,10 @@
                                   
                                     field: "REASON",
                                     title: "Exception Reason",
-                                    width: 200
+                                    width: 100
  
  
-                                }, {
- 
-                                  },
-                                  
-                                    {
- 
-
-
-                                }, {
-
-                                  },
-                                  
+                                },                                   
                                     {
 
                                     field: "RULE_NAME",
@@ -250,6 +239,11 @@
                                                 '# if(STATUS_CODE == 4) {# red #} #' +
                                                 '">#=ISSUE_STATUS_DESC#</span>'
                                         },</text>
+                                    }
+                                    {
+                                        field: "AUTH_REJECT_REASON",
+                                        title: "Rejection Reason",
+                                        width: 200
                                     }
                                    ]
                             });

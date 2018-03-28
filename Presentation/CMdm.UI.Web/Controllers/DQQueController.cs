@@ -193,7 +193,8 @@ namespace CMdm.UI.Web.Controllers
                     STATUS_CODE = x.ISSUE_STATUS,
                     REASON = x.REASON,
                     CATALOG_ID = x.CATALOG_ID,
-                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME
+                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME,
+                    AUTH_REJECT_REASON = x.AUTH_REJECT_REASON
 
                 }),
                 Total = items.TotalCount
