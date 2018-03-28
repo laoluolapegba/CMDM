@@ -301,6 +301,7 @@ namespace CMdm.Data.DAC
                 //var data = northwind.CM_DISTRIBUTION_SCHEDULE.Join(northwind.CM_BRANCH,
                 //c => c.BRANCH_ID, o => o.BRANCH_ID, (o, c) => new { Sched = o, Branch = c }).ToList();
                 string authStatus = "U";
+                string profileId = ;
                 //int issueStatus = (int)IssueStatus.Open;
                 var data = db.MdmDqRunExceptions
                     .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
