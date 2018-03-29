@@ -9,7 +9,7 @@
     public partial class CDMA_INITIAL_DEPOSIT_RANGE
     {
         [Key]
-        public string DEPOSIT_ID { get; set; }
+        public int DEPOSIT_ID { get; set; }
         public string INITIAL_DEPOSIT_RANGE { get; set; }
 
     }

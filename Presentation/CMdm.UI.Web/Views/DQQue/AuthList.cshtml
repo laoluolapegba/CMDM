@@ -527,6 +527,13 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
+        if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
+
+            window.location.href = `/CustNok/Authorize/${cus_id}`;
+            //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
+            /* Url.Action("Edit", "CustNok", new { id = cus_id});*/
+
+        }else{
         $("#update").css({ 'display': 'none' });
         var queryString = "c_id=" + cus_id;
         queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;

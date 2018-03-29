@@ -88,6 +88,7 @@
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\IssueStatus.cs" />
+    <Compile Include="Domain\Dqi\MdmUnauthExceptions.cs" />
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
