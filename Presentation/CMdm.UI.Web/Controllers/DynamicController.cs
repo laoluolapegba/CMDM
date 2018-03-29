@@ -1164,6 +1164,7 @@ namespace CMdm.UI.Web.Controllers
                                          "CDMA_INDIVIDUAL_ADDRESS_DETAIL", "CDMA_INDIVIDUAL_IDENTIFICATION" , "CDMA_INDIVIDUAL_OTHER_DETAILS"};
             string[] accinfo_array = { "CDMA_ACCOUNT_INFO", "CDMA_ACCT_SERVICES_REQUIRED" };
             string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME" };
+            string[] nok_array = { "CDMA_INDIVIDUAL_NEXT_OF_KIN" };
             //CDMA_CUSTOMER_INCOME
 
             if (biodata_array.Contains(table))
@@ -1334,7 +1335,7 @@ namespace CMdm.UI.Web.Controllers
                         ViewBag.changeIndex = new int[] { };
 
                     }
-
+                    
 
 
                     CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == c_id);

@@ -13,8 +13,15 @@
 
     public partial class CDMA_IDENTIFICATION_TYPE
     {
+        public CDMA_IDENTIFICATION_TYPE()
+        {
+            CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
+        }
+
+        
         [Key]
         public decimal CODE { get; set; }
         public string ID_TYPE { get; set; }
+        public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
     }
 }
