@@ -9,7 +9,7 @@
     public partial class CDMA_INCOME_BAND
     {
         [Key]
-        public decimal INCOME_ID { get; set; }
+        public int INCOME_ID { get; set; }
         public string EXPECTED_INCOME_BAND { get; set; }
         
     }
