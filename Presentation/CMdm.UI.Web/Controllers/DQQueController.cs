@@ -126,10 +126,13 @@ namespace CMdm.UI.Web.Controllers
             //}
             var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+            int OpenIssues = (int)IssueStatus.Open;
+
             
-            model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
+            model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION", OpenIssues).ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
             model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", Id).ToList();
+
             model.Statuses.Add(new SelectListItem
             {
                 Value = "0",
@@ -161,6 +164,7 @@ namespace CMdm.UI.Web.Controllers
             DateTime? endDateValue = (model.CreatedOnTo == null) ? null
                             : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
             //startDateValue, endDateValue,
+  
             IssueStatus? issueStatus = model.STATUS_CODE > 0 ? (IssueStatus?)(model.STATUS_CODE) : null;
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
@@ -189,7 +193,8 @@ namespace CMdm.UI.Web.Controllers
                     STATUS_CODE = x.ISSUE_STATUS,
                     REASON = x.REASON,
                     CATALOG_ID = x.CATALOG_ID,
-                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME
+                    CATALOG_TABLE_NAME = x.CATALOG_TABLE_NAME,
+                    AUTH_REJECT_REASON = x.AUTH_REJECT_REASON
 
                 }),
                 Total = items.TotalCount
@@ -437,6 +442,7 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
+                /*
                 using (var db = new AppDbContext())
                 {
                     foreach (var item in modifiedrecords)
@@ -449,9 +455,19 @@ namespace CMdm.UI.Web.Controllers
                             db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
                         }
+                        var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                        if (queitem != null)
+                        {
+                            queitem.ISSUE_STATUS = (int)IssueStatus.Closed;
+                            db.MdmDqRunExceptions.Attach(queitem);
+                            db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
                     }
 
                 }
+                */
+                _dqQueService.ApproveExceptionQueItems(modifiedrecords);
 
                 return RedirectToAction("AuthList");
 
@@ -464,7 +480,7 @@ namespace CMdm.UI.Web.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult DisapproveSelected(string selectedIds)
+        public virtual ActionResult DisapproveSelected(string selectedIds, string comments)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -481,24 +497,10 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
-                using (var db = new AppDbContext())
-                {
-                    foreach (var item in modifiedrecords)
-                    {
-                        var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
-                        if (entry != null)
-                        {
-                            entry.AUTHORISED = "N";
-                            db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
-                            db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                }
+                _dqQueService.DisApproveExceptionQueItems(modifiedrecords, comments);
                 return RedirectToAction("AuthList");
-
             }
+
             catch (Exception exc)
             {
                 ErrorNotification(exc);

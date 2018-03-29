@@ -177,6 +177,26 @@ namespace CMdm.Services.DqQue
             var queitems = new PagedList<CustExceptionsModel>(result, pageIndex, pageSize);
             return queitems;
         }
+        public virtual void ApproveExceptionQueItems(List<MdmDqRunException> queitems)
+        {
+            if (queitems == null)
+                throw new ArgumentNullException("queitems");
+
+            _dqqueDAC.ApproveExceptionQues(queitems);
+
+            //event notification
+            //_eventPublisher.EntityUpdated(vendor);
+        }
+        public virtual void DisApproveExceptionQueItems(List<MdmDqRunException> queitems, string comments)
+        {
+            if (queitems == null)
+                throw new ArgumentNullException("queitems");
+
+            _dqqueDAC.DisApproveExceptionQues(queitems, comments);
+
+            //event notification
+            //_eventPublisher.EntityUpdated(vendor);
+        }
         #endregion
     }
 }

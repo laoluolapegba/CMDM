@@ -1,23 +1,27 @@
-﻿namespace CMdm.Entities.Domain.Customer
-{
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-[Table("SRC_CDMA_STATE")]
-public partial class SRC_CDMA_STATE
+namespace CMdm.Entities.Domain.Customer
+{
+   
+    [Table("CDMA_CUST_TITLES")]
+
+    public partial class CDMA_CUST_TITLE
     {
-        public SRC_CDMA_STATE()
+        public CDMA_CUST_TITLE()
         {
             CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
         }
 
         
         [Key]
-        public decimal STATE_ID { get; set; }
-        public string STATE_NAME { get; set; }
-
+        public int TITLE_CODE { get; set; }
+        public string TITLE_DESC { get; set; }
         public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
     }
 }

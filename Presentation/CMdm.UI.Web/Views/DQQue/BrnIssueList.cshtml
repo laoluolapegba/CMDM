@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    @Html.Label("Customer ID")
+                                    @Html.Label("Customer Id")
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmEditorFor(model => model.CUST_ID)
@@ -186,21 +186,10 @@
                                   
                                     field: "REASON",
                                     title: "Exception Reason",
-                                    width: 200
+                                    width: 100
  
  
-                                }, {
- 
-                                  },
-                                  
-                                    {
- 
-
-
-                                }, {
-
-                                  },
-                                  
+                                },                                   
                                     {
 
                                     field: "RULE_NAME",
@@ -246,9 +235,15 @@
                                             template: '<span class="grid-report-item ' +
                                                 '# if(STATUS_CODE == 2) {# green #} #' +
                                                 '# if(STATUS_CODE == 3) {# yellow #} #' +
-                                                '# if(STATUS_CODE == 1) {# red #} #' +
+                                                '# if(STATUS_CODE == 1) {# blue #} #' +
+                                                '# if(STATUS_CODE == 4) {# red #} #' +
                                                 '">#=ISSUE_STATUS_DESC#</span>'
                                         },</text>
+                                    }
+                                    {
+                                        field: "AUTH_REJECT_REASON",
+                                        title: "Rejection Reason",
+                                        width: 200
                                     }
                                    ]
                             });
@@ -357,7 +352,7 @@
 
             if(hasError == true) { return false; }
 
-        
+
         }
 
 
@@ -407,7 +402,7 @@
            alert('EXPIRY DATE cannot be earlier than ISSUE DATE ');
            return false;
        }
-     
+
 
        $("#display").css({ 'display': 'none' });
        $("#update").css({ 'display': 'none' });
@@ -438,28 +433,40 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
+        if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
+
+            window.location.href = `/CustNok/Edit/${cus_id}`;
+            //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
+            /* Url.Action("Edit", "CustNok", new { id = cus_id});*/
+
+        }else{
+
        // alert(cus_id);
         $("#update").css({ 'display': 'none' });
-        var queryString = "c_id=" + cus_id;
-        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
+        var queryString = "id=" + cus_id;
+       // queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
         //alert(cus_id);
         $("#loading").css({ 'display': 'block' });
         $("#display").css({ 'display': 'none' });
-         $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
-                 type: 'get',data: queryString,cache: false,
-                 success: function (data) {
-                     // alert(data);
-                     $("#loading").css({ 'display': 'none' });
-                     $("#display").css({ 'display': 'block' });
 
-                      document.getElementById("display").innerHTML = "";
-                     // document.getElementById("display").innerHTML="hello";
-                     // var response = jQuery.parseJSON(data);
-                      //alert(response);
-                      document.getElementById("display").innerHTML = data;
-                  }
-                          }
-                   );
+
+            $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
+                type: 'get',data: queryString,cache: false,
+                success: function (data) {
+                    // alert(data);
+                    $("#loading").css({ 'display': 'none' });
+                    $("#display").css({ 'display': 'block' });
+
+                    document.getElementById("display").innerHTML = "";
+                    // document.getElementById("display").innerHTML="hello";
+                    // var response = jQuery.parseJSON(data);
+                    //alert(response);
+                    document.getElementById("display").innerHTML = data;
+                }
+            }
+                      );
+
+        }
 
 
     }

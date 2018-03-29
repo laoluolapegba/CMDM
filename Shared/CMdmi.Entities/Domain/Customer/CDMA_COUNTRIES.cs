@@ -13,6 +13,10 @@
 
     public partial class CDMA_COUNTRIES
     {
+        public CDMA_COUNTRIES()
+        {
+            CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
+        }
 
         [Key]
         public decimal COUNTRY_ID { get; set; }
@@ -20,8 +24,6 @@
         public string COUNTRY_ABBREVIATION { get; set; }
         public decimal UNITED_NATION_NUMBER { get; set; }
         public string DIALING_CODE { get; set; }
-   
-
-
+        public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
     }
 }

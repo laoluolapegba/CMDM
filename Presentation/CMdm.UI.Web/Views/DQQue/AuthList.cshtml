@@ -31,7 +31,7 @@
                 <i class="fa fa-check-square-o"></i>
                 Approve Selected
             </button>
-            <button type="button" id="disapprove-selected" class="btn bg-navy">
+            <button type="button" id="disapprove-modal" data-toggle="modal" data-target="#modal-comment" class="btn bg-navy">
                 <i class="fa fa-minus-square-o"></i>
                 Dissaprove Selected
             </button>
@@ -81,6 +81,17 @@
                                     @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.ISSUE_PRIORITY_DESC)
@@ -103,14 +114,6 @@
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmDropDownList("CATALOG_ID", Model.Catalogs)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
-                                        <i class="fa fa-search"></i>
-                                        Search
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -266,6 +269,7 @@
                    
                     <script type="text/javascript">
                         var selectedIds = [];
+                        var comments = "";
 
                         $(document).ready(function() {
                             //search button
@@ -314,11 +318,14 @@
                             });
 
                             //"disapprove selected" button
-                            $('#disapprove-selected').click(function(e) {
+                            $('#disapprove-selected').click(function (e) {
+                                var comments = $('#rejectComments').val();
+                                $('#modal-comment').modal('toggle');
                                 e.preventDefault();
 
                                 var postData = {
-                                    selectedIds: selectedIds
+                                    selectedIds: selectedIds,
+                                    comments: comments
                                 };
                                 addAntiForgeryToken(postData);
 
@@ -576,6 +583,26 @@
     }
     </script>
 }
+
+<div class="modal fade" id="modal-comment" role="dialog" aria-labelledby="modal-comment-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reason for rejection</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" placeholder="Add comments here" id="rejectComments"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="disapprove-selected" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal modal-primary fade" id="modal-primary">
