@@ -12,6 +12,9 @@ namespace CMdm.Data
     using Entities.Domain.Dqi;
     using Entities.Domain.Entity;
     using Entities.Domain.Customer;
+    using System.Data.Entity.Infrastructure;
+    using Entities.Domain.Audit;
+    using System.Data.Entity.Core.Objects;
 
     //using Entities.Domain.Courses;
 
@@ -27,7 +30,80 @@ namespace CMdm.Data
             : base("name=AppDbContext")
         {
         }
+        public override int SaveChanges()
+        {
+            try
+            {
+                var modifiedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList();
+                var now = DateTime.UtcNow;
 
+                foreach (var change in modifiedEntities)
+                {
+                    //var entityName = change.Entity.GetType().Name;
+                    var entityName = ObjectContext.GetObjectType(change.Entity.GetType()).Name;
+                    var primaryKey = GetPrimaryKeyValue(change);
+
+                    foreach (var prop in change.OriginalValues.PropertyNames)
+                    {
+                        
+                        //var originalValue = change.OriginalValues[prop] == null ? "" :  change.OriginalValues[prop].ToString();
+                        var originalValue = change.GetDatabaseValues().GetValue<object>(prop) == null ? "" : change.GetDatabaseValues().GetValue<object>(prop).ToString();
+                        var currentValue = change.CurrentValues[prop] == null ? "" : change.CurrentValues[prop].ToString();
+                        if (originalValue != currentValue)
+                        {
+                            CDMA_CHANGE_LOG log = new CDMA_CHANGE_LOG()
+                            {
+                                ENTITYNAME = entityName,
+                                PRIMARYKEYVALUE = primaryKey.ToString(),
+                                PROPERTYNAME = prop,
+                                OLDVALUE = originalValue,
+                                NEWVALUE = currentValue,
+                                DATECHANGED = now
+                            };
+                            CDMA_CHANGE_LOGS.Add(log);
+                        }
+                    }
+                }
+                return base.SaveChanges();
+              /*
+              db.ChangeTracker.DetectChanges();
+                // Had to add using System.Data.Entity.Infrastructure; for this:
+                var modifiedEntries = ((IObjectContextAdapter)db).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Modified);
+
+                foreach (var stateChangeEntry in modifiedEntries)
+                {
+                    for (int i = 0; i < stateChangeEntry.CurrentValues.FieldCount; i++)
+                    {
+                        var fieldName = stateChangeEntry.OriginalValues.GetName(i);
+                        var changedPropertyName = stateChangeEntry.CurrentValues.GetName(i);
+
+                        if (fieldName != changedPropertyName)
+                            continue;
+
+                        var originalValue = stateChangeEntry.OriginalValues.GetValue(i).ToString();
+                        var changedValue = stateChangeEntry.CurrentValues.GetValue(i).ToString();
+                        if (originalValue != changedValue)
+                        {
+                            // do stuff
+                            var foo = originalValue;
+                            var bar = changedValue;
+                        }
+
+                    }
+                }*/
+                
+            }
+            catch (DbEntityValidationException e)
+            {
+                var newException = new FormattedDbEntityValidationException(e);
+                throw newException;
+            }
+        }
+        object GetPrimaryKeyValue(DbEntityEntry entry)
+        {
+            var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
+            return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             string schemaName = ConfigurationManager.AppSettings["SchemaName"];
@@ -200,6 +276,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_TITLE> CDMA_CUST_TITLE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Audit.CDMA_CHANGE_LOG> CDMA_CHANGE_LOGS { get; set; }
 
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }

@@ -54,7 +54,6 @@
                                 </div>
                                 <div class="col-md-9">
                                     @Html.CMdmEditorFor(model => model.OTHER_NAME)
-
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,6 +81,38 @@
                                 <div class="col-md-9">
                                     @Html.CMdmDropDownListFor(model => model.RELATIONSHIP, Model.RelationshipTypes)
                                     @Html.ValidationMessageFor(model => model.RELATIONSHIP)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.OFFICE_NO)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.OFFICE_NO)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.MOBILE_NO)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.MOBILE_NO)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.EMAIL_ADDRESS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.EMAIL_ADDRESS)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.HOUSE_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.HOUSE_NUMBER)
                                 </div>
                             </div>
                         </div>

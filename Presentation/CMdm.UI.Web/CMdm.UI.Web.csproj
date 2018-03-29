@@ -2107,6 +2107,7 @@
     <Content Include="Views\CustNok\Editx.cshtml" />
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
+    <Content Include="Views\CustNok\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

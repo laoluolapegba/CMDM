@@ -10,7 +10,7 @@ namespace CMdm.Entities.Domain.Customer
 {
   
 
-    [Table("CDMA_CUST_REL_TYPE")]
+    [Table("CDMA_CUST_REL_TYPES")]
 
     public partial class CDMA_CUST_REL_TYPE
     {

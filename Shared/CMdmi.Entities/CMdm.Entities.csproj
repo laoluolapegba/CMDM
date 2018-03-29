@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Audit\CDMA_CHANGE_LOG.cs" />
     <Compile Include="Domain\Customer\BusinessDivision.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_INFO_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_INFO.cs" />

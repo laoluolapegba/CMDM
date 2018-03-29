@@ -25,12 +25,20 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
 
-            
+            var x = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
+                     where c.CUSTOMER_NO == id
+                     select new
+                     {
+                         a = c.CUSTOMER_NO,
+                         b= c.COUNTRY
+                     });
+
             var model = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
                               
                               where c.CUSTOMER_NO == id
                               select new CustomerNOKModel
                               {
+                                  CUSTOMER_NO = c.CUSTOMER_NO,
                                   COUNTRY = c.COUNTRY,
                                   CITY_TOWN = c.CITY_TOWN,
                                   DATE_OF_BIRTH = c.DATE_OF_BIRTH,
@@ -94,10 +102,20 @@ namespace CMdm.UI.Web.Controllers
                         entity.FIRST_NAME = nokmodel.FIRST_NAME;
                         entity.HOUSE_NUMBER = nokmodel.HOUSE_NUMBER;
 
-
+                        entity.MOBILE_NO = nokmodel.MOBILE_NO;
+                        entity.PLACE_OF_ISSUANCE = nokmodel.PLACE_OF_ISSUANCE;
+                        entity.RELATIONSHIP = nokmodel.RELATIONSHIP;
+                        entity.RESIDENT_PERMIT_NUMBER = nokmodel.RESIDENT_PERMIT_NUMBER;
+                        entity.SEX = nokmodel.SEX;
+                        entity.STREET_NAME = nokmodel.STREET_NAME;
+                        entity.TITLE = nokmodel.TITLE;
+                        entity.ZIP_POSTAL_CODE = nokmodel.ZIP_POSTAL_CODE;
+                        entity.ID_EXPIRY_DATE = nokmodel.ID_EXPIRY_DATE;
+                        entity.ID_ISSUE_DATE = nokmodel.ID_ISSUE_DATE;
                         entity.IDENTIFICATION_TYPE = nokmodel.IDENTIFICATION_TYPE;
                         entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                         entity.LAST_MODIFIED_DATE = DateTime.Now;
+                        entity.AUTHORISED = "U";
                         db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
                         db.Entry(entity).State = EntityState.Modified;
                         db.SaveChanges();
@@ -106,7 +124,7 @@ namespace CMdm.UI.Web.Controllers
                 }
 
                 SuccessNotification("NOK Updated");
-                return continueEditing ? RedirectToAction("Edit", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Index");
+                return continueEditing ? RedirectToAction("Edit", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(nokmodel);
@@ -173,7 +191,7 @@ namespace CMdm.UI.Web.Controllers
                 Text = "Female",
                 Value = "Female"
             });
-            model.IdTypes = new SelectList(db.CDMA_IDENTIFICATION_TYPE, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
+            model.IdTypes = new SelectList(db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
 
             model.Countries = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
             
@@ -268,7 +286,7 @@ namespace CMdm.UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CUSTOMER_NO,TITLE,SURNAME,FIRST_NAME,OTHER_NAME,DATE_OF_BIRTH,SEX,RELATIONSHIP,OFFICE_NO,MOBILE_NO,EMAIL_ADDRESS,HOUSE_NUMBER,IDENTIFICATION_TYPE,ID_EXPIRY_DATE,ID_ISSUE_DATE,RESIDENT_PERMIT_NUMBER,PLACE_OF_ISSUANCE,STREET_NAME,NEAREST_BUS_STOP_LANDMARK,CITY_TOWN,LGA,ZIP_POSTAL_CODE,STATE,COUNTRY,CREATED_DATE,CREATED_BY,LAST_MODIFIED_DATE,LAST_MODIFIED_BY,AUTHORISED,AUTHORISED_BY,AUTHORISED_DATE,IP_ADDRESS,BRANCH_CODE")] CDMA_INDIVIDUAL_NEXT_OF_KIN cDMA_INDIVIDUAL_NEXT_OF_KIN)
+        public ActionResult Edit_Scaffold([Bind(Include = "CUSTOMER_NO,TITLE,SURNAME,FIRST_NAME,OTHER_NAME,DATE_OF_BIRTH,SEX,RELATIONSHIP,OFFICE_NO,MOBILE_NO,EMAIL_ADDRESS,HOUSE_NUMBER,IDENTIFICATION_TYPE,ID_EXPIRY_DATE,ID_ISSUE_DATE,RESIDENT_PERMIT_NUMBER,PLACE_OF_ISSUANCE,STREET_NAME,NEAREST_BUS_STOP_LANDMARK,CITY_TOWN,LGA,ZIP_POSTAL_CODE,STATE,COUNTRY,CREATED_DATE,CREATED_BY,LAST_MODIFIED_DATE,LAST_MODIFIED_BY,AUTHORISED,AUTHORISED_BY,AUTHORISED_DATE,IP_ADDRESS,BRANCH_CODE")] CDMA_INDIVIDUAL_NEXT_OF_KIN cDMA_INDIVIDUAL_NEXT_OF_KIN)
         {
             if (ModelState.IsValid)
             {

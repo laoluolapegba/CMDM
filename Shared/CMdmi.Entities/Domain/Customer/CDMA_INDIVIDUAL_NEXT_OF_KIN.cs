@@ -14,7 +14,7 @@ namespace CMdm.Entities.Domain.Customer
         public string SURNAME { get; set; }
         public string FIRST_NAME { get; set; }
         public string OTHER_NAME { get; set; }
-        public string DATE_OF_BIRTH { get; set; }
+        public DateTime? DATE_OF_BIRTH { get; set; }
         public string SEX { get; set; }
         public int? RELATIONSHIP { get; set; }
         public string OFFICE_NO { get; set; }
@@ -22,8 +22,8 @@ namespace CMdm.Entities.Domain.Customer
         public string EMAIL_ADDRESS { get; set; }
         public string HOUSE_NUMBER { get; set; }
         public decimal? IDENTIFICATION_TYPE { get; set; }
-        public string ID_EXPIRY_DATE { get; set; }
-        public string ID_ISSUE_DATE { get; set; }
+        public DateTime? ID_EXPIRY_DATE { get; set; }
+        public DateTime? ID_ISSUE_DATE { get; set; }
         public string RESIDENT_PERMIT_NUMBER { get; set; }
         public string PLACE_OF_ISSUANCE { get; set; }
         public string STREET_NAME { get; set; }
@@ -42,6 +42,8 @@ namespace CMdm.Entities.Domain.Customer
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
         public string BRANCH_CODE { get; set; }
+
+        public string MNT_STATUS { get; set; }
 
         public virtual CDMA_CUST_REL_TYPE RelationshipTypes { get; set; }
         public virtual CDMA_CUST_TITLE TitleTypes { get; set; }

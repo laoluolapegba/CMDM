@@ -80,6 +80,7 @@
     <Compile Include="DAC\UserAdminDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />
     <Compile Include="EfRepository.cs" />
+    <Compile Include="FormattedDbEntityValidationException.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Initializers\SQLServerInitializer.cs" />
