@@ -293,50 +293,80 @@ namespace CMdm.Data.DAC
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             //var db2 = new AppDbContext();
-            
-            using (var db = new AppDbContext()) 
+            #region old
+            //using (var db = new AppDbContext()) 
+            //{
+            //    // Store the query.
+            //    string authStatus = "U";
+            //    //int issueStatus = (int)IssueStatus.Open;
+            //    var data = db.MdmDqRunExceptions
+            //        .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
+            //        e => e.CUST_ID, c => c.CUSTOMER_NO,
+            //        (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
+            //        .Where(x => x.Cust.AUTHORISED == authStatus);
+            //        //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
+
+            //    var query = data.Select(o => new CustExceptionsModel
+            //    {
+            //        EXCEPTION_ID = o.Excp.EXCEPTION_ID,
+            //        RULE_ID = o.Excp.RULE_ID,
+            //        RULE_NAME = o.Excp.RULE_NAME,
+            //        CUST_ID = o.Excp.CUST_ID,
+            //        BRANCH_CODE = o.Excp.BRANCH_CODE,
+            //        BRANCH_NAME = o.Excp.BRANCH_NAME,
+            //        ISSUE_PRIORITY_DESC = o.Excp.MdmDQPriorities.PRIORITY_DESCRIPTION,
+            //        ISSUE_STATUS_DESC = o.Excp.MdmDQQueStatuses.STATUS_DESCRIPTION,
+            //        RUN_DATE = o.Excp.RUN_DATE,
+            //        LAST_MODIFIED_DATE = o.Cust.LAST_MODIFIED_DATE,
+            //        LAST_MODIFIED_BY = o.Cust.LAST_MODIFIED_BY,
+            //        STATUS_CODE = o.Excp.ISSUE_STATUS,
+            //        PRIORITY_CODE = o.Excp.ISSUE_PRIORITY,
+            //        REASON = o.Excp.REASON,
+            //        CATALOG_TABLE_NAME = o.Excp.CATALOG_TABLE_NAME,
+            //        CATALOG_ID = o.Excp.CATALOG_ID,
+            //        SURNAME = o.Cust.SURNAME,
+            //        OTHERNAME = o.Cust.OTHER_NAME,
+            //        FIRST_NAME = o.Cust.FIRST_NAME,
+
+
+            //    });
+            #endregion
+            using (var db = new AppDbContext())
             {
                 // Store the query.
-                //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
-                //var data = northwind.CM_DISTRIBUTION_SCHEDULE.Join(northwind.CM_BRANCH,
-                //c => c.BRANCH_ID, o => o.BRANCH_ID, (o, c) => new { Sched = o, Branch = c }).ToList();
                 string authStatus = "U";
                 //int issueStatus = (int)IssueStatus.Open;
-                var data = db.MdmDqRunExceptions
-                    .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
-                    e => e.CUST_ID, c => c.CUSTOMER_NO,
-                    (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
-                    .Where(x => x.Cust.AUTHORISED == authStatus);
-                    //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
+                //var data = db.MdmUnauthExceptions
+                //    .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
+                //    e => e.CUST_ID, c => c.CUSTOMER_NO,
+                //    (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
+                //    .Where(x => x.Cust.AUTHORISED == authStatus);
+                //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
 
-                var query = data.Select(o => new CustExceptionsModel
+                var query = db.MdmUnauthExceptions.Select(o => new CustExceptionsModel
                 {
-                    EXCEPTION_ID = o.Excp.EXCEPTION_ID,
-                    RULE_ID = o.Excp.RULE_ID,
-                    RULE_NAME = o.Excp.RULE_NAME,
-                    CUST_ID = o.Excp.CUST_ID,
-                    BRANCH_CODE = o.Excp.BRANCH_CODE,
-                    BRANCH_NAME = o.Excp.BRANCH_NAME,
-                    ISSUE_PRIORITY_DESC = o.Excp.MdmDQPriorities.PRIORITY_DESCRIPTION,
-                    ISSUE_STATUS_DESC = o.Excp.MdmDQQueStatuses.STATUS_DESCRIPTION,
-                    RUN_DATE = o.Excp.RUN_DATE,
-                    LAST_MODIFIED_DATE = o.Cust.LAST_MODIFIED_DATE,
-                    LAST_MODIFIED_BY = o.Cust.LAST_MODIFIED_BY,
-                    STATUS_CODE = o.Excp.ISSUE_STATUS,
-                    PRIORITY_CODE = o.Excp.ISSUE_PRIORITY,
-                    REASON = o.Excp.REASON,
-                    CATALOG_TABLE_NAME = o.Excp.CATALOG_TABLE_NAME,
-                    CATALOG_ID = o.Excp.CATALOG_ID,
-                    SURNAME = o.Cust.SURNAME,
-                    OTHERNAME = o.Cust.OTHER_NAME,
-                    FIRST_NAME = o.Cust.FIRST_NAME,
+                    EXCEPTION_ID = o.EXCEPTION_ID,
+                    RULE_ID = o.RULE_ID,
+                    RULE_NAME = o.RULE_NAME,
+                    CUST_ID = o.CUST_ID,
+                    BRANCH_CODE = o.BRANCH_CODE,
+                    BRANCH_NAME = o.BRANCH_NAME,
+                    ISSUE_PRIORITY_DESC = o.MdmDQPriorities.PRIORITY_DESCRIPTION,
+                    ISSUE_STATUS_DESC = o.MdmDQQueStatuses.STATUS_DESCRIPTION,
+                    RUN_DATE = o.RUN_DATE,
+                    LAST_MODIFIED_DATE = o.LAST_MODIFIED_DATE,
+                    LAST_MODIFIED_BY = o.LAST_MODIFIED_BY,
+                    STATUS_CODE = o.ISSUE_STATUS,
+                    PRIORITY_CODE = o.ISSUE_PRIORITY,
+                    REASON = o.REASON,
+                    CATALOG_TABLE_NAME = o.CATALOG_TABLE_NAME,
+                    CATALOG_ID = o.CATALOG_ID,
+                    SURNAME = o.SURNAME,
+                    OTHERNAME = o.OTHER_NAME,
+                    FIRST_NAME = o.FIRST_NAME,
 
 
                 });
-                //    q => q.Excp).Include(a => a.MdmDQPriorities).Include(a => a.MdmDQQueStatuses);
-                    
-                //q => q).Include(a => Excp.MdmDQPriorities).Include(a => a.MdmDQQueStatuses);
-
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.CUST_ID == name);
                 //if (createdOnFrom.HasValue)

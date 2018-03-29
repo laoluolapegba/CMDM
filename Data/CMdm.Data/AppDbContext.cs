@@ -15,6 +15,8 @@ namespace CMdm.Data
     using System.Data.Entity.Infrastructure;
     using Entities.Domain.Audit;
     using System.Data.Entity.Core.Objects;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Collections.Generic;
 
     //using Entities.Domain.Courses;
 
@@ -30,40 +32,22 @@ namespace CMdm.Data
             : base("name=AppDbContext")
         {
         }
-        public override int SaveChanges()
+        public int SaveChanges(string userId, string custID)
         {
             try
             {
-                var modifiedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList();
-                var now = DateTime.UtcNow;
-
-                foreach (var change in modifiedEntities)
+                //var modifiedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList();
+                
+                // Get all Added/Deleted/Modified entities (not Unmodified or Detached)
+                foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified))
                 {
-                    //var entityName = change.Entity.GetType().Name;
-                    var entityName = ObjectContext.GetObjectType(change.Entity.GetType()).Name;
-                    var primaryKey = GetPrimaryKeyValue(change);
-
-                    foreach (var prop in change.OriginalValues.PropertyNames)
+                    // For each changed record, get the audit record entries and add them
+                    foreach (CDMA_CHANGE_LOG x in GetAuditRecordsForChange(ent, userId, custID))
                     {
-                        
-                        //var originalValue = change.OriginalValues[prop] == null ? "" :  change.OriginalValues[prop].ToString();
-                        var originalValue = change.GetDatabaseValues().GetValue<object>(prop) == null ? "" : change.GetDatabaseValues().GetValue<object>(prop).ToString();
-                        var currentValue = change.CurrentValues[prop] == null ? "" : change.CurrentValues[prop].ToString();
-                        if (originalValue != currentValue)
-                        {
-                            CDMA_CHANGE_LOG log = new CDMA_CHANGE_LOG()
-                            {
-                                ENTITYNAME = entityName,
-                                PRIMARYKEYVALUE = primaryKey.ToString(),
-                                PROPERTYNAME = prop,
-                                OLDVALUE = originalValue,
-                                NEWVALUE = currentValue,
-                                DATECHANGED = now
-                            };
-                            CDMA_CHANGE_LOGS.Add(log);
-                        }
+                        this.CDMA_CHANGE_LOGS.Add(x);
                     }
                 }
+                
                 return base.SaveChanges();
               /*
               db.ChangeTracker.DetectChanges();
@@ -99,6 +83,100 @@ namespace CMdm.Data
                 throw newException;
             }
         }
+
+        private IEnumerable<CDMA_CHANGE_LOG> GetAuditRecordsForChange(DbEntityEntry ent, string userId, string primaryKeyId)
+        {
+            List<CDMA_CHANGE_LOG> result = new List<CDMA_CHANGE_LOG>();
+            //var entityName = ObjectContext.GetObjectType(change.Entity.GetType()).Name;
+            // Get the Table() attribute, if one exists
+            TableAttribute tableAttr = ent.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
+
+            // Get table name (if it has a Table attribute, use that, otherwise get the pluralized name)
+            string entityName = tableAttr != null ? tableAttr.Name : ObjectContext.GetObjectType(ent.Entity.GetType()).Name;
+            //change.Entity.GetType().Name;
+
+            
+            var changeTime = DateTime.UtcNow;
+            if (ent.State == EntityState.Added)
+            {
+                // For Inserts, just add the whole record
+                // If the entity implements IDescribableEntity, use the description from Describe(), otherwise use ToString()
+                result.Add(new CDMA_CHANGE_LOG()
+                {
+                    USERID = userId,
+                    DATECHANGED = changeTime,
+                    EVENTTYPE = "M",    // Modified
+                    ENTITYNAME = entityName,
+                    PRIMARYKEYVALUE = primaryKeyId.ToString(),
+                    PROPERTYNAME = "*ALL",
+                    NEWVALUE = ""
+
+                });
+            }
+            else if (ent.State == EntityState.Deleted)
+            {
+                // Same with deletes, do the whole record, and use either the description from Describe() or ToString()
+                result.Add(new CDMA_CHANGE_LOG()
+                {
+                    USERID = userId,
+                    DATECHANGED = changeTime,
+                    EVENTTYPE = "D",    // Modified
+                    ENTITYNAME = entityName,
+                    PRIMARYKEYVALUE = primaryKeyId.ToString(),
+                    PROPERTYNAME = "*ALL",
+                    NEWVALUE = ""
+
+                });
+            }
+            else if (ent.State == EntityState.Modified)
+            {
+                foreach (var prop in ent.OriginalValues.PropertyNames)
+                {
+                    var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
+                    var currentValue = ent.CurrentValues[prop] == null ? "" : ent.CurrentValues[prop].ToString();
+                    // For updates, we only want to capture the columns that actually changed
+                    var primaryKey = GetPrimaryKeyValue(ent);
+                    if (originalValue != currentValue)
+                    {
+                        result.Add(new CDMA_CHANGE_LOG()
+                        {
+                            USERID = userId,
+                            DATECHANGED = changeTime,
+                            EVENTTYPE = "M",    // Modified
+                            ENTITYNAME = entityName,
+                            PRIMARYKEYVALUE = primaryKey.ToString(),
+                            PROPERTYNAME = prop,
+                            OLDVALUE = originalValue,
+                            NEWVALUE = currentValue
+                            //OriginalValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString(),
+                            //NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString()
+                        });
+                    }
+
+
+                    /*    
+                    //var originalValue = change.OriginalValues[prop] == null ? "" :  change.OriginalValues[prop].ToString();
+                    var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
+                    var currentValue = ent.CurrentValues[prop] == null ? "" : ent.CurrentValues[prop].ToString();
+                    if (originalValue != currentValue)
+                    {
+                        CDMA_CHANGE_LOG log = new CDMA_CHANGE_LOG()
+                        {
+                            ENTITYNAME = entityName,
+                            PRIMARYKEYVALUE = primaryKey.ToString(),
+                            PROPERTYNAME = prop,
+                            OLDVALUE = originalValue,
+                            NEWVALUE = currentValue,
+                            DATECHANGED = now
+                        };
+                        CDMA_CHANGE_LOGS.Add(log);
+                    }
+                    */
+                }
+            }
+            return result;
+        }
+
         object GetPrimaryKeyValue(DbEntityEntry entry)
         {
             var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
@@ -155,6 +233,10 @@ namespace CMdm.Data
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.Countries).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.COUNTRY).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.States).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.STATE).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.LocalGovts).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.LGA).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
+
 
         }
         #region Utilities
@@ -215,6 +297,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<MdmDQDsType> MdmDQDsTypes { get; set; }
         public System.Data.Entity.DbSet<MdmCatalog> MdmCatalogs { get; set; }
         public DbSet<MdmDqRunException> MdmDqRunExceptions { get; set; }
+        public DbSet<MdmUnauthException> MdmUnauthExceptions { get; set; }
         public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
         public DbSet<MdmRegex> MdmRegex { get; set; }
         public DbSet<CDMA_COUNTRIES> CDMA_COUNTRIES { get; set; }
