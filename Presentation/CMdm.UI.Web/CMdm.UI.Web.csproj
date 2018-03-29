@@ -2102,6 +2102,7 @@
     <Content Include="Views\OutStandingDocs\Create.cshtml" />
     <Content Include="Views\OutStandingDocs\List.cshtml" />
     <Content Include="Views\OutStandingDocs\AuthList.cshtml" />
+    <Content Include="Views\Dynamic\ApprovedIncome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
