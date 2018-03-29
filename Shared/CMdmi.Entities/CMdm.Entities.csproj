@@ -57,6 +57,7 @@
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_REL_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_TITLE.cs" />
+    <Compile Include="Domain\Customer\CDMA_FOREIGN_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INCOME_BAND.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG.cs" />
