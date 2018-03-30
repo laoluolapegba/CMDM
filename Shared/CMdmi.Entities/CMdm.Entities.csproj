@@ -57,7 +57,11 @@
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_REL_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_TITLE.cs" />
+<<<<<<< HEAD
     <Compile Include="Domain\Customer\CDMA_EMPLOYMENT_DETAILS.cs" />
+=======
+    <Compile Include="Domain\Customer\CDMA_FOREIGN_DETAILS.cs" />
+>>>>>>> 35cc50bbcfc60b9e5c27f46aea952f959c913f88
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INCOME_BAND.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\IssueStatus.cs" />
+    <Compile Include="Domain\Dqi\MdmUnauthExceptions.cs" />
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />
     <Compile Include="Domain\Entity\EntityMast.cs" />
