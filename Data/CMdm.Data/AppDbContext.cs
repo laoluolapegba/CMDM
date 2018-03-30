@@ -155,7 +155,14 @@ namespace CMdm.Data
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.Countries).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.COUNTRY).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.States).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.STATE).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.LocalGovts).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.LGA).WillCascadeOnDelete(false);
+            
 
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Businessnature).WithMany(t => t.Businessnature).HasForeignKey(e => e.NATURE_OF_BUSINESS_OCCUPATION).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Indsegment).WithMany(t => t.Indsegment).HasForeignKey(e => e.INDUSTRY_SEGMENT).WillCascadeOnDelete(false);
+
+            
         }
         #region Utilities
 
@@ -277,6 +284,13 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_TITLE> CDMA_CUST_TITLE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Audit.CDMA_CHANGE_LOG> CDMA_CHANGE_LOGS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_EMPLOYMENT_DETAILS> CDMA_EMPLOYMENT_DETAILS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_OCCUPATION_LIST> CDMA_OCCUPATION_LIST { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDUSTRY_SUBSECTOR> CDMA_INDUSTRY_SUBSECTOR { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_NATURE_OF_BUSINESS> CDMA_NATURE_OF_BUSINESS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDUSTRY_SEGMENT> CDMA_INDUSTRY_SEGMENT { get; set; }
+
 
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
