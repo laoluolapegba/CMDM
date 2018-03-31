@@ -42,8 +42,10 @@ namespace CMdm.UI.Web.Controllers
         }
 
         // GET: EmpDetail/Create
-        public ActionResult Create()
+        public ActionResult Create(string id="")
         {
+            EmpDetailsModel model = new EmpDetailsModel();
+            if (id != "") model.CUSTOMER_NO = id;
             // ViewBag.SUB_SECTOR = new SelectList(db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME");
             ViewBag.SECTOR_CLASS = new SelectList(db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION" );
             ViewBag.SUB_SECTOR = new SelectList(db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME");
@@ -51,7 +53,7 @@ namespace CMdm.UI.Web.Controllers
             ViewBag.INDUSTRY_SEGMENT = new SelectList(db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT" );
           //  ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION");
            
-            return View();
+            return View(model);
         }
 
         // POST: EmpDetail/Create
@@ -65,13 +67,15 @@ namespace CMdm.UI.Web.Controllers
             {
                 db.CDMA_EMPLOYMENT_DETAILS.Add(cDMA_EMPLOYMENT_DETAILS);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+               
+                return RedirectToAction("Index", "DQQue");
             }
 
             ViewBag.SECTOR_CLASS = new SelectList(db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", cDMA_EMPLOYMENT_DETAILS.SECTOR_CLASS);
             ViewBag.SUB_SECTOR = new SelectList(db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", cDMA_EMPLOYMENT_DETAILS.SUB_SECTOR);
             ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", cDMA_EMPLOYMENT_DETAILS.NATURE_OF_BUSINESS_OCCUPATION);
             ViewBag.INDUSTRY_SEGMENT = new SelectList(db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", cDMA_EMPLOYMENT_DETAILS.INDUSTRY_SEGMENT);
+            RedirectToAction("Index", "DQQue");
             return View(cDMA_EMPLOYMENT_DETAILS);
         }
 
@@ -176,16 +180,18 @@ namespace CMdm.UI.Web.Controllers
                     }
 
                 }
+
+                ViewBag.SECTOR_CLASS = new SelectList(db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", empmodel.SECTOR_CLASS);
+                ViewBag.SUB_SECTOR = new SelectList(db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", empmodel.SUB_SECTOR);
+                ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", empmodel.NATURE_OF_BUSINESS_OCCUPATION);
+                ViewBag.INDUSTRY_SEGMENT = new SelectList(db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", empmodel.INDUSTRY_SEGMENT);
+                //  PrepareModel(empmodel);
+                SuccessNotification("EMPd Updated");
+                return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
             }
 
            
-            ViewBag.SECTOR_CLASS = new SelectList(db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", empmodel.SECTOR_CLASS);
-            ViewBag.SUB_SECTOR = new SelectList(db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", empmodel.SUB_SECTOR);
-            ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", empmodel.NATURE_OF_BUSINESS_OCCUPATION);
-            ViewBag.INDUSTRY_SEGMENT = new SelectList(db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", empmodel.INDUSTRY_SEGMENT);
-            //  PrepareModel(empmodel);
-            SuccessNotification("NOK Updated");
-            return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
+          
 
             return View(empmodel);
         }

@@ -237,6 +237,8 @@ namespace CMdm.Data
             
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
+
+             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Businessnature).WithMany(t => t.Businessnature).HasForeignKey(e => e.NATURE_OF_BUSINESS_OCCUPATION).WillCascadeOnDelete(false);
@@ -371,7 +373,12 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDUSTRY_SUBSECTOR> CDMA_INDUSTRY_SUBSECTOR { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_NATURE_OF_BUSINESS> CDMA_NATURE_OF_BUSINESS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDUSTRY_SEGMENT> CDMA_INDUSTRY_SEGMENT { get; set; }
+ 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_FOREIGN_DETAILS> CDMA_FOREIGN_DETAILS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_TRUSTS_CLIENT_ACCOUNTS> CDMA_TRUSTS_CLIENT_ACCOUNTS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_AUTH_FINANCE_INCLUSION> CDMA_AUTH_FINANCE_INCLUSION { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_JURAT> CDMA_JURAT { get; set; }
 
