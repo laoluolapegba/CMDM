@@ -303,6 +303,7 @@
     <Compile Include="Controllers\DQQueController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ElementsController.cs" />
+    <Compile Include="Controllers\EmpDetailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
@@ -564,6 +565,7 @@
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
+    <Compile Include="Models\Customer\EmpDetailsModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -2107,9 +2109,7 @@
     <Content Include="Views\OutStandingDocs\Create.cshtml" />
     <Content Include="Views\OutStandingDocs\List.cshtml" />
     <Content Include="Views\OutStandingDocs\AuthList.cshtml" />
- 
     <Content Include="Views\Dynamic\ApprovedIncome.cshtml" />
- 
     <Content Include="Views\CustNok\Editx.cshtml" />
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
@@ -2117,6 +2117,12 @@
     <Content Include="Views\CustForeigner\Create.cshtml" />
     <Content Include="Views\CustForeigner\Edit.cshtml" />
     <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\EmpDetail\Create.cshtml" />
+    <Content Include="Views\EmpDetail\Delete.cshtml" />
+    <Content Include="Views\EmpDetail\Details.cshtml" />
+    <Content Include="Views\EmpDetail\Edit.cshtml" />
+    <Content Include="Views\EmpDetail\Index.cshtml" />
+    <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

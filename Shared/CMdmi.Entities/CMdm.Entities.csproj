@@ -57,6 +57,7 @@
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_REL_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_TITLE.cs" />
+    <Compile Include="Domain\Customer\CDMA_EMPLOYMENT_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_FOREIGN_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INCOME_BAND.cs" />
@@ -75,8 +76,12 @@
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_IDENTIFICATION.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS _LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS.cs" />
+    <Compile Include="Domain\Customer\CDMA_INDUSTRY_SEGMENT.cs" />
+    <Compile Include="Domain\Customer\CDMA_INDUSTRY_SUBSECTOR.cs" />
     <Compile Include="Domain\Customer\CDMA_INITIAL_DEPOSIT_RANGE.cs" />
     <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
+    <Compile Include="Domain\Customer\CDMA_NATURE_OF_BUSINESS.cs" />
+    <Compile Include="Domain\Customer\CDMA_OCCUPATION_LIST.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
     <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />

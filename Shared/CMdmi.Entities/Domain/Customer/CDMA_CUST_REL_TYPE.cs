@@ -13,7 +13,7 @@ namespace CMdm.Entities.Domain.Customer
     [Table("CDMA_CUST_REL_TYPES")]
 
     public partial class CDMA_CUST_REL_TYPE
-    {
+    { 
         public CDMA_CUST_REL_TYPE()
         {
             CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
