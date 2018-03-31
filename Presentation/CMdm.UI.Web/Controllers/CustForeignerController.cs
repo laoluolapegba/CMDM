@@ -132,6 +132,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
             if (ModelState.IsValid)
             {
                 CDMA_FOREIGN_DETAILS ford = new CDMA_FOREIGN_DETAILS
@@ -153,7 +154,7 @@ namespace CMdm.UI.Web.Controllers
                     LAST_MODIFIED_DATE = DateTime.Now,
                     AUTHORISED_BY = null,
                     AUTHORISED_DATE = null,
-                    IP_ADDRESS = "127.0.0.1",
+                    IP_ADDRESS = ip_address,
                     MULTIPLE_CITEZENSHIP = formodel.MULTIPLE_CITEZENSHIP
             };
                 db.CDMA_FOREIGN_DETAILS.Add(ford);

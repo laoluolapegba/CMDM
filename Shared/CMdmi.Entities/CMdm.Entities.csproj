@@ -47,6 +47,7 @@
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_REQUIRED.cs" />
+    <Compile Include="Domain\Customer\CDMA_ADDITIONAL_INFORMATION.cs" />
     <Compile Include="Domain\Customer\CDMA_BRANCH_ClASS.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
