@@ -1,0 +1,213 @@
+﻿@model CMdm.UI.Web.Models.Customer.CustomerTrustClientAccount
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.CUSTOMER_NO)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                    @Html.LabelFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                    <div class="col-md-9">
+                                     @Html.HiddenFor(model => model.CUSTOMER_NO)                                        
+                                     @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.TRUSTS_CLIENT_ACCOUNTS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.TRUSTS_CLIENT_ACCOUNTS, Model.CientAcc)
+                                
+                                    @Html.ValidationMessageFor(model => model.TRUSTS_CLIENT_ACCOUNTS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NAME_OF_BENEFICIAL_OWNER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.NAME_OF_BENEFICIAL_OWNER, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NAME_OF_BENEFICIAL_OWNER, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SPOUSE_NAME)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.SPOUSE_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SPOUSE_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SPOUSE_DATE_OF_BIRTH)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.SPOUSE_DATE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SPOUSE_DATE_OF_BIRTH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        
+                       
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SPOUSE_OCCUPATION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.SPOUSE_OCCUPATION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SPOUSE_OCCUPATION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SOURCES_OF_FUND_TO_ACCOUNT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.SOURCES_OF_FUND_TO_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SOURCES_OF_FUND_TO_ACCOUNT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.OTHER_SOURCE_EXPECT_ANN_INC)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.OTHER_SOURCE_EXPECT_ANN_INC, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.OTHER_SOURCE_EXPECT_ANN_INC, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NAME_OF_ASSOCIATED_BUSINESS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.NAME_OF_ASSOCIATED_BUSINESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NAME_OF_ASSOCIATED_BUSINESS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.FREQ_INTERNATIONAL_TRAVELER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.FREQ_INTERNATIONAL_TRAVELER, Model.FreqInt)
+                                    @Html.ValidationMessageFor(model => model.FREQ_INTERNATIONAL_TRAVELER, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.INSIDER_RELATION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.INSIDER_RELATION, Model.InsidrRel)
+                                   
+                                    @Html.ValidationMessageFor(model => model.INSIDER_RELATION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.POLITICALLY_EXPOSED_PERSON)
+                                </div>
+                                <div class="col-md-9">
+                                     @Html.CMdmDropDownListFor(model => model.POLITICALLY_EXPOSED_PERSON, Model.PolExpose)
+                                    @Html.ValidationMessageFor(model => model.POLITICALLY_EXPOSED_PERSON, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.POWER_OF_ATTORNEY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.POWER_OF_ATTORNEY, Model.PowAnto)
+                                    @Html.ValidationMessageFor(model => model.POWER_OF_ATTORNEY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.HOLDER_NAME)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.HOLDER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.HOLDER_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.ADDRESS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.COUNTRY)
+                                </div>
+                                <div class="col-md-9">
+                                  
+                                    @Html.CMdmDropDownListFor(model => model.COUNTRY, Model.Countries)
+                                    @Html.ValidationMessageFor(model => model.COUNTRY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NATIONALITY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.NATIONALITY, Model.Nationalities)
+                            
+                                    @Html.ValidationMessageFor(model => model.NATIONALITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.TELEPHONE_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.TELEPHONE_NUMBER, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TELEPHONE_NUMBER, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+          
+   
