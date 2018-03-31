@@ -293,6 +293,7 @@
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CustForeignerController.cs" />
+    <Compile Include="Controllers\CustJuratController.cs" />
     <Compile Include="Controllers\CustNokController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerIncomeController.cs" />
@@ -564,6 +565,7 @@
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
+    <Compile Include="Models\Customer\CustomerJuratModel.cs" />
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\EmpDetailsModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
@@ -2123,6 +2125,9 @@
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
     <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustJurat\Create.cshtml" />
+    <Content Include="Views\CustJurat\Edit.cshtml" />
+    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />

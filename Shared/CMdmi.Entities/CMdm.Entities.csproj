@@ -79,6 +79,7 @@
     <Compile Include="Domain\Customer\CDMA_INDUSTRY_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_INDUSTRY_SUBSECTOR.cs" />
     <Compile Include="Domain\Customer\CDMA_INITIAL_DEPOSIT_RANGE.cs" />
+    <Compile Include="Domain\Customer\CDMA_JURAT.cs" />
     <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
     <Compile Include="Domain\Customer\CDMA_NATURE_OF_BUSINESS.cs" />
     <Compile Include="Domain\Customer\CDMA_OCCUPATION_LIST.cs" />
