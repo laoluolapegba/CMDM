@@ -2114,13 +2114,9 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\CustForeigner\Create.cshtml" />
     <Content Include="Views\CustForeigner\Edit.cshtml" />
     <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
-=======
- 
->>>>>>> be2023f56baca88f3390b5bcacbbb0710e4accc3
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
