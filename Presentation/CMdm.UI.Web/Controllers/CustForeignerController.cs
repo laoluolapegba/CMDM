@@ -145,6 +145,7 @@ namespace CMdm.UI.Web.Controllers
                     CITY = formodel.CITY,
                     COUNTRY = formodel.COUNTRY,
                     ZIP_POSTAL_CODE = formodel.ZIP_POSTAL_CODE,
+                    FOREIGN_TEL_NUMBER = formodel.FOREIGN_TEL_NUMBER,
                     PURPOSE_OF_ACCOUNT = formodel.PURPOSE_OF_ACCOUNT,
                     CREATED_BY = identity.ProfileId.ToString(),
                     CREATED_DATE = DateTime.Now,

@@ -294,6 +294,7 @@
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CusClientAccController.cs" />
     <Compile Include="Controllers\CustForeignerController.cs" />
+    <Compile Include="Controllers\CustJuratController.cs" />
     <Compile Include="Controllers\CustNokController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerIncomeController.cs" />
@@ -567,6 +568,7 @@
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Customer\AuthForFinInclution.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
+    <Compile Include="Models\Customer\CustomerJuratModel.cs" />
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\CustomerTrustClientAccount.cs" />
     <Compile Include="Models\Customer\EmpDetailsModel.cs" />
@@ -2118,10 +2120,17 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
+<<<<<<< HEAD
+=======
+    <Content Include="Views\CustForeigner\Create.cshtml" />
+    <Content Include="Views\CustForeigner\Edit.cshtml" />
+    <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
+>>>>>>> 61d0a71f6f3126cb08e56e9e66a84d95e3722afd
     <Content Include="Views\EmpDetail\Create.cshtml" />
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
     <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\CusClientAcc\Create.cshtml" />
     <Content Include="Views\CusClientAcc\Edit.cshtml" />
     <Content Include="Views\CusClientAcc\Index.cshtml" />
@@ -2130,6 +2139,11 @@
     <Content Include="Views\FinInclusion\Edit.cshtml" />
     <Content Include="Views\FinInclusion\Index.cshtml" />
     <Content Include="Views\FinInclusion\_CreateOrUpdate.cshtml" />
+=======
+    <Content Include="Views\CustJurat\Create.cshtml" />
+    <Content Include="Views\CustJurat\Edit.cshtml" />
+    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
+>>>>>>> 61d0a71f6f3126cb08e56e9e66a84d95e3722afd
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
