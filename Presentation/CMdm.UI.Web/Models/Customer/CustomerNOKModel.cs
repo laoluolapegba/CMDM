@@ -79,5 +79,10 @@ namespace CMdm.UI.Web.Models.Customer
         public List<SelectListItem> RelationshipTypes { get; set; }
         public List<SelectListItem> Countries { get; set; }
         public List<SelectListItem> Genders { get; set; }
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
     }
 }

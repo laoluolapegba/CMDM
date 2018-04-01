@@ -87,6 +87,7 @@ namespace CMdm.Data
         private IEnumerable<CDMA_CHANGE_LOG> GetAuditRecordsForChange(DbEntityEntry ent, string userId, string primaryKeyId)
         {
             List<CDMA_CHANGE_LOG> result = new List<CDMA_CHANGE_LOG>();
+            string changeId = Guid.NewGuid().ToString();
             //var entityName = ObjectContext.GetObjectType(change.Entity.GetType()).Name;
             // Get the Table() attribute, if one exists
             TableAttribute tableAttr = ent.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
@@ -109,7 +110,8 @@ namespace CMdm.Data
                     ENTITYNAME = entityName,
                     PRIMARYKEYVALUE = primaryKeyId.ToString(),
                     PROPERTYNAME = "*ALL",
-                    NEWVALUE = ""
+                    NEWVALUE = "",
+                    CHANGEID = changeId
 
                 });
             }
@@ -124,12 +126,14 @@ namespace CMdm.Data
                     ENTITYNAME = entityName,
                     PRIMARYKEYVALUE = primaryKeyId.ToString(),
                     PROPERTYNAME = "*ALL",
-                    NEWVALUE = ""
+                    NEWVALUE = "",
+                    CHANGEID = changeId
 
                 });
             }
             else if (ent.State == EntityState.Modified)
             {
+                
                 foreach (var prop in ent.OriginalValues.PropertyNames)
                 {
                     var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
@@ -147,7 +151,8 @@ namespace CMdm.Data
                             PRIMARYKEYVALUE = primaryKey.ToString(),
                             PROPERTYNAME = prop,
                             OLDVALUE = originalValue,
-                            NEWVALUE = currentValue
+                            NEWVALUE = currentValue,
+                            CHANGEID = changeId
                             //OriginalValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString(),
                             //NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString()
                         });
