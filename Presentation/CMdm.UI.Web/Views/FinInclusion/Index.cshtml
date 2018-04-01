@@ -1,0 +1,111 @@
+﻿@model IEnumerable<CMdm.Entities.Domain.Customer.CDMA_AUTH_FINANCE_INCLUSION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SOCIAL_FINANCIAL_DISADVTAGE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SOCIAL_FINANCIAL_DOCUMENTS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ENJOYED_TIERED_KYC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RISK_CATEGORY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MANDATE_AUTH_COMBINE_RULE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_WITH_OTHER_BANKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_MODIFIED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_BY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTHORISED_DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP_ADDRESS)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SOCIAL_FINANCIAL_DISADVTAGE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SOCIAL_FINANCIAL_DOCUMENTS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ENJOYED_TIERED_KYC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RISK_CATEGORY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MANDATE_AUTH_COMBINE_RULE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_WITH_OTHER_BANKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_MODIFIED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_BY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTHORISED_DATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP_ADDRESS)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTOMER_NO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTOMER_NO })
+        </td>
+    </tr>
+}
+
+</table>

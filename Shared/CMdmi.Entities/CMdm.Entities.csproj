@@ -47,6 +47,8 @@
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_REQUIRED.cs" />
+    <Compile Include="Domain\Customer\CDMA_ADDITIONAL_INFORMATION.cs" />
+    <Compile Include="Domain\Customer\CDMA_AUTH_FINANCE_INCLUSION.cs" />
     <Compile Include="Domain\Customer\CDMA_BRANCH_ClASS.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
@@ -57,6 +59,8 @@
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_REL_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_CUST_TITLE.cs" />
+    <Compile Include="Domain\Customer\CDMA_EMPLOYMENT_DETAILS.cs" />
+    <Compile Include="Domain\Customer\CDMA_FOREIGN_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INCOME_BAND.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG.cs" />
@@ -74,9 +78,15 @@
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_IDENTIFICATION.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS _LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_OTHER_DETAILS.cs" />
+    <Compile Include="Domain\Customer\CDMA_INDUSTRY_SEGMENT.cs" />
+    <Compile Include="Domain\Customer\CDMA_INDUSTRY_SUBSECTOR.cs" />
     <Compile Include="Domain\Customer\CDMA_INITIAL_DEPOSIT_RANGE.cs" />
+    <Compile Include="Domain\Customer\CDMA_JURAT.cs" />
     <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
+    <Compile Include="Domain\Customer\CDMA_NATURE_OF_BUSINESS.cs" />
+    <Compile Include="Domain\Customer\CDMA_OCCUPATION_LIST.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
+    <Compile Include="Domain\Customer\CDMA_TRUSTS_CLIENT_ACCOUNTS.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
     <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />

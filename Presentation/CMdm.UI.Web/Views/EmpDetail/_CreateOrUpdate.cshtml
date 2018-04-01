@@ -1,0 +1,121 @@
+﻿@model CMdm.UI.Web.Models.Customer.EmpDetailsModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.CUSTOMER_NO)
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@Html.HiddenFor(model => model.CUSTOMER_NO)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                
+                                    <div class="col-md-9">
+                                            @Html.HiddenFor(model => model.CUSTOMER_NO)
+                                            @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
+
+                                     </div>
+                                    </div>
+                                
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.EMPLOYMENT_STATUS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.DropDownListFor(model => model.EMPLOYMENT_STATUS, new SelectList(new[] { "EMPLOYED", "SELF EMPLOYED", "ASSISTED" }), new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.EMPLOYMENT_STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.EMPLOYER_INSTITUTION_NAME)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.EMPLOYER_INSTITUTION_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.EMPLOYER_INSTITUTION_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.DATE_OF_EMPLOYMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.DATE_OF_EMPLOYMENT, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DATE_OF_EMPLOYMENT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SECTOR_CLASS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("SECTOR_CLASS", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SECTOR_CLASS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SUB_SECTOR)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("SUB_SECTOR", null, htmlAttributes: new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.SUB_SECTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NATURE_OF_BUSINESS_OCCUPATION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("NATURE_OF_BUSINESS_OCCUPATION", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.INDUSTRY_SEGMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("INDUSTRY_SEGMENT", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.INDUSTRY_SEGMENT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+</div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+ 
+         
