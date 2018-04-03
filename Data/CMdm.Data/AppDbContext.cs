@@ -389,6 +389,8 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ADDITIONAL_INFORMATION> CDMA_ADDITIONAL_INFORMATION { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Logging.Log> LOG { get; set; }
+
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 

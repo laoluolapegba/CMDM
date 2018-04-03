@@ -39,7 +39,7 @@ namespace CMdm.Services.Logging
             if (logger.IsEnabled(level))
             {
                 string fullMessage = exception == null ? string.Empty : exception.ToString();
-                logger.InsertLog(level, message, fullMessage, customer);
+                logger.AddLog(level, message, fullMessage, customer);
             }
         }
     }

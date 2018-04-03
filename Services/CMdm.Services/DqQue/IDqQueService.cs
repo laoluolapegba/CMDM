@@ -11,8 +11,8 @@ namespace CMdm.Services.DqQue
 {
     public interface IDqQueService
     {
-        void ApproveExceptionQueItems(List<MdmDqRunException> queitems);
-        void DisApproveExceptionQueItems(List<MdmDqRunException> queitems, string comments);
+        void ApproveExceptionQueItems(string selectedIds);  //List<MdmDqRunException> queitems
+        void DisApproveExceptionQueItems(string selectedIds, string comments);
         /// <summary>
         /// Updates the queitem
         /// </summary>
@@ -24,6 +24,12 @@ namespace CMdm.Services.DqQue
         /// <param name="recordId">recordId identifier</param>
         /// <returns>Vendor</returns>
         IList<MdmDqRunException> GetQueItembyIds(int[] recordIds);
+        /// <summary>
+        /// Gets a Queitem by item reference identifier
+        /// </summary>
+        /// <param name="recordId">que identifier</param>
+        /// <returns>Vendor</returns>
+        MdmDqRunException GetQueDetailItembyId(int recordId);
         /// <summary>
         /// Gets a Queitem by item reference identifier
         /// </summary>

@@ -84,5 +84,6 @@ namespace CMdm.UI.Web.Models.Customer
         public DateTime? LastUpdatedDate { get; set; }
         public string LastAuthdby { get; set; }
         public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
     }
 }

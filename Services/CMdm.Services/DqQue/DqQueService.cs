@@ -106,6 +106,13 @@ namespace CMdm.Services.DqQue
 
             return _dqqueDAC.SelectById(recordId);
         }
+        public virtual MdmDqRunException GetQueDetailItembyId(int recordId )
+        {
+            if (recordId == 0)
+                return null;
+
+            return _dqqueDAC.SelectExceptionById(recordId);
+        }
         /// <summary>
         /// Gets all queitems
         /// </summary>
@@ -177,22 +184,40 @@ namespace CMdm.Services.DqQue
             var queitems = new PagedList<CustExceptionsModel>(result, pageIndex, pageSize);
             return queitems;
         }
-        public virtual void ApproveExceptionQueItems(List<MdmDqRunException> queitems)
+        public virtual void ApproveExceptionQueItems(string selectedIds)  //List<MdmDqRunException> queitems
         {
-            if (queitems == null)
-                throw new ArgumentNullException("queitems");
+            var modifiedrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                modifiedrecords.AddRange(GetQueItembyIds(ids));
+            }
+            if (modifiedrecords == null)
+                throw new ArgumentNullException("approvedqueitems");
 
-            _dqqueDAC.ApproveExceptionQues(queitems);
+            _dqqueDAC.ApproveExceptionQues(modifiedrecords);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
         }
-        public virtual void DisApproveExceptionQueItems(List<MdmDqRunException> queitems, string comments)
+        public virtual void DisApproveExceptionQueItems(string selectedIds, string comments)//List<MdmDqRunException> queitems
         {
-            if (queitems == null)
-                throw new ArgumentNullException("queitems");
+            var modifiedrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                modifiedrecords.AddRange(GetQueItembyIds(ids));
+            }
+            if (modifiedrecords == null)
+                throw new ArgumentNullException("dissaprovedqueitems");
 
-            _dqqueDAC.DisApproveExceptionQues(queitems, comments);
+            _dqqueDAC.DisApproveExceptionQues(modifiedrecords, comments);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);

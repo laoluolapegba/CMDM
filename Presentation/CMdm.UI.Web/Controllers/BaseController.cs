@@ -9,11 +9,22 @@ using CMdm.Framework.Kendoui;
 using System.Text;
 using CMdm.Framework.Mvc;
 using Newtonsoft.Json.Converters;
+using CMdm.Services.Logging;
+using CMdm.Core;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class BaseController : Controller
     {
+        private ILogger logger;
+        private IWebHelper _webHelper;
+        public BaseController()
+        {
+            
+            _webHelper = new WebHelper(this.HttpContext);
+            logger = new DefaultLogger(_webHelper);
+        }
+        //var logger = EngineContext.Current.Resolve<ILogger>();
         /// <summary>
         /// Access denied view
         /// </summary>
@@ -83,7 +94,7 @@ namespace CMdm.UI.Web.Controllers
             //var logger = EngineContext.Current.Resolve<ILogger>();
 
             //var customer = workContext.CurrentCustomer;
-            //logger.Error(exc.Message, exc, customer);
+            logger.Error(exc.Message, exc);
             WriteToTextFile(exc.Message);
         }
         /// <summary>

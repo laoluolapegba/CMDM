@@ -429,17 +429,6 @@ namespace CMdm.UI.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-
-            var modifiedrecords = new List<MdmDqRunException>();
-            if (selectedIds != null)
-            {
-                var ids = selectedIds
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => Convert.ToInt32(x))
-                    .ToArray();
-                modifiedrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
-            }
-
             try
             {
                 /*
@@ -467,7 +456,7 @@ namespace CMdm.UI.Web.Controllers
 
                 }
                 */
-                _dqQueService.ApproveExceptionQueItems(modifiedrecords);
+                _dqQueService.ApproveExceptionQueItems(selectedIds);
 
                 return RedirectToAction("AuthList");
 
@@ -484,20 +473,9 @@ namespace CMdm.UI.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-
-            var modifiedrecords = new List<MdmDqRunException>();
-            if (selectedIds != null)
-            {
-                var ids = selectedIds
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => Convert.ToInt32(x))
-                    .ToArray();
-                modifiedrecords.AddRange(_dqQueService.GetQueItembyIds(ids));
-            }
-
             try
             {
-                _dqQueService.DisApproveExceptionQueItems(modifiedrecords, comments);
+                _dqQueService.DisApproveExceptionQueItems(selectedIds, comments);
                 return RedirectToAction("AuthList");
             }
 
