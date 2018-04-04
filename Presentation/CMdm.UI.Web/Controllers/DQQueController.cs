@@ -485,6 +485,52 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList");
             }
         }
+
+        public virtual ActionResult ValidateProfile(string exceptionId, string branch, string rule, string table)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            string controllerName = "";
+
+            switch (table)
+            {
+                case "CDMA_INDIVIDUAL_BIO_DATA":
+                    controllerName = "customer";
+                    break;
+                case " CDMA_ACCOUNT_INFO":
+                    controllerName = "ACCOUNTINFO";
+                    break;
+                case "CDMA_CUSTOMER_INCOME":
+                    controllerName = "CustomerIncome";
+                    break;
+                case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
+                    controllerName = "custnok";
+                    break;
+                case "CDMA_FOREIGN_DETAILS":
+                    controllerName = "custforeign";
+                    break;
+                case "CDMA_JURAT":
+                    controllerName = "jurat";
+                    break;
+                case "CDMA_EMPLOYMENT_DETAILS":
+                    controllerName = "EmpDetail";
+                    break;
+                case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
+                    controllerName = "CusClientAcc";
+                    break;
+                case "CDMA_AUTH_FINANCE_INCLUSION":
+                    controllerName = "FinInclusion";
+                    break;
+                case "CDMA_ADDITIONAL_INFORMATION":
+                    controllerName = "CustAdi";
+                    break;
+                default:
+                    controllerName = "";
+                    break;
+            }
+            ///return RedirectToAction("Edit", controllerName, new { id = customerId});
+            return Json(new { success = true, url = Url.Action("Authorize", controllerName, new { id = exceptionId }) }, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

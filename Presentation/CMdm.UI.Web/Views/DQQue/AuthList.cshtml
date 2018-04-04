@@ -180,7 +180,8 @@
                                         //var row = $(this).select().closest("tr"); 
                                         //var dataRow = grid.dataItem(row);
                                         buttons = '<div style="width:80px">';
-                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.EXCEPTION_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
+                                        //buttons += '<buttontype="button" id="validate-profile" class="btn btn-warning">Validate</button>'
+                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.EXCEPTION_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning">Validate</button>'
                                         //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
                                         buttons += '</div>';
                                         //let $button = $(buttons);
@@ -316,6 +317,41 @@
                                 });
                                 return false;
                             });
+
+                            //"validate" button
+                            @*$('#validate-profile').click(function(e) {
+                                e.preventDefault();
+
+                                var customerId = ${ dataItem.EXCEPTION_ID };
+                                var branchCode = ${ dataItem.BRANCH_CODE };
+                                var ruleId = ${ dataItem.RULE_ID };
+                                var table = { dataItem.CATALOG_TABLE_NAME };
+
+                                var postData = {
+                                    customerId: customerId,
+                                    branch: branchCode,
+                                    rule: ruleId,
+                                    table: table,
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("ValidateProfile", "DQQue"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });*@
 
                             //"disapprove selected" button
                             $('#disapprove-selected').click(function (e) {
@@ -556,9 +592,34 @@
 
 
     //modifyProfile
-    function validateProfile(cus_id,branch,rule,table)
+    function validateProfile(ex_id,branch,rule,table)
     {
-        if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
+        var postData = {
+            exceptionId: ex_id,
+            branch: branch,
+            rule: rule,
+            table: table,
+        };
+        addAntiForgeryToken(postData);
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("ValidateProfile", "DQQue"))",
+            contentType: 'application/json; charset=utf-8',
+            data: postData,
+            success: function (data) {
+                if (data.success)
+                    //alert(data.url);
+                    window.location = data.url;
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            },
+            traditional: true
+        });
+        return false;
+        @*if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
 
             window.location.href = `/CustNok/Authorize/${cus_id}`;
             //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
@@ -587,7 +648,7 @@
             }
     
                        );
-        }
+        }*@
 
     }
     </script>
