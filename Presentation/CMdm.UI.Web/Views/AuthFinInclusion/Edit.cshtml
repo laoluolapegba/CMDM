@@ -1,6 +1,6 @@
-﻿@model CMdm.UI.Web.Models.Customer.AuthForFinInclution
+﻿@model CMdm.UI.Web.Models.Customer.AuthFIModel
 @{
-    ViewBag.Title = "AUTHENTIFICATION FOR FINANCIAL INCLUSION";
+    ViewBag.Title = "Authentication for Financial Inclusion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            ADD AUTHENTIFICATION FOR FINANCIAL INCLUSION
+          EDIT AUTHENTIFICATION FOR FINANCIAL INCLUSION
             @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
         </h1>
         <div class="pull-right">
@@ -19,7 +19,7 @@
             </button>
             <button type="submit" name="save-continue" class="btn bg-blue">
                 <i class="fa fa-floppy-o"></i>
-                SaveContinue
+                Save &amp; Continue
             </button>
 
         </div>

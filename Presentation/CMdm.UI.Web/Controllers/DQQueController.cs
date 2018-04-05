@@ -519,7 +519,7 @@ namespace CMdm.UI.Web.Controllers
                     controllerName = "CustTca";
                     break;
                 case "CDMA_AUTH_FINANCE_INCLUSION":
-                    controllerName = "FinInclusion";
+                    controllerName = "AuthFinInclusion";
                     break;
                 case "CDMA_ADDITIONAL_INFORMATION":
                     controllerName = "CustAdi";

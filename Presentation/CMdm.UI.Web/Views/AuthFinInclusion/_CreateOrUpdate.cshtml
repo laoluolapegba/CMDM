@@ -1,6 +1,5 @@
-﻿@model CMdm.UI.Web.Models.Customer.AuthForFinInclution
+﻿@model CMdm.UI.Web.Models.Customer.AuthFIModel
 @Html.ValidationSummary(true)
-@Html.HiddenFor(model => model.CUSTOMER_NO)
 
 <div class="content">
     <div class="form-horizontal">
@@ -15,9 +14,7 @@
                                         @Html.LabelFor(model => model.CUSTOMER_NO)
                                     </div>
                                     <div class="col-md-7">
-                                        @Html.HiddenFor(model => model.CUSTOMER_NO)
-                                        @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
-
+                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
                                     </div>
                                 </div>
 
@@ -37,8 +34,7 @@
                                     @Html.LabelFor(model => model.SOCIAL_FINANCIAL_DOCUMENTS)
                                 </div>
                                  <div class="col-md-7">
-                                        @Html.EditorFor(model => model.SOCIAL_FINANCIAL_DOCUMENTS, new { htmlAttributes = new { @class = "form-control" } })
-
+                                        @Html.CMdmEditorFor(model => model.SOCIAL_FINANCIAL_DOCUMENTS)
                                         @Html.ValidationMessageFor(model => model.SOCIAL_FINANCIAL_DOCUMENTS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -48,7 +44,7 @@
                                     @Html.LabelFor(model => model.ENJOYED_TIERED_KYC)
                                 </div>
                                     <div class="col-md-7">
-                                          @Html.CMdmDropDownListFor(model => model.ENJOYED_TIERED_KYC, Model.KycReq)
+                                        @Html.CMdmDropDownListFor(model => model.ENJOYED_TIERED_KYC, Model.KycReq)
                                         @Html.ValidationMessageFor(model => model.ENJOYED_TIERED_KYC, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -68,8 +64,7 @@
                                     @Html.LabelFor(model => model.MANDATE_AUTH_COMBINE_RULE)
                                  </div>
                                     <div class="col-md-7">
-
-                                        @Html.EditorFor(model => model.MANDATE_AUTH_COMBINE_RULE, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.CMdmEditorFor(model => model.MANDATE_AUTH_COMBINE_RULE)
                                         @Html.ValidationMessageFor(model => model.MANDATE_AUTH_COMBINE_RULE, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -79,18 +74,14 @@
                                     @Html.LabelFor(model => model.ACCOUNT_WITH_OTHER_BANKS)
                                   </div>
                                     <div class="col-md-7">
-                                        @Html.EditorFor(model => model.ACCOUNT_WITH_OTHER_BANKS, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.CMdmEditorFor(model => model.ACCOUNT_WITH_OTHER_BANKS)
                                         @Html.ValidationMessageFor(model => model.ACCOUNT_WITH_OTHER_BANKS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
-                            
                         </div>
-
+                    </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
