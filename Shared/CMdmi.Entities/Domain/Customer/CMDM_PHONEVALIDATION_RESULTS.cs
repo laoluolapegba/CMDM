@@ -21,8 +21,8 @@ namespace CMdm.Entities.Domain.Customer
         public string CUST_MIDDLE_NAME { get; set; }
         public string CUST_FIRST_NAME { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_RUN_DATE { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? LAST_RUN_DATE { get; set; }
         public string REASON { get; set; }
         public string PHONE_NO { get; set; }
 

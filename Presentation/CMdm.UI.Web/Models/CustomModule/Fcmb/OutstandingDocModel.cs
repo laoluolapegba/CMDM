@@ -48,8 +48,12 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string DOCUMENT_CODE { get; set; }
         [DisplayName("Document Code")]
         public string REF_DESC { get; set; }
+
         [DisplayName("Due Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
         public DateTime? DUE_DATE { get; set; }
+
         [DisplayName("Reason")]
         public string FREZ_REASON_CODE { get; set; }
 
