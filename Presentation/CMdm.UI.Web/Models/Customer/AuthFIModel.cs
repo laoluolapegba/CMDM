@@ -31,6 +31,8 @@ namespace CMdm.UI.Web.Models.Customer
         public string MANDATE_AUTH_COMBINE_RULE { get; set; }
         [DisplayName("Account Held With Other Banks")]
         public string ACCOUNT_WITH_OTHER_BANKS { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
+        public string CREATED_BY { get; set; }
 
         public List<SelectListItem> SocialOrFin { get; set; }
         public List<SelectListItem> KycReq { get; set; }
