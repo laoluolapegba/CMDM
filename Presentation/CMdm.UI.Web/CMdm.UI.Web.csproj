@@ -293,6 +293,7 @@
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CusClientAccController.cs" />
+    <Compile Include="Controllers\CustAdiController.cs" />
     <Compile Include="Controllers\CustForeignerController.cs" />
     <Compile Include="Controllers\CustJuratController.cs" />
     <Compile Include="Controllers\CustNokController.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndIdentificationController.cs" />
     <Compile Include="Controllers\IndividualAddressController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MdmCatalogsController.cs" />
@@ -567,6 +569,7 @@
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Customer\AuthForFinInclution.cs" />
+    <Compile Include="Models\Customer\CustomerADIModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
     <Compile Include="Models\Customer\CustomerJuratModel.cs" />
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
@@ -583,6 +586,8 @@
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\GoldenRecord\GoldenRecordModel.cs" />
+    <Compile Include="Models\Logging\LogListModel.cs" />
+    <Compile Include="Models\Logging\LogModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
@@ -1504,6 +1509,9 @@
     <Content Include="Content\kendo\2017.3.1026\fonts\glyphs\WebComponentsIcons.woff" />
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.ttf" />
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.woff" />
+    <Content Include="Models\CustForeigner\Create.cshtml" />
+    <Content Include="Models\CustForeigner\Edit.cshtml" />
+    <Content Include="Models\CustForeigner\_CreateOrUpdate.cshtml" />
     <None Include="Properties\PublishProfiles\CMDMProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
@@ -2120,6 +2128,7 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
+<<<<<<< HEAD
  
     <Content Include="Views\CustForeigner\Create.cshtml" />
     <Content Include="Views\CustForeigner\Edit.cshtml" />
@@ -2132,14 +2141,40 @@
     <Content Include="Views\CusClientAcc\Edit.cshtml" />
     <Content Include="Views\CusClientAcc\Index.cshtml" />
     <Content Include="Views\CusClientAcc\_CreateOrUpdate.cshtml" />
+=======
+    <Content Include="Views\CustNok\Authorize.cshtml" />
+    <Content Include="Views\CusClientAcc\Create.cshtml" />
+    <Content Include="Views\CusClientAcc\Edit.cshtml" />
+    <Content Include="Views\CusClientAcc\Index.cshtml" />
+    <Content Include="Views\CusClientAcc\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustAdi\Create.cshtml" />
+    <Content Include="Views\CustAdi\Edit.cshtml" />
+    <Content Include="Views\CustAdi\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustForeigner\Create.cshtml" />
+    <Content Include="Views\CustForeigner\Edit.cshtml" />
+    <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustJurat\Create.cshtml" />
+    <Content Include="Views\CustJurat\Edit.cshtml" />
+    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\EmpDetail\Create.cshtml" />
+    <Content Include="Views\EmpDetail\Edit.cshtml" />
+    <Content Include="Views\EmpDetail\Index.cshtml" />
+    <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
+>>>>>>> f250f210a92ff65fab3033d35d5adba104bee9e1
     <Content Include="Views\FinInclusion\Create.cshtml" />
     <Content Include="Views\FinInclusion\Edit.cshtml" />
     <Content Include="Views\FinInclusion\Index.cshtml" />
     <Content Include="Views\FinInclusion\_CreateOrUpdate.cshtml" />
+<<<<<<< HEAD
      <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
    </ItemGroup>
+=======
+    <Content Include="Views\Log\List.cshtml" />
+    <Content Include="Views\Log\View.cshtml" />
+  </ItemGroup>
+>>>>>>> f250f210a92ff65fab3033d35d5adba104bee9e1
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
     <Folder Include="Content\customlogin\colorbox\images\" />

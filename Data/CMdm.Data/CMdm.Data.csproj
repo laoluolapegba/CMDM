@@ -76,6 +76,7 @@
     <Compile Include="DAC\DqRuleDAC.cs" />
     <Compile Include="DAC\DqQueDAC.cs" />
     <Compile Include="DAC\KPIDAC.cs" />
+    <Compile Include="DAC\LogDAC.cs" />
     <Compile Include="DAC\PermissionsDAC.cs" />
     <Compile Include="DAC\UserAdminDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />

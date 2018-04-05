@@ -73,6 +73,7 @@ namespace CMdm.Services.Logging
         /// <param name="fullMessage">The full message</param>
         /// <param name="customer">The customer to associate log record with</param>
         /// <returns>A log item</returns>
-        Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId = "", string UserId = "");
+        Log InsertLog1(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId = "", string UserId = "");
+        Log AddLog(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId = "", string UserId = "");
     }
 }

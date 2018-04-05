@@ -452,7 +452,57 @@ namespace CMdm.Core
                 _httpContext.Items["nop.IsPOSTBeingDone"] = value;
             }
         }
+        /// <summary>
+        /// Gets this page name
+        /// </summary>
+        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
+        /// <returns>Page name</returns>
+        public virtual string GetThisPageUrl(bool includeQueryString)
+        {
+            bool useSsl = IsCurrentConnectionSecured();
+            return GetThisPageUrl(includeQueryString, useSsl);
+        }
 
+        /// <summary>
+        /// Gets this page name
+        /// </summary>
+        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
+        /// <param name="useSsl">Value indicating whether to get SSL protected page</param>
+        /// <returns>Page name</returns>
+        public virtual string GetThisPageUrl(bool includeQueryString, bool useSsl)
+        {
+            if (!IsRequestAvailable(_httpContext))
+                return string.Empty;
+
+            //get the host considering using SSL
+            var url = GetStoreHost(useSsl).TrimEnd('/');
+
+            //get full URL with or without query string
+            url += includeQueryString ? _httpContext.Request.RawUrl : _httpContext.Request.Path;
+
+            return url.ToLowerInvariant();
+        }
+        /// <summary>
+        /// Gets store host location
+        /// </summary>
+        /// <param name="useSsl">Use SSL</param>
+        /// <returns>Store host location</returns>
+        public virtual string GetStoreHost(bool useSsl)
+        {
+            var result = "";
+            var httpHost = ServerVariables("HTTP_HOST");
+            if (!String.IsNullOrEmpty(httpHost))
+            {
+                result = "http://" + httpHost;
+                if (!result.EndsWith("/"))
+                    result += "/";
+            }
+                        
+
+            if (!result.EndsWith("/"))
+                result += "/";
+            return result.ToLowerInvariant();
+        }
         #endregion
     }
 }

@@ -1,0 +1,48 @@
+﻿@model CMdm.UI.Web.Models.Customer.CustomerADIModel
+@Html.ValidationSummary(true)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.Label("Annual Salary/ Expected Annual Income")
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.ANNUAL_SALARY_EXPECTED_INC, Model.Salaries)
+                                    @Html.ValidationMessageFor(model => model.ANNUAL_SALARY_EXPECTED_INC)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.FAX_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.FAX_NUMBER)
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

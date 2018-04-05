@@ -19,6 +19,7 @@ namespace CMdm.Entities.Domain.Audit
         public DateTime DATECHANGED { get; set; }
         public string EVENTTYPE { get; set; }
         public string USERID { get; set; }
+        public string CHANGEID { get; set; }
     }
 
 }

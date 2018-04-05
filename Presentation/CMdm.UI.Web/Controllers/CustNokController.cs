@@ -11,28 +11,100 @@ using CMdm.Entities.Domain.Customer;
 using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
+using System.Reflection;
+using CMdm.Services.DqQue;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class CustNokController : BaseController
     {
         private AppDbContext db = new AppDbContext();
+        private IDqQueService _dqQueService;
+        public CustNokController()
+        {
+            //bizrule = new DQQueBiz();
+            _dqQueService = new DqQueService();
+        }
+        public ActionResult Authorize(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("AuthList","DQQue");
+            }
+            
 
+            var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
+            if (querecord == null)
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+            //get all changed columns
+
+            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            var model = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
+                         where c.CUSTOMER_NO == querecord.CUST_ID
+                         select new CustomerNOKModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             COUNTRY = c.COUNTRY,
+                             CITY_TOWN = c.CITY_TOWN,
+                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                             FIRST_NAME = c.FIRST_NAME,
+                             HOUSE_NUMBER = c.HOUSE_NUMBER,
+                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
+                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
+                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
+                             LGA = c.LGA,
+                             MOBILE_NO = c.MOBILE_NO,
+                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                             OFFICE_NO = c.OFFICE_NO,
+                             OTHER_NAME = c.OTHER_NAME,
+                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
+                             RELATIONSHIP = c.RELATIONSHIP,
+                             RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
+                             SEX = c.SEX,
+                             STATE = c.STATE,
+                             STREET_NAME = c.STREET_NAME,
+                             SURNAME = c.SURNAME,
+                             TITLE = c.TITLE,
+                             ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                             LastUpdatedby = c.LAST_MODIFIED_BY,
+                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                             LastAuthdby = c.AUTHORISED_BY,
+                             LastAuthDate = c.AUTHORISED_DATE,
+                             ExceptionId = querecord.EXCEPTION_ID
+                         }).FirstOrDefault();
+
+            //var modelProperties = model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            
+            //List<string> props = new List<string>();
+            foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+            {
+                foreach (var item2 in changedSet)
+                {
+                    if (item2.PROPERTYNAME == item.Name)
+                    {
+                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                    }
+                }
+                //props.Add(item.Name);
+
+            }
+            //var matchItems = props.Intersect(changedSet);
+            model.ReadOnlyForm = "True";
+            PrepareModel(model);
+            return View(model);
+        }
         public ActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Create");
             }
-
-            var x = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
-                     where c.CUSTOMER_NO == id
-                     select new
-                     {
-                         a = c.CUSTOMER_NO,
-                         b= c.COUNTRY
-                     });
-
+           
             var model = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
                               
                               where c.CUSTOMER_NO == id
@@ -118,7 +190,7 @@ namespace CMdm.UI.Web.Controllers
                         entity.AUTHORISED = "U";
                         db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
                         db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
+                        db.SaveChanges(identity.ProfileId.ToString(), nokmodel.CUSTOMER_NO);
 
                     }
                 }
@@ -202,6 +274,81 @@ namespace CMdm.UI.Web.Controllers
 
 
         }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("approve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve(CustomerNOKModel nokmodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                
+                _dqQueService.ApproveExceptionQueItems(nokmodel.ExceptionId.ToString());
+                //using (var db = new AppDbContext())
+                //{
+                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
+                //    if (entity == null)
+                //    {
+                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
+                //        ModelState.AddModelError("", errorMessage);
+                //    }
+                //    else
+                //    {                       
+                //        entity.AUTHORISED = "A";
+                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
+                //        db.Entry(entity).State = EntityState.Modified;
+                //        db.SaveChanges();
+
+                //    }
+                //}
+
+                SuccessNotification("NOK Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustNok");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(nokmodel);
+            return View(nokmodel);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("disapprove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisApprove(CustomerNOKModel nokmodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                using (var db = new AppDbContext())
+                {
+                    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
+                    if (entity == null)
+                    {
+                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
+                        ModelState.AddModelError("", errorMessage);
+                    }
+                    else
+                    {
+                        entity.AUTHORISED = "N";
+                        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                }
+
+                SuccessNotification("NOK Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustNok");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(nokmodel);
+            return View(nokmodel);
+        }
+
         #region Scaffolded
         // GET: CustNok
         public ActionResult Index()
