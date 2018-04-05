@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace CMdm.UI.Web.Models.Customer
 {
-    public class AuthForFinInclution
+    public class AuthFIModel
     {
-        public AuthForFinInclution()
+        public AuthFIModel()
         {
             SocialOrFin = new List<SelectListItem>();
             KycReq = new List<SelectListItem>();
             YesKyc = new List<SelectListItem>();
-
         }
+
         [DisplayName("Customer No")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Is The Customer Socially Or Financially Disadvantaged?")]
@@ -32,25 +32,16 @@ namespace CMdm.UI.Web.Models.Customer
         [DisplayName("Account Held With Other Banks")]
         public string ACCOUNT_WITH_OTHER_BANKS { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-
-        public string CREATED_BY { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-        public string LAST_MODIFIED_BY { get; set; }
-        public string AUTHORISED { get; set; }
-        public string AUTHORISED_BY { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-        public string IP_ADDRESS { get; set; }
-
         public List<SelectListItem> SocialOrFin { get; set; }
         public List<SelectListItem> KycReq { get; set; }
         public List<SelectListItem> YesKyc { get; set; }
+
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
 
     }
 }
