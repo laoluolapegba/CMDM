@@ -507,16 +507,16 @@ namespace CMdm.UI.Web.Controllers
                     controllerName = "custnok";
                     break;
                 case "CDMA_FOREIGN_DETAILS":
-                    controllerName = "custforeign";
+                    controllerName = "custforeigner";
                     break;
                 case "CDMA_JURAT":
                     controllerName = "jurat";
                     break;
                 case "CDMA_EMPLOYMENT_DETAILS":
-                    controllerName = "EmpDetail";
+                    controllerName = "EmployeeInfo";
                     break;
                 case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
-                    controllerName = "CusClientAcc";
+                    controllerName = "CustTca";
                     break;
                 case "CDMA_AUTH_FINANCE_INCLUSION":
                     controllerName = "FinInclusion";

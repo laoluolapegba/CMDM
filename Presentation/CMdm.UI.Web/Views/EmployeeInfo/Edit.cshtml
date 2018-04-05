@@ -1,7 +1,6 @@
-﻿@model CMdm.UI.Web.Models.Customer.CustomerTrustClientAccount
-
+﻿@model CMdm.UI.Web.Models.Customer.EmpInfoModel
 @{
-    ViewBag.Title = "TRUST CLIENT ACCOUNT";
+    ViewBag.Title = "Employee Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +9,7 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Add Trust Client Account
+            Edit Customer - @Model.CUSTOMER_NO
             @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
         </h1>
         <div class="pull-right">

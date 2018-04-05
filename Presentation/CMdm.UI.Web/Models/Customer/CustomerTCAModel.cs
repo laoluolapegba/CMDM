@@ -1,15 +1,14 @@
-﻿namespace CMdm.UI.Web.Models.Customer
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
-    public class CustomerTrustClientAccount
+namespace CMdm.UI.Web.Models.Customer
+{
+    public class CustomerTCAModel
     {
-        public CustomerTrustClientAccount()
+        public CustomerTCAModel()
         {
             Countries = new List<SelectListItem>();
             Nationalities = new List<SelectListItem>();
@@ -27,10 +26,9 @@
         public string NAME_OF_BENEFICIAL_OWNER { get; set; }
         [DisplayName("Spouse Name")]
         public string SPOUSE_NAME { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Spouse’s Date of Birth")]
-        public Nullable<System.DateTime> SPOUSE_DATE_OF_BIRTH { get; set; }
+        [UIHint("DateNullable")]
+        public DateTime? SPOUSE_DATE_OF_BIRTH { get; set; }
         [DisplayName("Spouse’s Occupation")]
         public string SPOUSE_OCCUPATION { get; set; }
         [DisplayName("Sources Of Fund To The Account")]
@@ -57,24 +55,13 @@
         public decimal? NATIONALITY { get; set; }
         [DisplayName("Telephone Number")]
         public string TELEPHONE_NUMBER { get; set; }
-        public string LAST_MODIFIED_BY { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-        public string CREATED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-        public string AUTHORISED { get; set; }
-        public string AUTHORISED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-        public string IP_ADDRESS { get; set; }
-
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
 
         public List<SelectListItem> Countries { get; set; }
         public List<SelectListItem> Nationalities { get; set; }

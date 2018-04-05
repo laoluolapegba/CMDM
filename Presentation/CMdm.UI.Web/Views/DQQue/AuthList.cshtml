@@ -559,39 +559,7 @@
         e.preventDefault(); // avoid to execute the actual submit of the form.
     };
 
-
-    //modifyProfile
-    function modifyProfile(cus_id,branch,rule,table)
-    {
-
-        $("#update").css({ 'display': 'none' });
-        var queryString = "c_id=" + cus_id;
-        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
-        //alert(cus_id);
-        $("#loading").css({ 'display': 'block' });
-        $("#display").css({ 'display': 'none' });
-         $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
-                 type: 'get',data: queryString,cache: false,
-                 success: function (data) {
-                     // alert(data);
-                     $("#loading").css({ 'display': 'none' });
-                     $("#display").css({ 'display': 'block' });
-
-                      document.getElementById("display").innerHTML = "";
-                     // document.getElementById("display").innerHTML="hello";
-                     // var response = jQuery.parseJSON(data);
-                      //alert(response);
-                      document.getElementById("display").innerHTML = data;
-                  }
-                          }
-                   );
-
-
-    }
-
-
-
-    //modifyProfile
+    //validateProfile
     function validateProfile(ex_id,branch,rule,table)
     {
         var postData = {

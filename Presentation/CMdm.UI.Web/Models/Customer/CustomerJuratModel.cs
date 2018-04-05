@@ -23,5 +23,11 @@ namespace CMdm.UI.Web.Models.Customer
         public string TELEPHONE_NO { get; set; }
         [DisplayName("Language of Interpretation")]
         public string LANGUAGE_OF_INTERPRETATION { get; set; }
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
     }
 }

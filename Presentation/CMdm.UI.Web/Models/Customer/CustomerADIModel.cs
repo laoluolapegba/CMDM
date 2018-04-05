@@ -20,5 +20,11 @@ namespace CMdm.UI.Web.Models.Customer
         [DisplayName("Fax Number")]
         public string FAX_NUMBER { get; set; }
         public List<SelectListItem> Salaries { get; set; }
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
     }
 }
