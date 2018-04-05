@@ -46,14 +46,12 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
                 new PropertyByName<OutStandingDoc>("Product Name", p => p.SCHM_DESC),
                 new PropertyByName<OutStandingDoc>("Schm Type", p => p.SCHM_TYPE),
-                new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),
-                
-                //new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),
-                
+                new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),                
+                new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),             
                 
                 new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE),
-                new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE)
-                //new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
+                new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE),
+                new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
             };
 
             return ExportToXlsx(properties, documents);
