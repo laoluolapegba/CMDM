@@ -463,9 +463,6 @@ namespace CMdm.UI.Web.Controllers
         }
 
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ApproveBioData(DynamicViewModel DynamicModel)
@@ -556,7 +553,71 @@ namespace CMdm.UI.Web.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisapproveBioData(DynamicViewModel DynamicModel)
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var dateAndTime = DateTime.Now;
+            var c_id = DynamicModel.BioData.CUSTOMER_NO;
 
+            //create a log before update
+            string tied = DateTime.Now.ToString("hhmmssffffff");
+
+            CDMA_INDIVIDUAL_BIO_DATA cDMA_INDIVIDUAL_BIO_DATA = db.CDMA_INDIVIDUAL_BIO_DATA.Find(c_id);
+            CDMA_INDIVIDUAL_CONTACT_DETAIL cDMA_INDIVIDUAL_CONTACT_DETAIL = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Find(c_id);
+            CDMA_INDIVIDUAL_ADDRESS_DETAIL cDMA_INDIVIDUAL_ADDRESS_DETAIL = db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Find(c_id);
+            CDMA_INDIVIDUAL_IDENTIFICATION cDMA_INDIVIDUAL_IDENTIFICATION = db.CDMA_INDIVIDUAL_IDENTIFICATION.Find(c_id);
+            CDMA_INDIVIDUAL_OTHER_DETAILS cDMA_INDIVIDUAL_OTHER_DETAILS = db.CDMA_INDIVIDUAL_OTHER_DETAILS.Find(c_id);
+
+            //Address details
+            //  var authrizer = DynamicModel.AddressDetails.AUTHORISED;
+            // var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
+            //   var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
+            // checked if address record does not exist 
+            if (!(cDMA_INDIVIDUAL_ADDRESS_DETAIL == null))
+            {
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED_DATE = null;
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED = "N";
+                db.SaveChanges();
+            }
+
+            // Biodata           
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED_BY = null;
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED = "N";
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED_DATE = null;
+            db.SaveChanges();
+            
+            if (!(cDMA_INDIVIDUAL_CONTACT_DETAIL == null))
+            {
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED_DATE = null;
+                db.SaveChanges();
+            }
+            
+            // identification 
+            if (!(cDMA_INDIVIDUAL_IDENTIFICATION == null))
+            {
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED_DATE = null;
+
+                db.SaveChanges();
+            }
+
+            //otherdetails	 s
+            if (!(cDMA_INDIVIDUAL_OTHER_DETAILS == null))
+            {
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED_DATE = null;
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED_BY = null;
+                db.SaveChanges();
+            }
+
+            return PartialView("SaveBioData", DynamicModel);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

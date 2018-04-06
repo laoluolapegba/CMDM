@@ -66,7 +66,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of Leave objects.</returns>		
-        public List<MdmDqRule> Select(string name, int startRowIndex, int maximumRows, string sortExpression)
+        public List<MdmDqRule> Select(string name, int startRowIndex, int maximumRows, string sortExpression, int? dimensionId = null)
         {
             using (var db = new AppDbContext())
             {
@@ -78,7 +78,11 @@ namespace CMdm.Data.DAC
                     query = query.Where(v => v.RULE_NAME.ToUpper().Contains(name.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
-
+                if(dimensionId.HasValue && dimensionId.Value > 0)
+                {
+                    int dimension = (int)dimensionId.Value;
+                    query = query.Where(d => d.DIMENSION == dimension);
+                }
                 // Sort and page.
                 query = query.OrderBy(a => a.LAST_RUN);
                         //.Skip(startRowIndex).Take(maximumRows);

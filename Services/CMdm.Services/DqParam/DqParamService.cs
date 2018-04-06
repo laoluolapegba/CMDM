@@ -97,7 +97,7 @@ namespace CMdm.Services.DqParam
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "CREATED_DATE DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqparamDAC.Select(name, pageIndex, pageSize, sortExpression,dimId = null, entityId = null, catalogId = null);
+            result = _dqparamDAC.Select(name, pageIndex, pageSize, sortExpression, dimId, entityId, catalogId);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

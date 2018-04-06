@@ -262,7 +262,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
+                                    @Html.DropDownList("COUNTRY_OF_BIRTH", null, "Please select", htmlAttributes: new { @class = "form-control", @disabled = true })
                                    
                                    <!-- @Html.EditorFor(model => model.BioData.COUNTRY_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })-->
                                     @Html.ValidationMessageFor(model => model.BioData.COUNTRY_OF_BIRTH, "", new { @class = "text-danger" })
@@ -334,7 +334,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("MARITAL_STATUS", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = true })
+                                    @Html.DropDownList("MARITAL_STATUS", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @disabled = true })
 
 
                                    @* @Html.EditorFor(model => model.BioData.MARITAL_STATUS, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -358,7 +358,7 @@
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
+                                    @Html.DropDownList("BioData_NATIONALITY", null, "Please select", htmlAttributes: new { @class = "form-control", @disabled = true })
                                     @*@Html.EditorFor(model => model.BioData.NATIONALITY, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.NATIONALITY, "", new { @class = "text-danger" })
                                 </div>
@@ -499,7 +499,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
                                         }
                                         
                                     </label>
-                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control",  @readonly = true })
+                                    @Html.DropDownList("RELIGION", null, "Please select", htmlAttributes: new { @class = "form-control", @disabled = true })
                                     @*@Html.EditorFor(model => model.BioData.RELIGION, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.BioData.RELIGION, "", new { @class = "text-danger" })
                                 </div>
@@ -523,7 +523,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
 
                                     }  </label>
                                     
-                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
+                                    @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @disabled = true })
 
 
                                     @*@Html.EditorFor(model => model.BioData.BRANCH_CODE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -555,7 +555,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
                                         
                                     </label>
 
-                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();", @readonly = true })
+                                    @Html.DropDownList("STATES_RES", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();", @disabled = true })
 
 
                                     @*@Html.EditorFor(model => model.AddressDetails.STATE_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -583,7 +583,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
                                         
                                     </label>
                                     <div id="lgloading"><img style="width:100px;height:100px;display:none;" src="~/AdminLTE/dist/img/loading.gif"></div>
-                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @readonly = true })
+                                    @Html.DropDownList("LGA", null, "Please select state to pick LGA", htmlAttributes: new { @class = "form-control", @disabled = true })
                                     @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
 
                                 </div>
@@ -658,7 +658,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
                                         
                                     </label>
                                     
-                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @readonly = true })
+                                    @Html.DropDownList("COUNTRY_OF_RESIDENCE", null, "Please select", htmlAttributes: new { @class = "form-control", @disabled = true })
                                     @*@Html.EditorFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control" } })*@
                                     @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
 
@@ -848,7 +848,7 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
                                     </label>
 
                                     
-                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @readonly = true })
+                                    @Html.DropDownList("CDMA_IDENTIFICATION_TYPE", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @disabled = true })
 
 
                                    @*@Html.EditorFor(model => model.identification.IDENTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -989,8 +989,8 @@ new { htmlAttributes = new { @class = "form-control", @type = "number", @readonl
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                           
-                            <button type="button" class="btn btn-warning pull-right" onclick="ApproveData()">Approve Record</button> 
+                            <button type="button" class="btn btn-danger pull-right" onclick="DisapproveData();">Disapprove Record</button>                          
+                            <button type="button" class="btn btn-warning pull-right" onclick="ApproveData();">Approve Record</button> 
                             
                         </div>
                 <!--  
