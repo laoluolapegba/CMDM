@@ -106,6 +106,13 @@ namespace CMdm.Services.DqQue
 
             return _dqqueDAC.SelectById(recordId);
         }
+        public virtual MdmDqRunException GetQueDetailItembyId(int recordId )
+        {
+            if (recordId == 0)
+                return null;
+
+            return _dqqueDAC.SelectExceptionById(recordId);
+        }
         /// <summary>
         /// Gets all queitems
         /// </summary>
@@ -149,7 +156,7 @@ namespace CMdm.Services.DqQue
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId =null, int? ruleId =null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+        public virtual IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId =null, string customerId = null, int? ruleId =null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")  //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
         {
             List<MdmDqRunException> result = default(List<MdmDqRunException>);
@@ -157,13 +164,13 @@ namespace CMdm.Services.DqQue
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "RUN_DATE DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.SelectBrnIssues(name,  pageIndex, pageSize, sortExpression, ruleId, catalogId, BranchId, issueStatus, priority); //createdOnFrom = null, createdOnTo = null,
+            result = _dqqueDAC.SelectBrnIssues(name,  pageIndex, pageSize, sortExpression, customerId, ruleId, catalogId, BranchId, issueStatus, priority); //createdOnFrom = null, createdOnTo = null,
 
 
             var queitems = new PagedList<MdmDqRunException>(result, pageIndex, pageSize);
             return queitems;
         }
-        public virtual IPagedList<CustExceptionsModel> GetAllBrnUnAuthIssues(string name = "", int? catalogId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+        public virtual IPagedList<CustExceptionsModel> GetAllBrnUnAuthIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
              int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")  //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
         {
             List<CustExceptionsModel> result = default(List<CustExceptionsModel>);
@@ -171,11 +178,49 @@ namespace CMdm.Services.DqQue
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "RUN_DATE DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.SelectBrnUnauthIssues(name, pageIndex, pageSize, sortExpression, ruleId, catalogId, BranchId, issueStatus, priority); //createdOnFrom = null, createdOnTo = null,
+            result = _dqqueDAC.SelectBrnUnauthIssues(name, pageIndex, pageSize, sortExpression, customerId, ruleId, catalogId, BranchId, issueStatus, priority); //createdOnFrom = null, createdOnTo = null,
 
 
             var queitems = new PagedList<CustExceptionsModel>(result, pageIndex, pageSize);
             return queitems;
+        }
+        public virtual void ApproveExceptionQueItems(string selectedIds)  //List<MdmDqRunException> queitems
+        {
+            var modifiedrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                modifiedrecords.AddRange(GetQueItembyIds(ids));
+            }
+            if (modifiedrecords == null)
+                throw new ArgumentNullException("approvedqueitems");
+
+            _dqqueDAC.ApproveExceptionQues(modifiedrecords);
+
+            //event notification
+            //_eventPublisher.EntityUpdated(vendor);
+        }
+        public virtual void DisApproveExceptionQueItems(string selectedIds, string comments)//List<MdmDqRunException> queitems
+        {
+            var modifiedrecords = new List<MdmDqRunException>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                modifiedrecords.AddRange(GetQueItembyIds(ids));
+            }
+            if (modifiedrecords == null)
+                throw new ArgumentNullException("dissaprovedqueitems");
+
+            _dqqueDAC.DisApproveExceptionQues(modifiedrecords, comments);
+
+            //event notification
+            //_eventPublisher.EntityUpdated(vendor);
         }
         #endregion
     }

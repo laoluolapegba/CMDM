@@ -11,7 +11,7 @@ using CMdm.Entities.Domain.Customer;
 
 namespace CMdm.UI.Web.Controllers
 {
-    public class ACCOUNTINFOController : Controller
+    public class AccountInfoController : Controller
     {
         private AppDbContext db = new AppDbContext();
 

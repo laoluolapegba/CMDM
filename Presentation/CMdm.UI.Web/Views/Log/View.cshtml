@@ -1,0 +1,100 @@
+﻿@model CMdm.UI.Web.Models.Logging.LogModel
+
+@{
+    //page title
+    ViewBag.Title = "View Log Details";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            View Log Details
+            <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "List")</small>
+        </h1>
+        <div class="pull-right">
+            <span id="log-delete" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+                Delete
+            </span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    @Html.ValidationSummary(true)
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.LogLevel)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.LogLevel)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.ShortMessage)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.ShortMessage)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.FullMessage)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.FullMessage)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.IpAddress)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.IpAddress)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.CustomerId)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.CustomerId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.PageUrl)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.PageUrl)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.ReferrerUrl)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.ReferrerUrl)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.CreatedOn)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.CreatedOn)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*@Html.DeleteConfirmation("log-delete")*@

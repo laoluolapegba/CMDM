@@ -15,64 +15,65 @@ namespace CMdm.Entities.Domain.Logging
     /// Represents a log record
     /// </summary>
     [Table("MDM_EXCEPTION_LOG")]
-    public partial class Log : BaseEntity
+    public partial class Log
     {
+        public int ID { get; set; }
         /// <summary>
         /// Gets or sets the log level identifier
         /// </summary>
-        public int LogLevelId { get; set; }
+        public int LOGLEVELID { get; set; }
 
         /// <summary>
         /// Gets or sets the short message
         /// </summary>
-        public string ShortMessage { get; set; }
+        public string SHORTMESSAGE { get; set; }
 
         /// <summary>
         /// Gets or sets the full exception
         /// </summary>
-        public string FullMessage { get; set; }
+        public string FULLMESSAGE { get; set; }
 
         /// <summary>
         /// Gets or sets the IP address
         /// </summary>
-        public string IpAddress { get; set; }
+        public string IPADDRESS { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public string CustomerId { get; set; }
+        public string CUSTOMERID { get; set; }
 
         /// <summary>
         /// Gets or sets the page URL
         /// </summary>
-        public string PageUrl { get; set; }
+        public string PAGEURL { get; set; }
 
         /// <summary>
         /// Gets or sets the referrer URL
         /// </summary>
-        public string ReferrerUrl { get; set; }
-        public string Createdby { get; set; }
+        public string REFERRERURL { get; set; }
+        public string CREATEDBY { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime CREATEDDATE { get; set; }
 
-        
+
         /// <summary>
         /// Gets or sets the log level
         /// </summary>
-        public LogLevel LogLevel
-        {
-            get
-            {
-                return (LogLevel)this.LogLevelId;
-            }
-            set
-            {
-                this.LogLevelId = (int)value;
-            }
-        }
+        //public LogLevel LogLevel
+        //{
+        //    get
+        //    {
+        //        return (LogLevel)this.LOGLEVELID;
+        //    }
+        //    set
+        //    {
+        //        this.LOGLEVELID = (int)value;
+        //    }
+        //}
 
     }
 }

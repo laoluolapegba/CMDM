@@ -31,7 +31,7 @@
                 <i class="fa fa-check-square-o"></i>
                 Approve Selected
             </button>
-            <button type="button" id="disapprove-selected" class="btn bg-navy">
+            <button type="button" id="disapprove-modal" data-toggle="modal" data-target="#modal-comment" class="btn bg-navy">
                 <i class="fa fa-minus-square-o"></i>
                 Disapprove Selected
             </button>
@@ -81,6 +81,17 @@
                                     @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
+                                        <i class="fa fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.ISSUE_PRIORITY_DESC)
@@ -103,14 +114,6 @@
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmDropDownList("CATALOG_ID", Model.Catalogs)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="button" id="search-rule" class="btn btn-primary btn-search">
-                                        <i class="fa fa-search"></i>
-                                        Search
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +180,8 @@
                                         //var row = $(this).select().closest("tr"); 
                                         //var dataRow = grid.dataItem(row);
                                         buttons = '<div style="width:80px">';
-                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
+                                        //buttons += '<buttontype="button" id="validate-profile" class="btn btn-warning">Validate</button>'
+                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.EXCEPTION_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning">Validate</button>'
                                         //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
                                         buttons += '</div>';
                                         //let $button = $(buttons);
@@ -266,6 +270,7 @@
                    
                     <script type="text/javascript">
                         var selectedIds = [];
+                        var comments = "";
 
                         $(document).ready(function() {
                             //search button
@@ -313,12 +318,50 @@
                                 return false;
                             });
 
+                            //"validate" button
+                            @*$('#validate-profile').click(function(e) {
+                                e.preventDefault();
+
+                                var customerId = ${ dataItem.EXCEPTION_ID };
+                                var branchCode = ${ dataItem.BRANCH_CODE };
+                                var ruleId = ${ dataItem.RULE_ID };
+                                var table = { dataItem.CATALOG_TABLE_NAME };
+
+                                var postData = {
+                                    customerId: customerId,
+                                    branch: branchCode,
+                                    rule: ruleId,
+                                    table: table,
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@(Url.Action("ValidateProfile", "DQQue"))",
+                                    data: postData,
+                                    complete: function(data) {
+                                        //reload grid
+                                        var grid = $('#dqauth-grid').data('kendoGrid');
+                                        grid.dataSource.read();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError);
+                                    },
+                                    traditional: true
+                                });
+                                return false;
+                            });*@
+
                             //"disapprove selected" button
-                            $('#disapprove-selected').click(function(e) {
+                            $('#disapprove-selected').click(function (e) {
+                                var comments = $('#rejectComments').val();
+                                $('#modal-comment').modal('toggle');
                                 e.preventDefault();
 
                                 var postData = {
-                                    selectedIds: selectedIds
+                                    selectedIds: selectedIds,
+                                    comments: comments
                                 };
                                 addAntiForgeryToken(postData);
 
@@ -543,66 +586,88 @@
         e.preventDefault(); // avoid to execute the actual submit of the form.
     };
 
-
-    //modifyProfile
-    function modifyProfile(cus_id,branch,rule,table)
+    //validateProfile
+    function validateProfile(ex_id,branch,rule,table)
     {
-        $("#update").css({ 'display': 'none' });
-        var queryString = "c_id=" + cus_id;
-        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
-        //alert(cus_id);
-        $("#loading").css({ 'display': 'block' });
-        $("#display").css({ 'display': 'none' });
-         $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
-                 type: 'get',data: queryString,cache: false,
-                 success: function (data) {
-                     // alert(data);
-                     $("#loading").css({ 'display': 'none' });
-                     $("#display").css({ 'display': 'block' });
+        var postData = {
+            exceptionId: ex_id,
+            branch: branch,
+            rule: rule,
+            table: table,
+        };
+        addAntiForgeryToken(postData);
 
-                      document.getElementById("display").innerHTML = "";
-                     // document.getElementById("display").innerHTML="hello";
-                     // var response = jQuery.parseJSON(data);
-                      //alert(response);
-                      document.getElementById("display").innerHTML = data;
-                  }
-                          }
-                   );
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("ValidateProfile", "DQQue"))",
+            contentType: 'application/json; charset=utf-8',
+            data: postData,
+            success: function (data) {
+                if (data.success)
+                    //alert(data.url);
+                    window.location = data.url;
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            },
+            traditional: true
+        });
+        return false;
+        @*if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
 
+            window.location.href = `/CustNok/Authorize/${cus_id}`;
+            //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
+            /* Url.Action("Edit", "CustNok", new { id = cus_id});*/
 
-    }
+        }else{
+            $("#update").css({ 'display': 'none' });
+            var queryString = "c_id=" + cus_id;
+            queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
+            //alert(cus_id);
+            $("#loading").css({ 'display': 'block' });
+            $("#display").css({ 'display': 'none' });
+            $.ajax({url: "@Url.Action("DataValidation", "Dynamic")",
+                type: 'get',data: queryString,cache: false,
+                success: function (data) {
+                    // alert(data);
+                    $("#loading").css({ 'display': 'none' });
+                    $("#display").css({ 'display': 'block' });
 
-
-
-    //modifyProfile
-    function validateProfile(cus_id,branch,rule,table)
-    {
-        $("#update").css({ 'display': 'none' });
-        var queryString = "c_id=" + cus_id;
-        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
-        //alert(cus_id);
-        $("#loading").css({ 'display': 'block' });
-        $("#display").css({ 'display': 'none' });
-        $.ajax({url: "@Url.Action("DataValidation", "Dynamic")",
-            type: 'get',data: queryString,cache: false,
-        success: function (data) {
-            // alert(data);
-            $("#loading").css({ 'display': 'none' });
-            $("#display").css({ 'display': 'block' });
-
-            document.getElementById("display").innerHTML = "";
-            // document.getElementById("display").innerHTML="hello";
-            // var response = jQuery.parseJSON(data);
-            //alert(response);
-            document.getElementById("display").innerHTML = data;
-        }
-    }
-                   );
-
+                    document.getElementById("display").innerHTML = "";
+                    // document.getElementById("display").innerHTML="hello";
+                    // var response = jQuery.parseJSON(data);
+                    //alert(response);
+                    document.getElementById("display").innerHTML = data;
+                }
+            }
+    
+                       );
+        }*@
 
     }
     </script>
 }
+
+<div class="modal fade" id="modal-comment" role="dialog" aria-labelledby="modal-comment-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reason for rejection</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="3" placeholder="Add comments here" id="rejectComments"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="disapprove-selected" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal modal-primary fade" id="modal-primary">

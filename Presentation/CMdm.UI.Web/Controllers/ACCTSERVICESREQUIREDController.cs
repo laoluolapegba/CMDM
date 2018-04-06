@@ -11,7 +11,7 @@ using CMdm.Entities.Domain.Customer;
 
 namespace CMdm.UI.Web.Controllers
 {
-    public class ACCTSERVICESREQUIREDController : Controller
+    public class AcctServicesRequiredController : Controller
     {
         private AppDbContext db = new AppDbContext();
 

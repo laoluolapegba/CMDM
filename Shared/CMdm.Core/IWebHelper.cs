@@ -11,7 +11,12 @@ namespace CMdm.Core
         /// </summary>
         /// <returns>URL referrer</returns>
         string GetUrlReferrer();
-
+        /// <summary>
+        /// Gets this page name
+        /// </summary>
+        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
+        /// <returns>Page name</returns>
+        string GetThisPageUrl(bool includeQueryString);
         /// <summary>
         /// Get context IP address
         /// </summary>

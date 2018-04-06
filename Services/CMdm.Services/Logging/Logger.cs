@@ -2,6 +2,7 @@
 using CMdm.Core;
 using CMdm.Core.Data;
 using CMdm.Data;
+using CMdm.Data.DAC;
 using CMdm.Entities.Domain.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,34 +19,40 @@ namespace CMdm.Services.Logging
     {
         #region Fields
 
-        private readonly IRepository<Log> _logRepository;
-        //private readonly IWebHelper _webHelper;
+        //private readonly IRepository<Log> _logRepository;
+        private readonly IWebHelper _webHelper;
         private readonly IDbContext _dbContext;
         //private readonly IDataProvider _dataProvider;
         //private readonly CommonSettings _commonSettings;
+        private LogDAC _logDAC;
+        
 
         #endregion
 
         #region Ctor
 
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        /// <param name="logRepository">Log repository</param>
-        /// <param name="webHelper">Web helper</param>
-        /// <param name="dbContext">DB context</param>
-        /// <param name="dataProvider">WeData provider</param>
-        /// <param name="commonSettings">Common settings</param>
-        public DefaultLogger(IRepository<Log> logRepository,
-            IDbContext dbContext)
-        {
-            this._logRepository = logRepository;
-          //  this._webHelper = webHelper;
-            this._dbContext = dbContext;
-         //   this._dataProvider = dataProvider;
-         //   this._commonSettings = commonSettings;
-        }
+        ///// <summary>
+        ///// Ctor
+        ///// </summary>
+        ///// <param name="logRepository">Log repository</param>
+        ///// <param name="webHelper">Web helper</param>
+        ///// <param name="dbContext">DB context</param>
+        ///// <param name="dataProvider">WeData provider</param>
+        ///// <param name="commonSettings">Common settings</param>
+        //public DefaultLogger()
+        //{
+        //    this._logRepository = logRepository;
+        //  //  this._webHelper = webHelper;
+        //    this._dbContext = dbContext;
+        // //   this._dataProvider = dataProvider;
+        // //   this._commonSettings = commonSettings;
 
+        //}
+        public DefaultLogger(IWebHelper webHelper)
+        {
+            this._webHelper = webHelper;
+            _logDAC = new LogDAC();
+        }
         #endregion
 
         #region Utitilities
@@ -98,7 +105,7 @@ namespace CMdm.Services.Logging
             if (log == null)
                 throw new ArgumentNullException("log");
 
-            _logRepository.Delete(log);
+            //_logRepository.Delete(log);
         }
 
         /// <summary>
@@ -110,7 +117,7 @@ namespace CMdm.Services.Logging
             if (logs == null)
                 throw new ArgumentNullException("logs");
 
-            _logRepository.Delete(logs);
+            //_logRepository.Delete(logs);
         }
 
         /// <summary>
@@ -150,22 +157,17 @@ namespace CMdm.Services.Logging
             string message = "", LogLevel? logLevel = null,
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var query = _logRepository.Table;
-            if (fromUtc.HasValue)
-                query = query.Where(l => fromUtc.Value <= l.CreatedDate);
-            if (toUtc.HasValue)
-                query = query.Where(l => toUtc.Value >= l.CreatedDate);
-            if (logLevel.HasValue)
-            {
-                var logLevelId = (int)logLevel.Value;
-                query = query.Where(l => logLevelId == l.LogLevelId);
-            }
-            if (!String.IsNullOrEmpty(message))
-                query = query.Where(l => l.ShortMessage.Contains(message) || l.FullMessage.Contains(message));
-            query = query.OrderByDescending(l => l.CreatedDate);
+            List<Log> result = default(List<Log>);
+            // Step 1 - Calling Select on the DAC.
+            result = _logDAC.Select(fromUtc, toUtc, message, logLevel, pageIndex, pageSize);
 
-            var log = new PagedList<Log>(query, pageIndex, pageSize);
-            return log;
+            var queitems = new PagedList<Log>(result, pageIndex, pageSize);
+            return queitems;
+
+            //var query = _logRepository.Table;
+            
+            //var log = new PagedList<Log>(query, pageIndex, pageSize);
+            //return log;
         }
 
         /// <summary>
@@ -178,7 +180,8 @@ namespace CMdm.Services.Logging
             if (logId == 0)
                 return null;
 
-            return _logRepository.GetById(logId);
+            return _logDAC.SelectById(logId);
+            //_logRepository.GetById(logId);
         }
 
         /// <summary>
@@ -191,19 +194,21 @@ namespace CMdm.Services.Logging
             if (logIds == null || logIds.Length == 0)
                 return new List<Log>();
 
-            var query = from l in _logRepository.Table
-                        where logIds.Contains(l.Id)
-                        select l;
-            var logItems = query.ToList();
-            //sort by passed identifiers
-            var sortedLogItems = new List<Log>();
-            foreach (int id in logIds)
-            {
-                var log = logItems.Find(x => x.Id == id);
-                if (log != null)
-                    sortedLogItems.Add(log);
-            }
-            return sortedLogItems;
+            return _logDAC.SelectByIds(logIds);
+
+            //var query = from l in _logRepository.Table
+            //            where logIds.Contains(l.Id)
+            //            select l;
+            //var logItems = query.ToList();
+            ////sort by passed identifiers
+            //var sortedLogItems = new List<Log>();
+            //foreach (int id in logIds)
+            //{
+            //    var log = logItems.Find(x => x.Id == id);
+            //    if (log != null)
+            //        sortedLogItems.Add(log);
+            //}
+            //return sortedLogItems;
         }
 
         /// <summary>
@@ -214,7 +219,7 @@ namespace CMdm.Services.Logging
         /// <param name="fullMessage">The full message</param>
         /// <param name="customer">The customer to associate log record with</param>
         /// <returns>A log item</returns>
-        public virtual Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId ="", string UserId = "")  //Customer customer = null
+        public virtual Log InsertLog1(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId ="", string UserId = "")  //Customer customer = null
         {
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
@@ -222,18 +227,41 @@ namespace CMdm.Services.Logging
 
             var log = new Log
             {
-                LogLevel = logLevel,
-                ShortMessage = shortMessage,
-                FullMessage = fullMessage,
-                IpAddress = "", //_webHelper.GetCurrentIpAddress(),
-                CustomerId = CustomerId,
-                PageUrl = "", // _webHelper.GetThisPageUrl(true),
-                ReferrerUrl = "",// _webHelper.GetUrlReferrer(),
-                Createdby = UserId,
-                CreatedDate = DateTime.Now
+                //LogLevel = logLevel,
+                //ShortMessage = shortMessage,
+                //FullMessage = fullMessage,
+                //IpAddress = "", //_webHelper.GetCurrentIpAddress(),
+                //CustomerId = CustomerId,
+                //PageUrl = "", // _webHelper.GetThisPageUrl(true),
+                //ReferrerUrl = "",// _webHelper.GetUrlReferrer(),
+                //Createdby = UserId,
+                //CreatedDate = DateTime.Now
             };
 
-            _logRepository.Insert(log);
+            //_logRepository.Insert(log);
+
+            return log;
+        }
+        public virtual Log AddLog(LogLevel logLevel, string shortMessage, string fullMessage = "", string CustomerId = "", string UserId = "")  //Customer customer = null
+        {
+            //check ignore word/phrase list?
+            if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
+                return null;
+
+            var log = new Log
+            {
+                LOGLEVELID = (int)logLevel,
+                SHORTMESSAGE = shortMessage,
+                FULLMESSAGE = fullMessage.Substring(0, 3900),
+                IPADDRESS = "", // _webHelper.GetCurrentIpAddress(),
+                CUSTOMERID = CustomerId,
+                PAGEURL = "", // _webHelper.GetThisPageUrl(true),
+                REFERRERURL = "", // _webHelper.GetUrlReferrer(),
+                CREATEDBY = UserId,
+                CREATEDDATE = DateTime.Now
+            };
+            _logDAC.Insert(log);
+            //_logRepository.Insert(log);
 
             return log;
         }

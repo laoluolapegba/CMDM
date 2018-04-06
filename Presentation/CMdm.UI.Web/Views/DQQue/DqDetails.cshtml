@@ -212,6 +212,36 @@
 
 
 
+      //biodata
+    function submitIncomeInfo() {
+       //  alert('Hello');saving display
+       // document.getElementById("display").innerHTML = "";
+       $("#display").css({ 'display': 'none' });
+       $("#update").css({ 'display': 'none' });
+       $("#saving").css({ 'display': 'block' });
+
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("SaveIncomeData", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    }
+
+
 
 
 
@@ -271,7 +301,7 @@
             }
         });
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
+      //  e.preventDefault(); // avoid to execute the actual submit of the form.
     }
 
 
@@ -332,7 +362,34 @@
 
 
     }
+    function ApproveIncome(cus_id,branch,rule,table)
+    {
+        //  alert('Hello');saving display
+       // document.getElementById("display").innerHTML = "";
+       $("#display").css({ 'display': 'none' });
+       $("#update").css({ 'display': 'none' });
+       $("#saving").css({ 'display': 'block' });
 
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("ApproveIncome", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+
+    }
 
 
 

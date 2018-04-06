@@ -13,7 +13,7 @@
     public partial class CDMA_MARITALSTATUS
     {
         [Key]
-        public decimal CODE { get; set; }
+        public int CODE { get; set; }
         public string STATUS { get; set; }
     }
 }

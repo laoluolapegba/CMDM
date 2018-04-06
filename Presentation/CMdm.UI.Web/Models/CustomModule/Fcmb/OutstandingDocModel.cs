@@ -46,15 +46,20 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         [DisplayName("Document Code")]
         
         public string DOCUMENT_CODE { get; set; }
-        [DisplayName("Document Code")]
+
+        [DisplayName("Document Desc")]
         public string REF_DESC { get; set; }
+
         [DisplayName("Due Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
         public DateTime? DUE_DATE { get; set; }
+
         [DisplayName("Reason")]
         public string FREZ_REASON_CODE { get; set; }
 
         public IList<SelectListItem> Branches { get; set; }
-        [DisplayName("Branch Code")]
+        [DisplayName("Branch Name")]
         public string BRANCH_CODE { get; set; }
         public int Id { get; set; }
     }

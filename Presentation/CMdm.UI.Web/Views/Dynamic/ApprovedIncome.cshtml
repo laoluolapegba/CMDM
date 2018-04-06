@@ -1,0 +1,249 @@
+﻿@model CMdm.Entities.ViewModels.DynamicViewModel
+ 
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+}
+@*@Styles.Render("~/AdminLTE/plugins/font-awesome/css")
+        @Styles.Render("~/AdminLTE/plugins/ionicons/css")
+        @Styles.Render("~/AdminLTE/bootstrap/css")
+        @Styles.Render("~/AdminLTE/dist/css")
+        @Styles.Render("~/AdminLTE/dist/css/skins")
+        @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+
+@Scripts.Render("~/AdminLTE/bootstrap/js") *@
+@*@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/Content/kendo/css")
+@Styles.Render("~/Content/customstyle.css")
+@Scripts.Render("~/Scripts/common.js")*@
+
+ 
+ <script>
+     var date = $('#BioData_DATE_OF_BIRTH').datepicker({ dateFormat: 'mm-yy-dd' }).val();
+</script>
+
+  
+
+<style>
+    .nav-tabs-custom > .tab-content {
+        color: black;
+    }
+   label
+    {
+       display:block;       
+
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 24px;
+        padding: 2px 4px; 
+    }
+    br 
+    {
+        display:block;
+    }
+    .normal {
+        font-weight: normal;
+    }
+
+
+   
+</style> 
+
+
+
+
+    <!-- Custom Tabs (Pulled to the right) -->
+    <div class="nav-tabs-custom" style=" width:850px;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+        <ul class="nav nav-tabs pull-right">
+            <li class="active"><a href="#tab_1-1" data-toggle="tab">Edit Profile</a></li>
+            <li><a href="#tab_2-2" data-toggle="tab">Change History</a></li>
+          <!--<li><a href="#tab_3-2" data-toggle="tab">Other Details</a></li>-->
+             
+            <li class="pull-left header"><i class="fa fa-th"></i>@ViewBag.biorecord.SURNAME @ViewBag.biorecord.FIRST_NAME @ViewBag.biorecord.OTHER_NAME</ li >
+        </ul>
+        <div class="tab-content" >
+            <div class="tab-pane active" id="tab_1-1">
+
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "biodata" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4 style="color:#dd4b39;">Account Information Approver</h4>
+            <hr />
+            <input name="customer_no" value="@ViewBag.CUSTOMER_NO" id="customer_no" type="hidden" />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.AccInfo.TYPE_OF_ACCOUNT)
+            @Html.HiddenFor(model => model.AccInfo.CUSTOMER_NO, new { htmlAttributes = new { @class = "form-control" } })
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label>
+                            Income Band
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 66)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
+                            
+                        </label>
+                        @Html.DropDownList("INCOME_BAND", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        @*@Html.EditorFor(model => model.AccInfo.TYPE_OF_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.CusIncomeInfo.INCOME_BAND, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+        
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label>
+                            Initial Deposit
+                            @{
+
+                                foreach (var item in ViewBag.changeIndex)
+                                {
+                                    if (@item == 66)
+                                    {
+                                        <img src='~/AdminLTE/dist/img/attention.png' class='img-circle' alt='changes'>
+                                    }
+                                }
+
+                            }
+
+                        </label>
+                        @Html.DropDownList("INITIAL_DEPOSIT", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        @*@Html.EditorFor(model => model.AccInfo.TYPE_OF_ACCOUNT, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.CusIncomeInfo.INITIAL_DEPOSIT, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+                                        <br />
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+
+                                            <button type="button" class="btn btn-outline pull-right" onclick="ApproveIncome()">Update</button>
+
+                                        </div>
+                                        <!--
+                                             <input type="submit" value="Save" class="btn btn-outline" />
+                                              <div class="row">
+                                                 <div style="float:right;" class="col-lg-6">
+                                                     <div class="input-group">
+                                                         <br />
+                                                         <input type="submit" value="Save" class="btn btn-default" />
+
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        -->
+            </div>                          
+            }
+
+                                    </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_2-2">
+
+
+                                                    <div class="box box-solid">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">Change Logs</h3>
+                                                        </div>
+                                                        <!-- /.box-header -->
+                                                        <div class="box-body">
+                                                            <div class="box-group" id="accordion">
+                                                                <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it ViewBag.profile_log -->
+                                                                @{
+                                                                    CMdm.Data.AppDbContext _db = new CMdm.Data.AppDbContext();
+                                                                    var getdetails = new CMdm.UI.Web.Controllers.DynamicController();
+
+
+                                                                }
+                                                                @if (ViewBag.acc_info_log != null)
+                                                                {
+                                                                    foreach (var log in ViewBag.acc_info_log)
+                                                                    {
+                                                                        //for (var i = 0; i < myMoney.Count; i++)
+                                                                        //{
+                                                                        //    Console.WriteLine("Amount is {0} and type is {1}", myMoney[i].amount, myMoney[i].type);
+
+                                                                    <div class="panel box box-primary">
+                                                                        <div class="box-header with-border">
+                                                                            <h4 class="box-title">
+                                                                                <a data-toggle="collapse" data-parent="#accordion" href="#@log.TIED" aria-expanded="false" class="collapsed">
+                                                                                    @{
+
+                                                                                        var userd = getdetails.getUserDetails(log.LOGGED_BY);
+
+                                                                                    }
+                                                                                    Edited By  @userd.DISPLAY_NAME [@log.LOGGED_DATE]
+
+
+
+
+                                                                                </a>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="@log.TIED" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                            <div class="box-body">
+                                                                                <table>
+                                                                                    @if (!String.IsNullOrEmpty(log.COMMENTS))
+                                                                                    {
+                                                                                        @Html.Raw(@log.COMMENTS)
+                                                                                    }
+                                                                                    else
+                                                                                    {
+
+                                                                                        <text> No Changed were made on this log</text>
+                                                                                    }
+
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                                            }
+
+                                                                                        }
+
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                    </div>
+
+
+
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <!-- /.tab-pane -->
+                                            </div>
+                                            <!-- /.tab-content -->
+                                        </div>
+    <!-- nav-tabs-custom -->
+</div>
+<!-- /.col -->
+ 

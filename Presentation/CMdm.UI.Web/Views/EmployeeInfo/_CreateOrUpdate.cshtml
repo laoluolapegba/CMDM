@@ -1,0 +1,100 @@
+﻿@model CMdm.UI.Web.Models.Customer.EmpInfoModel
+@Html.ValidationSummary(true)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.EMPLOYMENT_STATUS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.EMPLOYMENT_STATUS, Model.EmploymentStatus)
+                                    @Html.ValidationMessageFor(model => model.EMPLOYMENT_STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.EMPLOYER_INSTITUTION_NAME)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.EMPLOYER_INSTITUTION_NAME)
+                                    @Html.ValidationMessageFor(model => model.EMPLOYER_INSTITUTION_NAME, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.DATE_OF_EMPLOYMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.DATE_OF_EMPLOYMENT)
+                                    @Html.ValidationMessageFor(model => model.DATE_OF_EMPLOYMENT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SECTOR_CLASS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.SECTOR_CLASS, Model.Occupationtype)
+                                    @Html.ValidationMessageFor(model => model.SECTOR_CLASS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SUB_SECTOR)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.SUB_SECTOR, Model.Subsectortype)
+                                    @Html.ValidationMessageFor(model => model.SUB_SECTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NATURE_OF_BUSINESS_OCCUPATION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, Model. Businessnature)
+                                    @Html.ValidationMessageFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.INDUSTRY_SEGMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.INDUSTRY_SEGMENT, Model.Indsegment)
+                                    @Html.ValidationMessageFor(model => model.INDUSTRY_SEGMENT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+         

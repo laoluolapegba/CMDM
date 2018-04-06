@@ -19,43 +19,25 @@ namespace CMdm.UI.Web.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: PhoneValidation
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string branch)
         {
             ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
 
-
             int pageSize = 50;
             int pageNumber = (page ?? 1);
-            if (page == null)
+
+            var PhoneValidation = from s in db.CMDM_PHONEVALIDATION_RESULTS
+                                 select s;
+
+            if(!String.IsNullOrEmpty(branch))
             {
-
-                this.Session["BRANCH"] = null;
-
-            }
-
-            if (Request["BRANCH"] != null && (page == null))
-            {
-                this.Session["BRANCH"] = Request["BRANCH"];
-            }
-
-
-
-            var BRANCH = this.Session["BRANCH"];
-
-            if (this.Session["BRANCH"] != null)
-            {
-
-                var result = db.CMDM_PHONEVALIDATION_RESULTS.Where(s => s.BRANCH_CODE == BRANCH.ToString()).OrderBy(i => i.CUSTOMER_NO).ToPagedList(page ?? 1, pageSize);
-                return View(result);
-
+                PhoneValidation = PhoneValidation.Where(s => s.BRANCH_CODE.ToUpper().Contains(branch.ToUpper())).OrderBy(s => s.CUSTOMER_NO);
             }
             else
             {
-                return View(db.CMDM_PHONEVALIDATION_RESULTS.OrderBy(i => i.CUSTOMER_NO).ToPagedList(page ?? 1, pageSize));
-
+                PhoneValidation = PhoneValidation.OrderBy(s => s.CUSTOMER_NO);
             }
-
-
+            return View(PhoneValidation.ToPagedList(page ?? 1, pageSize));
         }
 
 

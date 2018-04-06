@@ -99,6 +99,13 @@ namespace CMdm.Data.DAC
                 return db.Set<MdmDQQue>().Find(recordId);
             }
         }
+        public MdmDqRunException SelectExceptionById(int recordId)
+        {
+            using (var db = new AppDbContext())
+            {
+                return db.Set<MdmDqRunException>().Find(recordId);
+            }
+        }
 
         /// <summary>
         /// Conditionally retrieves one or more rows from the Leaves table with paging and a sort expression.
@@ -174,7 +181,7 @@ namespace CMdm.Data.DAC
             return query;
         }
         //
-        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int? catalogId =null, string BranchId = null, IssueStatus? status = null , int? priority = null)
+        public List<MdmDqRunException> SelectBrnIssues(string name,  int startRowIndex, int maximumRows, string sortExpression, string customerID = null, int? ruleId = null, int? catalogId =null, string BranchId = null, IssueStatus? status = null , int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             using (var db = new AppDbContext())
@@ -193,6 +200,10 @@ namespace CMdm.Data.DAC
                 {
                     int rule = (int)ruleId.Value;
                     query = query.Where(d => d.RULE_ID == rule);
+                }
+                if(!string.IsNullOrWhiteSpace(customerID))
+                {
+                    query = query.Where(d => d.CUST_ID == customerID);
                 }
                 if (catalogId.HasValue && catalogId > 0)
                 {
@@ -227,52 +238,320 @@ namespace CMdm.Data.DAC
             }
         }
 
-        public List<CustExceptionsModel> SelectBrnUnauthIssues(string name, int startRowIndex, int maximumRows, string sortExpression, int? ruleId = null, int? catalogId = null, string BranchId = null, IssueStatus? status = null, int? priority = null)
+        public void ApproveExceptionQues(List<MdmDqRunException> modifiedrecords)
+        {
+            using (var db = new AppDbContext())
+            {
+                foreach (var item in modifiedrecords)
+                {
+                    
+                    var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                    if (queitem != null)
+                    {
+                        queitem.ISSUE_STATUS = (int)IssueStatus.Closed;
+                        db.MdmDqRunExceptions.Attach(queitem);
+                        db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    switch (item.CATALOG_TABLE_NAME)
+                    {
+                        case "CDMA_INDIVIDUAL_BIO_DATA":
+                            var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry != null)
+                            {
+                                entry.AUTHORISED = "A";
+                                db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                                db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_CUSTOMER_INCOME":
+                            var entry1 = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry1 != null)
+                            {
+                                entry1.AUTHORISED = "A";
+                                db.CDMA_CUSTOMER_INCOME.Attach(entry1);
+                                db.Entry(entry1).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
+                            var entry2 = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry2 != null)
+                            {
+                                entry2.AUTHORISED = "A";
+                                db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entry2);
+                                db.Entry(entry2).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_FOREIGN_DETAILS":
+                            var entry3 = db.CDMA_FOREIGN_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry3 != null)
+                            {
+                                entry3.AUTHORISED = "A";
+                                db.CDMA_FOREIGN_DETAILS.Attach(entry3);
+                                db.Entry(entry3).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_JURAT":
+                            var entry4 = db.CDMA_JURAT.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry4 != null)
+                            {
+                                entry4.AUTHORISED = "A";
+                                db.CDMA_JURAT.Attach(entry4);
+                                db.Entry(entry4).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_EMPLOYMENT_DETAILS":
+                            var entry5 = db.CDMA_EMPLOYMENT_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry5 != null)
+                            {
+                                entry5.AUTHORISED = "A";
+                                db.CDMA_EMPLOYMENT_DETAILS.Attach(entry5);
+                                db.Entry(entry5).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
+                            var entry6 = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry6 != null)
+                            {
+                                entry6.AUTHORISED = "A";
+                                db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entry6);
+                                db.Entry(entry6).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_AUTH_FINANCE_INCLUSION":
+                            var entry7 = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry7 != null)
+                            {
+                                entry7.AUTHORISED = "A";
+                                db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entry7);
+                                db.Entry(entry7).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_ADDITIONAL_INFORMATION":
+                            var entry8 = db.CDMA_ADDITIONAL_INFORMATION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry8 != null)
+                            {
+                                entry8.AUTHORISED = "A";
+                                db.CDMA_ADDITIONAL_INFORMATION.Attach(entry8);
+                                db.Entry(entry8).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+
+            }
+        }
+        public void DisApproveExceptionQues(List<MdmDqRunException> modifiedrecords, string comments)
+        {
+            using (var db = new AppDbContext())
+            {
+                foreach (var item in modifiedrecords)
+                {
+                    switch (item.CATALOG_TABLE_NAME)
+                    {
+                        case "CDMA_INDIVIDUAL_BIO_DATA":
+                            var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry != null)
+                            {
+                                entry.AUTHORISED = "N";
+                                db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entry);
+                                db.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_CUSTOMER_INCOME":
+                            var entry1 = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry1 != null)
+                            {
+                                entry1.AUTHORISED = "N";
+                                db.CDMA_CUSTOMER_INCOME.Attach(entry1);
+                                db.Entry(entry1).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
+                            var entry2 = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry2 != null)
+                            {
+                                entry2.AUTHORISED = "N";
+                                db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entry2);
+                                db.Entry(entry2).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_FOREIGN_DETAILS":
+                            var entry3 = db.CDMA_FOREIGN_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry3 != null)
+                            {
+                                entry3.AUTHORISED = "N";
+                                db.CDMA_FOREIGN_DETAILS.Attach(entry3);
+                                db.Entry(entry3).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_JURAT":
+                            var entry4 = db.CDMA_JURAT.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry4 != null)
+                            {
+                                entry4.AUTHORISED = "N";
+                                db.CDMA_JURAT.Attach(entry4);
+                                db.Entry(entry4).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_EMPLOYMENT_DETAILS":
+                            var entry5 = db.CDMA_EMPLOYMENT_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry5 != null)
+                            {
+                                entry5.AUTHORISED = "N";
+                                db.CDMA_EMPLOYMENT_DETAILS.Attach(entry5);
+                                db.Entry(entry5).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
+                            var entry6 = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry6 != null)
+                            {
+                                entry6.AUTHORISED = "N";
+                                db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entry6);
+                                db.Entry(entry6).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_AUTH_FINANCE_INCLUSION":
+                            var entry7 = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry7 != null)
+                            {
+                                entry7.AUTHORISED = "N";
+                                db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entry7);
+                                db.Entry(entry7).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        case "CDMA_ADDITIONAL_INFORMATION":
+                            var entry8 = db.CDMA_ADDITIONAL_INFORMATION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            if (entry8 != null)
+                            {
+                                entry8.AUTHORISED = "N";
+                                db.CDMA_ADDITIONAL_INFORMATION.Attach(entry8);
+                                db.Entry(entry8).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    var queitem = db.MdmDqRunExceptions.FirstOrDefault(a => a.EXCEPTION_ID == item.EXCEPTION_ID);
+                    if (queitem != null)
+                    {
+                        queitem.ISSUE_STATUS = (int)IssueStatus.Rejected;
+                        //Add reject reason here
+                        queitem.AUTH_REJECT_REASON = comments;
+                        db.MdmDqRunExceptions.Attach(queitem);
+                        db.Entry(queitem).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+
+                }
+
+            }
+        }
+
+        public List<CustExceptionsModel> SelectBrnUnauthIssues(string name, int startRowIndex, int maximumRows, string sortExpression, string customerId = null, int? ruleId = null, int? catalogId = null, string BranchId = null, IssueStatus? status = null, int? priority = null)
         {
             //DateTime? createdOnFrom = null,            DateTime? createdOnTo = null,
             //var db2 = new AppDbContext();
-            
-            using (var db = new AppDbContext()) 
+            #region old
+            //using (var db = new AppDbContext()) 
+            //{
+            //    // Store the query.
+            //    string authStatus = "U";
+            //    //int issueStatus = (int)IssueStatus.Open;
+            //    var data = db.MdmDqRunExceptions
+            //        .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
+            //        e => e.CUST_ID, c => c.CUSTOMER_NO,
+            //        (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
+            //        .Where(x => x.Cust.AUTHORISED == authStatus);
+            //        //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
+
+            //    var query = data.Select(o => new CustExceptionsModel
+            //    {
+            //        EXCEPTION_ID = o.Excp.EXCEPTION_ID,
+            //        RULE_ID = o.Excp.RULE_ID,
+            //        RULE_NAME = o.Excp.RULE_NAME,
+            //        CUST_ID = o.Excp.CUST_ID,
+            //        BRANCH_CODE = o.Excp.BRANCH_CODE,
+            //        BRANCH_NAME = o.Excp.BRANCH_NAME,
+            //        ISSUE_PRIORITY_DESC = o.Excp.MdmDQPriorities.PRIORITY_DESCRIPTION,
+            //        ISSUE_STATUS_DESC = o.Excp.MdmDQQueStatuses.STATUS_DESCRIPTION,
+            //        RUN_DATE = o.Excp.RUN_DATE,
+            //        LAST_MODIFIED_DATE = o.Cust.LAST_MODIFIED_DATE,
+            //        LAST_MODIFIED_BY = o.Cust.LAST_MODIFIED_BY,
+            //        STATUS_CODE = o.Excp.ISSUE_STATUS,
+            //        PRIORITY_CODE = o.Excp.ISSUE_PRIORITY,
+            //        REASON = o.Excp.REASON,
+            //        CATALOG_TABLE_NAME = o.Excp.CATALOG_TABLE_NAME,
+            //        CATALOG_ID = o.Excp.CATALOG_ID,
+            //        SURNAME = o.Cust.SURNAME,
+            //        OTHERNAME = o.Cust.OTHER_NAME,
+            //        FIRST_NAME = o.Cust.FIRST_NAME,
+
+
+            //    });
+            #endregion
+            using (var db = new AppDbContext())
             {
                 // Store the query.
-                //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
-                //var data = northwind.CM_DISTRIBUTION_SCHEDULE.Join(northwind.CM_BRANCH,
-                //c => c.BRANCH_ID, o => o.BRANCH_ID, (o, c) => new { Sched = o, Branch = c }).ToList();
                 string authStatus = "U";
-                var data = db.MdmDqRunExceptions
-                    .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
-                    e => e.CUST_ID, c => c.CUSTOMER_NO,
-                    (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
-                    .Where(x => x.Cust.AUTHORISED == authStatus);
+                //int issueStatus = (int)IssueStatus.Open;
+                //var data = db.MdmUnauthExceptions
+                //    .Join(db.CDMA_INDIVIDUAL_BIO_DATA,
+                //    e => e.CUST_ID, c => c.CUSTOMER_NO,
+                //    (e, c) => new { Excp = e, Cust = c }).Include(e => e.Excp.MdmDQPriorities).Include(a => a.Excp.MdmDQQueStatuses)
+                //    .Where(x => x.Cust.AUTHORISED == authStatus);
+                //.Where(x=> x.Excp.ISSUE_STATUS == issueStatus);
 
-                var query = data.Select(o => new CustExceptionsModel
+                var query = db.MdmUnauthExceptions.Select(o => new CustExceptionsModel
                 {
-                    EXCEPTION_ID = o.Excp.EXCEPTION_ID,
-                    RULE_ID = o.Excp.RULE_ID,
-                    RULE_NAME = o.Excp.RULE_NAME,
-                    CUST_ID = o.Excp.CUST_ID,
-                    BRANCH_CODE = o.Excp.BRANCH_CODE,
-                    BRANCH_NAME = o.Excp.BRANCH_NAME,
-                    ISSUE_PRIORITY_DESC = o.Excp.MdmDQPriorities.PRIORITY_DESCRIPTION,
-                    ISSUE_STATUS_DESC = o.Excp.MdmDQQueStatuses.STATUS_DESCRIPTION,
-                    RUN_DATE = o.Excp.RUN_DATE,
-                    LAST_MODIFIED_DATE = o.Cust.LAST_MODIFIED_DATE,
-                    LAST_MODIFIED_BY = o.Cust.LAST_MODIFIED_BY,
-                    STATUS_CODE = o.Excp.ISSUE_STATUS,
-                    PRIORITY_CODE = o.Excp.ISSUE_PRIORITY,
-                    REASON = o.Excp.REASON,
-                    CATALOG_TABLE_NAME = o.Excp.CATALOG_TABLE_NAME,
-                    CATALOG_ID = o.Excp.CATALOG_ID,
-                    SURNAME = o.Cust.SURNAME,
-                    OTHERNAME = o.Cust.OTHER_NAME,
-                    FIRST_NAME = o.Cust.FIRST_NAME,
+                    EXCEPTION_ID = o.EXCEPTION_ID,
+                    RULE_ID = o.RULE_ID,
+                    RULE_NAME = o.RULE_NAME,
+                    CUST_ID = o.CUST_ID,
+                    BRANCH_CODE = o.BRANCH_CODE,
+                    BRANCH_NAME = o.BRANCH_NAME,
+                    ISSUE_PRIORITY_DESC = o.MdmDQPriorities.PRIORITY_DESCRIPTION,
+                    ISSUE_STATUS_DESC = o.MdmDQQueStatuses.STATUS_DESCRIPTION,
+                    RUN_DATE = o.RUN_DATE,
+                    LAST_MODIFIED_DATE = o.LAST_MODIFIED_DATE,
+                    LAST_MODIFIED_BY = o.LAST_MODIFIED_BY,
+                    STATUS_CODE = o.ISSUE_STATUS,
+                    PRIORITY_CODE = o.ISSUE_PRIORITY,
+                    REASON = o.REASON,
+                    CATALOG_TABLE_NAME = o.CATALOG_TABLE_NAME,
+                    CATALOG_ID = o.CATALOG_ID,
+                    SURNAME = o.SURNAME,
+                    OTHERNAME = o.OTHER_NAME,
+                    FIRST_NAME = o.FIRST_NAME,
 
 
                 });
-                //    q => q.Excp).Include(a => a.MdmDQPriorities).Include(a => a.MdmDQQueStatuses);
-                    
-                //q => q).Include(a => Excp.MdmDQPriorities).Include(a => a.MdmDQQueStatuses);
-
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.CUST_ID == name);
                 //if (createdOnFrom.HasValue)
@@ -283,6 +562,10 @@ namespace CMdm.Data.DAC
                 {
                     int rule = (int)ruleId.Value;
                     query = query.Where(d => d.RULE_ID == rule);
+                }
+                if(!string.IsNullOrWhiteSpace(customerId))
+                {
+                    query = query.Where(d => d.CUST_ID == customerId);
                 }
                 if (catalogId.HasValue && catalogId > 0)
                 {
@@ -297,7 +580,7 @@ namespace CMdm.Data.DAC
                 if (status.HasValue) // && status>0
                 {
                     int stat = (int)status.Value;
-                    query = query.Where(d => d.ISSUE_STATUS == stat);
+                    query = query.Where(d => d.STATUS_CODE == stat);
                 }
                 if (priority.HasValue && priority > 0)
                 {
