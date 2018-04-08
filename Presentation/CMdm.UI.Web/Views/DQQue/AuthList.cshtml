@@ -33,7 +33,7 @@
             </button>
             <button type="button" id="disapprove-modal" data-toggle="modal" data-target="#modal-comment" class="btn bg-navy">
                 <i class="fa fa-minus-square-o"></i>
-                Dissaprove Selected
+                Disapprove Selected
             </button>
             @*<button type="button" id="delete-selected" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
@@ -528,6 +528,33 @@
         e.preventDefault(); // avoid to execute the actual submit of the form.
     };
 
+        //biodata
+        function DisapproveData () {
+            $("#display").css({ 'display': 'none' });
+            $("#update").css({ 'display': 'none' });
+            $("#saving").css({ 'display': 'block' });
+
+            var frm = $('#biodata');
+
+            var url = "@Url.Action("DisapproveBioData", "Dynamic")"; // the script where you handle the form input.
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#biodata").serialize(), // serializes the form's elements.
+                success: function (data) {
+                    // alert(data); // show response from the server.
+                    $("#saving").css({ 'display': 'none' });
+                    $("#display").css({ 'display': 'none' });
+                    $("#update").css({ 'display': 'block' });
+                    //update
+                    document.getElementById("update").innerHTML = "Record Rejected";
+                    document.getElementById("update").innerHTML = data;
+                }
+            });
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+        };
+
 
 
     //biodata
@@ -559,39 +586,7 @@
         e.preventDefault(); // avoid to execute the actual submit of the form.
     };
 
-
-    //modifyProfile
-    function modifyProfile(cus_id,branch,rule,table)
-    {
-
-        $("#update").css({ 'display': 'none' });
-        var queryString = "c_id=" + cus_id;
-        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
-        //alert(cus_id);
-        $("#loading").css({ 'display': 'block' });
-        $("#display").css({ 'display': 'none' });
-         $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
-                 type: 'get',data: queryString,cache: false,
-                 success: function (data) {
-                     // alert(data);
-                     $("#loading").css({ 'display': 'none' });
-                     $("#display").css({ 'display': 'block' });
-
-                      document.getElementById("display").innerHTML = "";
-                     // document.getElementById("display").innerHTML="hello";
-                     // var response = jQuery.parseJSON(data);
-                      //alert(response);
-                      document.getElementById("display").innerHTML = data;
-                  }
-                          }
-                   );
-
-
-    }
-
-
-
-    //modifyProfile
+    //validateProfile
     function validateProfile(ex_id,branch,rule,table)
     {
         var postData = {

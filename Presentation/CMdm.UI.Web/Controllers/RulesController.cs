@@ -56,7 +56,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult List(DataSourceRequest command, DqRuleListModel model, string sort, string sortDir)
         {
 
-            var items = _dqRuleService.GetAllRuleItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqRuleService.GetAllRuleItems(model.SearchName, model.DimensionId, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             var gridModel = new DataSourceResult

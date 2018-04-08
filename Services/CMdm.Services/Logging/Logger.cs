@@ -252,11 +252,11 @@ namespace CMdm.Services.Logging
             {
                 LOGLEVELID = (int)logLevel,
                 SHORTMESSAGE = shortMessage,
-                FULLMESSAGE = fullMessage.Substring(0,3900),
-                IPADDRESS = _webHelper.GetCurrentIpAddress(),
+                FULLMESSAGE = fullMessage.Substring(0, 3900),
+                IPADDRESS = "", // _webHelper.GetCurrentIpAddress(),
                 CUSTOMERID = CustomerId,
-                PAGEURL = _webHelper.GetThisPageUrl(true),
-                REFERRERURL = _webHelper.GetUrlReferrer(),
+                PAGEURL = "", // _webHelper.GetThisPageUrl(true),
+                REFERRERURL = "", // _webHelper.GetUrlReferrer(),
                 CREATEDBY = UserId,
                 CREATEDDATE = DateTime.Now
             };

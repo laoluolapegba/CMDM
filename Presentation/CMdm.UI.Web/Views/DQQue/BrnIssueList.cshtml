@@ -324,13 +324,20 @@
   
     <script type="text/javascript">
         function validateKeyStrokes(event) {
-           // alert(event.which);
-            var charCode = (event.which) ? event.which : event.keyCode;
-            // charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105
-            if (charCode >= 48 && charCode <= 57 || charCode >= 96 && charCode <= 105) {
-                $("#AddressDetails_CITY_TOWN_OF_RESIDENCE").after('<span class="text-red">Numberic is not allowed.</span>');
+            event = event || window.event;
+            var charCode = (typeof event.which == "undefined") ? event.keyCode : event.which;
+            var charStr = String.fromCharCode(charCode);
+            if (/\d/.test(charStr)) {
+                alert("Numeric is not allowed!");
                 return false;
             }
+
+            //var charCode = (event.which) ? event.which : event.keyCode;
+            //if (charCode > 47 && charCode < 58 || charCode > 95 && charCode < 107) {
+              //  alert("Numeric is not allowed!");
+                //$("#AddressDetails_CITY_TOWN_OF_RESIDENCE").after('<span class="text-red">Numeric is not allowed.</span>');
+                //return false;
+            //}
             return true;
         }
         function validateMail()
@@ -378,6 +385,33 @@
                 $("#update").css({ 'display': 'block' });
                 //update
                 document.getElementById("update").innerHTML = "";
+                document.getElementById("update").innerHTML = data;
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    };
+
+    //biodata
+        function DisapproveData () {
+        $("#display").css({ 'display': 'none' });
+        $("#update").css({ 'display': 'none' });
+        $("#saving").css({ 'display': 'block' });
+
+        var frm = $('#biodata');
+
+        var url = "@Url.Action("DisapproveBioData", "Dynamic")"; // the script where you handle the form input.
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#biodata").serialize(), // serializes the form's elements.
+            success: function (data) {
+                // alert(data); // show response from the server.
+                $("#saving").css({ 'display': 'none' });
+                $("#display").css({ 'display': 'none' });
+                $("#update").css({ 'display': 'block' });
+                //update
+                document.getElementById("update").innerHTML = "Record Rejected";
                 document.getElementById("update").innerHTML = data;
             }
         });
@@ -470,8 +504,6 @@
 
 
     }
-
-
 
     //modifyProfile
     function validateProfile(cus_id,branch,rule,table)

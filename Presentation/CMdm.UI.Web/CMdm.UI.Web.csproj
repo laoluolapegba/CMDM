@@ -285,20 +285,20 @@
     <Compile Include="BLL\MessageFormatter.cs" />
     <Compile Include="BLL\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ACCOUNTINFOController.cs" />
-    <Compile Include="Controllers\ACCTSERVICESREQUIREDController.cs" />
+    <Compile Include="Controllers\AccountInfoController.cs" />
+    <Compile Include="Controllers\AcctServicesRequiredController.cs" />
     <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
-    <Compile Include="Controllers\CusClientAccController.cs" />
+    <Compile Include="Controllers\CustIncomeController.cs" />
+    <Compile Include="Controllers\CustTcaController.cs" />
     <Compile Include="Controllers\CustAdiController.cs" />
     <Compile Include="Controllers\CustForeignerController.cs" />
     <Compile Include="Controllers\CustJuratController.cs" />
     <Compile Include="Controllers\CustNokController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\CustomerIncomeController.cs" />
     <Compile Include="Controllers\DataSourcesController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\DqExceptionsController.cs" />
@@ -306,10 +306,10 @@
     <Compile Include="Controllers\DQQueController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ElementsController.cs" />
-    <Compile Include="Controllers\EmpDetailController.cs" />
+    <Compile Include="Controllers\EmployeeInfoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
-    <Compile Include="Controllers\FinInclusionController.cs" />
+    <Compile Include="Controllers\AuthFinInclusionController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\GoldenRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -568,13 +568,14 @@
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
-    <Compile Include="Models\Customer\AuthForFinInclution.cs" />
+    <Compile Include="Models\Customer\AuthFIModel.cs" />
     <Compile Include="Models\Customer\CustomerADIModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
+    <Compile Include="Models\Customer\CustomerIncomeModel.cs" />
     <Compile Include="Models\Customer\CustomerJuratModel.cs" />
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
-    <Compile Include="Models\Customer\CustomerTrustClientAccount.cs" />
-    <Compile Include="Models\Customer\EmpDetailsModel.cs" />
+    <Compile Include="Models\Customer\CustomerTCAModel.cs" />
+    <Compile Include="Models\Customer\EmpInfoModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -1509,9 +1510,6 @@
     <Content Include="Content\kendo\2017.3.1026\fonts\glyphs\WebComponentsIcons.woff" />
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.ttf" />
     <Content Include="Content\kendo\2017.3.1026\images\kendoui.woff" />
-    <Content Include="Models\CustForeigner\Create.cshtml" />
-    <Content Include="Models\CustForeigner\Edit.cshtml" />
-    <Content Include="Models\CustForeigner\_CreateOrUpdate.cshtml" />
     <None Include="Properties\PublishProfiles\CMDMProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
@@ -2066,16 +2064,16 @@
     <Content Include="Views\MdmWeights\Index.cshtml" />
     <Content Include="Views\MdmWeights\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Params\ParamList.cshtml" />
-    <Content Include="Views\ACCOUNTINFO\Create.cshtml" />
-    <Content Include="Views\ACCOUNTINFO\Delete.cshtml" />
-    <Content Include="Views\ACCOUNTINFO\Details.cshtml" />
-    <Content Include="Views\ACCOUNTINFO\Edit.cshtml" />
-    <Content Include="Views\ACCOUNTINFO\Index.cshtml" />
-    <Content Include="Views\ACCTSERVICESREQUIRED\Create.cshtml" />
-    <Content Include="Views\ACCTSERVICESREQUIRED\Delete.cshtml" />
-    <Content Include="Views\ACCTSERVICESREQUIRED\Details.cshtml" />
-    <Content Include="Views\ACCTSERVICESREQUIRED\Edit.cshtml" />
-    <Content Include="Views\ACCTSERVICESREQUIRED\Index.cshtml" />
+    <Content Include="Views\AccountInfo\Create.cshtml" />
+    <Content Include="Views\AccountInfo\Delete.cshtml" />
+    <Content Include="Views\AccountInfo\Details.cshtml" />
+    <Content Include="Views\AccountInfo\Edit.cshtml" />
+    <Content Include="Views\AccountInfo\Index.cshtml" />
+    <Content Include="Views\AcctServicesRequired\Create.cshtml" />
+    <Content Include="Views\AcctServicesRequired\Delete.cshtml" />
+    <Content Include="Views\AcctServicesRequired\Details.cshtml" />
+    <Content Include="Views\AcctServicesRequired\Edit.cshtml" />
+    <Content Include="Views\AcctServicesRequired\Index.cshtml" />
     <Content Include="Views\Dynamic\EditAccInfo.cshtml" />
     <Content Include="Views\DQI\ListParams.cshtml" />
     <Content Include="Views\Home\BranchDqi.cshtml" />
@@ -2103,11 +2101,6 @@
     <Content Include="Views\Permissions\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Permissions\_ListRolesTable4Permission.cshtml" />
     <Content Include="Views\Permissions\_AddRole4Permission.cshtml" />
-    <Content Include="Views\CustomerIncome\Create.cshtml" />
-    <Content Include="Views\CustomerIncome\Delete.cshtml" />
-    <Content Include="Views\CustomerIncome\Details.cshtml" />
-    <Content Include="Views\CustomerIncome\Edit.cshtml" />
-    <Content Include="Views\CustomerIncome\Index.cshtml" />
     <Content Include="Views\Dynamic\ApproveAccInfo.cshtml" />
     <Content Include="Views\Dynamic\EditIncomeInfo.cshtml" />
     <Content Include="Views\Dynamic\SaveAccInfo.cshtml" />
@@ -2128,6 +2121,7 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
+<<<<<<< HEAD
  
  
     <Content Include="Views\CustForeigner\Create.cshtml" />
@@ -2142,11 +2136,13 @@
     <Content Include="Views\CusClientAcc\Index.cshtml" />
     <Content Include="Views\CusClientAcc\_CreateOrUpdate.cshtml" />
  
+=======
+>>>>>>> de9d7d7f4571bda6548255ab49281598e809a7ea
     <Content Include="Views\CustNok\Authorize.cshtml" />
-    <Content Include="Views\CusClientAcc\Create.cshtml" />
-    <Content Include="Views\CusClientAcc\Edit.cshtml" />
-    <Content Include="Views\CusClientAcc\Index.cshtml" />
-    <Content Include="Views\CusClientAcc\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustTca\Create.cshtml" />
+    <Content Include="Views\CustTca\Edit.cshtml" />
+    <Content Include="Views\CustTca\Authorize.cshtml" />
+    <Content Include="Views\CustTca\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustAdi\Create.cshtml" />
     <Content Include="Views\CustAdi\Edit.cshtml" />
     <Content Include="Views\CustAdi\_CreateOrUpdate.cshtml" />
@@ -2156,6 +2152,7 @@
     <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\EmpDetail\Create.cshtml" />
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
@@ -2175,6 +2172,31 @@
     <Content Include="Views\Log\View.cshtml" />
   </ItemGroup> 
   
+=======
+    <Content Include="Views\EmployeeInfo\Create.cshtml" />
+    <Content Include="Views\EmployeeInfo\Edit.cshtml" />
+    <Content Include="Views\EmployeeInfo\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\AuthFinInclusion\Create.cshtml" />
+    <Content Include="Views\AuthFinInclusion\Edit.cshtml" />
+    <Content Include="Views\AuthFinInclusion\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\CustJurat\Create.cshtml" />
+    <Content Include="Views\CustJurat\Edit.cshtml" />
+    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\AuthFinInclusion\Authorize.cshtml" />
+    <Content Include="Views\CustIncome\Create.cshtml" />
+    <Content Include="Views\CustIncome\Edit.cshtml" />
+    <Content Include="Views\CustIncome\Authorize.cshtml" />
+    <Content Include="Views\CustIncome\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\EmployeeInfo\Authorize.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Log\List.cshtml" />
+    <Content Include="Views\Log\View.cshtml" />
+    <Content Include="Views\CustForeigner\Authorize.cshtml" />
+    <Content Include="Views\CustJurat\Authorize.cshtml" />
+    <Content Include="Views\CustAdi\Authorize.cshtml" />
+  </ItemGroup>
+>>>>>>> de9d7d7f4571bda6548255ab49281598e809a7ea
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
     <Folder Include="Content\customlogin\colorbox\images\" />

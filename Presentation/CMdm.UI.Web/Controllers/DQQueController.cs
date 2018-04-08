@@ -501,25 +501,25 @@ namespace CMdm.UI.Web.Controllers
                     controllerName = "ACCOUNTINFO";
                     break;
                 case "CDMA_CUSTOMER_INCOME":
-                    controllerName = "CustomerIncome";
+                    controllerName = "CustIncome";
                     break;
                 case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
                     controllerName = "custnok";
                     break;
                 case "CDMA_FOREIGN_DETAILS":
-                    controllerName = "custforeign";
+                    controllerName = "custforeigner";
                     break;
                 case "CDMA_JURAT":
                     controllerName = "jurat";
                     break;
                 case "CDMA_EMPLOYMENT_DETAILS":
-                    controllerName = "EmpDetail";
+                    controllerName = "EmployeeInfo";
                     break;
                 case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
-                    controllerName = "CusClientAcc";
+                    controllerName = "CustTca";
                     break;
                 case "CDMA_AUTH_FINANCE_INCLUSION":
-                    controllerName = "FinInclusion";
+                    controllerName = "AuthFinInclusion";
                     break;
                 case "CDMA_ADDITIONAL_INFORMATION":
                     controllerName = "CustAdi";

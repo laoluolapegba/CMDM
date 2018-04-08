@@ -11,12 +11,72 @@ using CMdm.Entities.Domain.Customer;
 using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
+using CMdm.Services.DqQue;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class CustAdiController : BaseController
     {
         private AppDbContext db = new AppDbContext();
+        private IDqQueService _dqQueService;
+        public CustAdiController()
+        {
+            //bizrule = new DQQueBiz();
+            _dqQueService = new DqQueService();
+        }
+
+        public ActionResult Authorize(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+
+
+            var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
+            if (querecord == null)
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+            //get all changed columns
+
+            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            var model = (from c in db.CDMA_ADDITIONAL_INFORMATION
+                         where c.CUSTOMER_NO == querecord.CUST_ID
+                         select new CustomerADIModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             ANNUAL_SALARY_EXPECTED_INC = c.ANNUAL_SALARY_EXPECTED_INC,
+                             FAX_NUMBER = c.FAX_NUMBER,
+                             LastUpdatedby = c.LAST_MODIFIED_BY,
+                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                             LastAuthdby = c.AUTHORISED_BY,
+                             LastAuthDate = c.AUTHORISED_DATE,
+                             ExceptionId = querecord.EXCEPTION_ID
+                         }).FirstOrDefault();
+
+            //var modelProperties = model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+
+            //List<string> props = new List<string>();
+            foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+            {
+                foreach (var item2 in changedSet)
+                {
+                    if (item2.PROPERTYNAME == item.Name)
+                    {
+                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                    }
+                }
+                //props.Add(item.Name);
+
+            }
+            //var matchItems = props.Intersect(changedSet);
+            model.ReadOnlyForm = "True";
+            PrepareModel(model);
+            return View(model);
+        }
 
         public ActionResult Edit(string id)
         {
@@ -183,6 +243,80 @@ namespace CMdm.UI.Web.Controllers
                 Text = "N20 million and above",
                 Value = "N20 million and above"
             });
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("approve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve(CustomerADIModel adimodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+
+                _dqQueService.ApproveExceptionQueItems(adimodel.ExceptionId.ToString());
+                //using (var db = new AppDbContext())
+                //{
+                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
+                //    if (entity == null)
+                //    {
+                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
+                //        ModelState.AddModelError("", errorMessage);
+                //    }
+                //    else
+                //    {                       
+                //        entity.AUTHORISED = "A";
+                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
+                //        db.Entry(entity).State = EntityState.Modified;
+                //        db.SaveChanges();
+
+                //    }
+                //}
+
+                SuccessNotification("ADI Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = adimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustAdi");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(adimodel);
+            return View(adimodel);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("disapprove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisApprove(CustomerADIModel adimodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                using (var db = new AppDbContext())
+                {
+                    var entity = db.CDMA_ADDITIONAL_INFORMATION.FirstOrDefault(o => o.CUSTOMER_NO == adimodel.CUSTOMER_NO);
+                    if (entity == null)
+                    {
+                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", adimodel.CUSTOMER_NO);
+                        ModelState.AddModelError("", errorMessage);
+                    }
+                    else
+                    {
+                        entity.AUTHORISED = "N";
+                        db.CDMA_ADDITIONAL_INFORMATION.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                }
+
+                SuccessNotification("ADI Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = adimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustAdi");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(adimodel);
+            return View(adimodel);
         }
 
         #region scaffolded

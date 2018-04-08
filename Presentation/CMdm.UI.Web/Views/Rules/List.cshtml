@@ -173,7 +173,8 @@ var gridPageSizes = "10, 15, 20, 50, 100";
 
                         function additionalData() {
                             var data = {
-                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                DimensionId: $('#@Html.FieldIdFor(model => model.DimensionId)').val(),
                             };
                             addAntiForgeryToken(data);
                             return data;

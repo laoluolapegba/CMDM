@@ -11,6 +11,7 @@ using CMdm.Entities.Domain.Customer;
 using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
+using CMdm.Services.DqQue;
 
 
 namespace CMdm.UI.Web.Controllers
@@ -18,6 +19,72 @@ namespace CMdm.UI.Web.Controllers
     public class CustForeignerController : BaseController
     {
         private AppDbContext db = new AppDbContext();
+        private IDqQueService _dqQueService;
+
+        public CustForeignerController()
+        {
+            _dqQueService = new DqQueService();
+        }
+
+        public ActionResult Authorize(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+
+            var model = new CustomerForeignerModel();
+
+            var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
+            if (querecord == null)
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+            //get all changed columns
+
+            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            if(changeId != null)
+            {
+                var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
+                model = (from c in db.CDMA_FOREIGN_DETAILS
+                             where c.CUSTOMER_NO == querecord.CUST_ID
+                             select new CustomerForeignerModel
+                             {
+                                 CUSTOMER_NO = c.CUSTOMER_NO,
+                                 FOREIGNER = c.FOREIGNER,
+                                 PASSPORT_RESIDENCE_PERMIT = c.PASSPORT_RESIDENCE_PERMIT,
+                                 PERMIT_ISSUE_DATE = c.PERMIT_ISSUE_DATE,
+                                 PERMIT_EXPIRY_DATE = c.PERMIT_EXPIRY_DATE,
+                                 FOREIGN_ADDRESS = c.FOREIGN_ADDRESS,
+                                 CITY = c.CITY,
+                                 FOREIGN_TEL_NUMBER = c.FOREIGN_TEL_NUMBER,
+                                 ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                                 PURPOSE_OF_ACCOUNT = c.PURPOSE_OF_ACCOUNT,
+                                 COUNTRY = c.COUNTRY,
+                                 MULTIPLE_CITEZENSHIP = c.MULTIPLE_CITEZENSHIP,
+                                 LastUpdatedby = c.LAST_MODIFIED_BY,
+                                 LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                                 LastAuthdby = c.AUTHORISED_BY,
+                                 LastAuthDate = c.AUTHORISED_DATE,
+                                 ExceptionId = querecord.EXCEPTION_ID
+                             }).FirstOrDefault();
+
+                foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+                }
+                model.ReadOnlyForm = "True";
+            }
+            
+            PrepareModel(model);
+            return View(model);
+        }
 
         public ActionResult Edit(string id)
         {
@@ -202,6 +269,81 @@ namespace CMdm.UI.Web.Controllers
 
             model.Countries = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
         }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("approve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve(CustomerForeignerModel formodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+
+                _dqQueService.ApproveExceptionQueItems(formodel.ExceptionId.ToString());
+                //using (var db = new AppDbContext())
+                //{
+                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
+                //    if (entity == null)
+                //    {
+                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
+                //        ModelState.AddModelError("", errorMessage);
+                //    }
+                //    else
+                //    {                       
+                //        entity.AUTHORISED = "A";
+                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
+                //        db.Entry(entity).State = EntityState.Modified;
+                //        db.SaveChanges();
+
+                //    }
+                //}
+
+                SuccessNotification("FORD Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = formodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustForeigner");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(formodel);
+            return View(formodel);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("disapprove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisApprove(CustomerForeignerModel formodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                using (var db = new AppDbContext())
+                {
+                    var entity = db.CDMA_FOREIGN_DETAILS.FirstOrDefault(o => o.CUSTOMER_NO == formodel.CUSTOMER_NO);
+                    if (entity == null)
+                    {
+                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", formodel.CUSTOMER_NO);
+                        ModelState.AddModelError("", errorMessage);
+                    }
+                    else
+                    {
+                        entity.AUTHORISED = "N";
+                        db.CDMA_FOREIGN_DETAILS.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
+                SuccessNotification("FORD Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = formodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustForeigner");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(formodel);
+            return View(formodel);
+        }
+
+
         #region scafolded
         // GET: CustForeigner
         public ActionResult Index()
