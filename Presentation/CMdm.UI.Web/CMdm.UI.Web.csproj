@@ -2121,8 +2121,6 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
-<<<<<<< HEAD
- 
  
     <Content Include="Views\CustForeigner\Create.cshtml" />
     <Content Include="Views\CustForeigner\Edit.cshtml" />
@@ -2135,9 +2133,6 @@
     <Content Include="Views\CusClientAcc\Edit.cshtml" />
     <Content Include="Views\CusClientAcc\Index.cshtml" />
     <Content Include="Views\CusClientAcc\_CreateOrUpdate.cshtml" />
- 
-=======
->>>>>>> de9d7d7f4571bda6548255ab49281598e809a7ea
     <Content Include="Views\CustNok\Authorize.cshtml" />
     <Content Include="Views\CustTca\Create.cshtml" />
     <Content Include="Views\CustTca\Edit.cshtml" />
@@ -2152,7 +2147,7 @@
     <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\EmpDetail\Create.cshtml" />
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
@@ -2172,7 +2167,7 @@
     <Content Include="Views\Log\View.cshtml" />
   </ItemGroup> 
   
-=======
+ <ItemGroup>
     <Content Include="Views\EmployeeInfo\Create.cshtml" />
     <Content Include="Views\EmployeeInfo\Edit.cshtml" />
     <Content Include="Views\EmployeeInfo\_CreateOrUpdate.cshtml" />
@@ -2196,7 +2191,7 @@
     <Content Include="Views\CustJurat\Authorize.cshtml" />
     <Content Include="Views\CustAdi\Authorize.cshtml" />
   </ItemGroup>
->>>>>>> de9d7d7f4571bda6548255ab49281598e809a7ea
+ 
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
     <Folder Include="Content\customlogin\colorbox\images\" />
