@@ -498,7 +498,7 @@ namespace CMdm.UI.Web.Controllers
                     controllerName = "customer";
                     break;
                 case " CDMA_ACCOUNT_INFO":
-                    controllerName = "ACCOUNTINFO";
+                    controllerName = "AccInfoContext";
                     break;
                 case "CDMA_CUSTOMER_INCOME":
                     controllerName = "CustIncome";

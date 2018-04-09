@@ -1,10 +1,11 @@
+using CMdm.Entities.Domain.Customer;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMdm.Data.Rbac
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
      [Table("CM_BRANCH")]
     public partial class CM_BRANCH
@@ -12,7 +13,8 @@ namespace CMdm.Data.Rbac
         public CM_BRANCH()
         {
             this.CM_USER_PROFILE = new HashSet<CM_USER_PROFILE>();
-        }
+            this.CdmaAccountInfo = new HashSet<CDMA_ACCOUNT_INFO>();
+    }
 
         [Key]
         public string BRANCH_ID { get; set; }
@@ -26,5 +28,6 @@ namespace CMdm.Data.Rbac
         public Nullable<System.DateTime> LAST_UPDATED_DATE { get; set; }
   
         public virtual ICollection<CM_USER_PROFILE> CM_USER_PROFILE { get; set; }
+        public ICollection<CDMA_ACCOUNT_INFO> CdmaAccountInfo { get; private set; }
     }
 }

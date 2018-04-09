@@ -12,7 +12,6 @@
     {
         [Key]
         public string CUSTOMER_NO { get; set; }
-       
         public string ACCOUNT_NUMBER { get; set; }
         public string CARD_PREFERENCE { get; set; }
         public string ELECTRONIC_BANKING_PREFERENCE { get; set; }
@@ -23,23 +22,23 @@
         public string CHEQUE_LEAVES_REQUIRED { get; set; }
         public string CHEQUE_CONFIRMATION { get; set; }
         public string CHEQUE_CONFIRMATION_THRESHOLD { get; set; }
+        public string CHEQUE_CONFIRM_THRESHOLD_RANGE { get; set; }
         public string ONLINE_TRANSFER_LIMIT { get; set; }
+        public string ONLINE_TRANSFER_LIMIT_RANGE { get; set; }
         public string TOKEN { get; set; }
         public string ACCOUNT_SIGNATORY { get; set; }
         public string SECOND_SIGNATORY { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-        public string CREATED_BY { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-        public string AUTHORISED { get; set; }         
-        public string AUTHORISED_BY { get; set; }         
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-        public string IP_ADDRESS { get; set; }
-       
 
+        public DateTime? CREATED_DATE { get; set; }
+        public string CREATED_BY { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
+        public string LAST_MODIFIED_BY { get; set; }
+        public string AUTHORISED { get; set; }
+        public string AUTHORISED_BY { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
+        public string IP_ADDRESS { get; set; }
+
+        public virtual CDMA_ONLINE_TRANSFER_LIMIT OnlineTransferLimitRange { get; set; }
+        public virtual CDMA_CHEQUE_CONFIRM_THRESHOLD ChequeConfirmationThresholdRange { get; set; }
     }
 }

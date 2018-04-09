@@ -347,9 +347,10 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_TYPE> CDMA_CUSTOMER_TYPE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.Limit_Range> Limit_Range { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SIZE> CDMA_BUSINESS_SIZE { get; set; }
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CONFIRM_THRESHOLD> CONFIRM_THRESHOLD { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.BusinessDivision> BUSINESSDIVISION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_DIVISION> CDMA_BUSINESS_DIVISION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ONLINE_TRANSFER_LIMIT> CDMA_ONLINE_TRANSFER_LIMIT { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CHEQUE_CONFIRM_THRESHOLD> CDMA_CHEQUE_CONFIRM_THRESHOLD { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SEGMENT> CDMA_BUSINESS_SEGMENT { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO_LOG> CDMA_ACCOUNT_INFO_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_RECORD_LOG> CDMA_ACCOUNT_RECORD_LOG { get; set; }

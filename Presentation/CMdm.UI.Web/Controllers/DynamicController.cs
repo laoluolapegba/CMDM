@@ -705,8 +705,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO_SAVE.BUSINESS_SIZE = Request["BusinessSize"]; //DynamicModel.AccInfo.BUSINESS_SIZE;
                 cDMA_ACCOUNT_INFO_SAVE.BVN_NUMBER = DynamicModel.AccInfo.BVN_NUMBER;
                 cDMA_ACCOUNT_INFO_SAVE.CAV_REQUIRED = DynamicModel.AccInfo.CAV_REQUIRED;
-                cDMA_ACCOUNT_INFO_SAVE.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-                cDMA_ACCOUNT_INFO_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO_SAVE.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+                //cDMA_ACCOUNT_INFO_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_IC = DynamicModel.AccInfo.CUSTOMER_IC;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_SEGMENT = Request["CustomerSegment"]; //DynamicModel.AccInfo.CUSTOMER_SEGMENT;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_TYPE = Request["CustomerType"];//DynamicModel.AccInfo.CUSTOMER_TYPE;
@@ -737,14 +737,14 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO.ACCOUNT_TITLE = DynamicModel.AccInfo.ACCOUNT_TITLE;
                 cDMA_ACCOUNT_INFO.ACCOUNT_OFFICER = DynamicModel.AccInfo.ACCOUNT_OFFICER;
                 cDMA_ACCOUNT_INFO.CAV_REQUIRED = DynamicModel.AccInfo.CAV_REQUIRED;
-                cDMA_ACCOUNT_INFO.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-                cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+                //cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO.CUSTOMER_IC = DynamicModel.AccInfo.CUSTOMER_IC;
                 cDMA_ACCOUNT_INFO.CUSTOMER_SEGMENT = Request["CustomerSegment"]; //DynamicModel.AccInfo.CUSTOMER_SEGMENT;
                 cDMA_ACCOUNT_INFO.CUSTOMER_TYPE = Request["CustomerType"] ;//DynamicModel.AccInfo.CUSTOMER_TYPE;
                 cDMA_ACCOUNT_INFO.OPERATING_INSTRUCTION = DynamicModel.AccInfo.OPERATING_INSTRUCTION;
                 cDMA_ACCOUNT_INFO.ORIGINATING_BRANCH = Request["OringinBranch"] ;//DynamicModel.AccInfo.ORIGINATING_BRANCH;
-                cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO.AUTHORISED = "U";
                 db.SaveChanges();
 
@@ -1416,14 +1416,14 @@ namespace CMdm.UI.Web.Controllers
                     }
 
 
-                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    }
-                    else
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    }
+                  //  if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    //{
+                      //  ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
+                    //}
+                    //else
+                    //{
+                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
+                    //}
 
 
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
@@ -1437,11 +1437,11 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD != null)
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
                     }
                     else
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
                     }
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT != null)
@@ -1455,11 +1455,11 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
                     }
                     else
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION");
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION");
                     }
 
 
@@ -1802,14 +1802,14 @@ namespace CMdm.UI.Web.Controllers
                     }
 
 
-                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    }
-                    else
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    }
+                    //if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    //{
+                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
+                    //}
+                    //else
+                    //{
+                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
+                    //}
 
 
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
@@ -1823,21 +1823,21 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD != null)
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
                     }
                     else
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
                     }
 
                   
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
                     }
                     else
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION");
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION");
                     }
 
 
@@ -2423,27 +2423,27 @@ namespace CMdm.UI.Web.Controllers
                                 + current.CAV_REQUIRED + "</td></tr>";
             }
 
-            if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHLDRANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHLDRANGE))))
-            {
-                index_id.Add(49);
+            //if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHLDRANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHLDRANGE))))
+            //{
+            //    index_id.Add(49);
 
-                var previous_CT = confirmYesNo(previous.BUSINESS_SIZE);
-                var current_CT = confirmYesNo(current.BUSINESS_SIZE);
+            //    var previous_CT = confirmYesNo(previous.BUSINESS_SIZE);
+            //    var current_CT = confirmYesNo(current.BUSINESS_SIZE);
 
-                result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
-                                + previous_CT + "</strong> To "
-                                + previous_CT + "</td></tr>";
-            }
+            //    result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
+            //                    + previous_CT + "</strong> To "
+            //                    + previous_CT + "</td></tr>";
+            //}
 
 
 
-            if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
-            {
-                index_id.Add(50);
-                result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
-                                + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
-                                + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
-            }
+            //if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
+            //{
+              //  index_id.Add(50);
+                //result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
+                  //              + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
+                    //            + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
+            //}
 
 
             return result;
@@ -2781,8 +2781,8 @@ namespace CMdm.UI.Web.Controllers
             cDMA_ACCOUNT_INFO_LOG.BUSINESS_SIZE = accountInfo.BUSINESS_SIZE;
             cDMA_ACCOUNT_INFO_LOG.BVN_NUMBER = accountInfo.BVN_NUMBER;
             cDMA_ACCOUNT_INFO_LOG.CAV_REQUIRED = accountInfo.CAV_REQUIRED;
-            cDMA_ACCOUNT_INFO_LOG.CHEQUE_CONFIRM_THRESHLDRANGE = accountInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-            cDMA_ACCOUNT_INFO_LOG.ONLINE_TRANSFER_LIMIT_RANGE = accountInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+            //cDMA_ACCOUNT_INFO_LOG.CHEQUE_CONFIRM_THRESHLDRANGE = accountInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+            //cDMA_ACCOUNT_INFO_LOG.ONLINE_TRANSFER_LIMIT_RANGE = accountInfo.ONLINE_TRANSFER_LIMIT_RANGE;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_IC = accountInfo.CUSTOMER_IC;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_SEGMENT = accountInfo.CUSTOMER_SEGMENT;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_TYPE = accountInfo.CUSTOMER_TYPE;
