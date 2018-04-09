@@ -24,7 +24,7 @@ namespace CMdm.Services.DqRule
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<MdmDqRule> GetAllRuleItems(string name = "",
+        IPagedList<MdmDqRule> GetAllRuleItems(string name = "", int? dimensionId = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
 
     }
