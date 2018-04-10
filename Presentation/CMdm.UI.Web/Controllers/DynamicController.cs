@@ -194,8 +194,8 @@ namespace CMdm.UI.Web.Controllers
 
             //Address details
             //  var authrizer = DynamicModel.AddressDetails.AUTHORISED;
-            // var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
-            //   var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
+             //var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
+              // var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
             // checked if address record does not exist 
             if (cDMA_INDIVIDUAL_ADDRESS_DETAIL == null)
             {
@@ -732,6 +732,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_LEAVES_REQUIRED = DynamicModel.ServiceInfo.CHEQUE_LEAVES_REQUIRED;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRMATION = DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRMATION_THRESHOLD = Request["threshold"] ;//DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION_THRESHOLD;
+                cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRM_THRESHOLD_RANGE = DynamicModel.ServiceInfo.CHEQUE_CONFIRM_THRESHOLD_RANGE;
+                cDMA_ACCT_SERVICES_REQUIRED_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
 
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.ONLINE_TRANSFER_LIMIT = DynamicModel.ServiceInfo.ONLINE_TRANSFER_LIMIT;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.TOKEN = DynamicModel.ServiceInfo.TOKEN;
@@ -760,6 +762,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_LEAVES_REQUIRED = DynamicModel.ServiceInfo.CHEQUE_LEAVES_REQUIRED;
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION = DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION;
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD = Request["threshold"]; //DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION_THRESHOLD;
+                cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRM_THRESHOLD_RANGE = DynamicModel.ServiceInfo.CHEQUE_CONFIRM_THRESHOLD_RANGE;
+                cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
 
                 cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT = DynamicModel.ServiceInfo.ONLINE_TRANSFER_LIMIT;
                 cDMA_ACCT_SERVICES_REQUIRED.TOKEN = DynamicModel.ServiceInfo.TOKEN;
@@ -1360,17 +1364,6 @@ namespace CMdm.UI.Web.Controllers
                         ViewBag.CustomerType = new SelectList(db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE");
                     }
 
-
-                  //  if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    //{
-                      //  ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    //}
-                    //else
-                    //{
-                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    //}
-
-
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
                     {
                         ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE", cDMA_ACCOUNT_INFO.BUSINESS_SIZE);
@@ -1397,6 +1390,16 @@ namespace CMdm.UI.Web.Controllers
                     {
                         ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME");
                     }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE);
+                    }
+                    else
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
+                    }
+
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
                     {
@@ -1479,6 +1482,9 @@ namespace CMdm.UI.Web.Controllers
 
         public ActionResult Dataquality(string c_id, decimal branch, decimal rule,string table)
         {
+            this.Session["rule"] = rule;
+            this.Session["branch"] = branch;
+            this.Session["id"] = c_id;
             this.Session["table"] = table;
             this.Session["category"] = "biodata";
             string table_cat = "";
@@ -1680,16 +1686,6 @@ namespace CMdm.UI.Web.Controllers
                     }
 
 
-                    //if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    //{
-                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    //}
-                    //else
-                    //{
-                     //   ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    //}
-
-
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
                     {
                         ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE", cDMA_ACCOUNT_INFO.BUSINESS_SIZE);
@@ -1724,6 +1720,15 @@ namespace CMdm.UI.Web.Controllers
                     else
                     {
                         ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE);
+                    }
+                    else
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
                     }
 
 
@@ -2287,28 +2292,6 @@ namespace CMdm.UI.Web.Controllers
                                 + current.CAV_REQUIRED + "</td></tr>";
             }
 
-            //if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHLDRANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHLDRANGE))))
-            //{
-            //    index_id.Add(49);
-
-            //    var previous_CT = confirmYesNo(previous.BUSINESS_SIZE);
-            //    var current_CT = confirmYesNo(current.BUSINESS_SIZE);
-
-            //    result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
-            //                    + previous_CT + "</strong> To "
-            //                    + previous_CT + "</td></tr>";
-            //}
-
-
-
-            //if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
-            //{
-              //  index_id.Add(50);
-                //result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
-                  //              + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
-                    //            + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
-            //}
-
 
             return result;
         }
@@ -2392,6 +2375,28 @@ namespace CMdm.UI.Web.Controllers
                 result = result + "<tr><td> CHEQUE CONFIRMATION THRESHOLD changed from <strong>"
                                 + previous.CHEQUE_CONFIRMATION_THRESHOLD + "</strong> To "
                                 + current.CHEQUE_CONFIRMATION_THRESHOLD + "</td></tr>";
+            }
+
+            if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHOLD_RANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHOLD_RANGE))))
+            {
+                index_id.Add(49);
+
+                var previous_CT = confirmYesNo(previous.CHEQUE_CONFIRM_THRESHOLD_RANGE);
+                var current_CT = confirmYesNo(current.CHEQUE_CONFIRM_THRESHOLD_RANGE);
+
+                result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
+                                + previous_CT + "</strong> To "
+                                + previous_CT + "</td></tr>";
+            }
+
+
+
+            if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
+            {
+                index_id.Add(50);
+                result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
+                                + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
+                                + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
             }
 
             if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT))))

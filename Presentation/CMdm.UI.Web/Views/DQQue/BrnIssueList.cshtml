@@ -478,7 +478,7 @@
        // alert(cus_id);
         $("#update").css({ 'display': 'none' });
         var queryString = "id=" + cus_id;
-       // queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
+        //queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
         //alert(cus_id);
         $("#loading").css({ 'display': 'block' });
         $("#display").css({ 'display': 'none' });
@@ -497,8 +497,7 @@
                     //alert(response);
                     document.getElementById("display").innerHTML = data;
                 }
-            }
-                      );
+            });
 
         }
 
