@@ -292,6 +292,7 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
     <Compile Include="Controllers\CustTcaController.cs" />
     <Compile Include="Controllers\CustAdiController.cs" />
@@ -569,6 +570,7 @@
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Course\CourseViewModel.cs" />
     <Compile Include="Models\Customer\AuthFIModel.cs" />
+    <Compile Include="Models\Customer\BiodataInfoViewModel.cs" />
     <Compile Include="Models\Customer\CustomerADIModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
     <Compile Include="Models\Customer\CustomerIncomeModel.cs" />
@@ -576,6 +578,11 @@
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\CustomerTCAModel.cs" />
     <Compile Include="Models\Customer\EmpInfoModel.cs" />
+    <Compile Include="Models\Customer\IndividualAddressDetails.cs" />
+    <Compile Include="Models\Customer\IndividualBioDataModel.cs" />
+    <Compile Include="Models\Customer\IndividualContactDetails.cs" />
+    <Compile Include="Models\Customer\individualIDDetail.cs" />
+    <Compile Include="Models\Customer\OtherDetails.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -2121,11 +2128,10 @@
     <Content Include="Views\CustNok\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustNok\Edit.cshtml" />
     <Content Include="Views\CustNok\Create.cshtml" />
- 
     <Content Include="Views\CustForeigner\Create.cshtml" />
     <Content Include="Views\CustForeigner\Edit.cshtml" />
     <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
-     <Content Include="Views\EmpDetail\Create.cshtml" />
+    <Content Include="Views\EmpDetail\Create.cshtml" />
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
     <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
@@ -2147,27 +2153,26 @@
     <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
-
     <Content Include="Views\EmpDetail\Create.cshtml" />
     <Content Include="Views\EmpDetail\Edit.cshtml" />
     <Content Include="Views\EmpDetail\Index.cshtml" />
     <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
- 
     <Content Include="Views\FinInclusion\Create.cshtml" />
     <Content Include="Views\FinInclusion\Edit.cshtml" />
     <Content Include="Views\FinInclusion\Index.cshtml" />
     <Content Include="Views\FinInclusion\_CreateOrUpdate.cshtml" />
- 
-     <Content Include="Views\CustJurat\Create.cshtml" />
+    <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
-   </ItemGroup>
+    <Content Include="Views\IndividualCustomer\Authorize.cshtml" />
+    <Content Include="Views\IndividualCustomer\Edit.cshtml" />
+    <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
     <Content Include="Views\Log\View.cshtml" />
-  </ItemGroup> 
-  
- <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\EmployeeInfo\Create.cshtml" />
     <Content Include="Views\EmployeeInfo\Edit.cshtml" />
     <Content Include="Views\EmployeeInfo\_CreateOrUpdate.cshtml" />
@@ -2191,7 +2196,6 @@
     <Content Include="Views\CustJurat\Authorize.cshtml" />
     <Content Include="Views\CustAdi\Authorize.cshtml" />
   </ItemGroup>
- 
   <ItemGroup>
     <Folder Include="Content\customlogin\aristo\images\" />
     <Folder Include="Content\customlogin\colorbox\images\" />
@@ -2199,6 +2203,7 @@
     <Folder Include="font\" />
     <Folder Include="Themes\DefaultClean\Views\Shared\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CusBioData\" />
     <Folder Include="Views\DataSources\" />
   </ItemGroup>
   <ItemGroup>
