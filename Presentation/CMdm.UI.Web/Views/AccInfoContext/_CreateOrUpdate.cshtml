@@ -1,0 +1,328 @@
+﻿@model CMdm.UI.Web.Models.Customer.AccInfoCtxModel
+@Html.ValidationSummary(true)
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>ACCOUNT INFORMATION</h4>
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_NO)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.AccInfoModel.CUSTOMER_NO)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.ACCOUNT_HOLDER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.ACCOUNT_HOLDER, Model.AccInfoModel.AccountHolder)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.ACCOUNT_HOLDER)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.TYPE_OF_ACCOUNT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.TYPE_OF_ACCOUNT, Model.AccInfoModel.TypesOfAccount)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.TYPE_OF_ACCOUNT)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.ACCOUNT_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.ACCOUNT_NUMBER)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.ACCOUNT_TITLE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.ACCOUNT_TITLE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BRANCH)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.BRANCH, Model.AccInfoModel.Branches)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.BRANCH)
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BRANCH_CLASS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.BRANCH_CLASS, Model.AccInfoModel.BranchClasses)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.BRANCH_CLASS)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BUSINESS_DIVISION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.BUSINESS_DIVISION, Model.AccInfoModel.BusinessDivisions)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.BUSINESS_DIVISION)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BUSINESS_SEGMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.BUSINESS_SEGMENT, Model.AccInfoModel.BusinessSegments)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.BUSINESS_SEGMENT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BUSINESS_SIZE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.BUSINESS_SIZE, Model.AccInfoModel.BusinessSizes)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.BUSINESS_SIZE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.BVN_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.BVN_NUMBER)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.CAV_REQUIRED)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.CAV_REQUIRED, Model.AccInfoModel.CavRequired)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.CAV_REQUIRED)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_IC)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.CUSTOMER_IC)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_SEGMENT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.CUSTOMER_SEGMENT, Model.AccInfoModel.CustomerSegments)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.CUSTOMER_SEGMENT)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_TYPE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.CUSTOMER_TYPE, Model.AccInfoModel.CustomerTypes)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.CUSTOMER_TYPE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.OPERATING_INSTRUCTION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.OPERATING_INSTRUCTION)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.ORIGINATING_BRANCH)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccInfoModel.ORIGINATING_BRANCH, Model.AccInfoModel.OriginatingBranch)
+                                    @Html.ValidationMessageFor(model => model.AccInfoModel.ORIGINATING_BRANCH)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>ACCOUNT SERVICES REQUIRED</h4>
+                            <div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.AccServicesModel.CARD_PREFERENCE)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmDropDownListFor(model => model.AccServicesModel.CARD_PREFERENCE, Model.AccServicesModel.CardPreference)
+                                        @Html.ValidationMessageFor(model => model.AccServicesModel.CARD_PREFERENCE)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.ELECTRONIC_BANKING_PREFERENCE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.ELECTRONIC_BANKING_PREFERENCE, Model.AccServicesModel.ElectronicBankingPreference)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.ELECTRONIC_BANKING_PREFERENCE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.STATEMENT_PREFERENCES)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.STATEMENT_PREFERENCES, Model.AccServicesModel.StatementPreference)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.STATEMENT_PREFERENCES)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.TRANSACTION_ALERT_PREFERENCE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.TRANSACTION_ALERT_PREFERENCE, Model.AccServicesModel.TransactionAlertPreference)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.TRANSACTION_ALERT_PREFERENCE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.STATEMENT_FREQUENCY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.STATEMENT_FREQUENCY, Model.AccServicesModel.StatementFrequency)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.STATEMENT_FREQUENCY)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.CHEQUE_BOOK_REQUISITION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.CHEQUE_BOOK_REQUISITION, Model.AccServicesModel.ChequeBookRequisition)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.CHEQUE_BOOK_REQUISITION)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.CHEQUE_LEAVES_REQUIRED)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.CHEQUE_LEAVES_REQUIRED, Model.AccServicesModel.ChequeLeavesRequired)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.CHEQUE_LEAVES_REQUIRED)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION, Model.AccServicesModel.ChequeConfirmation)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION_THRESHOLD)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION_THRESHOLD, Model.AccServicesModel.ChequeConfirmationThreshold)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.CHEQUE_CONFIRMATION_THRESHOLD)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.CHEQUE_CONFIRM_THRESHOLD_RANGE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.CHEQUE_CONFIRM_THRESHOLD_RANGE, Model.AccServicesModel.ChequeConfirmationThresholdRange)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.CHEQUE_CONFIRM_THRESHOLD_RANGE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT, Model.AccServicesModel.OnlineTransferLimit)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT_RANGE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT_RANGE, Model.AccServicesModel.OnlineTransferLimitRange)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.ONLINE_TRANSFER_LIMIT_RANGE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.TOKEN)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.TOKEN, Model.AccServicesModel.Token)
+                                    @Html.ValidationMessageFor(model => model.AccServicesModel.TOKEN)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_IC)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccInfoModel.CUSTOMER_IC)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.ACCOUNT_SIGNATORY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccServicesModel.ACCOUNT_SIGNATORY)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.AccServicesModel.SECOND_SIGNATORY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.AccServicesModel.SECOND_SIGNATORY)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

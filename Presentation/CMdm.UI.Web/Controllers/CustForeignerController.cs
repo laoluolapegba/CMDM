@@ -120,7 +120,6 @@ namespace CMdm.UI.Web.Controllers
                              MULTIPLE_CITEZENSHIP = c.MULTIPLE_CITEZENSHIP
                          }).FirstOrDefault();
 
-
             PrepareModel(model);
             return View(model);
         }

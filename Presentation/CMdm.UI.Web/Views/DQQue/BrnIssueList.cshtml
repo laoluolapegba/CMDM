@@ -467,40 +467,28 @@
     //modifyProfile
     function modifyProfile(cus_id,branch,rule,table)
     {
-        if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
-
-            window.location.href = `/CustNok/Edit/${cus_id}`;
-            //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
-            /* Url.Action("Edit", "CustNok", new { id = cus_id});*/
-
-        }else{
-
        // alert(cus_id);
         $("#update").css({ 'display': 'none' });
-        var queryString = "id=" + cus_id;
-       // queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
+        var queryString = "c_id=" + cus_id;
+        queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
         //alert(cus_id);
         $("#loading").css({ 'display': 'block' });
         $("#display").css({ 'display': 'none' });
+         $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
+                 type: 'get',data: queryString,cache: false,
+                 success: function (data) {
+                     // alert(data);
+                     $("#loading").css({ 'display': 'none' });
+                     $("#display").css({ 'display': 'block' });
 
-
-            $.ajax({url: "@Url.Action("Dataquality", "Dynamic")",
-                type: 'get',data: queryString,cache: false,
-                success: function (data) {
-                    // alert(data);
-                    $("#loading").css({ 'display': 'none' });
-                    $("#display").css({ 'display': 'block' });
-
-                    document.getElementById("display").innerHTML = "";
-                    // document.getElementById("display").innerHTML="hello";
-                    // var response = jQuery.parseJSON(data);
-                    //alert(response);
-                    document.getElementById("display").innerHTML = data;
-                }
-            }
-                      );
-
-        }
+                      document.getElementById("display").innerHTML = "";
+                     // document.getElementById("display").innerHTML="hello";
+                     // var response = jQuery.parseJSON(data);
+                      //alert(response);
+                      document.getElementById("display").innerHTML = data;
+                  }
+                          }
+                   );
 
 
     }
