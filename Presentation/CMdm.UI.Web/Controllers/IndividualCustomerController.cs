@@ -29,6 +29,84 @@ namespace CMdm.UI.Web.Controllers
             _dqQueService = new DqQueService();
         }
 
+
+
+        public ActionResult Authorize(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+
+
+            var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
+            if (querecord == null)
+            {
+                return RedirectToAction("AuthList", "DQQue");
+            }
+            //get all changed columns
+
+            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            var model = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
+                         where c.CUSTOMER_NO == querecord.CUST_ID
+                         select new CustomerNOKModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             COUNTRY = c.COUNTRY,
+                             CITY_TOWN = c.CITY_TOWN,
+                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                             FIRST_NAME = c.FIRST_NAME,
+                             HOUSE_NUMBER = c.HOUSE_NUMBER,
+                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
+                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
+                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
+                             LGA = c.LGA,
+                             MOBILE_NO = c.MOBILE_NO,
+                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                             OFFICE_NO = c.OFFICE_NO,
+                             OTHER_NAME = c.OTHER_NAME,
+                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
+                             RELATIONSHIP = c.RELATIONSHIP,
+                             RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
+                             SEX = c.SEX,
+                             STATE = c.STATE,
+                             STREET_NAME = c.STREET_NAME,
+                             SURNAME = c.SURNAME,
+                             TITLE = c.TITLE,
+                             ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                             LastUpdatedby = c.LAST_MODIFIED_BY,
+                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                             LastAuthdby = c.AUTHORISED_BY,
+                             LastAuthDate = c.AUTHORISED_DATE,
+                             ExceptionId = querecord.EXCEPTION_ID
+                         }).FirstOrDefault();
+
+            //var modelProperties = model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+
+            //List<string> props = new List<string>();
+            foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+            {
+                foreach (var item2 in changedSet)
+                {
+                    if (item2.PROPERTYNAME == item.Name)
+                    {
+                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                    }
+                }
+                //props.Add(item.Name);
+
+            }
+            //var matchItems = props.Intersect(changedSet);
+            model.ReadOnlyForm = "True";
+            //PrepareModel(model);
+            return View(model);
+        }
+
+
+
         // POST: MdmCatalogs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
