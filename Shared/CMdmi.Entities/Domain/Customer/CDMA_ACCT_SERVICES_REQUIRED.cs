@@ -38,7 +38,7 @@
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
-        public virtual CDMA_ONLINE_TRANSFER_LIMIT OnlineTransferLimitRange { get; set; }
-        public virtual CDMA_CHEQUE_CONFIRM_THRESHOLD ChequeConfirmationThresholdRange { get; set; }
+        //public virtual CDMA_ONLINE_TRANSFER_LIMIT OnlineTransferLimitRange { get; set; }
+        //public virtual CDMA_CHEQUE_CONFIRM_THRESHOLD ChequeConfirmationThresholdRange { get; set; }
     }
 }

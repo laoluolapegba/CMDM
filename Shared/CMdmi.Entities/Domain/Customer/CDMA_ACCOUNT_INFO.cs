@@ -37,14 +37,14 @@ namespace CMdm.Entities.Domain.Customer
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
-        public virtual CDMA_ACCOUNT_TYPE TypesOfAccount { get; set; }
+        //public virtual CDMA_ACCOUNT_TYPE TypesOfAccount { get; set; }
         //public virtual CM_BRANCH Branches { get; set; }
-        public virtual CDMA_BRANCH_CLASS BranchClasses { get; set; }
-        public virtual CDMA_BUSINESS_DIVISION BusinessDivisions { get; set; }
-        public virtual CDMA_BUSINESS_SEGMENT BusinessSegments { get; set; }
-        public virtual CDMA_BUSINESS_SIZE BusinessSizes { get; set; }
-        public virtual CDMA_CUSTOMER_SEGMENT CustomerSegments { get; set; }
-        public virtual CDMA_CUSTOMER_TYPE CustomerTypes { get; set; }
+        //public virtual CDMA_BRANCH_CLASS BranchClasses { get; set; }
+        //public virtual CDMA_BUSINESS_DIVISION BusinessDivisions { get; set; }
+        //public virtual CDMA_BUSINESS_SEGMENT BusinessSegments { get; set; }
+        //public virtual CDMA_BUSINESS_SIZE BusinessSizes { get; set; }
+        //public virtual CDMA_CUSTOMER_SEGMENT CustomerSegments { get; set; }
+        //public virtual CDMA_CUSTOMER_TYPE CustomerTypes { get; set; }
         //public virtual CM_BRANCH OriginatingBranch { get; set; }
     }
 }

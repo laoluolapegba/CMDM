@@ -43,7 +43,7 @@ namespace CMdm.UI.Web.Models.Customer
         public string MOBILE_NO { get; set; }
         [DisplayName("Email Address")]
         public string EMAIL_ADDRESS { get; set; }
-        [DisplayName("ouse Number")]
+        [DisplayName("House Number")]
         public string HOUSE_NUMBER { get; set; }
         [DisplayName("Identification Type")]
         public decimal? IDENTIFICATION_TYPE { get; set; }

@@ -166,6 +166,7 @@ namespace CMdm.UI.Web.Models.Customer
                                    OPERATING_INSTRUCTION = c.OPERATING_INSTRUCTION,
                                    ORIGINATING_BRANCH = c.ORIGINATING_BRANCH,
                                }).FirstOrDefault();
+            PrepareAccountInfoModel(accountInfo);
 
             var accountService = (from c in db.CDMA_ACCT_SERVICES_REQUIRED
                                   where c.CUSTOMER_NO == id
@@ -189,12 +190,18 @@ namespace CMdm.UI.Web.Models.Customer
                                       ACCOUNT_SIGNATORY = c.ACCOUNT_SIGNATORY,
                                       SECOND_SIGNATORY = c.SECOND_SIGNATORY,
                                   }).FirstOrDefault();
+            PrepareAccountServiceModel(accountService);
 
             var model = new AccInfoCtxModel();
             model.AccInfoModel = accountInfo;
             model.AccServicesModel = accountService;
 
-            PrepareModel(model);
+            if(model == null)
+            {
+                return HttpNotFound();
+            }
+
+            //PrepareModel(model);
             return View(model);
         }
 
@@ -214,8 +221,9 @@ namespace CMdm.UI.Web.Models.Customer
                 using (var db = new AppDbContext())
                 {
                     var entity = db.CDMA_ACCOUNT_INFO.FirstOrDefault(o => o.CUSTOMER_NO == actxmodel.AccInfoModel.CUSTOMER_NO);
-                    var entity2 = db.CDMA_ACCT_SERVICES_REQUIRED.FirstOrDefault(o => o.CUSTOMER_NO == actxmodel.AccServicesModel.CUSTOMER_NO);
-                    if (entity == null || entity2 == null)
+                    var entity2 = db.CDMA_ACCT_SERVICES_REQUIRED.FirstOrDefault(o => o.CUSTOMER_NO == actxmodel.AccInfoModel.CUSTOMER_NO);
+
+                    if (entity == null)
                     {
                         string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", actxmodel.AccInfoModel.CUSTOMER_NO);
                         ModelState.AddModelError("", errorMessage);
@@ -243,6 +251,17 @@ namespace CMdm.UI.Web.Models.Customer
                         entity.LAST_MODIFIED_DATE = DateTime.Now;
                         entity.AUTHORISED = "U";
 
+                        db.CDMA_ACCOUNT_INFO.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges(identity.ProfileId.ToString(), actxmodel.AccInfoModel.CUSTOMER_NO);
+                    }
+                    if(entity2 == null)
+                    {
+                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", actxmodel.AccServicesModel.CUSTOMER_NO);
+                        ModelState.AddModelError("", errorMessage);
+                    }
+                    else
+                    {
                         entity2.ACCOUNT_NUMBER = actxmodel.AccServicesModel.ACCOUNT_NUMBER;
                         entity2.CARD_PREFERENCE = actxmodel.AccServicesModel.CARD_PREFERENCE;
                         entity2.ELECTRONIC_BANKING_PREFERENCE = actxmodel.AccServicesModel.ELECTRONIC_BANKING_PREFERENCE;
@@ -263,11 +282,9 @@ namespace CMdm.UI.Web.Models.Customer
                         entity2.LAST_MODIFIED_DATE = DateTime.Now;
                         entity2.AUTHORISED = "U";
 
-                        db.CDMA_ACCOUNT_INFO.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
                         db.CDMA_ACCT_SERVICES_REQUIRED.Attach(entity2);
                         db.Entry(entity2).State = EntityState.Modified;
-                        db.SaveChanges();
+                        db.SaveChanges(identity.ProfileId.ToString(), actxmodel.AccServicesModel.CUSTOMER_NO);
                     }
                 }
 
@@ -278,9 +295,16 @@ namespace CMdm.UI.Web.Models.Customer
             PrepareModel(actxmodel);
             return View(actxmodel);
         }
+
         public ActionResult Create()
         {
+            var accountInfoModel = new AccInfoModel();
+            var accountServiceModel = new AccServicesModel();
             var model = new AccInfoCtxModel();
+
+            model.AccInfoModel = accountInfoModel;
+            model.AccServicesModel = accountServiceModel;
+
             PrepareModel(model);
             return View(model);
         }
@@ -377,8 +401,6 @@ namespace CMdm.UI.Web.Models.Customer
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            if (model == null)
-                throw new ArgumentNullException("model");
 
             var accountInfo = new AccInfoModel();
             var accountService = new AccServicesModel();
@@ -417,13 +439,66 @@ namespace CMdm.UI.Web.Models.Customer
             accountService.ChequeConfirmation.Add(new SelectListItem { Text = "No", Value = "N" });
             accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "Yes", Value = "Y" });
             accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.Token.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.Token.Add(new SelectListItem { Text = "No", Value = "N" });
+            accountService.Tokens.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            accountService.Tokens.Add(new SelectListItem { Text = "No", Value = "N" });
             accountService.OnlineTransferLimitRange = new SelectList(db.CDMA_ONLINE_TRANSFER_LIMIT, "LIMIT_ID", "DESCRIPTION").ToList();
             accountService.ChequeConfirmationThresholdRange = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND").ToList();
 
             model.AccInfoModel = accountInfo;
             model.AccServicesModel = accountService;
+        }
+
+        [NonAction]
+        public virtual void PrepareAccountInfoModel(AccInfoModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            model.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.CavRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.CavRequired.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.TypesOfAccount = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME").ToList();
+            model.Branches = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+            model.BranchClasses = new SelectList(db.CDMA_BRANCH_CLASS, "ID", "CLASS").ToList();
+            model.BusinessDivisions = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION").ToList();
+            model.BusinessSegments = new SelectList(db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
+            model.BusinessSizes = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE").ToList();
+            model.CustomerSegments = new SelectList(db.CDMA_CUSTOMER_SEGMENT, "ID", "SEGMENT").ToList();
+            model.CustomerTypes = new SelectList(db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE").ToList();
+            model.OriginatingBranch = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+        }
+
+        [NonAction]
+        public virtual void PrepareAccountServiceModel(AccServicesModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            model.OnlineTransferLimit.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.OnlineTransferLimit.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.CardPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.CardPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.ElectronicBankingPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.ElectronicBankingPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.StatementPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.StatementPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.TransactionAlertPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.TransactionAlertPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.StatementFrequency.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.StatementFrequency.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.ChequeBookRequisition.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.ChequeBookRequisition.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.ChequeLeavesRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.ChequeLeavesRequired.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.ChequeConfirmation.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.ChequeConfirmation.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.Tokens.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+            model.Tokens.Add(new SelectListItem { Text = "No", Value = "N" });
+            model.OnlineTransferLimitRange = new SelectList(db.CDMA_ONLINE_TRANSFER_LIMIT, "LIMIT_ID", "DESCRIPTION").ToList();
+            model.ChequeConfirmationThresholdRange = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND").ToList();
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]

@@ -1,0 +1,79 @@
+﻿@model CMdm.UI.Web.Models.Customer.BiodataInfoViewModel
+@{
+    ViewBag.Title = "Edit Customer Bio-Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+           Edit Customer - @Html.CMdmDisplayFor(model => model.BioData.CUSTOMER_NO)
+            @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                SaveContinue
+            </button>
+            
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+ 
+
+<script>
+    function loadlga() {
+
+        var itemSelected = $("#AddressDetails_STATE_OF_RESIDENCE").val();
+
+        var queryString = "state_id=" + itemSelected;
+
+       // $("#lgloading").css({ 'display': 'block' });
+        $("#lgloading").show();
+       // alert(itemSelected);
+        $.ajax({url: "@Url.Action("loadlga", "Dynamic")",
+            type: 'get',data: queryString,cache: false,
+        success: function (data) {
+            // alert(data);
+
+            $("#lgloading").css({ 'display': 'none' });
+
+            document.getElementById("AddressDetails_LGA_OF_RESIDENCE").innerHTML = "";
+
+            document.getElementById("AddressDetails_LGA_OF_RESIDENCE").innerHTML = data;
+        }
+    }
+                   );
+
+
+
+
+    }
+
+
+    function getAge() {
+        var dateString = $('#BioData_DATE_OF_BIRTH').val();
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        if(age<0)
+        {
+            age = 0;
+        }
+
+        $('#BioData_AGE').val(age);
+
+
+    }
+</script>

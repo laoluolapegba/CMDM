@@ -247,12 +247,13 @@ namespace CMdm.Services.Logging
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
                 return null;
-
+ 
             var log = new Log
             {
+                
                 LOGLEVELID = (int)logLevel,
                 SHORTMESSAGE = shortMessage,
-                FULLMESSAGE = fullMessage.Substring(0, 3900),
+                FULLMESSAGE = fullMessage.Substring(0, 300),
                 IPADDRESS = "", // _webHelper.GetCurrentIpAddress(),
                 CUSTOMERID = CustomerId,
                 PAGEURL = "", // _webHelper.GetThisPageUrl(true),
@@ -260,8 +261,15 @@ namespace CMdm.Services.Logging
                 CREATEDBY = UserId,
                 CREATEDDATE = DateTime.Now
             };
-            _logDAC.Insert(log);
-            //_logRepository.Insert(log);
+            try
+            {
+               _logDAC.Insert(log);
+                //_logRepository.Insert(log);
+            }
+            catch
+            {
+
+            }
 
             return log;
         }

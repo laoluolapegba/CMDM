@@ -21,14 +21,14 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext db = new AppDbContext();
         private IAccountOfficerService _dqQueService;
-        private IExportManager _exportManager;
+        private IAccExportManager _exportManager;
 
         #region Constructors
         public AccountOfficerController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new AccountOfficerService();
-            _exportManager = new ExportManager();
+            _exportManager = new AccExportManager();
         }
         #endregion Constructors
 
@@ -110,6 +110,57 @@ namespace CMdm.UI.Web.Controllers
 
             return Json(gridModel);
         }
+
+        [HttpPost, ActionName("List")]
+        [FormValueRequired("exportexcel-all")]
+        public virtual ActionResult ExportExcelAll(AccountOfficerModel model)
+        {
+
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var items = _dqQueService.GetAllAccountOfficers(model.SearchName, model.AO_NAME, model.SOL_ID);
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
+                return File(bytes, MimeTypes.TextXlsx, "accountOfficers.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        [HttpPost]
+        public virtual ActionResult ExportExcelSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            var docs = new List<AccountOfficer>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                docs.AddRange(_dqQueService.GetAccountOfficerbyIds(ids));
+            }
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                return File(bytes, MimeTypes.TextXlsx, "accountOfficers.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        #region scaffolded
 
         // GET: AccountOfficer/Details/5
         //public ActionResult Details(string id)
@@ -214,5 +265,6 @@ namespace CMdm.UI.Web.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
+        #endregion scaffolded
     }
 }

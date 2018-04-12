@@ -21,7 +21,7 @@ namespace CMdm.UI.Web.Models.Customer
             ChequeConfirmationThresholdRange = new List<SelectListItem>();
             OnlineTransferLimit = new List<SelectListItem>();
             OnlineTransferLimitRange = new List<SelectListItem>();
-            Token = new List<SelectListItem>();
+            Tokens = new List<SelectListItem>();
     }
 
         [DisplayName("Customer No")]
@@ -71,7 +71,7 @@ namespace CMdm.UI.Web.Models.Customer
         public List<SelectListItem> ChequeConfirmationThresholdRange { get; set; }
         public List<SelectListItem> OnlineTransferLimit { get; set; }
         public List<SelectListItem> OnlineTransferLimitRange { get; set; }
-        public List<SelectListItem> Token { get; set; }
+        public List<SelectListItem> Tokens { get; set; }
 
         public string ReadOnlyForm { get; set; }
         public string LastUpdatedby { get; set; }

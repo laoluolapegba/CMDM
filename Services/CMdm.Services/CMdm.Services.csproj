@@ -98,9 +98,11 @@
     <Compile Include="DqQue\IDqQueService.cs" />
     <Compile Include="DqRule\DqRuleService.cs" />
     <Compile Include="DqRule\IDqRuleService.cs" />
+    <Compile Include="ExportImport\AccExportManager.cs" />
     <Compile Include="ExportImport\ExportManager.cs" />
     <Compile Include="ExportImport\Help\PropertyByName.cs" />
     <Compile Include="ExportImport\Help\PropertyManager.cs" />
+    <Compile Include="ExportImport\IAccExportManager.cs" />
     <Compile Include="ExportImport\IExportManager.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GoldenRecord\GoldenRecordService.cs" />

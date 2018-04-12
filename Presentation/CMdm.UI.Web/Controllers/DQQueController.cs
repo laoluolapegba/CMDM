@@ -495,7 +495,7 @@ namespace CMdm.UI.Web.Controllers
             switch (table)
             {
                 case "CDMA_INDIVIDUAL_BIO_DATA":
-                    controllerName = "customer";
+                    controllerName = "IndividualCustomer";
                     break;
                 case " CDMA_ACCOUNT_INFO":
                     controllerName = "AccInfoContext";
