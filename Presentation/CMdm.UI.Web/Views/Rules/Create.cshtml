@@ -160,7 +160,8 @@
         };
 
         function getPrefix() {
-            var res = window.location.origin + "/Rules/";  //"http://localhost:57406/Rules/";// window.location.pathname;
+            //SALAM: Added CMDM to the URL below just for it to work on server
+            var res = window.location.origin + "/CMDM/Rules/";  //"http://localhost:57406/Rules/";// window.location.pathname;
             if (res.charAt(res.length-1) !== '/')
                 res = res + '/';
             return res;

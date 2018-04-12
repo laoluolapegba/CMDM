@@ -87,7 +87,7 @@ namespace CMdm.Services.DqRule
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Ruleitems</returns>
-        public virtual IPagedList<MdmDqRule> GetAllRuleItems(string name = "",
+        public virtual IPagedList<MdmDqRule> GetAllRuleItems(string name = "", int? dimensionId = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<MdmDqRule> result = default(List<MdmDqRule>);
@@ -95,7 +95,7 @@ namespace CMdm.Services.DqRule
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "LAST_RUN DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqruleDAC.Select(name, pageIndex, pageSize, sortExpression);
+            result = _dqruleDAC.Select(name, pageIndex, pageSize, sortExpression, dimensionId) ;
 
             // Step 2 - Get count.
             //totalRowCount = _dqruleDAC.Count(name); i dont need this cos i can do items.totalcount

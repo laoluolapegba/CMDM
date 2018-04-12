@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Audit\CDMA_CHANGE_LOG.cs" />
-    <Compile Include="Domain\Customer\BusinessDivision.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_INFO_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_INFO.cs" />
     <Compile Include="Domain\Customer\CDMA_ACCOUNT_TYPE.cs" />
@@ -49,9 +48,11 @@
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_REQUIRED.cs" />
     <Compile Include="Domain\Customer\CDMA_ADDITIONAL_INFORMATION.cs" />
     <Compile Include="Domain\Customer\CDMA_AUTH_FINANCE_INCLUSION.cs" />
-    <Compile Include="Domain\Customer\CDMA_BRANCH_ClASS.cs" />
+    <Compile Include="Domain\Customer\CDMA_BRANCH_CLASS.cs" />
+    <Compile Include="Domain\Customer\CDMA_BUSINESS_DIVISION.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
+    <Compile Include="Domain\Customer\CDMA_CHEQUE_CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\CDMA_COUNTRIES.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME.cs" />
@@ -85,14 +86,16 @@
     <Compile Include="Domain\Customer\CDMA_MARITALSTATUS.cs" />
     <Compile Include="Domain\Customer\CDMA_NATURE_OF_BUSINESS.cs" />
     <Compile Include="Domain\Customer\CDMA_OCCUPATION_LIST.cs" />
+    <Compile Include="Domain\Customer\CDMA_ONLINE_TRANSFER_LIMIT.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CDMA_TRUSTS_CLIENT_ACCOUNTS.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
-    <Compile Include="Domain\Customer\CONFIRM_THRESHOLD.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Customer\Limit_Range.cs" />
     <Compile Include="Domain\Customer\SRC_CDMA_LGA.cs" />
     <Compile Include="Domain\Customer\SRC_CDMA_STATE.cs" />
+    <Compile Include="Domain\Customer\TMP_ACCOUNTOFFICER_EXCEPTIONS.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\Dqi\BranchDqiSummary.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />

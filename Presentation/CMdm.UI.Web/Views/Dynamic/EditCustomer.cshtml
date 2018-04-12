@@ -89,7 +89,7 @@
                                 <div class="input-group">
                                     <label> Title</label>
 
-                                    @Html.EditorFor(model => model.BioData.TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.TITLE, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.BioData.TITLE, "", new { @class = "text-danger " })
 
                                 </div>
@@ -150,7 +150,7 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label> Place of Birth</label>
-                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.BioData.PLACE_OF_BIRTH, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -213,14 +213,14 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label> State of Origin</label>
-                                    @Html.EditorFor(model => model.BioData.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.STATE_OF_ORIGIN, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.BioData.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label> Mother Maiden Name</label>
-                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.BioData.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
 
 
@@ -241,7 +241,7 @@
                             <div class="col-lg-3">
                                 <div class="input-group">
                                     <label>Complexion</label>
-                                    @Html.EditorFor(model => model.BioData.COMPLEXION, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.BioData.COMPLEXION, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
                                     @Html.ValidationMessageFor(model => model.BioData.COMPLEXION, "", new { @class = "text-danger" })
                                 </div>
                             </div>

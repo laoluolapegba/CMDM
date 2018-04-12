@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-//
+ 
 namespace CMdm.UI.Web.Controllers
 {
     public class DynamicController : Controller
@@ -60,18 +60,6 @@ namespace CMdm.UI.Web.Controllers
 
             CDMA_ACCOUNT_TYPE accType = db.CDMA_ACCOUNT_TYPE.Where(a => a.ACCOUNT_ID == id).FirstOrDefault();
             return accType;
-        }
-
-        public CDMA_INCOME_BAND getIncomeBand(decimal income_id)
-        {
-            CDMA_INCOME_BAND result = db.CDMA_INCOME_BAND.Where(a => a.INCOME_ID == income_id).FirstOrDefault();
-            return result;
-        }
-
-        public CDMA_INITIAL_DEPOSIT_RANGE getIniDeposit(decimal income_id)
-        {
-            CDMA_INITIAL_DEPOSIT_RANGE result = db.CDMA_INITIAL_DEPOSIT_RANGE.Where(a => a.DEPOSIT_ID == income_id).FirstOrDefault();
-            return result;
         }
 
         public CDMA_RELIGION getRel(decimal rel_id)
@@ -145,35 +133,6 @@ namespace CMdm.UI.Web.Controllers
             return "Nil";
         }
 
-
-        [HttpPost]
-      //  [ValidateAntiForgeryToken]
-        public ActionResult ApproveIncome(DynamicViewModel DynamicModel)
-        {
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            var dateAndTime = DateTime.Now;
-            var c_id =  Request["customer_no"];
-
-
-            //create a log before update
-            string tied = DateTime.Now.ToString("hhmmssffffff");
-            //var values = Request["AccInfo.CUSTOMER_NO"];
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
-            CDMA_INDIVIDUAL_BIO_DATA biorecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
-            
-            cDMA_CUSTOMER_INCOME.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
-            cDMA_CUSTOMER_INCOME.LAST_MODIFIED_DATE = dateAndTime;
-            cDMA_CUSTOMER_INCOME.AUTHORISED_BY = identity.ProfileId.ToString();
-            cDMA_CUSTOMER_INCOME.AUTHORISED_DATE = dateAndTime;// DynamicModel.AccInfo.BRANCH;
-            cDMA_CUSTOMER_INCOME.AUTHORISED = "A";
-            db.SaveChanges();
-           
-            return PartialView("SaveBioData");
-
-
-
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult approveAccInfodata(DynamicViewModel DynamicModel)
@@ -224,6 +183,9 @@ namespace CMdm.UI.Web.Controllers
             //create a log before update
             string tied = DateTime.Now.ToString("hhmmssffffff");
 
+ 
+
+
             CDMA_INDIVIDUAL_BIO_DATA cDMA_INDIVIDUAL_BIO_DATA = db.CDMA_INDIVIDUAL_BIO_DATA.Find(c_id);
             CDMA_INDIVIDUAL_CONTACT_DETAIL cDMA_INDIVIDUAL_CONTACT_DETAIL = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Find(c_id);
             CDMA_INDIVIDUAL_ADDRESS_DETAIL cDMA_INDIVIDUAL_ADDRESS_DETAIL = db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Find(c_id);
@@ -232,8 +194,8 @@ namespace CMdm.UI.Web.Controllers
 
             //Address details
             //  var authrizer = DynamicModel.AddressDetails.AUTHORISED;
-            // var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
-            //   var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
+             //var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
+              // var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
             // checked if address record does not exist 
             if (cDMA_INDIVIDUAL_ADDRESS_DETAIL == null)
             {
@@ -501,9 +463,6 @@ namespace CMdm.UI.Web.Controllers
         }
 
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ApproveBioData(DynamicViewModel DynamicModel)
@@ -594,78 +553,70 @@ namespace CMdm.UI.Web.Controllers
 
         }
 
-        public ActionResult SaveIncomeData(DynamicViewModel DynamicModel) {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisapproveBioData(DynamicViewModel DynamicModel)
+        {
             var identity = ((CustomPrincipal)User).CustomIdentity;
             var dateAndTime = DateTime.Now;
-            var c_id = Request["customer_no"];
+            var c_id = DynamicModel.BioData.CUSTOMER_NO;
 
             //create a log before update
             string tied = DateTime.Now.ToString("hhmmssffffff");
-            //var values = Request["AccInfo.CUSTOMER_NO"];
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
-            CDMA_INDIVIDUAL_BIO_DATA cusrecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
 
-            if (cDMA_CUSTOMER_INCOME == null)
+            CDMA_INDIVIDUAL_BIO_DATA cDMA_INDIVIDUAL_BIO_DATA = db.CDMA_INDIVIDUAL_BIO_DATA.Find(c_id);
+            CDMA_INDIVIDUAL_CONTACT_DETAIL cDMA_INDIVIDUAL_CONTACT_DETAIL = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Find(c_id);
+            CDMA_INDIVIDUAL_ADDRESS_DETAIL cDMA_INDIVIDUAL_ADDRESS_DETAIL = db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Find(c_id);
+            CDMA_INDIVIDUAL_IDENTIFICATION cDMA_INDIVIDUAL_IDENTIFICATION = db.CDMA_INDIVIDUAL_IDENTIFICATION.Find(c_id);
+            CDMA_INDIVIDUAL_OTHER_DETAILS cDMA_INDIVIDUAL_OTHER_DETAILS = db.CDMA_INDIVIDUAL_OTHER_DETAILS.Find(c_id);
+
+            //Address details
+            //  var authrizer = DynamicModel.AddressDetails.AUTHORISED;
+            // var AUTHORISED_BY = DynamicModel.AddressDetails.AUTHORISED_BY;
+            //   var AUTHORISED_DATE = DynamicModel.AddressDetails.AUTHORISED_DATE;
+            // checked if address record does not exist 
+            if (!(cDMA_INDIVIDUAL_ADDRESS_DETAIL == null))
             {
-                CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME_SAVE = new CDMA_CUSTOMER_INCOME();
-                cDMA_CUSTOMER_INCOME_SAVE.INCOME_BAND = Request["INCOME_BAND"]; //DynamicMode.CusIncomeInfo.INCOME_BAND;
-                cDMA_CUSTOMER_INCOME_SAVE.INITIAL_DEPOSIT = Request["INITIAL_DEPOSIT"];
-                cDMA_CUSTOMER_INCOME_SAVE.CUSTOMER_NO = c_id;
-                cDMA_CUSTOMER_INCOME_SAVE.AUTHORISED = "U";
-                cDMA_CUSTOMER_INCOME_SAVE.CREATED_DATE = dateAndTime;
-                cDMA_CUSTOMER_INCOME_SAVE.CREATED_BY = identity.ProfileId.ToString();
-                cDMA_CUSTOMER_INCOME_SAVE.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_CUSTOMER_INCOME_SAVE.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                cDMA_CUSTOMER_INCOME_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
-                db.CDMA_CUSTOMER_INCOME.Add(cDMA_CUSTOMER_INCOME_SAVE);
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED_DATE = null;
+                cDMA_INDIVIDUAL_ADDRESS_DETAIL.AUTHORISED = "N";
                 db.SaveChanges();
             }
-            else
+
+            // Biodata           
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED_BY = null;
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED = "N";
+            cDMA_INDIVIDUAL_BIO_DATA.AUTHORISED_DATE = null;
+            db.SaveChanges();
+            
+            if (!(cDMA_INDIVIDUAL_CONTACT_DETAIL == null))
             {
-                cDMA_CUSTOMER_INCOME.INCOME_BAND = Request["INCOME_BAND"]; //DynamicMode.CusIncomeInfo.INCOME_BAND;
-                cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT = Request["INITIAL_DEPOSIT"];
-                cDMA_CUSTOMER_INCOME.CUSTOMER_NO = c_id;
-                cDMA_CUSTOMER_INCOME.AUTHORISED = "U";
-                cDMA_CUSTOMER_INCOME.CREATED_DATE = dateAndTime;
-                cDMA_CUSTOMER_INCOME.CREATED_BY = identity.ProfileId.ToString();
-                cDMA_CUSTOMER_INCOME.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_CUSTOMER_INCOME.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                cDMA_CUSTOMER_INCOME.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_CONTACT_DETAIL.AUTHORISED_DATE = null;
                 db.SaveChanges();
+            }
+            
+            // identification 
+            if (!(cDMA_INDIVIDUAL_IDENTIFICATION == null))
+            {
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED_BY = null;
+                cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED_DATE = null;
 
-                CDMA_CUSTOMER_INCOME customerIncome = (CDMA_CUSTOMER_INCOME)this.Session["cDMA_CUSTOMER_INCOME"];
-                // compare the Old record with the new one and get comment
-                string serv_req_changes = compareCustomerIncome(cDMA_CUSTOMER_INCOME,customerIncome); //compareServiceReq(cDMA_ACCT_SERVICES_REQUIRED, serviceRequired);
-                changesComment = changesComment + serv_req_changes;
-                // log address details
-                CDMA_CUSTOMER_INCOME_LOG CUSTOMER_INCOME_log = ConvertToCustomerIncomeLog(customerIncome);
-                CUSTOMER_INCOME_log.TIED = tied;
-                db.CDMA_CUSTOMER_INCOME_LOG.Add(CUSTOMER_INCOME_log);
                 db.SaveChanges();
-
-
-
-                CDMA_INDIVIDUAL_PROFILE_LOG SAVE_ACC_INF_LOG = new CDMA_INDIVIDUAL_PROFILE_LOG();
-                SAVE_ACC_INF_LOG.AFFECTED_CATEGORY = "CusIncome";
-                SAVE_ACC_INF_LOG.CUSTOMER_NO = c_id;
-                SAVE_ACC_INF_LOG.LOGGED_BY = Convert.ToDecimal(identity.ProfileId);
-                SAVE_ACC_INF_LOG.LOGGED_DATE = dateAndTime;
-                SAVE_ACC_INF_LOG.TIED = tied;
-                SAVE_ACC_INF_LOG.COMMENTS = changesComment;
-                string change_index = String.Join(", ", index_id);
-                //int[] change_index = index_id.ToArray();
-                SAVE_ACC_INF_LOG.CHANGE_INDEX = change_index.ToString();
-                db.CDMA_INDIVIDUAL_PROFILE_LOG.Add(SAVE_ACC_INF_LOG);
-                db.SaveChanges();
-
-               
             }
 
+            //otherdetails	 s
+            if (!(cDMA_INDIVIDUAL_OTHER_DETAILS == null))
+            {
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED_DATE = null;
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED = "N";
+                cDMA_INDIVIDUAL_OTHER_DETAILS.AUTHORISED_BY = null;
+                db.SaveChanges();
+            }
 
             return PartialView("SaveBioData", DynamicModel);
-
-
-
         }
 
         [HttpPost]
@@ -705,8 +656,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO_SAVE.BUSINESS_SIZE = Request["BusinessSize"]; //DynamicModel.AccInfo.BUSINESS_SIZE;
                 cDMA_ACCOUNT_INFO_SAVE.BVN_NUMBER = DynamicModel.AccInfo.BVN_NUMBER;
                 cDMA_ACCOUNT_INFO_SAVE.CAV_REQUIRED = DynamicModel.AccInfo.CAV_REQUIRED;
-                cDMA_ACCOUNT_INFO_SAVE.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-                cDMA_ACCOUNT_INFO_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO_SAVE.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+                //cDMA_ACCOUNT_INFO_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_IC = DynamicModel.AccInfo.CUSTOMER_IC;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_SEGMENT = Request["CustomerSegment"]; //DynamicModel.AccInfo.CUSTOMER_SEGMENT;
                 cDMA_ACCOUNT_INFO_SAVE.CUSTOMER_TYPE = Request["CustomerType"];//DynamicModel.AccInfo.CUSTOMER_TYPE;
@@ -737,14 +688,14 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCOUNT_INFO.ACCOUNT_TITLE = DynamicModel.AccInfo.ACCOUNT_TITLE;
                 cDMA_ACCOUNT_INFO.ACCOUNT_OFFICER = DynamicModel.AccInfo.ACCOUNT_OFFICER;
                 cDMA_ACCOUNT_INFO.CAV_REQUIRED = DynamicModel.AccInfo.CAV_REQUIRED;
-                cDMA_ACCOUNT_INFO.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-                cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO.CHEQUE_CONFIRM_THRESHLDRANGE = DynamicModel.AccInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+                //cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO.CUSTOMER_IC = DynamicModel.AccInfo.CUSTOMER_IC;
                 cDMA_ACCOUNT_INFO.CUSTOMER_SEGMENT = Request["CustomerSegment"]; //DynamicModel.AccInfo.CUSTOMER_SEGMENT;
                 cDMA_ACCOUNT_INFO.CUSTOMER_TYPE = Request["CustomerType"] ;//DynamicModel.AccInfo.CUSTOMER_TYPE;
                 cDMA_ACCOUNT_INFO.OPERATING_INSTRUCTION = DynamicModel.AccInfo.OPERATING_INSTRUCTION;
                 cDMA_ACCOUNT_INFO.ORIGINATING_BRANCH = Request["OringinBranch"] ;//DynamicModel.AccInfo.ORIGINATING_BRANCH;
-                cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+                //cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE = DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
                 cDMA_ACCOUNT_INFO.AUTHORISED = "U";
                 db.SaveChanges();
 
@@ -781,6 +732,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_LEAVES_REQUIRED = DynamicModel.ServiceInfo.CHEQUE_LEAVES_REQUIRED;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRMATION = DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRMATION_THRESHOLD = Request["threshold"] ;//DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION_THRESHOLD;
+                cDMA_ACCT_SERVICES_REQUIRED_SAVE.CHEQUE_CONFIRM_THRESHOLD_RANGE = DynamicModel.ServiceInfo.CHEQUE_CONFIRM_THRESHOLD_RANGE;
+                cDMA_ACCT_SERVICES_REQUIRED_SAVE.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"];//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
 
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.ONLINE_TRANSFER_LIMIT = DynamicModel.ServiceInfo.ONLINE_TRANSFER_LIMIT;
                 cDMA_ACCT_SERVICES_REQUIRED_SAVE.TOKEN = DynamicModel.ServiceInfo.TOKEN;
@@ -809,6 +762,8 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_LEAVES_REQUIRED = DynamicModel.ServiceInfo.CHEQUE_LEAVES_REQUIRED;
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION = DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION;
                 cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD = Request["threshold"]; //DynamicModel.ServiceInfo.CHEQUE_CONFIRMATION_THRESHOLD;
+                cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRM_THRESHOLD_RANGE = DynamicModel.ServiceInfo.CHEQUE_CONFIRM_THRESHOLD_RANGE;
+                cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE = Request["RangeLimit"] ;//DynamicModel.AccInfo.ONLINE_TRANSFER_LIMIT_RANGE;
 
                 cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT = DynamicModel.ServiceInfo.ONLINE_TRANSFER_LIMIT;
                 cDMA_ACCT_SERVICES_REQUIRED.TOKEN = DynamicModel.ServiceInfo.TOKEN;
@@ -1189,13 +1144,7 @@ namespace CMdm.UI.Web.Controllers
             string[] biodata_array = { "CDMA_INDIVIDUAL_BIO_DATA", "CDMA_INDIVIDUAL_CONTACT_DETAIL",
                                          "CDMA_INDIVIDUAL_ADDRESS_DETAIL", "CDMA_INDIVIDUAL_IDENTIFICATION" , "CDMA_INDIVIDUAL_OTHER_DETAILS"};
             string[] accinfo_array = { "CDMA_ACCOUNT_INFO", "CDMA_ACCT_SERVICES_REQUIRED" };
- 
-            string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME", "CDMA_CUSTOMER_INCOME" };//CDMA_CUSTOMER_INCOME
-
- 
-           // string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME" };
-            string[] nok_array = { "CDMA_INDIVIDUAL_NEXT_OF_KIN" };
- 
+            string[] cusinfo_array = { "CDMA_CUSTOMER_INCOME" };
             //CDMA_CUSTOMER_INCOME
 
             if (biodata_array.Contains(table))
@@ -1207,12 +1156,12 @@ namespace CMdm.UI.Web.Controllers
             {
                 table_cat = "accinfo";
             }
-            else if (cusinfo_array.Contains(table))
+            else if (accinfo_array.Contains(table))
             {
                 table_cat = "cusinfo";
             }
 
-          var viewModel = new DynamicViewModel(); //Create an instance of the above view model
+                var viewModel = new DynamicViewModel(); //Create an instance of the above view model
 
  
 
@@ -1302,7 +1251,7 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_INDIVIDUAL_BIO_DATA != null)
                     {
-                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", Convert.ToDecimal(cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS));
+                        ViewBag.MARITAL_STATUS = new SelectList(db.CDMA_MARITALSTATUS, "CODE", "STATUS", cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS);
                     }
                     else
                     {
@@ -1366,7 +1315,7 @@ namespace CMdm.UI.Web.Controllers
                         ViewBag.changeIndex = new int[] { };
 
                     }
-                    
+
 
 
                     CDMA_ACCOUNT_INFO cDMA_ACCOUNT_INFO = db.CDMA_ACCOUNT_INFO.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
@@ -1415,17 +1364,6 @@ namespace CMdm.UI.Web.Controllers
                         ViewBag.CustomerType = new SelectList(db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE");
                     }
 
-
-                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    }
-                    else
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    }
-
-
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
                     {
                         ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE", cDMA_ACCOUNT_INFO.BUSINESS_SIZE);
@@ -1437,11 +1375,11 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD != null)
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
                     }
                     else
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
                     }
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT != null)
@@ -1453,13 +1391,23 @@ namespace CMdm.UI.Web.Controllers
                         ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME");
                     }
 
-                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE != null)
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE);
                     }
                     else
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION");
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
+                    }
+
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                    }
+                    else
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION");
                     }
 
 
@@ -1512,77 +1460,10 @@ namespace CMdm.UI.Web.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
 
-                    CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
-                    CDMA_INDIVIDUAL_BIO_DATA cusrecord = db.CDMA_INDIVIDUAL_BIO_DATA.SingleOrDefault(c => c.CUSTOMER_NO == c_id);
-
-                    ViewBag.CUSTOMER_NO = cusrecord.CUSTOMER_NO;
-                    ViewBag.biorecord = cusrecord;
-                    if (cDMA_CUSTOMER_INCOME != null && cDMA_CUSTOMER_INCOME.INCOME_BAND != null)
-                    {
-                        ViewBag.INCOME_BAND = new SelectList(db.CDMA_INCOME_BAND, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_CUSTOMER_INCOME.INCOME_BAND);
-                    }
-                    else
-                    {
-                        ViewBag.INCOME_BAND = new SelectList(db.CDMA_INCOME_BAND, "INCOME_ID", "EXPECTED_INCOME_BAND");
-
-                    }
-
-                    if (cDMA_CUSTOMER_INCOME != null && cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT != null)
-                    {
-                        ViewBag.INITIAL_DEPOSIT = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE", cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT);
-                    }
-                    else
-                    {
-                        ViewBag.INITIAL_DEPOSIT = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE");
-                    }
+                    
+                    return PartialView("ApproveAccInfo", viewModel);
 
 
-                    if (cDMA_CUSTOMER_INCOME != null)
-                    {
-                        this.Session["cDMA_CUSTOMER_INCOME"] = cDMA_CUSTOMER_INCOME;
-                    }
-                    else
-                    {
-                        this.Session["cDMA_CUSTOMER_INCOME"] = cDMA_CUSTOMER_INCOME;
-                    }
-                    //CDMA_CUSTOMER_TYPE
-                    ViewBag.acc_info_log = db.CDMA_INDIVIDUAL_PROFILE_LOG.Where(b => b.CUSTOMER_NO == c_id)
-                                             .Where(b => b.AFFECTED_CATEGORY == "CusIncome")
-                                             .OrderBy(i => i.LOG_ID).ToList();
-
-                    ViewBag.record = cusrecord;
-                    viewModel.CusIncomeInfo = cDMA_CUSTOMER_INCOME;
-
-
-                    var lastUpdateIncom = db.CDMA_INDIVIDUAL_PROFILE_LOG
-                        .Where(b => b.CUSTOMER_NO == c_id).ToList()
-                        .Where(b => b.AFFECTED_CATEGORY == "CusIncome")
-                        .OrderByDescending(i => i.LOG_ID).Take(1);
-                    var changeIndexSingleIncom = lastUpdateIncom.SingleOrDefault();
-                    if (!(changeIndexSingleIncom == null))
-                    {
-                        ChangeIndex = changeIndexSingleIncom.CHANGE_INDEX;
-                    }
-                    else
-                    {
-                        ChangeIndex = null;
-                    }
-
-                    if (!(ChangeIndex == null))
-                    {
-                        nums = Array.ConvertAll(ChangeIndex.Split(','), int.Parse);
-                        ViewBag.changeIndex = nums;
-                    }
-                    else
-                    {
-                        ViewBag.changeIndex = new int[] { };
-
-                    }
-
-
-
-                    return PartialView("ApprovedIncome", viewModel);
-                     
                 case "Beet Armyworm":
                  
                 default:
@@ -1601,6 +1482,9 @@ namespace CMdm.UI.Web.Controllers
 
         public ActionResult Dataquality(string c_id, decimal branch, decimal rule,string table)
         {
+            this.Session["rule"] = rule;
+            this.Session["branch"] = branch;
+            this.Session["id"] = c_id;
             this.Session["table"] = table;
             this.Session["category"] = "biodata";
             string table_cat = "";
@@ -1802,16 +1686,6 @@ namespace CMdm.UI.Web.Controllers
                     }
 
 
-                    if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE != null)
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCOUNT_INFO.ONLINE_TRANSFER_LIMIT_RANGE);
-                    }
-                    else
-                    {
-                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
-                    }
-
-
                     if (cDMA_ACCOUNT_INFO != null && cDMA_ACCOUNT_INFO.BUSINESS_SIZE != null)
                     {
                         ViewBag.BusinessSize = new SelectList(db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE", cDMA_ACCOUNT_INFO.BUSINESS_SIZE);
@@ -1823,21 +1697,38 @@ namespace CMdm.UI.Web.Controllers
 
                     if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD != null)
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND", cDMA_ACCT_SERVICES_REQUIRED.CHEQUE_CONFIRMATION_THRESHOLD);
                     }
                     else
                     {
-                        ViewBag.threshold = new SelectList(db.CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
+                        ViewBag.threshold = new SelectList(db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND");
                     }
 
-                  
-                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT != null)
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME", cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT);
                     }
                     else
                     {
-                        ViewBag.BUSINESSDIVISION = new SelectList(db.BUSINESSDIVISION, "ID", "DIVISION");
+                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.BUSINESS_DIVISION != null)
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION", cDMA_ACCOUNT_INFO.BUSINESS_DIVISION);
+                    }
+                    else
+                    {
+                        ViewBag.BUSINESSDIVISION = new SelectList(db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION");
+                    }
+
+                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE != null)
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT", cDMA_ACCT_SERVICES_REQUIRED.ONLINE_TRANSFER_LIMIT_RANGE);
+                    }
+                    else
+                    {
+                        ViewBag.RangeLimit = new SelectList(db.Limit_Range, "ID", "LIMIT");
                     }
 
 
@@ -1848,15 +1739,6 @@ namespace CMdm.UI.Web.Controllers
                     else
                     {
                         ViewBag.BUSINESS_SEGMENT = new SelectList(db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT");
-                    }
-
-                    if (cDMA_ACCT_SERVICES_REQUIRED != null && cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT != null)
-                    {
-                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME", cDMA_ACCOUNT_INFO.TYPE_OF_ACCOUNT);
-                    }
-                    else
-                    {
-                        ViewBag.TYPE_OF_ACCOUNT = new SelectList(db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME");
                     }
 
 
@@ -1922,27 +1804,14 @@ namespace CMdm.UI.Web.Controllers
                     
                     if (cDMA_CUSTOMER_INCOME != null && cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT != null)
                     {
-                        ViewBag.INITIAL_DEPOSIT = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE", cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT);
+                        ViewBag.CustomerSegment = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE", cDMA_CUSTOMER_INCOME.INITIAL_DEPOSIT);
                     }
                     else
                     {
-                        ViewBag.INITIAL_DEPOSIT = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE");
+                        ViewBag.CustomerSegment = new SelectList(db.CDMA_INITIAL_DEPOSIT_RANGE, "DEPOSIT_ID", "INITIAL_DEPOSIT_RANGE");
                     }
-
-
-                    if (cDMA_CUSTOMER_INCOME != null)
-                    {
-                        this.Session["cDMA_CUSTOMER_INCOME"] = cDMA_CUSTOMER_INCOME;
-                    }
-                    else
-                    {
-                        this.Session["cDMA_CUSTOMER_INCOME"] = cDMA_CUSTOMER_INCOME;
-                    }
-                    //CDMA_CUSTOMER_TYPEINITIAL_DEPOSIT
-                    ViewBag.acc_info_log = db.CDMA_INDIVIDUAL_PROFILE_LOG.Where(b => b.CUSTOMER_NO == c_id)
-                                             .Where(b => b.AFFECTED_CATEGORY == "CusIncome")
-                                             .OrderBy(i => i.LOG_ID).ToList();
-
+ 
+                    //CDMA_CUSTOMER_TYPE
                     ViewBag.record = cusrecord;
                     viewModel.CusIncomeInfo = cDMA_CUSTOMER_INCOME;
                      
@@ -2423,70 +2292,11 @@ namespace CMdm.UI.Web.Controllers
                                 + current.CAV_REQUIRED + "</td></tr>";
             }
 
-            if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHLDRANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHLDRANGE))))
-            {
-                index_id.Add(49);
-
-                var previous_CT = confirmYesNo(previous.BUSINESS_SIZE);
-                var current_CT = confirmYesNo(current.BUSINESS_SIZE);
-
-                result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
-                                + previous_CT + "</strong> To "
-                                + previous_CT + "</td></tr>";
-            }
-
-
-
-            if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
-            {
-                index_id.Add(50);
-                result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
-                                + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
-                                + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
-            }
-
 
             return result;
         }
-
-
-
-        public string compareCustomerIncome(CDMA_CUSTOMER_INCOME current, CDMA_CUSTOMER_INCOME previous)
-        {
-            string result = "";
-            if ((current.INCOME_BAND != null) ||  (previous.INCOME_BAND != null))
-            {
-                if (!(current.INCOME_BAND).Equals((previous.INCOME_BAND)))
-                {
-                    CDMA_INCOME_BAND previous_INCOME = getIncomeBand(Convert.ToDecimal(previous.INCOME_BAND));
-                    CDMA_INCOME_BAND current_INCOME = getIncomeBand(Convert.ToDecimal(current.INCOME_BAND));
-
-                    index_id.Add(66);
-                    result = result + "<tr><td>INCOME BAND Changed <strong>"
-                                    + previous_INCOME.EXPECTED_INCOME_BAND + "</strong> To "
-                                    + current_INCOME.EXPECTED_INCOME_BAND + "</td></tr>";
-                }
-          }
-            if ((current.INITIAL_DEPOSIT != null) || (previous.INITIAL_DEPOSIT != null))
-            {
-                if (!(current.INITIAL_DEPOSIT).Equals((previous.INITIAL_DEPOSIT)))
-                {
-                    CDMA_INITIAL_DEPOSIT_RANGE previous_Ini_Dep = getIniDeposit(Convert.ToDecimal(previous.INITIAL_DEPOSIT));
-                    CDMA_INITIAL_DEPOSIT_RANGE current_Ini_Dep = getIniDeposit(Convert.ToDecimal(current.INITIAL_DEPOSIT));
-
-                    index_id.Add(67);
-                    result = result + "<tr><td>Initial Deposit Changed<strong> "
-                                    + previous_Ini_Dep.INITIAL_DEPOSIT_RANGE + "</strong> To "
-                                    + current_Ini_Dep.INITIAL_DEPOSIT_RANGE + "</td></tr>";
-                }
-            }
-
-
-            return result;
-
-        }
-
-            public string compareServiceReq(CDMA_ACCT_SERVICES_REQUIRED current, CDMA_ACCT_SERVICES_REQUIRED previous)
+         
+        public string compareServiceReq(CDMA_ACCT_SERVICES_REQUIRED current, CDMA_ACCT_SERVICES_REQUIRED previous)
         {
             string result = "";
             
@@ -2565,6 +2375,28 @@ namespace CMdm.UI.Web.Controllers
                 result = result + "<tr><td> CHEQUE CONFIRMATION THRESHOLD changed from <strong>"
                                 + previous.CHEQUE_CONFIRMATION_THRESHOLD + "</strong> To "
                                 + current.CHEQUE_CONFIRMATION_THRESHOLD + "</td></tr>";
+            }
+
+            if (!(retrunValue(current.CHEQUE_CONFIRM_THRESHOLD_RANGE).Equals(retrunValue(previous.CHEQUE_CONFIRM_THRESHOLD_RANGE))))
+            {
+                index_id.Add(49);
+
+                var previous_CT = confirmYesNo(previous.CHEQUE_CONFIRM_THRESHOLD_RANGE);
+                var current_CT = confirmYesNo(current.CHEQUE_CONFIRM_THRESHOLD_RANGE);
+
+                result = result + "<tr><td> CHEQUE CONFIRM THRESHLDRANGE changed <strong>"
+                                + previous_CT + "</strong> To "
+                                + previous_CT + "</td></tr>";
+            }
+
+
+
+            if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT_RANGE).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT_RANGE))))
+            {
+                index_id.Add(50);
+                result = result + "<tr><td> ONLINE TRANSFER LIMIT RANGE changed <strong>"
+                                + previous.ONLINE_TRANSFER_LIMIT_RANGE + "</strong> To "
+                                + current.ONLINE_TRANSFER_LIMIT_RANGE + "</td></tr>";
             }
 
             if (!(retrunValue(current.ONLINE_TRANSFER_LIMIT).Equals(retrunValue(previous.ONLINE_TRANSFER_LIMIT))))
@@ -2701,33 +2533,7 @@ namespace CMdm.UI.Web.Controllers
 
 
 
-
-        public CDMA_CUSTOMER_INCOME_LOG ConvertToCustomerIncomeLog(CDMA_CUSTOMER_INCOME CuomerIncome)
-        {
-            var dateAndTime = DateTime.Now;
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            CDMA_CUSTOMER_INCOME_LOG cDMA_CUSTOMER_INCOME_LOG = new CDMA_CUSTOMER_INCOME_LOG();
-
-            cDMA_CUSTOMER_INCOME_LOG.INCOME_BAND = CuomerIncome.INCOME_BAND;
-            cDMA_CUSTOMER_INCOME_LOG.INITIAL_DEPOSIT = CuomerIncome.INITIAL_DEPOSIT;
-            cDMA_CUSTOMER_INCOME_LOG.CUSTOMER_NO = CuomerIncome.CUSTOMER_NO;
-            cDMA_CUSTOMER_INCOME_LOG.AUTHORISED = CuomerIncome.AUTHORISED;
-            cDMA_CUSTOMER_INCOME_LOG.CREATED_DATE = CuomerIncome.CREATED_DATE;
-            cDMA_CUSTOMER_INCOME_LOG.CREATED_BY = CuomerIncome.CREATED_BY;
-            cDMA_CUSTOMER_INCOME_LOG.LAST_MODIFIED_DATE = CuomerIncome.LAST_MODIFIED_DATE;
-            cDMA_CUSTOMER_INCOME_LOG.LAST_MODIFIED_BY = CuomerIncome.LAST_MODIFIED_BY;
-            cDMA_CUSTOMER_INCOME_LOG.IP_ADDRESS = CuomerIncome.IP_ADDRESS;
-
-            cDMA_CUSTOMER_INCOME_LOG.CREATED_BY = CuomerIncome.CREATED_BY;
-            cDMA_CUSTOMER_INCOME_LOG.CREATED_DATE = CuomerIncome.CREATED_DATE;
-            cDMA_CUSTOMER_INCOME_LOG.IP_ADDRESS = CuomerIncome.IP_ADDRESS;
-
-            return cDMA_CUSTOMER_INCOME_LOG;
-
-
-        }
-
-            public CDMA_ACCT_SERVICES_LOG ConvertToServiceRequiredLog(CDMA_ACCT_SERVICES_REQUIRED accountInfo)
+        public CDMA_ACCT_SERVICES_LOG ConvertToServiceRequiredLog(CDMA_ACCT_SERVICES_REQUIRED accountInfo)
         {
             var dateAndTime = DateTime.Now;
             var identity = ((CustomPrincipal)User).CustomIdentity;
@@ -2781,8 +2587,8 @@ namespace CMdm.UI.Web.Controllers
             cDMA_ACCOUNT_INFO_LOG.BUSINESS_SIZE = accountInfo.BUSINESS_SIZE;
             cDMA_ACCOUNT_INFO_LOG.BVN_NUMBER = accountInfo.BVN_NUMBER;
             cDMA_ACCOUNT_INFO_LOG.CAV_REQUIRED = accountInfo.CAV_REQUIRED;
-            cDMA_ACCOUNT_INFO_LOG.CHEQUE_CONFIRM_THRESHLDRANGE = accountInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
-            cDMA_ACCOUNT_INFO_LOG.ONLINE_TRANSFER_LIMIT_RANGE = accountInfo.ONLINE_TRANSFER_LIMIT_RANGE;
+            //cDMA_ACCOUNT_INFO_LOG.CHEQUE_CONFIRM_THRESHLDRANGE = accountInfo.CHEQUE_CONFIRM_THRESHLDRANGE;
+            //cDMA_ACCOUNT_INFO_LOG.ONLINE_TRANSFER_LIMIT_RANGE = accountInfo.ONLINE_TRANSFER_LIMIT_RANGE;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_IC = accountInfo.CUSTOMER_IC;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_SEGMENT = accountInfo.CUSTOMER_SEGMENT;
             cDMA_ACCOUNT_INFO_LOG.CUSTOMER_TYPE = accountInfo.CUSTOMER_TYPE;
@@ -2920,12 +2726,12 @@ namespace CMdm.UI.Web.Controllers
             if (String.IsNullOrEmpty(x))
             {
 
-                return "";
+                return " ";
             }
             else if (x == null)
             {
 
-                return "";
+                return " ";
             }
             else { return x; }
 

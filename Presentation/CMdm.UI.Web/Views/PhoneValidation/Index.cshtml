@@ -24,15 +24,13 @@
                         <div class="form-group">
                             <label>Find by Branch</label>
 
-                            @Html.DropDownList("BRANCH", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
+                            @Html.DropDownList("branch", null, "Please select", htmlAttributes: new { @class = "form-control", @required = "required" })
 
                         </div>
                         <div class="box-footer">
-                            <button class="btn btn-warning"><a href="/PhoneValidation/ExportListFromTsv" style="color:white">Export to Excel</a></button>
+                            <button class="btn btn-warning"><a href="@Url.Action("ExportListFromTsv", "PhoneValidation")" style="color:white">Export to Excel</a></button>
                             <button type="submit" class="btn btn-info pull-right">Search</button>
                         </div>
-
-
                     }
 
                     <table id="example2" class="table table-bordered table-hover">
@@ -40,6 +38,9 @@
                             <tr>
                                 <th>
                                     BRANCH CODE
+                                </th>
+                                <th>
+                                    CUSTOMER ID
                                 </th>
                                 <th>
                                     LAST NAME
@@ -53,9 +54,9 @@
                                 <th>
                                     LAST RUN DATE
                                 </th>
-                                <th>PHONE NO</th>
+                                <th>REASON</th>
                                 <th>
-                                    REASON
+                                    PHONE NO
                                 </th>
 
                             </tr>
@@ -66,6 +67,9 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.BRANCH_CODE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CUSTOMER_NO)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CUST_LAST_NAME)

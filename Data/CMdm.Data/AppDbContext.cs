@@ -345,10 +345,25 @@ namespace CMdm.Data
             
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
-
+ 
+  
+             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+ 
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+ 
+ 
              modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
+ 
+ 
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+ 
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
+ 
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Businessnature).WithMany(t => t.Businessnature).HasForeignKey(e => e.NATURE_OF_BUSINESS_OCCUPATION).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Indsegment).WithMany(t => t.Indsegment).HasForeignKey(e => e.INDUSTRY_SEGMENT).WillCascadeOnDelete(false);
 
@@ -447,9 +462,10 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_TYPE> CDMA_CUSTOMER_TYPE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.Limit_Range> Limit_Range { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SIZE> CDMA_BUSINESS_SIZE { get; set; }
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CONFIRM_THRESHOLD> CONFIRM_THRESHOLD { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
-        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.BusinessDivision> BUSINESSDIVISION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_DIVISION> CDMA_BUSINESS_DIVISION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ONLINE_TRANSFER_LIMIT> CDMA_ONLINE_TRANSFER_LIMIT { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CHEQUE_CONFIRM_THRESHOLD> CDMA_CHEQUE_CONFIRM_THRESHOLD { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SEGMENT> CDMA_BUSINESS_SEGMENT { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_INFO_LOG> CDMA_ACCOUNT_INFO_LOG { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_RECORD_LOG> CDMA_ACCOUNT_RECORD_LOG { get; set; }
@@ -470,6 +486,7 @@ namespace CMdm.Data
         
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.AccountOfficer> AccountOfficers { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
@@ -487,13 +504,14 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_TRUSTS_CLIENT_ACCOUNTS> CDMA_TRUSTS_CLIENT_ACCOUNTS { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_AUTH_FINANCE_INCLUSION> CDMA_AUTH_FINANCE_INCLUSION { get; set; }
-
+ 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_JURAT> CDMA_JURAT { get; set; }
-
+   
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ADDITIONAL_INFORMATION> CDMA_ADDITIONAL_INFORMATION { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Logging.Log> LOG { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.TMP_ACCOUNTOFFICER_EXCEPTIONS> TMP_ACCOUNTOFFICER_EXCEPTIONS { get; set; }
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 

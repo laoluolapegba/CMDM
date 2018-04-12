@@ -1,10 +1,11 @@
+using CMdm.Entities.Domain.Customer;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMdm.Data.Rbac
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
      [Table("CM_BRANCH")]
     public partial class CM_BRANCH
@@ -12,7 +13,7 @@ namespace CMdm.Data.Rbac
         public CM_BRANCH()
         {
             this.CM_USER_PROFILE = new HashSet<CM_USER_PROFILE>();
-        }
+    }
 
         [Key]
         public string BRANCH_ID { get; set; }

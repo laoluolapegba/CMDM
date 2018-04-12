@@ -42,10 +42,16 @@ namespace CMdm.UI.Web.Models.Customer
         public string FOREIGNER { get; set; }
         [DisplayName("Multiple Citezenship")]
         public string MULTIPLE_CITEZENSHIP { get; set; }
-        public DateTime? CREATED_DATE { get; set; }
-        public string CREATED_BY { get; set; }
+
         public List<SelectListItem> Countries { get; set; }
         public List<SelectListItem> Foreigners { get; set; }
         public List<SelectListItem> MultipleCitezenships { get; set; }
+
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
     }
 }

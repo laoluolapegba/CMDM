@@ -26,7 +26,7 @@
         <div class="tab-pane fade" id="tab1">
             <div class="widget">
         <div class="widget-header">
-            <h3><i class="fa fa-edit"></i>Individual Customer Report</h3>
+            <h3><i class="fa fa-edit"></i>Customer Report</h3>
         </div>
         <div class="widget-content">
 
@@ -150,7 +150,7 @@
         <div class="tab-pane fade active in" id="tab2">
             <div class="widget">
         <div class="widget-header">
-            <h3><i class="fa fa-edit"></i>Corporate Customer Report</h3>
+            <h3><i class="fa fa-edit"></i>Customer Report</h3>
         </div>
         <div class="widget-content">
             
