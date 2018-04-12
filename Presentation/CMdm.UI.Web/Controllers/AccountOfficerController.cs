@@ -58,13 +58,13 @@ namespace CMdm.UI.Web.Controllers
 
             model.AccountOfficers.Add(new SelectListItem
             {
-                Value = "VACANT",
+                Value = "2",
                 Text = "Vacant"
             });
 
             model.AccountOfficers.Add(new SelectListItem
             {
-                Value = null,
+                Value = "1",
                 Text = "None"
             });
 

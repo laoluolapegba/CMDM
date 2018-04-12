@@ -96,8 +96,10 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.ACCOUNT_NUMBER.Contains(name));
-                if (aoname != "0")
-                    query = query.Where(v => v.AO_NAME.Contains(aoname));
+                if (aoname == "1")
+                    query = query.Where(v => v.AO_NAME == null);
+                if(aoname == "2")
+                    query = query.Where(v => v.AO_NAME.ToUpper().Contains("VACANT"));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.
