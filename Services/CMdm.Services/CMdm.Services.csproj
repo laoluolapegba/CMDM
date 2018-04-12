@@ -87,7 +87,9 @@
   <ItemGroup>
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Authentication\LDAPAuthenticationService.cs" />
+    <Compile Include="CustomModule\Fcmb\AccountOfficerService.cs" />
     <Compile Include="CustomModule\Fcmb\CustomService.cs" />
+    <Compile Include="CustomModule\Fcmb\IAccountOfficerService.cs" />
     <Compile Include="CustomModule\Fcmb\ICustomService.cs" />
     <Compile Include="DqParam\DqParamService.cs" />
     <Compile Include="DqParam\IDqParamService.cs" />

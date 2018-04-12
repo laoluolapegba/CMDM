@@ -24,7 +24,7 @@
                             @Html.LabelFor(model => model.USER_LEVEL)
                         </div>
                         <div class="col-md-9">
-                            @Html.CMdmEditorFor(model => model.USER_LEVEL, required: true)
+                            @Html.EditorFor(model => model.USER_LEVEL, new { htmlAttributes = new { min = 0, required = "required" } })
                             @Html.ValidationMessageFor(model => model.USER_LEVEL)
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                             @Html.LabelFor(model => model.PSWD_LIFE_DAYS)
                         </div>
                         <div class="col-md-9">
-                            @Html.CMdmEditorFor(model => model.PSWD_LIFE_DAYS, required: true)
+                            @Html.EditorFor(model => model.PSWD_LIFE_DAYS, new { htmlAttributes = new { min = 0, required = "required" } })
                             @Html.ValidationMessageFor(model => model.PSWD_LIFE_DAYS)
                         </div>
                     </div>
@@ -60,3 +60,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('input[type="number"]').change(function(e){
+            $('input[type="number"]').replace(/\D/g, "");
+            $('input[type="number"]').min = "0";
+        });
+    });
+</script>

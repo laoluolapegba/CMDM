@@ -11,31 +11,31 @@ using System.Threading.Tasks;
 
 namespace CMdm.Services.CustomModule.Fcmb
 {
-    public class CustomService : ICustomService
+    public class AccountOfficerService : IAccountOfficerService
     {
         #region Fields
 
         //private readonly IRepository<MdmDQQue> _dqqueRepository;
-        private CustomActionsDAC _dqqueDAC;
+        private AccountOfficerDAC _aoDAC;
         #endregion
         #region Ctor
-        public CustomService()
+        public AccountOfficerService()
         {
-           _dqqueDAC = new CustomActionsDAC();
+            _aoDAC = new AccountOfficerDAC();
         }
 
         #endregion
-        #region OutstandingDocs
+        #region AccountOfficer
         /// <summary>
         /// Updates the queitem
         /// </summary>
         /// <param name="queitem">queitem</param>
-        public virtual void UpdateOutStandingDocItem(OutStandingDoc queitem)
+        public virtual void UpdateAccountOfficers(AccountOfficer queitem)
         {
             if (queitem == null)
                 throw new ArgumentNullException("queitem");
 
-            _dqqueDAC.UpdateOutstandingDoc(queitem);
+            _aoDAC.UpdateAccountOfficer(queitem);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
@@ -44,12 +44,12 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// Delete an item
         /// </summary>
         /// <param name="queitem">QueItem</param>
-        public virtual void DeleteQueItem(OutStandingDoc queitem)
+        public virtual void DeleteQueItem(AccountOfficer queitem)
         {
             if (queitem == null)
                 throw new ArgumentNullException("queitem");
 
-            UpdateOutStandingDocItem(queitem);
+            UpdateAccountOfficers(queitem);
 
             //event notification
             //_eventPublisher.EntityDeleted(vendor);
@@ -58,12 +58,12 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// Inserts a queitem
         /// </summary>
         /// <param name="queitem">Queitem</param>
-        public virtual void InsertOutDocItem(OutStandingDoc queitem)
+        public virtual void InsertAccountOfficer(AccountOfficer queitem)
         {
             if (queitem == null)
                 throw new ArgumentNullException("queitem");
 
-            _dqqueDAC.InsertOutstandingDoc(queitem);
+            _aoDAC.InsertAccountOfficer(queitem);
 
             //event notification
             //_eventPublisher.EntityInserted(vendor);
@@ -73,12 +73,12 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// Updates the queitem
         /// </summary>
         /// <param name="queitem">queitem</param>
-        public virtual void UpdateOutDocItem(OutStandingDoc queitem)
+        public virtual void UpdateAccountOfficer(AccountOfficer queitem)
         {
             if (queitem == null)
                 throw new ArgumentNullException("queitem");
 
-            _dqqueDAC.UpdateOutstandingDoc(queitem);
+            _aoDAC.UpdateAccountOfficer(queitem);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);
@@ -88,24 +88,24 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// </summary>
         /// <param name="recordId">recordId identifier</param>
         /// <returns>Vendor</returns>
-        public virtual IList<OutStandingDoc> GetOutDocItembyIds(int[] recordIds)
+        public virtual IList<AccountOfficer> GetAccountOfficerbyIds(int[] recordIds)
         {
             if (recordIds == null || recordIds.Length == 0)
                 return null;
 
-            return _dqqueDAC.SelectByIds(recordIds);
+            return _aoDAC.SelectByIds(recordIds);
         }
         /// <summary>
         /// Gets a queitem by item identifier
         /// </summary>
         /// <param name="recordId">MdmDQQue identifier</param>
         /// <returns>Vendor</returns>
-        public virtual OutStandingDoc GetOutDocItembyId(int recordId)
+        public virtual AccountOfficer GetAccOffbyId(int recordId)
         {
             if (recordId == 0)
                 return null;
 
-            return _dqqueDAC.SelectOutStandingDocById(recordId);
+            return _aoDAC.SelectAccountOfficerById(recordId);
         }
         /// <summary>
         /// Gets all queitems
@@ -115,15 +115,15 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string acctid = "", string branchCode = "",
+        public virtual IPagedList<AccountOfficer> GetAllAccountOfficers(string name = "", string aoname = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
-            List<OutStandingDoc> result = default(List<OutStandingDoc>);
+            List<AccountOfficer> result = default(List<AccountOfficer>);
 
             if (string.IsNullOrWhiteSpace(sortExpression))
-                sortExpression = "DUE_DATE DESC";
+                sortExpression = "RUN_DATE DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.SelectOutStandingDoc(name, acctid, branchCode, pageIndex, pageSize, sortExpression);
+            result = _aoDAC.SelectAccountOfficer(name, aoname, branchCode, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount
@@ -138,9 +138,9 @@ namespace CMdm.Services.CustomModule.Fcmb
             ////query = query.Where(v => !v.Deleted);
             //query = query.OrderBy(v => v.CREATED_DATE).ThenBy(v => v.ERROR_DESC);
 
-            var queitems = new PagedList<OutStandingDoc>(result, pageIndex, pageSize);
+            var queitems = new PagedList<AccountOfficer>(result, pageIndex, pageSize);
             return queitems;
         }
-        #endregion OutstandingDocs
+        #endregion AccountOfficer
     }
 }
