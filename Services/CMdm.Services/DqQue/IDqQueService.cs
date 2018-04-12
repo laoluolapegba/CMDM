@@ -11,7 +11,7 @@ namespace CMdm.Services.DqQue
 {
     public interface IDqQueService
     {
-        void ApproveExceptionQueItems(string selectedIds);  //List<MdmDqRunException> queitems
+        void ApproveExceptionQueItems(string selectedIds, int userId);  //List<MdmDqRunException> queitems
         void DisApproveExceptionQueItems(string selectedIds, string comments);
         /// <summary>
         /// Updates the queitem

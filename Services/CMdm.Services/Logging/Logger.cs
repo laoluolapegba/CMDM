@@ -247,12 +247,14 @@ namespace CMdm.Services.Logging
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
                 return null;
-
+            string fullMsg = string.Empty;
+            if (fullMessage.Length >= 4000)
+                fullMsg = fullMessage.Substring(0, 3900);
             var log = new Log
             {
                 LOGLEVELID = (int)logLevel,
                 SHORTMESSAGE = shortMessage,
-                FULLMESSAGE = fullMessage.Substring(0,3900),
+                FULLMESSAGE = fullMsg,
                 IPADDRESS = _webHelper.GetCurrentIpAddress(),
                 CUSTOMERID = CustomerId,
                 PAGEURL = _webHelper.GetThisPageUrl(true),

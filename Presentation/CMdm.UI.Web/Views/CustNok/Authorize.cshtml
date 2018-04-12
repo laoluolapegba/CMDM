@@ -8,9 +8,10 @@
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("ReadOnlyForm", Model.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.ExceptionId);
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Edit Customer - @Model.CUSTOMER_NO
+            Authorize Customer - @Model.CUSTOMER_NO
             @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
         </h1>
         <div class="pull-right">
