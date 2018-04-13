@@ -22,7 +22,7 @@
         public string PLACE_OF_BIRTH { get; set; }
         public string COUNTRY_OF_BIRTH { get; set; }
         public string SEX { get; set; }
-        public DateTime? AGE { get; set; }
+        public int? AGE { get; set; }
         public string MARITAL_STATUS { get; set; }
         public string NATIONALITY { get; set; }
         public string STATE_OF_ORIGIN { get; set; }
