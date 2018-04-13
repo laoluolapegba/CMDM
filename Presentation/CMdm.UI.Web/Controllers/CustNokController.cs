@@ -315,8 +315,8 @@ namespace CMdm.UI.Web.Controllers
                             newentity.ID_EXPIRY_DATE = nokmodel.ID_EXPIRY_DATE;
                             newentity.ID_ISSUE_DATE = nokmodel.ID_ISSUE_DATE;
                             newentity.IDENTIFICATION_TYPE = nokmodel.IDENTIFICATION_TYPE;
-                            newentity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                            newentity.LAST_MODIFIED_DATE = DateTime.Now;
+                            newentity.CREATED_BY = identity.ProfileId.ToString();
+                            newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
                             newentity.CUSTOMER_NO = nokmodel.CUSTOMER_NO;
                             newentity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
@@ -464,26 +464,7 @@ namespace CMdm.UI.Web.Controllers
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("NOK Authorised");
                 }
-                
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
-
-                //    }
-                //}
-
-                
+               
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
