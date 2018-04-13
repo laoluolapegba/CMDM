@@ -11,8 +11,8 @@
     {
         public IndividualBioDataModel()
         {
-          CountryofBirth = new List<SelectListItem>();
-           Nationalities = new List<SelectListItem>();
+            CountryofBirth = new List<SelectListItem>();
+            Nationalities = new List<SelectListItem>();
             Religions = new List<SelectListItem>();
             Branchs = new List<SelectListItem>();
             State = new List<SelectListItem>();
@@ -34,12 +34,10 @@
         public string OTHER_NAME { get; set; }
         [DisplayName("Nickname")]
         public string NICKNAME_ALIAS { get; set; }
-         
-       // public string LAST_MODIFIED_BY { get; set; }
+        // public string LAST_MODIFIED_BY { get; set; }
         [DisplayName("Date of Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> DATE_OF_BIRTH { get; set; }
+        [UIHint("Nullable")]
+        public DateTime? DATE_OF_BIRTH { get; set; }
         [DisplayName("Place of Birth")]
         public string PLACE_OF_BIRTH { get; set; }
         [DisplayName("Country of Birth")]
@@ -47,7 +45,7 @@
         [DisplayName("Sex")]
         public string SEX { get; set; }
         [DisplayName("Age")]
-        public Nullable<int> AGE { get; set; }
+        public int? AGE { get; set; }
         [DisplayName("Marital Status")]
         public string MARITAL_STATUS { get; set; }
         [DisplayName("Nationality")]
@@ -62,7 +60,7 @@
         [DisplayName("Complexion")]
         public string COMPLEXION { get; set; }
         [DisplayName("No of Children")]
-        public Nullable<int> NUMBER_OF_CHILDREN { get; set; }
+        public int? NUMBER_OF_CHILDREN { get; set; }
         [DisplayName("Religion")]
         public string RELIGION { get; set; }
 
@@ -95,5 +93,13 @@
         public List<SelectListItem> Gender { get; set; }
         public List<SelectListItem> CusComplexion { get; set; }
         public List<SelectListItem> MaritalStatus { get; set; }
+
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
+        public string AuthoriserRemarks { get; internal set; }
     }
 }

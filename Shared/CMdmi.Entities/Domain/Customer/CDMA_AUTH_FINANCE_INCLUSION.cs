@@ -8,8 +8,8 @@
 
     [Table("CDMA_AUTH_FINANCE_INCLUSION")]
     public partial class CDMA_AUTH_FINANCE_INCLUSION
-    {  
-        [Key]
+    {
+        [Key, Column(Order = 0)]
         [DisplayName("Customer No")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Is The Customer Socially Or Financially Disadvantaged?")]
@@ -24,21 +24,14 @@
         public string MANDATE_AUTH_COMBINE_RULE { get; set; }
         [DisplayName("Account Held With Other Banks")]
         public string ACCOUNT_WITH_OTHER_BANKS { get; set; }
-        
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
     }

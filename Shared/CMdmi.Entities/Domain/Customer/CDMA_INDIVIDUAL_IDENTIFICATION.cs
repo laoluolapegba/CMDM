@@ -14,31 +14,21 @@
     public partial class CDMA_INDIVIDUAL_IDENTIFICATION
     {
 
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public string IDENTIFICATION_TYPE { get; set; }
         public string ID_NO { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> ID_EXPIRY_DATE { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> ID_ISSUE_DATE { get; set; }
-
+        public DateTime? ID_EXPIRY_DATE { get; set; }
+        public DateTime? ID_ISSUE_DATE { get; set; }
         public string PLACE_OF_ISSUANCE { get; set; }
-        
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }     
+        public DateTime? LAST_MODIFIED_DATE { get; set; }     
         public string LAST_MODIFIED_BY { get; set; }
-
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
-
-
-
     }
 }

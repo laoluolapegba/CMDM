@@ -9,8 +9,8 @@
     [Table("CDMA_TRUSTS_CLIENT_ACCOUNTS")]
     public partial class CDMA_TRUSTS_CLIENT_ACCOUNTS
     {
-       
-        [Key]
+
+        [Key, Column(Order = 0)]
         [DisplayName("Customer No")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Trusts Client ACC")]
@@ -19,10 +19,8 @@
         public string NAME_OF_BENEFICIAL_OWNER { get; set; }
         [DisplayName("Spouse Name")]
         public string SPOUSE_NAME { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Spouse’s Date of Birth")]
-        public Nullable<System.DateTime> SPOUSE_DATE_OF_BIRTH { get; set; }
+        public DateTime? SPOUSE_DATE_OF_BIRTH { get; set; }
         [DisplayName("Spouse’s Occupation")]
         public string SPOUSE_OCCUPATION { get; set; }
         [DisplayName("Sources Of Fund To The Account")]
@@ -50,21 +48,13 @@
         [DisplayName("Telephone Number")]
         public string TELEPHONE_NUMBER { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
-          
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
        
     }
