@@ -327,7 +327,7 @@ namespace CMdm.UI.Web.Controllers
         [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
         [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(AuthFIModel afimodel, bool disapproveRecord)
+        public ActionResult Authorize(AuthFIModel afimodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
@@ -474,7 +474,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
              
-            var model = (from c in db.CDMA_AUTH_FINANCE_INCLUSION
+            var model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
 
                          where c.CUSTOMER_NO == id
                          select new AuthFIModel
@@ -550,7 +550,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -245,18 +245,34 @@ namespace CMdm.UI.Web.Controllers
             });
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [FormValueRequired("approve")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(CustomerADIModel adimodel, bool continueEditing)
+        public ActionResult Authorize(CustomerADIModel adimodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
-                _dqQueService.ApproveExceptionQueItems(adimodel.ExceptionId.ToString());
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
+
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), adimodel.AuthoriserRemarks);
+                    SuccessNotification("ADI Not Authorised");
+                }
+
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("ADI Authorised");
+                }
+
                 //using (var db = new AppDbContext())
                 //{
                 //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
@@ -275,8 +291,8 @@ namespace CMdm.UI.Web.Controllers
                 //    }
                 //}
 
-                SuccessNotification("ADI Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = adimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustAdi");
+
+                return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(adimodel);

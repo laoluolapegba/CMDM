@@ -568,7 +568,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
             
-            var model = (from c in db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+            var model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
 
                          where c.CUSTOMER_NO == id
                          select new CustomerTCAModel
@@ -666,7 +666,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_TRUSTS_CLIENT_ACCOUNTS cDMA_TRUSTS_CLIENT_ACCOUNTS = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Find(id);
+            CDMA_TRUSTS_CLIENT_ACCOUNTS cDMA_TRUSTS_CLIENT_ACCOUNTS = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Find(id);
             if (cDMA_TRUSTS_CLIENT_ACCOUNTS == null)
             {
                 return HttpNotFound();
@@ -679,9 +679,9 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            CDMA_TRUSTS_CLIENT_ACCOUNTS cDMA_TRUSTS_CLIENT_ACCOUNTS = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Find(id);
-            db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Remove(cDMA_TRUSTS_CLIENT_ACCOUNTS);
-            db.SaveChanges();
+            CDMA_TRUSTS_CLIENT_ACCOUNTS cDMA_TRUSTS_CLIENT_ACCOUNTS = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Find(id);
+            _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Remove(cDMA_TRUSTS_CLIENT_ACCOUNTS);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -689,7 +689,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
