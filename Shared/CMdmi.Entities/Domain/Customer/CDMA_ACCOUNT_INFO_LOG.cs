@@ -22,45 +22,20 @@
         public string BVN_NUMBER { get; set; }
         public string CAV_REQUIRED { get; set; }
         public string CHEQUE_CONFIRM_THRESHLDRANGE { get; set; }
-
         public string TIED { get; set; }
-
-
-
         public string ONLINE_TRANSFER_LIMIT_RANGE { get; set; }
         public string CUSTOMER_IC { get; set; }
         public string CUSTOMER_SEGMENT { get; set; }
         public string CUSTOMER_TYPE { get; set; }
         public string OPERATING_INSTRUCTION { get; set; }
         public string ORIGINATING_BRANCH { get; set; }
-       
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
-
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
-
-
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-       
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
-
-
-
-
-
-
-
     }
 }

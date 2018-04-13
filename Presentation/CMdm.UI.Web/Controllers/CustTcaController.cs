@@ -15,7 +15,7 @@ namespace CMdm.UI.Web.Controllers
 {
     public class CustTcaController : BaseController
     {
-        private AppDbContext db = new AppDbContext();
+        private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
 
         public CustTcaController()
@@ -30,7 +30,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-            var model = new CustomerTCAModel();
+            //var model = new CustomerTCAModel();
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -39,12 +39,11 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
-            if (changeId != null)
-            {
-                var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
-                model = (from c in db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_TRUSTS_CLIENT_ACCOUNTS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            var model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
                          where c.CUSTOMER_NO == querecord.CUST_ID
+                         where c.AUTHORISED == "U"
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -71,7 +70,8 @@ namespace CMdm.UI.Web.Controllers
                              LastAuthDate = c.AUTHORISED_DATE,
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
-
+            if (model != null)
+            {
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -82,9 +82,8 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                 }
-                model.ReadOnlyForm = "True";
             }
-
+            model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
@@ -95,10 +94,14 @@ namespace CMdm.UI.Web.Controllers
             {
                 return RedirectToAction("Create");
             }
+            int records = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Count(o => o.CUSTOMER_NO == id);
+            var model = new CustomerTCAModel();
 
-            var model = (from c in db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+            if(records > 1)
+            {
+                model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
                          where c.CUSTOMER_NO == id
-
+                         where c.AUTHORISED == "U"
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -120,7 +123,33 @@ namespace CMdm.UI.Web.Controllers
                              NATIONALITY = c.NATIONALITY,
                              TELEPHONE_NUMBER = c.TELEPHONE_NUMBER
                          }).FirstOrDefault();
-
+            }else if(records == 1)
+            {
+                model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+                         where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "A"
+                         select new CustomerTCAModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             TRUSTS_CLIENT_ACCOUNTS = c.TRUSTS_CLIENT_ACCOUNTS,
+                             NAME_OF_BENEFICIAL_OWNER = c.NAME_OF_BENEFICIAL_OWNER,
+                             SPOUSE_NAME = c.SPOUSE_NAME,
+                             SPOUSE_DATE_OF_BIRTH = c.SPOUSE_DATE_OF_BIRTH,
+                             SPOUSE_OCCUPATION = c.SPOUSE_OCCUPATION,
+                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             OTHER_SOURCE_EXPECT_ANN_INC = c.OTHER_SOURCE_EXPECT_ANN_INC,
+                             NAME_OF_ASSOCIATED_BUSINESS = c.NAME_OF_ASSOCIATED_BUSINESS,
+                             FREQ_INTERNATIONAL_TRAVELER = c.FREQ_INTERNATIONAL_TRAVELER,
+                             INSIDER_RELATION = c.INSIDER_RELATION,
+                             POLITICALLY_EXPOSED_PERSON = c.POLITICALLY_EXPOSED_PERSON,
+                             POWER_OF_ATTORNEY = c.POWER_OF_ATTORNEY,
+                             HOLDER_NAME = c.HOLDER_NAME,
+                             ADDRESS = c.ADDRESS,
+                             COUNTRY = c.COUNTRY,
+                             NATIONALITY = c.NATIONALITY,
+                             TELEPHONE_NUMBER = c.TELEPHONE_NUMBER
+                         }).FirstOrDefault();
+            }
             PrepareModel(model);
             return View(model);
         }
@@ -136,42 +165,115 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            bool updateFlag = false;
+
             if (ModelState.IsValid)
             {
+                CDMA_TRUSTS_CLIENT_ACCOUNTS originalObject = new CDMA_TRUSTS_CLIENT_ACCOUNTS();
+
                 using (var db = new AppDbContext())
                 {
-                    var entity = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO);
-                    if (entity == null)
+                    int records = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Count(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
+                    //if there are more than one records, the 'U' one is the edited one
+                    if (records > 1)
                     {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", tcamodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
-                        entity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
-                        entity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
-                        entity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
-                        entity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
-                        entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
-                        entity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                        entity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
-                        entity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
-                        entity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
-                        entity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
-                        entity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
-                        entity.HOLDER_NAME = tcamodel.HOLDER_NAME;
-                        entity.ADDRESS = tcamodel.ADDRESS;
-                        entity.COUNTRY = tcamodel.COUNTRY;
-                        entity.NATIONALITY = tcamodel.NATIONALITY;
-                        entity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
-                        entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                        entity.LAST_MODIFIED_DATE = DateTime.Now;
-                        entity.AUTHORISED = "U";
-                        db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
+                        updateFlag = true;
+                        originalObject = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Where(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
 
+                        var entity = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "U");
+                        if (entity != null)
+                        {
+                            entity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
+                            entity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
+                            entity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
+                            entity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
+                            entity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
+                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
+                            entity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
+                            entity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
+                            entity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
+                            entity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
+                            entity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
+                            entity.HOLDER_NAME = tcamodel.HOLDER_NAME;
+                            entity.ADDRESS = tcamodel.ADDRESS;
+                            entity.COUNTRY = tcamodel.COUNTRY;
+                            entity.NATIONALITY = tcamodel.NATIONALITY;
+                            entity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+                            db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), tcamodel.CUSTOMER_NO, updateFlag, originalObject);
+                        }
+                    }
+                    else if (records == 1)
+                    {
+                        updateFlag = false;
+                        var entity = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "A");
+                        originalObject = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Where(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
+                        if (originalObject != null)
+                        {
+                            entity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
+                            entity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
+                            entity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
+                            entity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
+                            entity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
+                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
+                            entity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
+                            entity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
+                            entity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
+                            entity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
+                            entity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
+                            entity.HOLDER_NAME = tcamodel.HOLDER_NAME;
+                            entity.ADDRESS = tcamodel.ADDRESS;
+                            entity.COUNTRY = tcamodel.COUNTRY;
+                            entity.NATIONALITY = tcamodel.NATIONALITY;
+                            entity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+
+                            db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), tcamodel.CUSTOMER_NO, updateFlag, originalObject);  //track the audit
+
+
+                            // There is no 'U' status row in the table so, Add new record with mnt_status U
+                            //entity.AUTHORISED = "U";
+                            var newentity = new CDMA_TRUSTS_CLIENT_ACCOUNTS();
+                            newentity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
+                            newentity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
+                            newentity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
+                            newentity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
+                            newentity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
+                            newentity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            newentity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
+                            newentity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
+                            newentity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
+                            newentity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
+                            newentity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
+                            newentity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
+                            newentity.HOLDER_NAME = tcamodel.HOLDER_NAME;
+                            newentity.ADDRESS = tcamodel.ADDRESS;
+                            newentity.COUNTRY = tcamodel.COUNTRY;
+                            newentity.NATIONALITY = tcamodel.NATIONALITY;
+                            newentity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            newentity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            newentity.LAST_MODIFIED_DATE = DateTime.Now;
+                            newentity.AUTHORISED = "U";
+                            newentity.CUSTOMER_NO = tcamodel.CUSTOMER_NO;
+                            db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Add(newentity);
+
+                            db.SaveChanges(); //do not track audit.
+                        }
+                        else
+                        {
+                            string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", tcamodel.CUSTOMER_NO);
+                            ModelState.AddModelError("", errorMessage);
+                        }
                     }
                 }
 
@@ -235,8 +337,8 @@ namespace CMdm.UI.Web.Controllers
                     AUTHORISED_DATE = null,
                     IP_ADDRESS = ip_address
                 };
-                db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Add(tca);
-                db.SaveChanges();
+                _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Add(tca);
+                _db.SaveChanges();
 
 
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
@@ -310,58 +412,77 @@ namespace CMdm.UI.Web.Controllers
                 Value = "N"
             });
 
-            model.Countries = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            model.Nationalities = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            model.Nationalities = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [FormValueRequired("approve")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(CustomerTCAModel tcamodel, bool continueEditing)
+        public ActionResult Authorize(CustomerTCAModel tcamodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
-                _dqQueService.ApproveExceptionQueItems(tcamodel.ExceptionId.ToString());
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
-                SuccessNotification("TCA Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = tcamodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustTca");
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
+
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), tcamodel.AuthoriserRemarks);
+                    SuccessNotification("TCA Not Authorised");
+                }
+
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("TCA Authorised");
+                }
+
+                //using (var db = new AppDbContext())
+                //{
+                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
+                //    if (entity == null)
+                //    {
+                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
+                //        ModelState.AddModelError("", errorMessage);
+                //    }
+                //    else
+                //    {                       
+                //        entity.AUTHORISED = "A";
+                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
+                //        db.Entry(entity).State = EntityState.Modified;
+                //        db.SaveChanges();
+
+                //    }
+                //}
+
+
+                return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(tcamodel);
             return View(tcamodel);
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "continueEditing")]
         [FormValueRequired("disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult DisApprove(CustomerTCAModel tcamodel, bool continueEditing)
+        public ActionResult DisApprove_(CustomerTCAModel tcamodel, bool continueEditing)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
-                using (var db = new AppDbContext())
-                {
-                    var entity = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO);
-                    if (entity == null)
-                    {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", tcamodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.AUTHORISED = "N";
-                        db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
+                _dqQueService.DisApproveExceptionQueItems(tcamodel.ExceptionId.ToString(), tcamodel.AuthoriserRemarks);
 
-                SuccessNotification("TCA Authorised");
+                SuccessNotification("NOK Authorised");
                 return continueEditing ? RedirectToAction("Authorize", new { id = tcamodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustTca");
                 //return RedirectToAction("Index");
             }

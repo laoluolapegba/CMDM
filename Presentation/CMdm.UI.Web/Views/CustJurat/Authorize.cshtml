@@ -8,6 +8,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("ReadOnlyForm", Model.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.ExceptionId);
     <div class="content-header clearfix">
         <h1 class="pull-left">
             Authorize Customer - @Model.CUSTOMER_NO
@@ -47,11 +48,11 @@
     </div>
 }
 <script type="text/javascript">
-            $(document).ready(function () {
-                if ($("#ReadOnlyForm").val() == "True") {
-                    $('input', 'form').attr('readonly', true);
-                    $('select', 'form').attr('disabled', true).attr('readonly', true);
-                }
-                $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
-            });
+    $(document).ready(function () {
+        if ($("#ReadOnlyForm").val() == "True") {
+            $('input', 'form').attr('readonly', true);
+            $('select', 'form').attr('disabled', true).attr('readonly', true);
+        }
+        $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
+    });
 </script>

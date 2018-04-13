@@ -20,8 +20,6 @@
         public string TIED { get; set; }
         public string COMMENTS { get; set; }
         public string CHANGE_INDEX { get; set; }
-        public Nullable<System.DateTime>  LOGGED_DATE { get; set; }
-         
-
+        public DateTime?  LOGGED_DATE { get; set; }      
     }
 }

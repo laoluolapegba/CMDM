@@ -9,10 +9,9 @@
 
     [Table("CDMA_INDIVIDUAL_BIO_DATA")]
     
-     
     public partial class CDMA_INDIVIDUAL_BIO_DATA
     {
-        [Key]
+        [Key, Column(Order = 0)]
         [DisplayName("Customer NO")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Title")]
@@ -28,9 +27,7 @@
         [DisplayName("Nickname")]
         public string LAST_MODIFIED_BY { get; set; }
         [DisplayName("Date of Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> DATE_OF_BIRTH { get; set; }
+        public DateTime? DATE_OF_BIRTH { get; set; }
         [DisplayName("Place of Birth")]
         public string PLACE_OF_BIRTH { get; set; }
         [DisplayName("Country of Birth")]
@@ -38,7 +35,7 @@
         [DisplayName("Sex")]
         public string SEX { get; set; }
         [DisplayName("Age")]
-        public Nullable<int> AGE { get; set; }
+        public int? AGE { get; set; }
         [DisplayName("Marital Status")]
         public string MARITAL_STATUS { get; set; }
         [DisplayName("Nationality")]
@@ -53,29 +50,17 @@
         [DisplayName("Complexion")]
         public string COMPLEXION { get; set; }
         [DisplayName("No of Children")]
-        public Nullable<int> NUMBER_OF_CHILDREN { get; set; }
+        public int? NUMBER_OF_CHILDREN { get; set; }
         [DisplayName("Religion")]
         public string RELIGION { get; set; }
-
-
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
         public string BRANCH_CODE { get; set; }
-
-
     }
 }

@@ -8,7 +8,7 @@ namespace CMdm.Entities.Domain.Customer
     [Table("CDMA_FOREIGN_DETAILS")]
     public partial class CDMA_FOREIGN_DETAILS
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public string FOREIGNER { get; set; }
         public string PASSPORT_RESIDENCE_PERMIT { get; set; }
@@ -24,6 +24,7 @@ namespace CMdm.Entities.Domain.Customer
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
         public DateTime? AUTHORISED_DATE { get; set; }

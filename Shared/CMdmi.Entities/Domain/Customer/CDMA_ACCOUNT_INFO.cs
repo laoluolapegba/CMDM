@@ -8,7 +8,7 @@ namespace CMdm.Entities.Domain.Customer
     [Table("CDMA_ACCOUNT_INFO")]
     public partial class CDMA_ACCOUNT_INFO
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public string ACCOUNT_HOLDER { get; set; }
         public string TYPE_OF_ACCOUNT { get; set; }
@@ -27,24 +27,24 @@ namespace CMdm.Entities.Domain.Customer
         public string CUSTOMER_TYPE { get; set; }
         public string OPERATING_INSTRUCTION { get; set; }
         public string ORIGINATING_BRANCH { get; set; }
-
         public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
-        //public virtual CDMA_ACCOUNT_TYPE TypesOfAccount { get; set; }
+        public virtual CDMA_ACCOUNT_TYPE TypesOfAccount { get; set; }
         //public virtual CM_BRANCH Branches { get; set; }
-        //public virtual CDMA_BRANCH_CLASS BranchClasses { get; set; }
-        //public virtual CDMA_BUSINESS_DIVISION BusinessDivisions { get; set; }
-        //public virtual CDMA_BUSINESS_SEGMENT BusinessSegments { get; set; }
-        //public virtual CDMA_BUSINESS_SIZE BusinessSizes { get; set; }
-        //public virtual CDMA_CUSTOMER_SEGMENT CustomerSegments { get; set; }
-        //public virtual CDMA_CUSTOMER_TYPE CustomerTypes { get; set; }
+        public virtual CDMA_BRANCH_CLASS BranchClasses { get; set; }
+        public virtual CDMA_BUSINESS_DIVISION BusinessDivisions { get; set; }
+        public virtual CDMA_BUSINESS_SEGMENT BusinessSegments { get; set; }
+        public virtual CDMA_BUSINESS_SIZE BusinessSizes { get; set; }
+        public virtual CDMA_CUSTOMER_SEGMENT CustomerSegments { get; set; }
+        public virtual CDMA_CUSTOMER_TYPE CustomerTypes { get; set; }
         //public virtual CM_BRANCH OriginatingBranch { get; set; }
     }
 }
