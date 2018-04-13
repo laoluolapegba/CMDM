@@ -429,6 +429,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
             try
             {
                 /*
@@ -456,7 +457,7 @@ namespace CMdm.UI.Web.Controllers
 
                 }
                 */
-                _dqQueService.ApproveExceptionQueItems(selectedIds);
+                _dqQueService.ApproveExceptionQueItems(selectedIds, identity.ProfileId);
 
                 return RedirectToAction("AuthList");
 
