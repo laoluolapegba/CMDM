@@ -335,26 +335,7 @@ namespace CMdm.UI.Web.Controllers
                             //ModelState.AddModelError("", errorMessage);
                         }
                     }
-                    //else
-                    //{
-                    //    string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                    //    ModelState.AddModelError("", errorMessage);
-
-                    //    //string errorMessage = string.Format("Unauthorized record exists for record with Id:{0} .", nokmodel.CUSTOMER_NO);
-                    //    //ModelState.AddModelError("", errorMessage);
-                    //}
-                    //var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO && o.AUTHORISED == "A");
-
-                    //if (entity == null)
-                    //{
-                    //    string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                    //    ModelState.AddModelError("", errorMessage);
-
-                    //}                                        
-                    //else
-                    //{
-
-                    //}
+                    
                 }
 
                 SuccessNotification("NOK Updated");

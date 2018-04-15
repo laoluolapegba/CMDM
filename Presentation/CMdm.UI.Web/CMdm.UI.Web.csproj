@@ -334,6 +334,7 @@
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
@@ -2216,6 +2217,7 @@
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CusBioData\" />
     <Folder Include="Views\DataSources\" />
+    <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE\bootstrap\css\bootstrap.css.map" />
