@@ -21,8 +21,9 @@ namespace CMdm.UI.Web.Controllers
 {
     public class IndividualCustomerController : BaseController
     {
-        private AppDbContext db = new AppDbContext();
+        private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+
         public IndividualCustomerController()
         {
             //bizrule = new DQQueBiz();
@@ -46,66 +47,209 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in db.CDMA_INDIVIDUAL_NEXT_OF_KIN
-                         where c.CUSTOMER_NO == querecord.CUST_ID
-                         select new CustomerNOKModel
+            var model = new BiodataInfoViewModel();
+
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_BIO_DATA" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            var changeId2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_CONTACT_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2); //.Select(a=>a.PROPERTYNAME);
+            var changeId3 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_ADDRESS_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet3 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3); //.Select(a=>a.PROPERTYNAME);
+            var changeId4 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_IDENTIFICATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet4 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId4); //.Select(a=>a.PROPERTYNAME);
+            var changeId5 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_OTHER_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet5 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId5); //.Select(a=>a.PROPERTYNAME);
+               
+
+            var biodata = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualBioDataModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             COUNTRY = c.COUNTRY,
-                             CITY_TOWN = c.CITY_TOWN,
-                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
-                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
-                             FIRST_NAME = c.FIRST_NAME,
-                             HOUSE_NUMBER = c.HOUSE_NUMBER,
-                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
-                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
-                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
-                             LGA = c.LGA,
-                             MOBILE_NO = c.MOBILE_NO,
-                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
-                             OFFICE_NO = c.OFFICE_NO,
-                             OTHER_NAME = c.OTHER_NAME,
-                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
-                             RELATIONSHIP = c.RELATIONSHIP,
-                             RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
-                             SEX = c.SEX,
-                             STATE = c.STATE,
-                             STREET_NAME = c.STREET_NAME,
-                             SURNAME = c.SURNAME,
-                             TITLE = c.TITLE,
-                             ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
-                             LastUpdatedby = c.LAST_MODIFIED_BY,
+                            TITLE = c.TITLE,
+                            SURNAME = c.SURNAME,
+                            FIRST_NAME = c.FIRST_NAME,
+                            OTHER_NAME = c.OTHER_NAME,
+                            NICKNAME_ALIAS = c.NICKNAME_ALIAS,
+                            DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                            PLACE_OF_BIRTH = c.PLACE_OF_BIRTH,
+                            COUNTRY_OF_BIRTH = c.COUNTRY_OF_BIRTH,
+                            SEX = c.SEX,
+                            AGE = c.AGE,
+                            MARITAL_STATUS = c.MARITAL_STATUS,
+                            NATIONALITY = c.NATIONALITY,
+                            STATE_OF_ORIGIN = c.STATE_OF_ORIGIN,
+                            MOTHER_MAIDEN_NAME = c.MOTHER_MAIDEN_NAME,
+                            DISABILITY = c.DISABILITY,
+                            COMPLEXION = c.COMPLEXION,
+                            NUMBER_OF_CHILDREN = c.NUMBER_OF_CHILDREN,
+                            RELIGION = c.RELIGION,
+                            LastUpdatedby = c.LAST_MODIFIED_BY,
                              LastUpdatedDate = c.LAST_MODIFIED_DATE,
                              LastAuthdby = c.AUTHORISED_BY,
                              LastAuthDate = c.AUTHORISED_DATE,
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
 
-            //var modelProperties = model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static);
 
+            var contact = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualContactDetails
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               MOBILE_NO = c.MOBILE_NO,
+                               EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                               MAILING_ADDRESS = c.MAILING_ADDRESS,
+                               LastUpdatedby = c.LAST_MODIFIED_BY,
+                               LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                               LastAuthdby = c.AUTHORISED_BY,
+                               LastAuthDate = c.AUTHORISED_DATE,
+                               ExceptionId = querecord.EXCEPTION_ID
+                           }).FirstOrDefault();
 
-            //List<string> props = new List<string>();
-            foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+            var address = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualAddressDetails
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               RESIDENTIAL_ADDRESS = c.RESIDENTIAL_ADDRESS,
+                               CITY_TOWN_OF_RESIDENCE = c.CITY_TOWN_OF_RESIDENCE,
+                               LGA_OF_RESIDENCE = c.LGA_OF_RESIDENCE,
+                               NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                               STATE_OF_RESIDENCE = c.STATE_OF_RESIDENCE,
+                               COUNTRY_OF_RESIDENCE = c.COUNTRY_OF_RESIDENCE,
+                               RESIDENCE_OWNED_OR_RENT = c.RESIDENCE_OWNED_OR_RENT,
+                               ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                               LastUpdatedby = c.LAST_MODIFIED_BY,
+                               LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                               LastAuthdby = c.AUTHORISED_BY,
+                               LastAuthDate = c.AUTHORISED_DATE,
+                               ExceptionId = querecord.EXCEPTION_ID
+                           }).FirstOrDefault();
+
+            var identification = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new individualIDDetail
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
+                               ID_NO = c.ID_NO,
+                               ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
+                               ID_ISSUE_DATE = c.ID_ISSUE_DATE,
+                               PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
+                               LastUpdatedby = c.LAST_MODIFIED_BY,
+                               LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                               LastAuthdby = c.AUTHORISED_BY,
+                               LastAuthDate = c.AUTHORISED_DATE,
+                               ExceptionId = querecord.EXCEPTION_ID
+                           }).FirstOrDefault();
+
+            var otherdetails = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
+                                  where c.CUSTOMER_NO == id
+                                  where c.AUTHORISED == "U"
+                                  select new OtherDetails
+                                  {
+                                      CUSTOMER_NO = c.CUSTOMER_NO,
+                                      TIN_NO = c.TIN_NO,
+                                      LastUpdatedby = c.LAST_MODIFIED_BY,
+                                      LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                                      LastAuthdby = c.AUTHORISED_BY,
+                                      LastAuthDate = c.AUTHORISED_DATE,
+                                      ExceptionId = querecord.EXCEPTION_ID
+                                  }).FirstOrDefault();
+
+            model.BioData = biodata;
+            model.AddressDetails = address;
+            model.contact = contact;
+            model.identification = identification;
+            model.otherdetails = otherdetails;
+
+            if (model.BioData != null)
             {
-                foreach (var item2 in changedSet)
+                foreach (var item in model.BioData.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
-                    if (item2.PROPERTYNAME == item.Name)
+                    foreach (var item2 in changedSet)
                     {
-                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
                     }
                 }
-                //props.Add(item.Name);
-
             }
+
+            if (model.AddressDetails != null)
+            {
+                foreach (var item in model.AddressDetails.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet3)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+                }
+            }
+
+            if (model.contact != null)
+            {
+                foreach (var item in model.contact.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet2)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+                }
+            }
+
+            if (model.identification != null)
+            {
+                foreach (var item in model.identification.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet4)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+                }
+            }
+
+            if (model.otherdetails != null)
+            {
+                foreach (var item in model.otherdetails.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet5)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+                }
+            }
+
             //var matchItems = props.Intersect(changedSet);
-            model.ReadOnlyForm = "True";
-            //PrepareModel(model);
+            model.AddressDetails.ReadOnlyForm = "True";
+            model.BioData.ReadOnlyForm = "True";
+            model.contact.ReadOnlyForm = "True";
+            model.identification.ReadOnlyForm = "True";
+            model.otherdetails.ReadOnlyForm = "True";
+
+            IndIdDataPrepareModel(model.identification);
+            IndAddDataPrepareModel(model.AddressDetails);
+            IndBioDataPrepareModel(model.BioData);
             return View(model);
         }
-
-
 
         // POST: MdmCatalogs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -297,11 +441,6 @@ namespace CMdm.UI.Web.Controllers
                     }
 
                 }
-
-
-
-            
-
             SuccessNotification("Bio Data Updated");
             return continueEditing ? RedirectToAction("Edit", new { id = bioDatamodel.BioData.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
             //return RedirectToAction("Index");
@@ -316,126 +455,240 @@ namespace CMdm.UI.Web.Controllers
         // GET: CusBioData/Create
         public ActionResult Edit(string id)
         {
-            var viewModel = new BiodataInfoViewModel();
+            var model = new BiodataInfoViewModel();
+
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Create");
             }
 
-            var IndividualBioDataModel = (from c in db.CDMA_INDIVIDUAL_BIO_DATA
+            int records = _db.CDMA_INDIVIDUAL_BIO_DATA.Count(o => o.CUSTOMER_NO == id);
+            int records2 = _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Count(o => o.CUSTOMER_NO == id);
+            int records3 = _db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Count(o => o.CUSTOMER_NO == id);
+            int records4 = _db.CDMA_INDIVIDUAL_IDENTIFICATION.Count(o => o.CUSTOMER_NO == id);
+            int records5 = _db.CDMA_INDIVIDUAL_OTHER_DETAILS.Count(o => o.CUSTOMER_NO == id);
 
-                         where c.CUSTOMER_NO == id
-                         select new IndividualBioDataModel
-                         {
-                             CUSTOMER_NO = c.CUSTOMER_NO,
-                             TITLE = c.TITLE,
-                             SURNAME = c.SURNAME,
-                             FIRST_NAME = c.FIRST_NAME,
-                             OTHER_NAME = c.OTHER_NAME,
-                             NICKNAME_ALIAS = c.NICKNAME_ALIAS,
-                           //  LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
-                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
-                             PLACE_OF_BIRTH = c.PLACE_OF_BIRTH,
-                             COUNTRY_OF_BIRTH = c.COUNTRY_OF_BIRTH,
-                             SEX = c.SEX,
-                             AGE = c.AGE,
+            var biodata = new IndividualBioDataModel();
+            var address = new IndividualAddressDetails();
+            var contact = new IndividualContactDetails();
+            var identification = new individualIDDetail();
+            var otherdetails = new OtherDetails();
+
+            if(records > 1)
+            {
+                biodata = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualBioDataModel
+                        {
+                            CUSTOMER_NO = c.CUSTOMER_NO,
+                            TITLE = c.TITLE,
+                            SURNAME = c.SURNAME,
+                            FIRST_NAME = c.FIRST_NAME,
+                            OTHER_NAME = c.OTHER_NAME,
+                            NICKNAME_ALIAS = c.NICKNAME_ALIAS,
+                            DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                            PLACE_OF_BIRTH = c.PLACE_OF_BIRTH,
+                            COUNTRY_OF_BIRTH = c.COUNTRY_OF_BIRTH,
+                            SEX = c.SEX,
+                            AGE = c.AGE,
                             MARITAL_STATUS = c.MARITAL_STATUS,
-                             NATIONALITY = c.NATIONALITY,
-                             STATE_OF_ORIGIN = c.STATE_OF_ORIGIN,
-                             MOTHER_MAIDEN_NAME = c.MOTHER_MAIDEN_NAME,
-                             DISABILITY = c.DISABILITY,
-                             COMPLEXION = c.COMPLEXION,
-                             NUMBER_OF_CHILDREN = c.NUMBER_OF_CHILDREN,
-                             RELIGION = c.RELIGION
-                         }).FirstOrDefault();
-            IndBioDataPrepareModel(IndividualBioDataModel);
-
-            var IndividualContactModel = (from c in db.CDMA_INDIVIDUAL_CONTACT_DETAIL
-
-                                          where c.CUSTOMER_NO == id
-                                          select new IndividualContactDetails
-                                          {
-                                              CUSTOMER_NO = c.CUSTOMER_NO,
-                                              MOBILE_NO = c.MOBILE_NO,
-                                              EMAIL_ADDRESS = c.EMAIL_ADDRESS,
-                                              MAILING_ADDRESS = c.MAILING_ADDRESS,
-                                              CREATED_DATE = c.CREATED_DATE,
-                                              CREATED_BY = c.CREATED_BY,
-                                              LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
-                                              LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
-                                              IP_ADDRESS = c.IP_ADDRESS,
-                                          }).FirstOrDefault();
-
-            var IndividualAddressModel = (from c in db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
-                                          where c.CUSTOMER_NO == id
-                                          select new IndividualAddressDetails
-                                          {
-                                              CUSTOMER_NO = c.CUSTOMER_NO,
-                                              RESIDENTIAL_ADDRESS = c.RESIDENTIAL_ADDRESS,
-                                              CITY_TOWN_OF_RESIDENCE = c.CITY_TOWN_OF_RESIDENCE,
-                                              LGA_OF_RESIDENCE = c.LGA_OF_RESIDENCE,
-                                              NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
-                                              STATE_OF_RESIDENCE = c.STATE_OF_RESIDENCE,
-                                              COUNTRY_OF_RESIDENCE = c.COUNTRY_OF_RESIDENCE,
-                                              RESIDENCE_OWNED_OR_RENT = c.RESIDENCE_OWNED_OR_RENT,
-                                              ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
-                                              CREATED_DATE = c.CREATED_DATE,
-                                              CREATED_BY = c.CREATED_BY,
-                                              LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
-                                              LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
-                                              IP_ADDRESS = c.IP_ADDRESS,
-                                          }).FirstOrDefault();
-            IndAddDataPrepareModel(IndividualAddressModel);
-
-            //individualIDDetail
-
-            var individualIDModel = (from c in db.CDMA_INDIVIDUAL_IDENTIFICATION
-                                     where c.CUSTOMER_NO == id
-                                     select new individualIDDetail
-                                     {
-                                         CUSTOMER_NO = c.CUSTOMER_NO,
-                                         IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
-                                         ID_NO = c.ID_NO,
-                                         ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
-                                         ID_ISSUE_DATE = c.ID_ISSUE_DATE,
-                                         PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
-                                         LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
-                                         LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
-                                         IP_ADDRESS = c.IP_ADDRESS
-                                     }).FirstOrDefault();
-            IndIdDataPrepareModel(individualIDModel);
-
-
-            var OtherDetailsModel = (from c in db.CDMA_INDIVIDUAL_OTHER_DETAILS
-                                     where c.CUSTOMER_NO == id
-                                     select new OtherDetails
-                                     {
-                                         CUSTOMER_NO = c.CUSTOMER_NO,
-                                         TIN_NO = c.TIN_NO
-                                     }).FirstOrDefault();
-
-
-
-
-            if (IndividualBioDataModel == null)
+                            NATIONALITY = c.NATIONALITY,
+                            STATE_OF_ORIGIN = c.STATE_OF_ORIGIN,
+                            MOTHER_MAIDEN_NAME = c.MOTHER_MAIDEN_NAME,
+                            DISABILITY = c.DISABILITY,
+                            COMPLEXION = c.COMPLEXION,
+                            NUMBER_OF_CHILDREN = c.NUMBER_OF_CHILDREN,
+                            RELIGION = c.RELIGION
+                        }).FirstOrDefault();
+            }
+            else if(records == 1)
+            {
+                biodata = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "A"
+                           select new IndividualBioDataModel
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               TITLE = c.TITLE,
+                               SURNAME = c.SURNAME,
+                               FIRST_NAME = c.FIRST_NAME,
+                               OTHER_NAME = c.OTHER_NAME,
+                               NICKNAME_ALIAS = c.NICKNAME_ALIAS,
+                               DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                               PLACE_OF_BIRTH = c.PLACE_OF_BIRTH,
+                               COUNTRY_OF_BIRTH = c.COUNTRY_OF_BIRTH,
+                               SEX = c.SEX,
+                               AGE = c.AGE,
+                               MARITAL_STATUS = c.MARITAL_STATUS,
+                               NATIONALITY = c.NATIONALITY,
+                               STATE_OF_ORIGIN = c.STATE_OF_ORIGIN,
+                               MOTHER_MAIDEN_NAME = c.MOTHER_MAIDEN_NAME,
+                               DISABILITY = c.DISABILITY,
+                               COMPLEXION = c.COMPLEXION,
+                               NUMBER_OF_CHILDREN = c.NUMBER_OF_CHILDREN,
+                               RELIGION = c.RELIGION
+                           }).FirstOrDefault();
+            }
+            if(records2 > 1)
+            {
+                address = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
+                            where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualAddressDetails
+                            {
+                                CUSTOMER_NO = c.CUSTOMER_NO,
+                                RESIDENTIAL_ADDRESS = c.RESIDENTIAL_ADDRESS,
+                                CITY_TOWN_OF_RESIDENCE = c.CITY_TOWN_OF_RESIDENCE,
+                                LGA_OF_RESIDENCE = c.LGA_OF_RESIDENCE,
+                                NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                                STATE_OF_RESIDENCE = c.STATE_OF_RESIDENCE,
+                                COUNTRY_OF_RESIDENCE = c.COUNTRY_OF_RESIDENCE,
+                                RESIDENCE_OWNED_OR_RENT = c.RESIDENCE_OWNED_OR_RENT,
+                                ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                                CREATED_DATE = c.CREATED_DATE,
+                                CREATED_BY = c.CREATED_BY,
+                                LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                                LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                                IP_ADDRESS = c.IP_ADDRESS,
+                            }).FirstOrDefault();
+            }
+            else if(records2 == 1)
+            {
+                address = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "A"
+                           select new IndividualAddressDetails
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               RESIDENTIAL_ADDRESS = c.RESIDENTIAL_ADDRESS,
+                               CITY_TOWN_OF_RESIDENCE = c.CITY_TOWN_OF_RESIDENCE,
+                               LGA_OF_RESIDENCE = c.LGA_OF_RESIDENCE,
+                               NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                               STATE_OF_RESIDENCE = c.STATE_OF_RESIDENCE,
+                               COUNTRY_OF_RESIDENCE = c.COUNTRY_OF_RESIDENCE,
+                               RESIDENCE_OWNED_OR_RENT = c.RESIDENCE_OWNED_OR_RENT,
+                               ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                               CREATED_DATE = c.CREATED_DATE,
+                               CREATED_BY = c.CREATED_BY,
+                               LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                               LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                               IP_ADDRESS = c.IP_ADDRESS,
+                           }).FirstOrDefault();
+            }
+            if(records3 > 1)
+            {
+                contact = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
+                            where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new IndividualContactDetails
+                            {
+                                CUSTOMER_NO = c.CUSTOMER_NO,
+                                MOBILE_NO = c.MOBILE_NO,
+                                EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                                MAILING_ADDRESS = c.MAILING_ADDRESS,
+                                CREATED_DATE = c.CREATED_DATE,
+                                CREATED_BY = c.CREATED_BY,
+                                LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                                LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                                IP_ADDRESS = c.IP_ADDRESS,
+                            }).FirstOrDefault();
+            }
+            else if(records3 == 1)
+            {
+                contact = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "A"
+                           select new IndividualContactDetails
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               MOBILE_NO = c.MOBILE_NO,
+                               EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                               MAILING_ADDRESS = c.MAILING_ADDRESS,
+                               CREATED_DATE = c.CREATED_DATE,
+                               CREATED_BY = c.CREATED_BY,
+                               LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                               LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                               IP_ADDRESS = c.IP_ADDRESS,
+                           }).FirstOrDefault();
+            }
+            if(records4 > 1)
+            {
+                 identification = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
+                                    where c.CUSTOMER_NO == id
+                                   where c.AUTHORISED == "U"
+                                   select new individualIDDetail
+                                         {
+                                             CUSTOMER_NO = c.CUSTOMER_NO,
+                                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
+                                             ID_NO = c.ID_NO,
+                                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
+                                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
+                                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
+                                             LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                                             LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                                             IP_ADDRESS = c.IP_ADDRESS
+                                         }).FirstOrDefault();
+            }
+            else if(records4 == 1)
+            {
+                identification = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
+                                  where c.CUSTOMER_NO == id
+                                  where c.AUTHORISED == "A"
+                                  select new individualIDDetail
+                                  {
+                                      CUSTOMER_NO = c.CUSTOMER_NO,
+                                      IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
+                                      ID_NO = c.ID_NO,
+                                      ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
+                                      ID_ISSUE_DATE = c.ID_ISSUE_DATE,
+                                      PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
+                                      LAST_MODIFIED_DATE = c.LAST_MODIFIED_DATE,
+                                      LAST_MODIFIED_BY = c.LAST_MODIFIED_BY,
+                                      IP_ADDRESS = c.IP_ADDRESS
+                                  }).FirstOrDefault();
+            }
+            if(records5 > 1)
+            {
+                otherdetails = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
+                                         where c.CUSTOMER_NO == id
+                                         where c.AUTHORISED == "U"
+                                         select new OtherDetails
+                                         {
+                                             CUSTOMER_NO = c.CUSTOMER_NO,
+                                             TIN_NO = c.TIN_NO
+                                         }).FirstOrDefault();
+            }
+            else if(records5 == 1)
+            {
+                otherdetails = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
+                                where c.CUSTOMER_NO == id
+                                where c.AUTHORISED == "A"
+                                select new OtherDetails
+                                {
+                                    CUSTOMER_NO = c.CUSTOMER_NO,
+                                    TIN_NO = c.TIN_NO
+                                }).FirstOrDefault();
+            }
+            
+            IndBioDataPrepareModel(biodata);            
+            IndAddDataPrepareModel(address);
+            IndIdDataPrepareModel(identification);
+            
+            if (model == null)
             {
                 return HttpNotFound();
             }
 
 
-            viewModel.BioData = IndividualBioDataModel;
-            viewModel.AddressDetails = IndividualAddressModel;
-            viewModel.contact = IndividualContactModel;
-            viewModel.identification = individualIDModel;
-            viewModel.otherdetails = OtherDetailsModel;
-            //  return JavaScript("alert('hey');");
-            return View(viewModel);
-            //ViewData["BioData"] = IndividualBioDataModel;
-            //ViewData["AddressDetails"] = IndividualAddressModel;
-            //ViewData["contact"] = IndividualContactModel;
-            //ViewData["identification"] = individualIDModel;
-            //ViewData["otherdetails"] = OtherDetailsModel;
-            //return View(viewModel);
+            model.BioData = biodata;
+            model.AddressDetails = address;
+            model.contact = contact;
+            model.identification = identification;
+            model.otherdetails = otherdetails;
+
+            return View(model);
+
         }
 
         [NonAction]
@@ -443,9 +696,8 @@ namespace CMdm.UI.Web.Controllers
         {
             if (individualIDModel == null)
                 throw new ArgumentNullException("model");
-            individualIDModel.IdType = new SelectList(db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
+            individualIDModel.IdType = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
         }
-
 
         [NonAction]
         protected virtual void IndAddDataPrepareModel(IndividualAddressDetails IndividualAddressModel)
@@ -466,14 +718,12 @@ namespace CMdm.UI.Web.Controllers
             });
 
 
-            IndividualAddressModel.CountryofResidence = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualAddressModel.StateofResidence = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
-            IndividualAddressModel.LGAofResidence = new SelectList(db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
+            IndividualAddressModel.CountryofResidence = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            IndividualAddressModel.StateofResidence = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
+            IndividualAddressModel.LGAofResidence = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
 
 
         }
-
-
 
         [NonAction]
         protected virtual void IndBioDataPrepareModel(IndividualBioDataModel IndividualBioDataModel)
@@ -546,14 +796,12 @@ namespace CMdm.UI.Web.Controllers
                 Value = "Single"
             });
 
-            IndividualBioDataModel.CountryofBirth = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualBioDataModel.Nationalities = new SelectList(db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualBioDataModel.Religions = new SelectList(db.CDMA_RELIGION, "CODE", "RELIGION").ToList();
-           IndividualBioDataModel.Branchs = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
-            IndividualBioDataModel.State = new SelectList(db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
-            IndividualBioDataModel.TitleTypes = new SelectList(db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
-
-
+            IndividualBioDataModel.CountryofBirth = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            IndividualBioDataModel.Nationalities = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            IndividualBioDataModel.Religions = new SelectList(_db.CDMA_RELIGION, "CODE", "RELIGION").ToList();
+           IndividualBioDataModel.Branchs = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+            IndividualBioDataModel.State = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
+            IndividualBioDataModel.TitleTypes = new SelectList(_db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
         }
 
 

@@ -1,4 +1,4 @@
-﻿@@model CMdm.UI.Web.Models.Customer.BiodataInfoViewModel
+﻿@model CMdm.UI.Web.Models.Customer.BiodataInfoViewModel
 @{
     //ViewBag.Title = "Authorize";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,10 +7,11 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("ReadOnlyForm", Model.ReadOnlyForm);
+    @Html.Hidden("ReadOnlyForm", Model.BioData.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.BioData.ExceptionId);
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Authorize Customer - @Model.CUSTOMER_NO
+            Authorize Customer - @Model.BioData.CUSTOMER_NO
             @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
         </h1>
         <div class="pull-right">
@@ -22,36 +23,36 @@
                 <i class="fa fa-minus-square-o"></i>
                 Disapprove
             </button>
-            
-            
+
+
         </div>
     </div>
     @Html.Partial("_CreateOrUpdate", Model)
     <div class="content">
         <div class="form-inline">
             <div class="form-group">
-                @Html.LabelFor(model => model.LastUpdatedby)
+                @Html.LabelFor(model => model.BioData.LastUpdatedby)
             </div>
             <div class="form-group">
-                @Html.CMdmDisplayFor(model => model.LastUpdatedby)
+                @Html.CMdmDisplayFor(model => model.BioData.LastUpdatedby)
 
             </div>
-                @Html.LabelFor(model => model.LastUpdatedDate)
-           
+            @Html.LabelFor(model => model.BioData.LastUpdatedDate)
+
             <div class="form-group">
-                @Html.CMdmDisplayFor(model => model.LastUpdatedDate)
+                @Html.CMdmDisplayFor(model => model.BioData.LastUpdatedDate)
 
             </div>
         </div>
-                
+
     </div>
 }
-        <script type="text/javascript">
-            $(document).ready(function () {
-                if ($("#ReadOnlyForm").val() == "True") {
-                    $('input', 'form').attr('readonly', true);
-                    $('select', 'form').attr('disabled', true).attr('readonly', true);
-                }
-                $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
-            });
-        </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($("#ReadOnlyForm").val() == "True") {
+            $('input', 'form').attr('readonly', true);
+            $('select', 'form').attr('disabled', true).attr('readonly', true);
+        }
+        $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
+    });
+</script>

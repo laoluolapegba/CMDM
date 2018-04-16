@@ -19,6 +19,7 @@
         public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }
+        public string LAST_MODIFIED_BY { get; set; }
         [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }

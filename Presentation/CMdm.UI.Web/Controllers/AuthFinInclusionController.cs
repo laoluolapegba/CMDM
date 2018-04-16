@@ -198,8 +198,8 @@ namespace CMdm.UI.Web.Controllers
                             newentity.RISK_CATEGORY = afimodel.RISK_CATEGORY;
                             newentity.MANDATE_AUTH_COMBINE_RULE = afimodel.MANDATE_AUTH_COMBINE_RULE;
                             newentity.ACCOUNT_WITH_OTHER_BANKS = afimodel.ACCOUNT_WITH_OTHER_BANKS;
-                            newentity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                            newentity.LAST_MODIFIED_DATE = DateTime.Now;
+                            newentity.CREATED_BY = identity.ProfileId.ToString();
+                            newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
                             newentity.CUSTOMER_NO = afimodel.CUSTOMER_NO;
                             db.CDMA_AUTH_FINANCE_INCLUSION.Add(newentity);

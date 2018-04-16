@@ -1,5 +1,6 @@
 ﻿@model CMdm.UI.Web.Models.Customer.EmpInfoModel
 @Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.CUSTOMER_NO)
 
 <div class="content">
     <div class="form-horizontal">
@@ -14,7 +15,7 @@
                                         @Html.LabelFor(model => model.CUSTOMER_NO)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
+                                        @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +76,7 @@
                                     @Html.LabelFor(model => model.NATURE_OF_BUSINESS_OCCUPATION)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, Model. Businessnature)
+                                    @Html.CMdmDropDownListFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, Model.Businessnature)
                                     @Html.ValidationMessageFor(model => model.NATURE_OF_BUSINESS_OCCUPATION, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -96,5 +97,5 @@
         </div>
     </div>
 </div>
- 
-         
+
+

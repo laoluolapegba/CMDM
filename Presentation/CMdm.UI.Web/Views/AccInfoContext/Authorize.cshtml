@@ -8,6 +8,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("ReadOnlyForm", Model.AccInfoModel.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.AccInfoModel.ExceptionId);
     <div class="content-header clearfix">
         <h1 class="pull-left">
             Authorize Customer - @Model.AccInfoModel.CUSTOMER_NO
