@@ -187,7 +187,6 @@ namespace CMdm.UI.Web.Models.Customer
                                     OPERATING_INSTRUCTION = c.OPERATING_INSTRUCTION,
                                     ORIGINATING_BRANCH = c.ORIGINATING_BRANCH,
                                 }).FirstOrDefault();
-                PrepareAccountInfoModel(accountInfo);
             }
             else if(records == 1)
             {
@@ -215,7 +214,6 @@ namespace CMdm.UI.Web.Models.Customer
                                    OPERATING_INSTRUCTION = c.OPERATING_INSTRUCTION,
                                    ORIGINATING_BRANCH = c.ORIGINATING_BRANCH,
                                }).FirstOrDefault();
-                PrepareAccountInfoModel(accountInfo);
             }
             
             if(records2 > 1)
@@ -243,7 +241,6 @@ namespace CMdm.UI.Web.Models.Customer
                                         ACCOUNT_SIGNATORY = c.ACCOUNT_SIGNATORY,
                                         SECOND_SIGNATORY = c.SECOND_SIGNATORY,
                                     }).FirstOrDefault();
-                PrepareAccountServiceModel(accountService);
             }
             else if(records2 == 1)
             {
@@ -270,8 +267,11 @@ namespace CMdm.UI.Web.Models.Customer
                                       ACCOUNT_SIGNATORY = c.ACCOUNT_SIGNATORY,
                                       SECOND_SIGNATORY = c.SECOND_SIGNATORY,
                                   }).FirstOrDefault();
-                PrepareAccountServiceModel(accountService);
+                
             }
+
+            PrepareAccountInfoModel(accountInfo);
+            PrepareAccountServiceModel(accountService);
 
             model.AccInfoModel = accountInfo;
             model.AccServicesModel = accountService;
