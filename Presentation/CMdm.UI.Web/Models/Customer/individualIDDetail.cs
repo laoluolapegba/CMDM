@@ -20,10 +20,10 @@ namespace CMdm.UI.Web.Models.Customer
         [DisplayName("Identification Number")]
         public string ID_NO { get; set; }
         [DisplayName("Expiry Date")]
-        [UIHint("Nullable")]
+        [UIHint("DateNullable")]
         public DateTime? ID_EXPIRY_DATE { get; set; }
         [DisplayName("Issued Date")]
-        [UIHint("Nullable")]
+        [UIHint("DateNullable")]
         public DateTime? ID_ISSUE_DATE { get; set; }
         [DisplayName("Place of Issuance")]
         public string PLACE_OF_ISSUANCE { get; set; }
