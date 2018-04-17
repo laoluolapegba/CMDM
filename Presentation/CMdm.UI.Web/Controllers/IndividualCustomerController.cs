@@ -607,7 +607,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
             int invrecords = _db.CDMA_INDIVIDUAL_BIO_DATA.Count(o => o.CUSTOMER_NO == id);
-            var indvmodel = new IndividualBioDataModel();
+            IndividualBioDataModel indvmodel = new IndividualBioDataModel();
             if (invrecords > 1)
             {
                 indvmodel = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
@@ -669,7 +669,7 @@ namespace CMdm.UI.Web.Controllers
 
             IndBioDataPrepareModel(indvmodel);
             int contactrecords = _db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Count(o => o.CUSTOMER_NO == id);
-            var contactmodel = new IndividualContactDetails();
+            IndividualContactDetails contactmodel = new IndividualContactDetails();
             if (contactrecords > 1)
             {
                 contactmodel = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
@@ -689,7 +689,7 @@ namespace CMdm.UI.Web.Controllers
                                     IP_ADDRESS = c.IP_ADDRESS,
                                 }).FirstOrDefault();
             }
-            else if (invrecords == 1)
+            else if (contactrecords == 1)
             {
                 contactmodel = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
 
@@ -710,7 +710,7 @@ namespace CMdm.UI.Web.Controllers
             }
 
             int addressrecords = _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Count(o => o.CUSTOMER_NO == id);
-            var addressmodel = new IndividualAddressDetails();
+            IndividualAddressDetails addressmodel = new IndividualAddressDetails();
             if (addressrecords > 1)
             {
                 addressmodel = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
@@ -734,7 +734,7 @@ namespace CMdm.UI.Web.Controllers
                                     IP_ADDRESS = c.IP_ADDRESS,
                                 }).FirstOrDefault();
             }
-            else if (invrecords == 1)
+            else if (addressrecords == 1)
             {
                 addressmodel = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
                                 where c.CUSTOMER_NO == id
@@ -761,7 +761,7 @@ namespace CMdm.UI.Web.Controllers
             IndAddDataPrepareModel(addressmodel);
 
             int idrecords = _db.CDMA_INDIVIDUAL_IDENTIFICATION.Count(o => o.CUSTOMER_NO == id);
-            var idmodel = new individualIDDetail();
+            individualIDDetail idmodel = new individualIDDetail();
             if (idrecords > 1)
             {
                 idmodel = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
@@ -780,7 +780,7 @@ namespace CMdm.UI.Web.Controllers
                                IP_ADDRESS = c.IP_ADDRESS
                            }).FirstOrDefault();
             }
-            else if (invrecords == 1)
+            else if (idrecords == 1)
             {
                 idmodel = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
                            where c.CUSTOMER_NO == id
@@ -800,7 +800,7 @@ namespace CMdm.UI.Web.Controllers
             }
             IndIdDataPrepareModel(idmodel);
             int otherrecords = _db.CDMA_INDIVIDUAL_OTHER_DETAILS.Count(o => o.CUSTOMER_NO == id);
-            var othermodel = new OtherDetails();
+            OtherDetails othermodel = new OtherDetails();
             if (otherrecords > 1)
             {
                 othermodel = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
@@ -812,7 +812,7 @@ namespace CMdm.UI.Web.Controllers
                                   TIN_NO = c.TIN_NO
                               }).FirstOrDefault();
             }
-            else if (invrecords == 1)
+            else if (otherrecords == 1)
             {
                 othermodel = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
                               where c.CUSTOMER_NO == id
@@ -850,8 +850,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void IndIdDataPrepareModel(individualIDDetail individualIDModel)
         {
-            if (individualIDModel == null)
-                throw new ArgumentNullException("model");
+            //if (individualIDModel == null)
+            //    throw new ArgumentNullException("model");
             individualIDModel.IdType = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
         }
 
@@ -859,8 +859,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void IndAddDataPrepareModel(IndividualAddressDetails IndividualAddressModel)
         {
-            if (IndividualAddressModel == null)
-                throw new ArgumentNullException("model");
+            //if (IndividualAddressModel == null)
+            //    throw new ArgumentNullException("model");
 
 
             IndividualAddressModel.ResidenceStatus.Add(new SelectListItem
