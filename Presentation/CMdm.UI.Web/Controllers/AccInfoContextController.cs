@@ -143,7 +143,9 @@ namespace CMdm.UI.Web.Models.Customer
                 model.AccInfoModel.ReadOnlyForm = "True";
                 model.AccServicesModel.ReadOnlyForm = "True";
 
-            PrepareModel(model);
+            PrepareAccountInfoModel(model.AccInfoModel);
+            PrepareAccountServiceModel(model.AccServicesModel);
+            //PrepareModel(model);
             return View(model);
         }
 
@@ -156,6 +158,7 @@ namespace CMdm.UI.Web.Models.Customer
             int records = _db.CDMA_ACCOUNT_INFO.Count(o => o.CUSTOMER_NO == id);
             int records2 = _db.CDMA_ACCT_SERVICES_REQUIRED.Count(o => o.CUSTOMER_NO == id);
 
+            AccInfoCtxModel model = new AccInfoCtxModel();
             AccInfoModel accountInfo = new AccInfoModel();
             AccServicesModel accountService = new AccServicesModel();
             if(records > 1)
@@ -184,6 +187,7 @@ namespace CMdm.UI.Web.Models.Customer
                                     OPERATING_INSTRUCTION = c.OPERATING_INSTRUCTION,
                                     ORIGINATING_BRANCH = c.ORIGINATING_BRANCH,
                                 }).FirstOrDefault();
+                PrepareAccountInfoModel(accountInfo);
             }
             else if(records == 1)
             {
@@ -211,6 +215,7 @@ namespace CMdm.UI.Web.Models.Customer
                                    OPERATING_INSTRUCTION = c.OPERATING_INSTRUCTION,
                                    ORIGINATING_BRANCH = c.ORIGINATING_BRANCH,
                                }).FirstOrDefault();
+                PrepareAccountInfoModel(accountInfo);
             }
             
             if(records2 > 1)
@@ -238,6 +243,7 @@ namespace CMdm.UI.Web.Models.Customer
                                         ACCOUNT_SIGNATORY = c.ACCOUNT_SIGNATORY,
                                         SECOND_SIGNATORY = c.SECOND_SIGNATORY,
                                     }).FirstOrDefault();
+                PrepareAccountServiceModel(accountService);
             }
             else if(records2 == 1)
             {
@@ -264,12 +270,9 @@ namespace CMdm.UI.Web.Models.Customer
                                       ACCOUNT_SIGNATORY = c.ACCOUNT_SIGNATORY,
                                       SECOND_SIGNATORY = c.SECOND_SIGNATORY,
                                   }).FirstOrDefault();
+                PrepareAccountServiceModel(accountService);
             }
 
-            PrepareAccountInfoModel(accountInfo);            
-            PrepareAccountServiceModel(accountService);
-
-            var model = new AccInfoCtxModel();
             model.AccInfoModel = accountInfo;
             model.AccServicesModel = accountService;
 
@@ -517,7 +520,7 @@ namespace CMdm.UI.Web.Models.Customer
 
             PrepareAccountInfoModel(actxmodel.AccInfoModel);
             PrepareAccountServiceModel(actxmodel.AccServicesModel);
-            PrepareModel(actxmodel);
+            //PrepareModel(actxmodel);
             return View(actxmodel);
         }
 
@@ -530,7 +533,9 @@ namespace CMdm.UI.Web.Models.Customer
             model.AccInfoModel = accountInfoModel;
             model.AccServicesModel = accountServiceModel;
 
-            PrepareModel(model);
+            PrepareAccountInfoModel(accountInfoModel);
+            PrepareAccountServiceModel(accountServiceModel);
+            //PrepareModel(model);
             return View(model);
         }
 
@@ -616,69 +621,71 @@ namespace CMdm.UI.Web.Models.Customer
                 return continueEditing ? RedirectToAction("Edit", new { id = actxmodel.AccInfoModel.CUSTOMER_NO }) : RedirectToAction("Create");
                 //return RedirectToAction("Index");
             }
-            PrepareModel(actxmodel);
+
+            PrepareAccountInfoModel(actxmodel.AccInfoModel);
+            PrepareAccountServiceModel(actxmodel.AccServicesModel);
+            //PrepareModel(actxmodel);
             return View(actxmodel);
         }
 
-        [NonAction]
-        protected virtual void PrepareModel(AccInfoCtxModel model)
-        {
-            //if (model == null)
-            //    throw new ArgumentNullException("model");
+        //[NonAction]
+        //protected virtual void PrepareModel(AccInfoCtxModel model)
+        //{
+        //    //if (model == null)
+        //    //    throw new ArgumentNullException("model");
 
 
-            AccInfoModel accountInfo = new AccInfoModel();
-            AccServicesModel accountService = new AccServicesModel();
+        //    AccInfoModel accountInfo = new AccInfoModel();
+        //    AccServicesModel accountService = new AccServicesModel();
 
-            accountInfo.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountInfo.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountInfo.CavRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountInfo.CavRequired.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountInfo.TypesOfAccount = new SelectList(_db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME").ToList();
-            accountInfo.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
-            accountInfo.BranchClasses = new SelectList(_db.CDMA_BRANCH_CLASS, "ID", "CLASS").ToList();
-            accountInfo.BusinessDivisions = new SelectList(_db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION").ToList();
-            accountInfo.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
-            accountInfo.BusinessSizes = new SelectList(_db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE").ToList();
-            accountInfo.CustomerSegments = new SelectList(_db.CDMA_CUSTOMER_SEGMENT, "ID", "SEGMENT").ToList();
-            accountInfo.CustomerTypes = new SelectList(_db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE").ToList();
-            accountInfo.OriginatingBranch = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+        //    accountInfo.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountInfo.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountInfo.CavRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountInfo.CavRequired.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountInfo.TypesOfAccount = new SelectList(_db.CDMA_ACCOUNT_TYPE, "ACCOUNT_ID", "ACCOUNT_NAME").ToList();
+        //    accountInfo.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+        //    accountInfo.BranchClasses = new SelectList(_db.CDMA_BRANCH_CLASS, "ID", "CLASS").ToList();
+        //    accountInfo.BusinessDivisions = new SelectList(_db.CDMA_BUSINESS_DIVISION, "ID", "DIVISION").ToList();
+        //    accountInfo.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
+        //    accountInfo.BusinessSizes = new SelectList(_db.CDMA_BUSINESS_SIZE, "SIZE_ID", "SIZE_RANGE").ToList();
+        //    accountInfo.CustomerSegments = new SelectList(_db.CDMA_CUSTOMER_SEGMENT, "ID", "SEGMENT").ToList();
+        //    accountInfo.CustomerTypes = new SelectList(_db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE").ToList();
+        //    accountInfo.OriginatingBranch = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
 
-            accountService.OnlineTransferLimit.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.OnlineTransferLimit.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.CardPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.CardPreference.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.ElectronicBankingPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.ElectronicBankingPreference.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.StatementPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.StatementPreference.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.TransactionAlertPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.TransactionAlertPreference.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.StatementFrequency.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.StatementFrequency.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.ChequeBookRequisition.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.ChequeBookRequisition.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.ChequeLeavesRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.ChequeLeavesRequired.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.ChequeConfirmation.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.ChequeConfirmation.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.Tokens.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            accountService.Tokens.Add(new SelectListItem { Text = "No", Value = "N" });
-            accountService.OnlineTransferLimitRange = new SelectList(_db.CDMA_ONLINE_TRANSFER_LIMIT, "LIMIT_ID", "DESCRIPTION").ToList();
-            accountService.ChequeConfirmationThresholdRange = new SelectList(_db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND").ToList();
+        //    accountService.OnlineTransferLimit.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.OnlineTransferLimit.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.CardPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.CardPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.ElectronicBankingPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.ElectronicBankingPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.StatementPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.StatementPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.TransactionAlertPreference.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.TransactionAlertPreference.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.StatementFrequency.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.StatementFrequency.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.ChequeBookRequisition.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.ChequeBookRequisition.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.ChequeLeavesRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.ChequeLeavesRequired.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.ChequeConfirmation.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.ChequeConfirmation.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.ChequeConfirmationThreshold.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.Tokens.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+        //    accountService.Tokens.Add(new SelectListItem { Text = "No", Value = "N" });
+        //    accountService.OnlineTransferLimitRange = new SelectList(_db.CDMA_ONLINE_TRANSFER_LIMIT, "LIMIT_ID", "DESCRIPTION").ToList();
+        //    accountService.ChequeConfirmationThresholdRange = new SelectList(_db.CDMA_CHEQUE_CONFIRM_THRESHOLD, "INCOME_ID", "EXPECTED_INCOME_BAND").ToList();
 
-            model.AccInfoModel = accountInfo;
-            model.AccServicesModel = accountService;
-        }
+        //    model.AccInfoModel = accountInfo;
+        //    model.AccServicesModel = accountService;
+        //}
 
         [NonAction]
         public virtual void PrepareAccountInfoModel(AccInfoModel model)
         {
             //if (model == null)
-            //    throw new ArgumentNullException("model");
-
+               // throw new ArgumentNullException("model");
             model.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
             model.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
             model.CavRequired.Add(new SelectListItem { Text = "Yes", Value = "Y" });
@@ -757,7 +764,10 @@ namespace CMdm.UI.Web.Models.Customer
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
-            PrepareModel(actxmodel);
+
+            PrepareAccountInfoModel(actxmodel.AccInfoModel);
+            PrepareAccountServiceModel(actxmodel.AccServicesModel);
+            //PrepareModel(actxmodel);
             return View(actxmodel);
         }
 
@@ -778,7 +788,10 @@ namespace CMdm.UI.Web.Models.Customer
                 return continueEditing ? RedirectToAction("Authorize", new { id = actxmodel.AccInfoModel.CUSTOMER_NO }) : RedirectToAction("Authorize", "AccInfoContext");
                 //return RedirectToAction("Index");
             }
-            PrepareModel(actxmodel);
+
+            PrepareAccountInfoModel(actxmodel.AccInfoModel);
+            PrepareAccountServiceModel(actxmodel.AccServicesModel);
+            //PrepareModel(actxmodel);
             return View(actxmodel);
         }
 
