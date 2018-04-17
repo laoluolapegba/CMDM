@@ -333,6 +333,7 @@
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
@@ -604,8 +605,10 @@
     <Compile Include="Models\Logging\LogModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
+    <Compile Include="Models\Messaging\MailModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
     <Compile Include="Models\UserAdmin\RolesListModel.cs" />
+    <Compile Include="Models\UserAdmin\SiteMapModel.cs" />
     <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2174,6 +2177,7 @@
     <Content Include="Views\IndividualCustomer\Authorize.cshtml" />
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
     <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\SiteMap\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
