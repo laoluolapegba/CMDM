@@ -40,7 +40,7 @@ namespace CMdm.UI.Web.Controllers
 
             var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_AUTH_FINANCE_INCLUSION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
+            AuthFIModel model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new AuthFIModel
@@ -85,7 +85,7 @@ namespace CMdm.UI.Web.Controllers
             }
 
             int records = _db.CDMA_AUTH_FINANCE_INCLUSION.Count(o => o.CUSTOMER_NO == id);
-            var model = new AuthFIModel();
+            AuthFIModel model = new AuthFIModel();
             if(records > 1)
             {
                 model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
@@ -225,7 +225,7 @@ namespace CMdm.UI.Web.Controllers
             //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
             //    return AccessDeniedView();
 
-            var model = new AuthFIModel();
+            AuthFIModel model = new AuthFIModel();
             PrepareModel(model);
             return View(model);
         }
@@ -279,8 +279,8 @@ namespace CMdm.UI.Web.Controllers
         protected virtual void PrepareModel(AuthFIModel model)
         {
 
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -351,25 +351,6 @@ namespace CMdm.UI.Web.Controllers
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("AFI Authorised");
                 }
-
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
-
-                //    }
-                //}
-
 
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");

@@ -42,7 +42,7 @@ namespace CMdm.UI.Web.Controllers
 
             var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_ADDITIONAL_INFORMATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in _db.CDMA_ADDITIONAL_INFORMATION
+            CustomerADIModel model = (from c in _db.CDMA_ADDITIONAL_INFORMATION
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new CustomerADIModel
@@ -90,7 +90,7 @@ namespace CMdm.UI.Web.Controllers
             }
 
             int records = _db.CDMA_ADDITIONAL_INFORMATION.Count(o => o.CUSTOMER_NO == id);
-            var model = new CustomerADIModel();
+            CustomerADIModel model = new CustomerADIModel();
             if(records > 1)
             {
                 model = (from c in _db.CDMA_ADDITIONAL_INFORMATION
@@ -213,7 +213,7 @@ namespace CMdm.UI.Web.Controllers
             //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
             //    return AccessDeniedView();
 
-            var model = new CustomerADIModel();
+            CustomerADIModel model = new CustomerADIModel();
             PrepareModel(model);
             return View(model);
         }
@@ -263,11 +263,9 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerADIModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+              //  throw new ArgumentNullException("model");
 
-            if (model == null)
-                throw new ArgumentNullException("model");
             model.Salaries.Add(new SelectListItem
             {
                 Text = "Less Than N50,000",

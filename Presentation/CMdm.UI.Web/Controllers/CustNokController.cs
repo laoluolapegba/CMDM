@@ -391,8 +391,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerNOKModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");

@@ -33,7 +33,6 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
             {
@@ -43,7 +42,7 @@ namespace CMdm.UI.Web.Controllers
             var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_JURAT" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
 
-            var model = (from c in _db.CDMA_JURAT
+            CustomerJuratModel model = (from c in _db.CDMA_JURAT
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new CustomerJuratModel
@@ -89,7 +88,8 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
             int records = _db.CDMA_JURAT.Count(o => o.CUSTOMER_NO == id);
-            var model = new CustomerJuratModel();
+
+            CustomerJuratModel model = new CustomerJuratModel();
             if(records > 1)
             {
                 model = (from c in _db.CDMA_JURAT
@@ -219,10 +219,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new CustomerJuratModel();
+            CustomerJuratModel model = new CustomerJuratModel();
             PrepareModel(model);
             return View(model);
         }
@@ -275,8 +272,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerJuratModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -309,28 +306,8 @@ namespace CMdm.UI.Web.Controllers
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("JURAT Authorised");
                 }
-
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
-
-                //    }
-                //}
-
-
+                
                 return RedirectToAction("AuthList", "DQQue");
-                //return RedirectToAction("Index");
             }
             PrepareModel(cjmodel);
             return View(cjmodel);

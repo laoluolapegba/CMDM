@@ -41,7 +41,7 @@ namespace CMdm.UI.Web.Controllers
 
             var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_TRUSTS_CLIENT_ACCOUNTS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+            CustomerTCAModel model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new CustomerTCAModel
@@ -95,7 +95,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
             int records = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Count(o => o.CUSTOMER_NO == id);
-            var model = new CustomerTCAModel();
+            CustomerTCAModel model = new CustomerTCAModel();
 
             if(records > 1)
             {
@@ -286,10 +286,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new CustomerTCAModel();
+            CustomerTCAModel model = new CustomerTCAModel();
             PrepareModel(model);
             return View(model);
         }
@@ -355,8 +352,8 @@ namespace CMdm.UI.Web.Controllers
         protected virtual void PrepareModel(CustomerTCAModel model)
         {
 
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -494,7 +491,7 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult Create_(string id = "")
         {
             CustomerTCAModel model = new CustomerTCAModel();
-           if(id!="")model.CUSTOMER_NO = id;
+            if(id!="")model.CUSTOMER_NO = id;
             PrepareModel(model);
 
 

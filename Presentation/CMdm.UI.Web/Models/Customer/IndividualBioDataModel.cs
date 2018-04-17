@@ -36,7 +36,7 @@
         public string NICKNAME_ALIAS { get; set; }
         // public string LAST_MODIFIED_BY { get; set; }
         [DisplayName("Date of Birth")]
-        [UIHint("Nullable")]
+        [UIHint("DateNullable")]
         public DateTime? DATE_OF_BIRTH { get; set; }
         [DisplayName("Place of Birth")]
         public string PLACE_OF_BIRTH { get; set; }

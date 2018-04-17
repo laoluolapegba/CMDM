@@ -33,7 +33,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-            var model = new CustomerForeignerModel();
+            CustomerForeignerModel model = new CustomerForeignerModel();
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -42,34 +42,35 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_FOREIGN_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
-            if(changeId != null)
-            {
-                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
-                model = (from c in _db.CDMA_FOREIGN_DETAILS
-                             where c.CUSTOMER_NO == querecord.CUST_ID
-                         where c.AUTHORISED == "U"
-                         select new CustomerForeignerModel
-                             {
-                                 CUSTOMER_NO = c.CUSTOMER_NO,
-                                 FOREIGNER = c.FOREIGNER,
-                                 PASSPORT_RESIDENCE_PERMIT = c.PASSPORT_RESIDENCE_PERMIT,
-                                 PERMIT_ISSUE_DATE = c.PERMIT_ISSUE_DATE,
-                                 PERMIT_EXPIRY_DATE = c.PERMIT_EXPIRY_DATE,
-                                 FOREIGN_ADDRESS = c.FOREIGN_ADDRESS,
-                                 CITY = c.CITY,
-                                 FOREIGN_TEL_NUMBER = c.FOREIGN_TEL_NUMBER,
-                                 ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
-                                 PURPOSE_OF_ACCOUNT = c.PURPOSE_OF_ACCOUNT,
-                                 COUNTRY = c.COUNTRY,
-                                 MULTIPLE_CITEZENSHIP = c.MULTIPLE_CITEZENSHIP,
-                                 LastUpdatedby = c.LAST_MODIFIED_BY,
-                                 LastUpdatedDate = c.LAST_MODIFIED_DATE,
-                                 LastAuthdby = c.AUTHORISED_BY,
-                                 LastAuthDate = c.AUTHORISED_DATE,
-                                 ExceptionId = querecord.EXCEPTION_ID
-                             }).FirstOrDefault();
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_FOREIGN_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
 
+            model = (from c in _db.CDMA_FOREIGN_DETAILS
+                     where c.CUSTOMER_NO == querecord.CUST_ID
+                     where c.AUTHORISED == "U"
+                     select new CustomerForeignerModel
+                    {
+                        CUSTOMER_NO = c.CUSTOMER_NO,
+                        FOREIGNER = c.FOREIGNER,
+                        PASSPORT_RESIDENCE_PERMIT = c.PASSPORT_RESIDENCE_PERMIT,
+                        PERMIT_ISSUE_DATE = c.PERMIT_ISSUE_DATE,
+                        PERMIT_EXPIRY_DATE = c.PERMIT_EXPIRY_DATE,
+                        FOREIGN_ADDRESS = c.FOREIGN_ADDRESS,
+                        CITY = c.CITY,
+                        FOREIGN_TEL_NUMBER = c.FOREIGN_TEL_NUMBER,
+                        ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                        PURPOSE_OF_ACCOUNT = c.PURPOSE_OF_ACCOUNT,
+                        COUNTRY = c.COUNTRY,
+                        MULTIPLE_CITEZENSHIP = c.MULTIPLE_CITEZENSHIP,
+                        LastUpdatedby = c.LAST_MODIFIED_BY,
+                        LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                        LastAuthdby = c.AUTHORISED_BY,
+                        LastAuthDate = c.AUTHORISED_DATE,
+                        ExceptionId = querecord.EXCEPTION_ID
+                    }).FirstOrDefault();
+
+            if(model != null)
+            {
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -80,8 +81,8 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                 }
-                model.ReadOnlyForm = "True";
             }
+            model.ReadOnlyForm = "True";
             
             PrepareModel(model);
             return View(model);
@@ -93,8 +94,10 @@ namespace CMdm.UI.Web.Controllers
             {
                 return RedirectToAction("Create");
             }
-            int records = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Count(o => o.CUSTOMER_NO == id);
-            var model = new CustomerForeignerModel();
+
+            int records = _db.CDMA_FOREIGN_DETAILS.Count(o => o.CUSTOMER_NO == id);
+            CustomerForeignerModel model = new CustomerForeignerModel();
+
             if (records > 1)
             {
                 model = (from c in _db.CDMA_FOREIGN_DETAILS
@@ -137,7 +140,8 @@ namespace CMdm.UI.Web.Controllers
                              MULTIPLE_CITEZENSHIP = c.MULTIPLE_CITEZENSHIP
                          }).FirstOrDefault();
             }
-                PrepareModel(model);
+
+            PrepareModel(model);
             return View(model);
         }
 
@@ -154,7 +158,8 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
             bool updateFlag = false;
             if (ModelState.IsValid)
-            {   CDMA_FOREIGN_DETAILS originalObject = new CDMA_FOREIGN_DETAILS();
+            {
+                CDMA_FOREIGN_DETAILS originalObject = new CDMA_FOREIGN_DETAILS();
                 using (var db = new AppDbContext())
                 {
                     int records = db.CDMA_FOREIGN_DETAILS.Count(o => o.CUSTOMER_NO == formodel.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
@@ -181,7 +186,6 @@ namespace CMdm.UI.Web.Controllers
                             entity.MULTIPLE_CITEZENSHIP = formodel.MULTIPLE_CITEZENSHIP;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
-
 
                             db.CDMA_FOREIGN_DETAILS.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
@@ -236,33 +240,15 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_FOREIGN_DETAILS.Add(newentity);
 
                             db.SaveChanges(); //do not track audit.
-
-
                         }
                         else
                         {
                             string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", formodel.CUSTOMER_NO);
                             ModelState.AddModelError("", errorMessage);
-
-                            //string errorMessage = string.Format("Unauthorized record exists for record with Id:{0} .", nokmodel.CUSTOMER_NO);
-                            //ModelState.AddModelError("", errorMessage);
                         }
 
                     }
-                            //var entity = db.CDMA_FOREIGN_DETAILS.FirstOrDefault(o => o.CUSTOMER_NO == formodel.CUSTOMER_NO);
-                            //if (entity == null)
-                            //{
-                            //    string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", formodel.CUSTOMER_NO);
-                            //    ModelState.AddModelError("", errorMessage);
-                            //}
-                            //else
-                            //{
-
-
-                            //}
-                        }
-
-
+                }
                 SuccessNotification("FORD Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = formodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
@@ -272,10 +258,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new CustomerForeignerModel();
+            CustomerForeignerModel model = new CustomerForeignerModel();
             PrepareModel(model);
             return View(model);
         }
@@ -334,8 +317,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerForeignerModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -382,19 +365,14 @@ namespace CMdm.UI.Web.Controllers
                     exceptionId = int.Parse((string)routeValues["id"]);
                 if (disapproveRecord)
                 {
-
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), formodel.AuthoriserRemarks);
                     SuccessNotification("FORD Not Authorised");
                 }
-
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("FORD Authorised");
                 }
-
-
-                                //return RedirectToAction("Index");
             }
             PrepareModel(formodel);
             return View(formodel);

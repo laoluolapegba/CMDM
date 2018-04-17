@@ -32,7 +32,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-            var model = new EmpInfoModel();
+            EmpInfoModel model = new EmpInfoModel();
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -41,30 +41,31 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_EMPLOYMENT_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
-            if (changeId != null)
-            {
-                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
-                model = (from c in _db.CDMA_EMPLOYMENT_DETAILS
-                         where c.CUSTOMER_NO == querecord.CUST_ID
-                         where c.AUTHORISED == "U"
-                         select new EmpInfoModel
-                         {
-                             CUSTOMER_NO = c.CUSTOMER_NO,
-                             EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
-                             EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
-                             DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
-                             SECTOR_CLASS = c.SECTOR_CLASS,
-                             SUB_SECTOR = c.SUB_SECTOR,
-                             NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
-                             INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
-                             LastUpdatedby = c.LAST_MODIFIED_BY,
-                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
-                             LastAuthdby = c.AUTHORISED_BY,
-                             LastAuthDate = c.AUTHORISED_DATE,
-                             ExceptionId = querecord.EXCEPTION_ID
-                         }).FirstOrDefault();
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_ADDITIONAL_INFORMATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
 
+            model = (from c in _db.CDMA_EMPLOYMENT_DETAILS
+                        where c.CUSTOMER_NO == querecord.CUST_ID
+                        where c.AUTHORISED == "U"
+                        select new EmpInfoModel
+                        {
+                            CUSTOMER_NO = c.CUSTOMER_NO,
+                            EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
+                            EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
+                            DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
+                            SECTOR_CLASS = c.SECTOR_CLASS,
+                            SUB_SECTOR = c.SUB_SECTOR,
+                            NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
+                            INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
+                            LastUpdatedby = c.LAST_MODIFIED_BY,
+                            LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                            LastAuthdby = c.AUTHORISED_BY,
+                            LastAuthDate = c.AUTHORISED_DATE,
+                            ExceptionId = querecord.EXCEPTION_ID
+                        }).FirstOrDefault();
+
+            if(model != null)
+            {            
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -75,9 +76,9 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                 }
-                model.ReadOnlyForm = "True";
             }
 
+            model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
@@ -90,12 +91,11 @@ namespace CMdm.UI.Web.Controllers
             }
 
             int records = _db.CDMA_EMPLOYMENT_DETAILS.Count(o => o.CUSTOMER_NO == id);
-            var model = new EmpInfoModel();
+            EmpInfoModel model = new EmpInfoModel();
+
             if (records > 1)
             {
-
                 model = (from c in _db.CDMA_EMPLOYMENT_DETAILS
-
                          where c.CUSTOMER_NO == id
                          where c.AUTHORISED == "U"
                          select new EmpInfoModel
@@ -129,7 +129,7 @@ namespace CMdm.UI.Web.Controllers
                          }).FirstOrDefault();
             }
 
-                PrepareModel(model);
+            PrepareModel(model);
             return View(model);
         }
 
@@ -174,8 +174,6 @@ namespace CMdm.UI.Web.Controllers
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), empmodel.CUSTOMER_NO, updateFlag, originalObject);
                         }
-
-
                     }
                     else if (records == 1)
                     {
@@ -227,10 +225,6 @@ namespace CMdm.UI.Web.Controllers
 
                         }
                     }
-
-
-                    
-                    
                 }
 
                 SuccessNotification("EMP Updated");
@@ -242,10 +236,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new EmpInfoModel();
+            EmpInfoModel model = new EmpInfoModel();
             PrepareModel(model);
             return View(model);
         }
@@ -300,8 +291,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(EmpInfoModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");

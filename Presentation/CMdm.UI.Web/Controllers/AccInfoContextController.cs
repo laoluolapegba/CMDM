@@ -42,7 +42,7 @@ namespace CMdm.UI.Web.Models.Customer
             }
             //get all changed columns
 
-            var model = new AccInfoCtxModel();
+            AccInfoCtxModel model = new AccInfoCtxModel();
 
             var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_ACCOUNT_INFO" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
@@ -50,7 +50,7 @@ namespace CMdm.UI.Web.Models.Customer
             var changeId2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_ACCT_SERVICES_REQUIRED" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
             var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2); //.Select(a=>a.PROPERTYNAME);
 
-            var accountInfo = (from c in _db.CDMA_ACCOUNT_INFO
+            AccInfoModel accountInfo = (from c in _db.CDMA_ACCOUNT_INFO
                                where c.CUSTOMER_NO == id
                                where c.AUTHORISED == "U"
                                select new AccInfoModel
@@ -80,7 +80,7 @@ namespace CMdm.UI.Web.Models.Customer
                                        ExceptionId = querecord.EXCEPTION_ID
                                    }).FirstOrDefault();
 
-            var accountService = (from c in _db.CDMA_ACCT_SERVICES_REQUIRED
+            AccServicesModel accountService = (from c in _db.CDMA_ACCT_SERVICES_REQUIRED
                                     where c.CUSTOMER_NO == id
                                   where c.AUTHORISED == "U"
                                   select new AccServicesModel
@@ -156,8 +156,8 @@ namespace CMdm.UI.Web.Models.Customer
             int records = _db.CDMA_ACCOUNT_INFO.Count(o => o.CUSTOMER_NO == id);
             int records2 = _db.CDMA_ACCT_SERVICES_REQUIRED.Count(o => o.CUSTOMER_NO == id);
 
-            var accountInfo = new AccInfoModel();
-            var accountService = new AccServicesModel();
+            AccInfoModel accountInfo = new AccInfoModel();
+            AccServicesModel accountService = new AccServicesModel();
             if(records > 1)
             {
                 accountInfo = (from c in _db.CDMA_ACCOUNT_INFO
@@ -523,9 +523,9 @@ namespace CMdm.UI.Web.Models.Customer
 
         public ActionResult Create()
         {
-            var accountInfoModel = new AccInfoModel();
-            var accountServiceModel = new AccServicesModel();
-            var model = new AccInfoCtxModel();
+            AccInfoModel accountInfoModel = new AccInfoModel();
+            AccServicesModel accountServiceModel = new AccServicesModel();
+            AccInfoCtxModel model = new AccInfoCtxModel();
 
             model.AccInfoModel = accountInfoModel;
             model.AccServicesModel = accountServiceModel;
@@ -623,12 +623,12 @@ namespace CMdm.UI.Web.Models.Customer
         [NonAction]
         protected virtual void PrepareModel(AccInfoCtxModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
 
-            var accountInfo = new AccInfoModel();
-            var accountService = new AccServicesModel();
+            AccInfoModel accountInfo = new AccInfoModel();
+            AccServicesModel accountService = new AccServicesModel();
 
             accountInfo.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
             accountInfo.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
@@ -676,8 +676,8 @@ namespace CMdm.UI.Web.Models.Customer
         [NonAction]
         public virtual void PrepareAccountInfoModel(AccInfoModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             model.AccountHolder.Add(new SelectListItem { Text = "Yes", Value = "Y" });
             model.AccountHolder.Add(new SelectListItem { Text = "No", Value = "N" });
@@ -697,8 +697,8 @@ namespace CMdm.UI.Web.Models.Customer
         [NonAction]
         public virtual void PrepareAccountServiceModel(AccServicesModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             model.OnlineTransferLimit.Add(new SelectListItem { Text = "Yes", Value = "Y" });
             model.OnlineTransferLimit.Add(new SelectListItem { Text = "No", Value = "N" });
