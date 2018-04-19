@@ -46,9 +46,9 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_BIO_DATA" &&  a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var indvdmodel = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
+             //.Select(a=>a.PROPERTYNAME);
+            IndividualBioDataModel indvdmodel = new IndividualBioDataModel();
+                indvdmodel  = (from c in _db.CDMA_INDIVIDUAL_BIO_DATA
                          where c.CUSTOMER_NO == querecord.CUST_ID
                               where c.AUTHORISED == "U"
                               select new IndividualBioDataModel
@@ -78,30 +78,66 @@ namespace CMdm.UI.Web.Controllers
                              LastAuthDate = c.AUTHORISED_DATE,
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
+            var changelog = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_BIO_DATA" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            
+            if (changelog != null && indvdmodel != null)
+            {
+                string changeId = changelog.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId);
+                foreach (var item in indvdmodel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
-            var changeId2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_ADDRESS_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2);
+                }
+            }
 
-            var addressmodel = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
+            IndividualAddressDetails addressmodel  = new IndividualAddressDetails();
+            var adddata = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
                                 where c.CUSTOMER_NO == querecord.CUST_ID
                                 where c.AUTHORISED == "U"
                                 select new IndividualAddressDetails
-                                  {
-                                    CUSTOMER_NO =c.CUSTOMER_NO,
+                                {
+                                    CUSTOMER_NO = c.CUSTOMER_NO,
                                     CITY_TOWN_OF_RESIDENCE = c.CITY_TOWN_OF_RESIDENCE,
-                                    COUNTRY_OF_RESIDENCE =  c.COUNTRY_OF_RESIDENCE,
+                                    COUNTRY_OF_RESIDENCE = c.COUNTRY_OF_RESIDENCE,
                                     LGA_OF_RESIDENCE = c.LGA_OF_RESIDENCE,
                                     NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
                                     RESIDENCE_OWNED_OR_RENT = c.RESIDENCE_OWNED_OR_RENT,
                                     RESIDENTIAL_ADDRESS = c.RESIDENTIAL_ADDRESS,
                                     STATE_OF_RESIDENCE = c.STATE_OF_RESIDENCE,
-                                    ZIP_POSTAL_CODE =c.ZIP_POSTAL_CODE
-                                  }).FirstOrDefault();
+                                    ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE
+                                }).FirstOrDefault();
+            if (adddata != null) addressmodel = adddata;
+            var changelog2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_ADDRESS_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            if(changelog2 != null && addressmodel != null)
+            {
+                string changeId2 = changelog2.CHANGEID;
+                var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2);
+                foreach (var item in addressmodel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet2)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
-            var changeId3 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_IDENTIFICATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet3 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                }
+            }
 
-            var idmodel = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
+
+
+
+
+            individualIDDetail idmodel = new individualIDDetail();
+            var iddata = (from c in _db.CDMA_INDIVIDUAL_IDENTIFICATION
                                 where c.CUSTOMER_NO == querecord.CUST_ID
                                 where c.AUTHORISED == "U"
                                 select new individualIDDetail
@@ -114,11 +150,29 @@ namespace CMdm.UI.Web.Controllers
                                     PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
                                     
                                 }).FirstOrDefault();
+            if (iddata != null) idmodel = iddata;
+            var changelog3 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_IDENTIFICATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            
+            if (changelog3 != null && idmodel != null)
+            {
+                string changeId3 = changelog3.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                foreach (var item in idmodel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
-            var changeId4 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_OTHER_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet4 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                }
+            }
 
-            var otherdetailsmodel = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
+            OtherDetails otherdetailsmodel = new OtherDetails();
+
+            var otherdetdata = (from c in _db.CDMA_INDIVIDUAL_OTHER_DETAILS
                            where c.CUSTOMER_NO == querecord.CUST_ID
                            where c.AUTHORISED == "U"
                            select new OtherDetails
@@ -126,10 +180,30 @@ namespace CMdm.UI.Web.Controllers
                                CUSTOMER_NO = c.CUSTOMER_NO,
                                TIN_NO = c.TIN_NO,
                            }).FirstOrDefault();
-            var changeId5 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_CONTACT_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet5 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+            if (otherdetdata != null) otherdetailsmodel = otherdetdata;
+            var changelog4 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_OTHER_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+           
+            if (changelog4 != null && otherdetailsmodel != null)
+            {
+                string changeId3 = changelog4.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                foreach (var item in otherdetailsmodel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
-            var contactmodel = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
+                }
+            }
+
+            
+            IndividualContactDetails contactmodel = new IndividualContactDetails();
+
+            var contactdata = (from c in _db.CDMA_INDIVIDUAL_CONTACT_DETAIL
                                      where c.CUSTOMER_NO == querecord.CUST_ID
                                      where c.AUTHORISED == "U"
                                      select new IndividualContactDetails
@@ -139,29 +213,43 @@ namespace CMdm.UI.Web.Controllers
                                          MAILING_ADDRESS = c.MAILING_ADDRESS,
                                          MOBILE_NO = c.MOBILE_NO,
                                      }).FirstOrDefault();
+            if (contactdata != null) contactmodel = contactdata;
+            var changelog5 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_CONTACT_DETAIL" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            if (changelog5 != null && contactmodel !=null)
+            {
+                string changeId3 = changelog4.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                foreach (var item in contactmodel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
+                }
+            }
+            
 
             var model = new BiodataInfoViewModel();
+
             model.BioData = indvdmodel;
             model.AddressDetails = addressmodel;
             model.identification = idmodel;
             model.otherdetails = otherdetailsmodel;
             model.contact = contactmodel;
 
-            foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
-            {
-                foreach (var item2 in changedSet)
-                {
-                    if (item2.PROPERTYNAME == item.Name)
-                    {
-                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
-                    }
-                }
-                //props.Add(item.Name);
-
-            }
+            
             //var matchItems = props.Intersect(changedSet);
             model.BioData.ReadOnlyForm = "True";
+            IndBioDataPrepareModel(indvdmodel);
+            IndAddDataPrepareModel(addressmodel);
+            IndIdDataPrepareModel(idmodel);
+
+
+            
             //PrepareModel(model);
             return View(model);
         }
@@ -711,6 +799,7 @@ namespace CMdm.UI.Web.Controllers
 
             int addressrecords = _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Count(o => o.CUSTOMER_NO == id);
             IndividualAddressDetails addressmodel = new IndividualAddressDetails();
+            IndAddDataPrepareModel(addressmodel);
             if (addressrecords > 1)
             {
                 addressmodel = (from c in _db.CDMA_INDIVIDUAL_ADDRESS_DETAIL
@@ -758,7 +847,7 @@ namespace CMdm.UI.Web.Controllers
                                 }).FirstOrDefault();
             }
 
-            IndAddDataPrepareModel(addressmodel);
+            
 
             int idrecords = _db.CDMA_INDIVIDUAL_IDENTIFICATION.Count(o => o.CUSTOMER_NO == id);
             individualIDDetail idmodel = new individualIDDetail();
@@ -852,7 +941,11 @@ namespace CMdm.UI.Web.Controllers
         {
             //if (individualIDModel == null)
             //    throw new ArgumentNullException("model");
-            individualIDModel.IdType = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
+            if (individualIDModel != null)
+            {
+                individualIDModel.IdType = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
+            }
+                
         }
 
 
@@ -861,23 +954,26 @@ namespace CMdm.UI.Web.Controllers
         {
             //if (IndividualAddressModel == null)
             //    throw new ArgumentNullException("model");
-
-
-            IndividualAddressModel.ResidenceStatus.Add(new SelectListItem
+            if (IndividualAddressModel != null)
             {
-                Text = "Owned",
-                Value = "Owned"
-            });
-            IndividualAddressModel.ResidenceStatus.Add(new SelectListItem
-            {
-                Text = "Rented",
-                Value = "Rented"
-            });
+
+                IndividualAddressModel.ResidenceStatus.Add(new SelectListItem
+                {
+                    Text = "Owned",
+                    Value = "Owned"
+                });
+                IndividualAddressModel.ResidenceStatus.Add(new SelectListItem
+                {
+                    Text = "Rented",
+                    Value = "Rented"
+                });
 
 
-            IndividualAddressModel.CountryofResidence = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualAddressModel.StateofResidence = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
-            IndividualAddressModel.LGAofResidence = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
+                IndividualAddressModel.CountryofResidence = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+                IndividualAddressModel.StateofResidence = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
+                IndividualAddressModel.LGAofResidence = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
+            }
+
 
 
         }
@@ -889,78 +985,81 @@ namespace CMdm.UI.Web.Controllers
         {
             if (IndividualBioDataModel == null)
                 throw new ArgumentNullException("model");
+            if (IndividualBioDataModel != null)
+            {
+                IndividualBioDataModel.Gender.Add(new SelectListItem
+                {
+                    Text = "Male",
+                    Value = "Male"
+                });
+                IndividualBioDataModel.Gender.Add(new SelectListItem
+                {
+                    Text = "Female",
+                    Value = "Female"
+                });
+                IndividualBioDataModel.IndDisAbility.Add(new SelectListItem
+                {
+                    Text = "Yes",
+                    Value = "Y"
+                });
+                IndividualBioDataModel.IndDisAbility.Add(new SelectListItem
+                {
+                    Text = "No",
+                    Value = "N"
+                });
 
+                IndividualBioDataModel.CusComplexion.Add(new SelectListItem
+                {
+                    Text = "Albino",
+                    Value = "Albino"
+                });
+                IndividualBioDataModel.CusComplexion.Add(new SelectListItem
+                {
+                    Text = "Black",
+                    Value = "Black"
+                });
+                IndividualBioDataModel.CusComplexion.Add(new SelectListItem
+                {
+                    Text = "Yellow",
+                    Value = "Yellow"
+                });
+                IndividualBioDataModel.CusComplexion.Add(new SelectListItem
+                {
+                    Text = "Other",
+                    Value = "Other"
+                });
 
-            IndividualBioDataModel.Gender.Add(new SelectListItem
-            {
-                Text = "Male",
-                Value = "Male"
-            });
-            IndividualBioDataModel.Gender.Add(new SelectListItem
-            {
-                Text = "Female",
-                Value = "Female"
-            });
-            IndividualBioDataModel.IndDisAbility.Add(new SelectListItem
-            {
-                Text = "Yes",
-                Value = "Y"
-            });
-            IndividualBioDataModel.IndDisAbility.Add(new SelectListItem
-            {
-                Text = "No",
-                Value = "N"
-            });
+                IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
+                {
+                    Text = "Married",
+                    Value = "Married"
+                });
 
-            IndividualBioDataModel.CusComplexion.Add(new SelectListItem
-            {
-                Text = "Albino",
-                Value = "Albino"
-            });
-            IndividualBioDataModel.CusComplexion.Add(new SelectListItem
-            {
-                Text = "Black",
-                Value = "Black"
-            });
-            IndividualBioDataModel.CusComplexion.Add(new SelectListItem
-            {
-                Text = "Yellow",
-                Value = "Yellow"
-            });
-            IndividualBioDataModel.CusComplexion.Add(new SelectListItem
-            {
-                Text = "Other",
-                Value = "Other"
-            });
+                IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
+                {
+                    Text = "Not Married",
+                    Value = "Not Married"
+                });
+                IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
+                {
+                    Text = "Divorced",
+                    Value = "Divorced"
+                });
+                IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
+                {
+                    Text = "Single",
+                    Value = "Single"
+                });
 
-            IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
-            {
-                Text = "Married",
-                Value = "Married"
-            });
+                IndividualBioDataModel.CountryofBirth = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+                IndividualBioDataModel.Nationalities = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+                IndividualBioDataModel.Religions = new SelectList(_db.CDMA_RELIGION, "CODE", "RELIGION").ToList();
+                IndividualBioDataModel.Branchs = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+                IndividualBioDataModel.State = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
+                IndividualBioDataModel.TitleTypes = new SelectList(_db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
 
-            IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
-            {
-                Text = "Not Married",
-                Value = "Not Married"
-            });
-            IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
-            {
-                Text = "Divorced",
-                Value = "Divorced"
-            });
-            IndividualBioDataModel.MaritalStatus.Add(new SelectListItem
-            {
-                Text = "Single",
-                Value = "Single"
-            });
+            }
 
-            IndividualBioDataModel.CountryofBirth = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualBioDataModel.Nationalities = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            IndividualBioDataModel.Religions = new SelectList(_db.CDMA_RELIGION, "CODE", "RELIGION").ToList();
-           IndividualBioDataModel.Branchs = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
-            IndividualBioDataModel.State = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
-            IndividualBioDataModel.TitleTypes = new SelectList(_db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
 
 
         }
@@ -968,13 +1067,13 @@ namespace CMdm.UI.Web.Controllers
         [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
         [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Authorize(IndividualBioDataModel indivmodel, bool disapproveRecord)
+        public ActionResult Authorize(BiodataInfoViewModel indivmodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
                 int exceptionId = 0;
@@ -983,20 +1082,34 @@ namespace CMdm.UI.Web.Controllers
                 if (disapproveRecord)
                 {
 
-                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), indivmodel.AuthoriserRemarks);
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), indivmodel.BioData.AuthoriserRemarks);
                     SuccessNotification("Customer record Not Authorised");
                 }
 
                 else
                 {
-                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(),  identity.ProfileId);
                     SuccessNotification("Customer record Authorised");
                 }
 
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
-            }
-            IndBioDataPrepareModel(indivmodel);
+            //}
+            //var model = new BiodataInfoViewModel();
+
+            //model.BioData = indivmodel;
+            //model.AddressDetails = addressmodel;
+            //model.identification = idmodel;
+            //model.otherdetails = otherdetailsmodel;
+            //model.contact = contactmodel;
+
+
+            ////var matchItems = props.Intersect(changedSet);
+            //model.BioData.ReadOnlyForm = "True";
+            //IndBioDataPrepareModel(indvdmodel);
+            //IndAddDataPrepareModel(addressmodel);
+            //IndIdDataPrepareModel(idmodel);
+            //IndBioDataPrepareModel(indivmodel);
             return View(indivmodel);
         }
 
