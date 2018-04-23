@@ -608,7 +608,6 @@
     <Compile Include="Models\Logging\LogModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
-    <Compile Include="Models\Messaging\MailModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
     <Compile Include="Models\UserAdmin\RolesListModel.cs" />
     <Compile Include="Models\UserAdmin\SiteMapModel.cs" />
@@ -2233,6 +2232,7 @@
     <Folder Include="Content\customlogin\colorbox\images\" />
     <Folder Include="exceptions\" />
     <Folder Include="font\" />
+    <Folder Include="Models\Messaging\" />
     <Folder Include="Models\Report\" />
     <Folder Include="Report\" />
     <Folder Include="Themes\DefaultClean\Views\Shared\" />

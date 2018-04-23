@@ -517,7 +517,8 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.CDMA_DQI_PROCESSING_RESULT> CDMA_DQI_PROCESSING_RESULT { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules> GoldenRecordRules { get; set; }
-        
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Report.CmReportDefn> RptDefinition { get; set; }
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
