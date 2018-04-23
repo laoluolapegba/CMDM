@@ -2179,9 +2179,9 @@
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
     <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
     <Content Include="Views\SiteMap\Index.cshtml" />
-    <Content Include="Views\Templates\MessagingTemplates\Authorization.cshtml" />
-    <Content Include="Views\Templates\MessagingTemplates\Reject.cshtml" />
-    <Content Include="Views\Templates\MessagingTemplates\Change.cshtml" />
+    <Content Include="Views\MessagingTemplates\Authorization.cshtml" />
+    <Content Include="Views\MessagingTemplates\Reject.cshtml" />
+    <Content Include="Views\MessagingTemplates\Change.cshtml" />
     <Content Include="Views\GRRules\Create.cshtml" />
     <Content Include="Views\GRRules\Delete.cshtml" />
     <Content Include="Views\GRRules\Details.cshtml" />

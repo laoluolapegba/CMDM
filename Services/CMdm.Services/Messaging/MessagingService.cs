@@ -14,6 +14,9 @@ using RazorEngine.Configuration.Xml;
 using RazorEngine.Templating;
 using System.Configuration;
 using System.Web.Configuration;
+using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CMdm.Services.Messaging
 {
@@ -23,6 +26,7 @@ namespace CMdm.Services.Messaging
         private TemplateService _templateService;
         static readonly string TemplateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Views", "MessagingTemplates");
         static bool mailSent = false;
+        private SymmetricAlgorithm mobjCryptoService;
 
         public MessagingService()
         {
@@ -62,85 +66,74 @@ namespace CMdm.Services.Messaging
                     break;
             }
 
-            if(recepientNames.Count == 1)
+            backJob = new CM_BACK_JOBS
             {
-                backJob = new CM_BACK_JOBS
-                {
-                    CUSTOMER_NO = customerNo,
-                    JOB_TYPE = 2,
-                    FROM_EMAIL = GetUserNamebyUserId(userProfile),
-                    DATE_LOGGED = DateTime.Now,
-                    CREATED_BY = userProfile.ToString(),
-                    RCPT_EMAIL = recepientNames.SingleOrDefault(),
-                    FLG_STATUS = 1,
-                    DATE_SENT = DateTime.Now,
-                    COUNT_RETRIES = 0,
-                    MSG_SUBJECT = mailSubject,
-                    BRANCH_ID = branchId,
-                    RECIPIENTNAME = recepientNames.SingleOrDefault(),
-                    REQUIREDDATE = DateTime.Now,
-                    MAILBODY = null,
-                    MAILBODY_2 = null,
-                    MAILTYPE = (int)mailType,
-                    MAIL_TEMPLATE = mailTemplate,
-                    USERFULLNAME = GetUserFullNamebyProdileId(userProfile),
-                    BRANCHNAME = GetBranchName(branchId.ToString())
-                };
-            }
-            else if(recepientNames.Count > 1)
-            {
-                for(int i = 0; i < recepientNames.Count; i++)
-                {
-                    backJob = new CM_BACK_JOBS
-                    {
-                        JOB_TYPE = 2,
-                        FROM_EMAIL = GetUserNamebyUserId(userProfile),
-                        DATE_LOGGED = DateTime.Now,
-                        CREATED_BY = userProfile.ToString(),
-                        RCPT_EMAIL = recepientNames.SingleOrDefault(),
-                        FLG_STATUS = 1,
-                        DATE_SENT = DateTime.Now,
-                        COUNT_RETRIES = 0,
-                        MSG_SUBJECT = mailSubject,
-                        BRANCH_ID = branchId,
-                        RECIPIENTNAME = recepientNames[i],
-                        REQUIREDDATE = DateTime.Now,
-                        MAILBODY = null,
-                        MAILBODY_2 = null,
-                        MAILTYPE = (int)mailType,
-                        MAIL_TEMPLATE = mailTemplate,
-                        USERFULLNAME = GetUserFullNamebyProdileId(userProfile),
-                        BRANCHNAME = GetBranchName(branchId.ToString())
-                    };
-                }
-            }
-
+                CUSTOMER_NO = customerNo,
+                JOB_TYPE = 2,
+                FROM_EMAIL = GetUserNamebyUserId(userProfile),
+                DATE_LOGGED = DateTime.Now,
+                CREATED_BY = userProfile.ToString(),
+                RCPT_EMAIL = recepientNames.SingleOrDefault(),
+                FLG_STATUS = 1,
+                DATE_SENT = DateTime.Now,
+                COUNT_RETRIES = 0,
+                MSG_SUBJECT = mailSubject,
+                BRANCH_ID = branchId,
+                RECIPIENTNAME = recepientNames.SingleOrDefault(),
+                REQUIREDDATE = DateTime.Now,
+                MAILBODY = null,
+                MAILBODY_2 = null,
+                MAILTYPE = (int)mailType,
+                MAIL_TEMPLATE = mailTemplate,
+                USERFULLNAME = GetUserFullNamebyProdileId(userProfile),
+                BRANCHNAME = GetBranchName(branchId.ToString())
+            };
+            
+            string htmlbody = GenerateBody(backJob);
+            backJob.MAILBODY = htmlbody;
             db.CM_BACK_JOBS.Add(backJob);
             db.SaveChanges();
-            //SendMail(backJob.RECIPIENTNAME, mailSubject, backJob.MAILBODY + backJob.MAILBODY_2, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
+            SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
-        public void SendMail(string address, string subject, string body, string from, string sender)
+        public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
         {
+            string smtpHost = db.Settings.Where(a => a.SETTING_NAME == "SMTP_HOST").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string smtpMail = db.Settings.Where(a => a.SETTING_NAME == "SMTP_MAIL").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string smtpKey = db.Settings.Where(a => a.SETTING_NAME == "SMTP_KEY").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string initPassword = db.Settings.Where(a => a.SETTING_NAME == "SMTP_PASS").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string smtpPort = db.Settings.Where(a => a.SETTING_NAME == "SMTP_PORT").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string smtpDomain = db.Settings.Where(a => a.SETTING_NAME == "SMTP_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();
+            string smtpDomainGroup = db.Settings.Where(a => a.SETTING_NAME == "SMTP_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();//Needed if mails are attached to a group
+
+            EncryptString enc = new EncryptString(System.Security.Cryptography.SymmetricAlgorithm.Create());  //System.Security.Cryptography.RC2
+            string test = enc.Encrypt("s.lanre(02)", smtpKey);
+            string smtpPassword = enc.Decrypt(initPassword, smtpKey);
+
             try
             {
                 MailMessage mail = new MailMessage();
 
                 //Setting From , To and CC
                 mail.Subject = subject;
-                mail.From = new MailAddress(from, sender);
-                mail.To.Add(new MailAddress(address));
+                mail.From = new MailAddress(from+"@" + smtpDomain, sender);
+
+                foreach(var address in addresses)
+                {
+                    mail.To.Add(new MailAddress(address + "@" + smtpDomain));
+                }                    
+
                 mail.Body = body;
                 mail.IsBodyHtml = true;
 
                 var smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
+                smtp.Host = smtpHost;
                 smtp.EnableSsl = true;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                var networkCred = new System.Net.NetworkCredential("sirlamlanre", "my_password", "domaiin");
+                var networkCred = new System.Net.NetworkCredential(smtpMail, smtpPassword /*smtp domain if needed*/);
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = networkCred;
-                smtp.Port = 465;
+                smtp.Port = Convert.ToInt32(smtpPort);
 
                 System.Net.ServicePointManager.ServerCertificateValidationCallback +=
                 (s, cert, chain, sslPolicyErrors) => true;
@@ -300,6 +293,148 @@ namespace CMdm.Services.Messaging
             {
                 templateService.AddNamespace(namespaceInfo.Namespace);
             }
+        }
+    }
+
+    public class EncryptString
+    {
+
+        /// <summary>
+        /// SymmCrypto is a wrapper of System.Security.Cryptography.SymmetricAlgorithm classes
+        /// and simplifies the interface. It supports customized SymmetricAlgorithm as well.
+        /// </summary>
+        /// <remarks>
+
+        /// Supported .Net intrinsic SymmetricAlgorithm classes.
+        /// </remarks>
+
+        public enum SymmProvEnum : int
+        {
+            DES, RC2, Rijndael
+        }
+
+        private SymmetricAlgorithm mobjCryptoService;
+
+        /// <remarks>
+
+        /// Constructor for using an intrinsic .Net SymmetricAlgorithm class.
+
+        /// </remarks>
+
+        public EncryptString(SymmProvEnum NetSelected)
+        {
+            switch (NetSelected)
+            {
+                case SymmProvEnum.DES:
+                    mobjCryptoService = new DESCryptoServiceProvider();
+                    break;
+                case SymmProvEnum.RC2:
+                    mobjCryptoService = new RC2CryptoServiceProvider();
+                    break;
+                case SymmProvEnum.Rijndael:
+                    mobjCryptoService = new RijndaelManaged();
+                    break;
+            }
+        }
+
+        /// <remarks>
+
+        /// Constructor for using a customized SymmetricAlgorithm class.
+
+        /// </remarks>
+
+        public EncryptString(SymmetricAlgorithm ServiceProvider)
+        {
+            mobjCryptoService = ServiceProvider;
+        }
+
+        /// <remarks>
+
+        /// Depending on the legal key size limitations of a specific CryptoService provider
+        /// and length of the private key provided, padding the secret key with space character
+        /// to meet the legal size of the algorithm.
+        /// </remarks>
+
+        private byte[] GetLegalKey(string Key)
+        {
+            string sTemp;
+            if (mobjCryptoService.LegalKeySizes.Length > 0)
+            {
+                int lessSize = 0, moreSize = mobjCryptoService.LegalKeySizes[0].MinSize;
+                // key sizes are in bits
+
+                while (Key.Length * 8 > moreSize)
+                {
+                    lessSize = moreSize;
+                    moreSize += mobjCryptoService.LegalKeySizes[0].SkipSize;
+                }
+                sTemp = Key.PadRight(moreSize / 8, ' ');
+            }
+            else
+                sTemp = Key;
+
+            // convert the secret key to byte array
+
+            return ASCIIEncoding.ASCII.GetBytes(sTemp);
+        }
+
+        public string Encrypt(string Source, string Key)
+        {
+            byte[] bytIn = System.Text.ASCIIEncoding.ASCII.GetBytes(Source);
+            // create a MemoryStream so that the process can be done without I/O files
+
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+
+            byte[] bytKey = GetLegalKey(Key);
+
+            // set the private key
+
+            mobjCryptoService.Key = bytKey;
+            mobjCryptoService.IV = bytKey;
+
+            // create an Encryptor from the Provider Service instance
+
+            ICryptoTransform encrypto = mobjCryptoService.CreateEncryptor();
+
+            // create Crypto Stream that transforms a stream using the encryption
+
+            CryptoStream cs = new CryptoStream(ms, encrypto, CryptoStreamMode.Write);
+
+            // write out encrypted content into MemoryStream
+
+            cs.Write(bytIn, 0, bytIn.Length);
+            cs.FlushFinalBlock();
+
+            // get the output and trim the '\0' bytes
+
+            byte[] bytOut = ms.GetBuffer();
+            int i = 0;
+            for (i = 0; i < bytOut.Length; i++)
+                if (bytOut[i] == 0)
+                    break;
+
+            // convert into Base64 so that the result can be used in xml
+
+            return System.Convert.ToBase64String(bytOut, 0, i);
+        }
+
+        public string Decrypt(string Source, string Key)
+        {
+            // convert from Base64 to binary
+            byte[] bytIn = System.Convert.FromBase64String(Source);
+            // create a MemoryStream with the input
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(bytIn, 0, bytIn.Length);
+            byte[] bytKey = GetLegalKey(Key);
+            // set the private key
+            mobjCryptoService.Key = bytKey;
+            mobjCryptoService.IV = bytKey;
+            // create a Decryptor from the Provider Service instance
+            ICryptoTransform encrypto = mobjCryptoService.CreateDecryptor();
+            // create Crypto Stream that transforms a stream using the decryption
+            CryptoStream cs = new CryptoStream(ms, encrypto, CryptoStreamMode.Read);
+            // read out the result from the Crypto Stream
+            System.IO.StreamReader sr = new System.IO.StreamReader(cs);
+            return sr.ReadToEnd();
         }
     }
 }
