@@ -90,6 +90,7 @@
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CDMA_TRUSTS_CLIENT_ACCOUNTS.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
+    <Compile Include="Domain\Customer\CM_BACK_JOBS.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Customer\Limit_Range.cs" />
     <Compile Include="Domain\Customer\SRC_CDMA_LGA.cs" />
@@ -132,6 +133,8 @@
     <Compile Include="ViewModels\CustExceptionsModel.cs" />
     <Compile Include="ViewModels\DynamicViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\MessageJobEnum.cs" />
+    <Compile Include="ViewModels\MessageModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
   </ItemGroup>
   <ItemGroup />

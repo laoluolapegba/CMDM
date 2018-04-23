@@ -21,12 +21,14 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             return View(db.CM_USER_ROLES.ToList());
         }
 
         // GET: Roles/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -42,6 +44,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: Roles/Create
         public ActionResult Create()
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             return View();
         }
 
@@ -53,6 +56,7 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "ROLE_ID")]CM_USER_ROLES cM_USER_ROLES, bool continueEditing)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
@@ -75,6 +79,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: Roles/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -94,6 +99,7 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CM_USER_ROLES cM_USER_ROLES, bool continueEditing)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
@@ -115,6 +121,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: Roles/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,6 +139,7 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             CM_USER_ROLES cM_USER_ROLES = db.CM_USER_ROLES.Find(id);
             db.CM_USER_ROLES.Remove(cM_USER_ROLES);
             db.SaveChanges();

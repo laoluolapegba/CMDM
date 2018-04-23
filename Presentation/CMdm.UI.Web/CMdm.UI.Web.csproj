@@ -605,7 +605,6 @@
     <Compile Include="Models\Logging\LogModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
-    <Compile Include="Models\Messaging\MailModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
     <Compile Include="Models\UserAdmin\RolesListModel.cs" />
     <Compile Include="Models\UserAdmin\SiteMapModel.cs" />
@@ -2178,6 +2177,9 @@
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
     <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
     <Content Include="Views\SiteMap\Index.cshtml" />
+    <Content Include="Views\Templates\MessagingTemplates\Authorization.cshtml" />
+    <Content Include="Views\Templates\MessagingTemplates\Reject.cshtml" />
+    <Content Include="Views\Templates\MessagingTemplates\Change.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

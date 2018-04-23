@@ -460,6 +460,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BRANCH_CLASS> CDMA_BRANCH_CLASS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_SEGMENT> CDMA_CUSTOMER_SEGMENT { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_TYPE> CDMA_CUSTOMER_TYPE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CM_BACK_JOBS> CM_BACK_JOBS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.Limit_Range> Limit_Range { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SIZE> CDMA_BUSINESS_SIZE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
