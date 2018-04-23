@@ -51,6 +51,9 @@ namespace CMdm.Data.Rbac
 
         public int? PARENT_ID { get; set; }
 
+        [DisplayName("Checker Role")]
+        public int? CHECKER_ID { get; set; }
+
         public virtual ICollection<CM_ROLE_PERM_XREF> CM_ROLE_PERM_XREF { get; set; }
 
         public virtual ICollection<CM_USER_PROFILE> CM_USER_PROFILE { get; set; }

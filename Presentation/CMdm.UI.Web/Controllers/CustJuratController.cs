@@ -12,6 +12,8 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -19,11 +21,13 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
 
         public CustJuratController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -201,7 +205,9 @@ namespace CMdm.UI.Web.Controllers
                             newentity.CUSTOMER_NO = cjmodel.CUSTOMER_NO;
                             db.CDMA_JURAT.Add(newentity);
 
+
                             db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                         else
                         {

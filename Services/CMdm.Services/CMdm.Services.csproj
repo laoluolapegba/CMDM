@@ -48,6 +48,12 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RazorGenerator.Mvc.2.4.9\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -83,8 +89,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Authentication\LDAPAuthenticationService.cs" />
     <Compile Include="CustomModule\Fcmb\AccountOfficerService.cs" />
@@ -111,7 +121,10 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
-    <Compile Include="Messaging\MailService.cs" />
+    <Compile Include="Messaging\IMessagingService.cs" />
+    <Compile Include="Messaging\MessagingService.cs" />
+    <Compile Include="Notification\INotificationService.cs" />
+    <Compile Include="Notification\NotificationService.cs" />
     <Compile Include="Permissions\IPermissionsService.cs" />
     <Compile Include="Permissions\PermissionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
