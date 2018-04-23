@@ -14,8 +14,6 @@ using RazorEngine.Configuration.Xml;
 using RazorEngine.Templating;
 using System.Configuration;
 using System.Web.Configuration;
-using System.IO;
-using System.Text;
 using System.Security.Cryptography;
 
 namespace CMdm.Services.Messaging
@@ -93,7 +91,7 @@ namespace CMdm.Services.Messaging
             backJob.MAILBODY = htmlbody;
             db.CM_BACK_JOBS.Add(backJob);
             db.SaveChanges();
-            SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
+            //SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
         {
