@@ -98,6 +98,7 @@
     <Compile Include="Domain\Customer\TMP_ACCOUNTOFFICER_EXCEPTIONS.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\Dqi\BranchDqiSummary.cs" />
+    <Compile Include="Domain\Dqi\CDMA_DQI_PROCESSING_RESULT.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\IssueStatus.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Domain\Entity\EntityMast.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\OutStandingDoc.cs" />
     <Compile Include="Domain\GoldenRecord\CdmaGoldenRecord.cs" />
+    <Compile Include="Domain\GoldenRecord\GoldenRecordRules.cs" />
     <Compile Include="Domain\Kpi\BrnKpi.cs" />
     <Compile Include="Domain\Localization\Language.cs" />
     <Compile Include="Domain\Localization\LocaleStringResource.cs" />

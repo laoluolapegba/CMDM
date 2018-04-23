@@ -1,0 +1,43 @@
+﻿@model CMdm.Entities.Domain.Dqi.CDMA_DQI_PROCESSING_RESULT
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CDMA_DQI_PROCESSING_RESULT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BRANCH_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BRANCH_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DQI_RESULT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DQI_RESULT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PREVIOUS_DQI_RESULT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PREVIOUS_DQI_RESULT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PROCESS_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

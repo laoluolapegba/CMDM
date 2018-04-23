@@ -293,6 +293,8 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\DQISummaryController.cs" />
+    <Compile Include="Controllers\GRRulesController.cs" />
     <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
     <Compile Include="Controllers\CustTcaController.cs" />
@@ -2180,6 +2182,16 @@
     <Content Include="Views\Templates\MessagingTemplates\Authorization.cshtml" />
     <Content Include="Views\Templates\MessagingTemplates\Reject.cshtml" />
     <Content Include="Views\Templates\MessagingTemplates\Change.cshtml" />
+    <Content Include="Views\GRRules\Create.cshtml" />
+    <Content Include="Views\GRRules\Delete.cshtml" />
+    <Content Include="Views\GRRules\Details.cshtml" />
+    <Content Include="Views\GRRules\Edit.cshtml" />
+    <Content Include="Views\GRRules\Index.cshtml" />
+    <Content Include="Views\DQISummary\Create.cshtml" />
+    <Content Include="Views\DQISummary\Delete.cshtml" />
+    <Content Include="Views\DQISummary\Details.cshtml" />
+    <Content Include="Views\DQISummary\Edit.cshtml" />
+    <Content Include="Views\DQISummary\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
