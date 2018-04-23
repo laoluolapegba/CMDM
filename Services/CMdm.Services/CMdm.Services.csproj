@@ -115,6 +115,9 @@
     <Compile Include="Permissions\IPermissionsService.cs" />
     <Compile Include="Permissions\PermissionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\ReportRequestViewModel.cs" />
+    <Compile Include="Report\ReportService.cs" />
     <Compile Include="Security\PermissionService.cs" />
     <Compile Include="UserAdmin\IUserService.cs" />
     <Compile Include="UserAdmin\UserService.cs" />

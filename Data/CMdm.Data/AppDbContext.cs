@@ -513,6 +513,10 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.TMP_ACCOUNTOFFICER_EXCEPTIONS> TMP_ACCOUNTOFFICER_EXCEPTIONS { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules> GoldenRecordRules { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Report.CmReportDefn> RptDefinition { get; set; }
+
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
 

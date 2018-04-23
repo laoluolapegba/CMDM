@@ -1,0 +1,53 @@
+﻿@model CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>GoldenRecordRules</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RULE_NAME)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RULE_NAME)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.RULE_DESCRIPTION)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RULE_DESCRIPTION)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.RULE_STATUS)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.RULE_STATUS)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.RULE_ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
