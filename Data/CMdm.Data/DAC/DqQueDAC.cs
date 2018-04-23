@@ -377,6 +377,7 @@ namespace CMdm.Data.DAC
                     }
                     switch (item.CATALOG_TABLE_NAME)
                     {
+                        #region Individual
                         case "CDMA_INDIVIDUAL_BIO_DATA":
                             var entry = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
                             var oldrecord = db.CDMA_INDIVIDUAL_BIO_DATA.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
@@ -392,7 +393,64 @@ namespace CMdm.Data.DAC
 
 
                             }
+                            var addressentry = db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            var addressrecord = db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
+                            if (addressentry != null)
+                            {
+                                if (addressrecord != null)
+                                {
+                                    db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Remove(addressrecord);
+                                }
+
+                                db.SaveChanges();
+                                noOfRowUpdated = db.Database.ExecuteSqlCommand("Update CDMA_INDIVIDUAL_ADDRESS_DETAIL set AUTHORISED='A', AUTHORISED_BY = " + userId + ", AUTHORISED_DATE=sysdate  where customer_no = '" + item.CUST_ID + "' and AUTHORISED ='U' ");
+
+
+                            }
+                            var identry = db.CDMA_INDIVIDUAL_IDENTIFICATION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            var idrecord = db.CDMA_INDIVIDUAL_IDENTIFICATION.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
+                            if (identry != null)
+                            {
+                                if (addressrecord != null)
+                                {
+                                    db.CDMA_INDIVIDUAL_IDENTIFICATION.Remove(idrecord);
+                                }
+
+                                db.SaveChanges();
+                                noOfRowUpdated = db.Database.ExecuteSqlCommand("Update CDMA_INDIVIDUAL_IDENTIFICATION set AUTHORISED='A', AUTHORISED_BY = " + userId + ", AUTHORISED_DATE=sysdate  where customer_no = '" + item.CUST_ID + "' and AUTHORISED ='U' ");
+
+
+                            }
+                            var otherentry = db.CDMA_INDIVIDUAL_OTHER_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            var otherrecord = db.CDMA_INDIVIDUAL_OTHER_DETAILS.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
+                            if (identry != null)
+                            {
+                                if (addressrecord != null)
+                                {
+                                    db.CDMA_INDIVIDUAL_OTHER_DETAILS.Remove(otherrecord);
+                                }
+
+                                db.SaveChanges();
+                                noOfRowUpdated = db.Database.ExecuteSqlCommand("Update CDMA_INDIVIDUAL_OTHER_DETAILS set AUTHORISED='A', AUTHORISED_BY = " + userId + ", AUTHORISED_DATE=sysdate  where customer_no = '" + item.CUST_ID + "' and AUTHORISED ='U' ");
+
+
+                            }
+                            var contactentry = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
+                            var contactrecord = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
+                            if (identry != null)
+                            {
+                                if (contactrecord != null)
+                                {
+                                    db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Remove(contactrecord);
+                                }
+
+                                db.SaveChanges();
+                                noOfRowUpdated = db.Database.ExecuteSqlCommand("Update CDMA_INDIVIDUAL_CONTACT_DETAIL set AUTHORISED='A', AUTHORISED_BY = " + userId + ", AUTHORISED_DATE=sysdate  where customer_no = '" + item.CUST_ID + "' and AUTHORISED ='U' ");
+
+
+                            }
                             break;
+                        #endregion
                         case "CDMA_CUSTOMER_INCOME":
                             var entry1 = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "U");
                             var oldrecord1 = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(a => a.CUSTOMER_NO == item.CUST_ID && a.AUTHORISED == "A");
