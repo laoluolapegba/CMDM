@@ -55,6 +55,8 @@ namespace CMdm.UI.Web.Controllers
                 Text = "All",
                 Selected = true
             });
+            //Test OrderBy
+            model.Branches.OrderBy(x => x.Value);
 
             model.AccountOfficers.Add(new SelectListItem
             {

@@ -498,20 +498,32 @@ namespace CMdm.UI.Web.Controllers
                 case "CDMA_INDIVIDUAL_BIO_DATA":
                     controllerName = "IndividualCustomer";
                     break;
-                case " CDMA_ACCOUNT_INFO":
+                case "CDMA_INDIVIDUAL_ADDRESS_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_CONTACT_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_IDENTIFICATION":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_ACCOUNT_INFO":
+                    controllerName = "AccInfoContext";
+                    break;
+                case "CDMA_ACCT_SERVICES_REQUIRED":
                     controllerName = "AccInfoContext";
                     break;
                 case "CDMA_CUSTOMER_INCOME":
                     controllerName = "CustIncome";
                     break;
                 case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
-                    controllerName = "custnok";
+                    controllerName = "CustNok";
                     break;
                 case "CDMA_FOREIGN_DETAILS":
-                    controllerName = "custforeigner";
+                    controllerName = "CustForeigner";
                     break;
                 case "CDMA_JURAT":
-                    controllerName = "jurat";
+                    controllerName = "CustJurat";
                     break;
                 case "CDMA_EMPLOYMENT_DETAILS":
                     controllerName = "EmployeeInfo";
@@ -553,7 +565,10 @@ namespace CMdm.UI.Web.Controllers
                 case "CDMA_INDIVIDUAL_IDENTIFICATION":
                     controllerName = "IndividualCustomer";
                     break;
-                case " CDMA_ACCOUNT_INFO":
+                case "CDMA_ACCOUNT_INFO":
+                    controllerName = "AccInfoContext";
+                    break;
+                case "CDMA_ACCT_SERVICES_REQUIRED":
                     controllerName = "AccInfoContext";
                     break;
                 case "CDMA_CUSTOMER_INCOME":
