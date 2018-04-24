@@ -159,6 +159,7 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ScriptManager.MSAjax, Version=4.5.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.ScriptManager.MSAjax.4.5.6\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
       <Private>True</Private>
@@ -293,7 +294,6 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
-    <Compile Include="Controllers\DQISummaryController.cs" />
     <Compile Include="Controllers\GRRulesController.cs" />
     <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
@@ -331,6 +331,7 @@
     <Compile Include="Controllers\ParamsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PhoneValidationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -626,6 +627,13 @@
       <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1332,6 +1340,7 @@
     <Content Include="LogOff.aspx" />
     <Content Include="Modules\WebForm1.aspx" />
     <Content Include="Modules\WebForm2.aspx" />
+    <Content Include="ReportViewer.aspx" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
     <Content Include="Scripts\admin.common.js" />
@@ -2179,19 +2188,12 @@
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
     <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
     <Content Include="Views\SiteMap\Index.cshtml" />
-    <Content Include="Views\MessagingTemplates\Authorization.cshtml" />
-    <Content Include="Views\MessagingTemplates\Reject.cshtml" />
-    <Content Include="Views\MessagingTemplates\Change.cshtml" />
     <Content Include="Views\GRRules\Create.cshtml" />
     <Content Include="Views\GRRules\Delete.cshtml" />
     <Content Include="Views\GRRules\Details.cshtml" />
     <Content Include="Views\GRRules\Edit.cshtml" />
     <Content Include="Views\GRRules\Index.cshtml" />
-    <Content Include="Views\DQISummary\Create.cshtml" />
-    <Content Include="Views\DQISummary\Delete.cshtml" />
-    <Content Include="Views\DQISummary\Details.cshtml" />
-    <Content Include="Views\DQISummary\Edit.cshtml" />
-    <Content Include="Views\DQISummary\Index.cshtml" />
+    <Content Include="Views\Report\ReportViewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
@@ -2230,11 +2232,13 @@
     <Folder Include="Content\customlogin\colorbox\images\" />
     <Folder Include="exceptions\" />
     <Folder Include="font\" />
+    <Folder Include="Models\Messaging\" />
+    <Folder Include="Models\Report\" />
+    <Folder Include="Report\" />
     <Folder Include="Themes\DefaultClean\Views\Shared\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CusBioData\" />
     <Folder Include="Views\DataSources\" />
-    <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE\bootstrap\css\bootstrap.css.map" />
