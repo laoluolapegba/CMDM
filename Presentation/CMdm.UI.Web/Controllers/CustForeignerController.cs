@@ -12,7 +12,8 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
-
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -20,10 +21,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
 
         public CustForeignerController()
         {
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -190,6 +193,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_FOREIGN_DETAILS.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), formodel.CUSTOMER_NO, updateFlag, originalObject);
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                     }
                     else if (records == 1)
@@ -240,6 +244,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_FOREIGN_DETAILS.Add(newentity);
 
                             db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                         else
                         {
@@ -367,11 +372,13 @@ namespace CMdm.UI.Web.Controllers
                 {
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), formodel.AuthoriserRemarks);
                     SuccessNotification("FORD Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, formodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(formodel.LastUpdatedby));
                 }
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("FORD Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, formodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(formodel.LastUpdatedby));
                 }
             }
             PrepareModel(formodel);

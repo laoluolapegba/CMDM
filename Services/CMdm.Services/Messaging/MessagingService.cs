@@ -91,7 +91,7 @@ namespace CMdm.Services.Messaging
             backJob.MAILBODY = htmlbody;
             db.CM_BACK_JOBS.Add(backJob);
             db.SaveChanges();
-            //SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
+            SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
         {
@@ -125,7 +125,7 @@ namespace CMdm.Services.Messaging
 
                 var smtp = new SmtpClient();
                 smtp.Host = smtpHost;
-                smtp.EnableSsl = true;
+                smtp.EnableSsl = false; //Can be set to true if authentication is needed
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
                 var networkCred = new System.Net.NetworkCredential(smtpMail, smtpPassword /*smtp domain if needed*/);

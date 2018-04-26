@@ -13,18 +13,21 @@ using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using System.Reflection;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class CustNokController : BaseController
     {
         private AppDbContext _db = new AppDbContext();
-
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
         public CustNokController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
         public ActionResult Authorize(string id)
         {
@@ -251,8 +254,8 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), nokmodel.CUSTOMER_NO, updateFlag, originalObject);
-                            
-                            
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
+
                         }
                     }
                     else if (records == 1)
@@ -323,8 +326,8 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Add(newentity);
 
                             db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
-                            
                         }
                         else
                         {
@@ -438,12 +441,14 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), nokmodel.AuthoriserRemarks);
                     SuccessNotification("NOK Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(nokmodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("NOK Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(nokmodel.LastUpdatedby));
                 }
                
                 return RedirectToAction("AuthList", "DQQue");

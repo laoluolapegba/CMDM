@@ -12,6 +12,8 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -19,10 +21,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
 
         public EmployeeInfoController()
         {
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -173,6 +177,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_EMPLOYMENT_DETAILS.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), empmodel.CUSTOMER_NO, updateFlag, originalObject);
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                     }
                     else if (records == 1)
@@ -217,6 +222,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_EMPLOYMENT_DETAILS.Add(newentity);
 
                             db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                         else
                         {
@@ -339,12 +345,14 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), empmodel.AuthoriserRemarks);
                     SuccessNotification("NOK Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, empmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(empmodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("NOK Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, empmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(empmodel.LastUpdatedby));
                 }
 
                 return RedirectToAction("AuthList", "DQQue");

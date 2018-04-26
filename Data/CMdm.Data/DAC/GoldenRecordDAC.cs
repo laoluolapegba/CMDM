@@ -110,7 +110,7 @@ namespace CMdm.Data.DAC
                 //    query = query.Where(al => createdOnFrom.Value <= al.RUN_DATE);
                 //if (createdOnTo.HasValue)
                 //    query = query.Where(al => createdOnTo.Value >= al.RUN_DATE);
-                if (!string.IsNullOrWhiteSpace(BranchId))
+                if (!string.IsNullOrWhiteSpace(BranchId) && BranchId != "0")
                     query = query.Where(v => v.BRANCH_CODE == BranchId);
                 if (GoldenrecordId.HasValue && GoldenrecordId > 0)
                 {

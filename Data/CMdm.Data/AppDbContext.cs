@@ -488,6 +488,7 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.AccountOfficer> AccountOfficers { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.CustSegment> CustSegment { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
@@ -519,6 +520,8 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules> GoldenRecordRules { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Report.CmReportDefn> RptDefinition { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.TMP_SEC_SUB3> TMP_SEC_SUB3 { get; set; }
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 

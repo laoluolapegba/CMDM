@@ -12,6 +12,8 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -19,10 +21,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
         public CustAdiController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -159,6 +163,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_ADDITIONAL_INFORMATION.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), adimodel.CUSTOMER_NO, updateFlag, originalObject);
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                     }                     
                     else if(records == 1)
@@ -189,6 +194,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_ADDITIONAL_INFORMATION.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges();
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                         else
                         {
@@ -328,12 +334,14 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), adimodel.AuthoriserRemarks);
                     SuccessNotification("ADI Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, adimodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(adimodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("ADI Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, adimodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(adimodel.LastUpdatedby));
                 }
 
                 //using (var db = new AppDbContext())

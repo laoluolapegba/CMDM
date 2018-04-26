@@ -72,6 +72,7 @@
     <Compile Include="CMdmObjectContext.cs" />
     <Compile Include="DAC\AccountOfficerDAC.cs" />
     <Compile Include="DAC\CustomActionsDAC.cs" />
+    <Compile Include="DAC\CustSegmentDAC.cs" />
     <Compile Include="DAC\GoldenRecordDAC.cs" />
     <Compile Include="DAC\DqParamDAC.cs" />
     <Compile Include="DAC\DqRuleDAC.cs" />

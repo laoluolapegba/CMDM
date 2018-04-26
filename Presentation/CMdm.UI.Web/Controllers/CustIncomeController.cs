@@ -11,6 +11,8 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -18,10 +20,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
 
         public CustIncomeController()
         {
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -152,7 +156,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_CUSTOMER_INCOME.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), cimodel.CUSTOMER_NO, updateFlag, originalObject);
-
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         
@@ -182,6 +186,7 @@ namespace CMdm.UI.Web.Controllers
                             newentity.CUSTOMER_NO = cimodel.CUSTOMER_NO;
                             db.CDMA_CUSTOMER_INCOME.Add(newentity);
                             db.SaveChanges();
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                         else
                         {
@@ -297,12 +302,14 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), cimodel.AuthoriserRemarks);
                     SuccessNotification("CustI Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, cimodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(cimodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("CustI Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, cimodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(cimodel.LastUpdatedby));
                 }
 
                 return RedirectToAction("AuthList", "DQQue");
@@ -315,7 +322,7 @@ namespace CMdm.UI.Web.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         [FormValueRequired("disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult DisApprove(CustomerIncomeModel cimodel, bool continueEditing)
+        public ActionResult DisApprove_(CustomerIncomeModel cimodel, bool continueEditing)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();

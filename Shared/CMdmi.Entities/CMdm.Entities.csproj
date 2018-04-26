@@ -96,7 +96,9 @@
     <Compile Include="Domain\Customer\SRC_CDMA_LGA.cs" />
     <Compile Include="Domain\Customer\SRC_CDMA_STATE.cs" />
     <Compile Include="Domain\Customer\TMP_ACCOUNTOFFICER_EXCEPTIONS.cs" />
+    <Compile Include="Domain\Customer\TMP_SEC_SUB3.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
     <Compile Include="Domain\Dqi\BranchDqiSummary.cs" />
     <Compile Include="Domain\Dqi\CDMA_DQI_PROCESSING_RESULT.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />

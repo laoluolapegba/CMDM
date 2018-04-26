@@ -169,6 +169,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_JURAT.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), cjmodel.CUSTOMER_NO, updateFlag, originalObject);
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
                         }
                     }
                     else if (records == 1)
@@ -305,12 +306,14 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), cjmodel.AuthoriserRemarks);
                     SuccessNotification("JURAT Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, cjmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(cjmodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("JURAT Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, cjmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(cjmodel.LastUpdatedby));
                 }
                 
                 return RedirectToAction("AuthList", "DQQue");

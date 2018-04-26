@@ -297,6 +297,8 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\CustSegmentController.cs" />
+    <Compile Include="Controllers\DQISummaryController.cs" />
     <Compile Include="Controllers\GRRulesController.cs" />
     <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
@@ -596,6 +598,7 @@
     <Compile Include="Models\Customer\IndividualContactDetails.cs" />
     <Compile Include="Models\Customer\individualIDDetail.cs" />
     <Compile Include="Models\Customer\OtherDetails.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
@@ -2197,6 +2200,7 @@
     <Content Include="Views\GRRules\Edit.cshtml" />
     <Content Include="Views\GRRules\Index.cshtml" />
     <Content Include="Views\Report\ReportViewer.cshtml" />
+    <Content Include="Views\CustSegment\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
