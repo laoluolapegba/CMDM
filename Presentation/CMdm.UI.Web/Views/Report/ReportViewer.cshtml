@@ -26,6 +26,16 @@
                                         @Html.CMdmDropDownListFor(model => model.REPORT_ID, Model.ReportList)
                                         @Html.ValidationMessageFor(model => model.REPORT_ID)
                                     </div>
+                                    
+                                    @(Html.Kendo().DropDownList()
+                                .Name("Branch")
+                                    .HtmlAttributes(new { @style = "width:250px" })
+                                        .Filter(FilterType.Contains)
+                                .DataSource(datasource => datasource
+                                              .Read(read => read.Action("GetBranches", "Report")
+                                              )).DataTextField("BranchName").DataValueField("BranchId")
+                                                      
+                                    )
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-8 col-md-offset-4">

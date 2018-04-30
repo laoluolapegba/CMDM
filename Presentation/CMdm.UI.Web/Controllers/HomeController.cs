@@ -46,6 +46,8 @@ namespace CMdm.UI.Web.Controllers
                 return AccessDeniedView();
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            BrnKpi kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+            ViewBag.brnDQI = kpirow.BRN_DQI;
 
             ViewData["BranchId"] = identity.BranchId;
             ViewData["CatalogId"] = 1;

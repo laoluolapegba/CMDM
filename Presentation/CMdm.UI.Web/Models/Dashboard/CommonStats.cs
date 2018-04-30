@@ -7,5 +7,11 @@ namespace CMdm.UI.Web.Models.Dashboard
 {
     public class CommonStats
     {
+
+    }
+
+    public class BranchDQISummary
+    {
+
     }
 }
