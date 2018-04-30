@@ -40,7 +40,7 @@ namespace CMdm.Entities.Domain.Dqi
         //[AllowHtml]
         [Required]
         public string EXCEPTION_QUERY { get; set; }
-        [DisplayName("Descriptoon and Resolution")]
+        [DisplayName("Description and Resolution")]
         public string DESCRIPTION_RESOLUTION { get; set; }
 
         [DisplayName("Schedule")]

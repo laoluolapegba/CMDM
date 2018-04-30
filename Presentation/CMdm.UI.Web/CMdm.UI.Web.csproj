@@ -159,6 +159,10 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WebForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax, Version=4.5.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.ScriptManager.MSAjax.4.5.6\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
       <Private>True</Private>
@@ -286,12 +290,14 @@
     <Compile Include="BLL\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountInfoController.cs" />
+    <Compile Include="Controllers\AccountOfficerController.cs" />
     <Compile Include="Controllers\AcctServicesRequiredController.cs" />
     <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\GRRulesController.cs" />
     <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
     <Compile Include="Controllers\CustTcaController.cs" />
@@ -328,10 +334,12 @@
     <Compile Include="Controllers\ParamsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PhoneValidationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
@@ -582,6 +590,7 @@
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\CustomerTCAModel.cs" />
     <Compile Include="Models\Customer\EmpInfoModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\AccountOfficerModel.cs" />
     <Compile Include="Models\Customer\IndividualAddressDetails.cs" />
     <Compile Include="Models\Customer\IndividualBioDataModel.cs" />
     <Compile Include="Models\Customer\IndividualContactDetails.cs" />
@@ -604,6 +613,7 @@
     <Compile Include="Models\MdmWeight\MdmWeightModel.cs" />
     <Compile Include="Models\UserAdmin\PermissionListModel.cs" />
     <Compile Include="Models\UserAdmin\RolesListModel.cs" />
+    <Compile Include="Models\UserAdmin\SiteMapModel.cs" />
     <Compile Include="Models\UserAdmin\UsersListViewModel.cs" />
     <Compile Include="Modules\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -620,6 +630,13 @@
       <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1326,6 +1343,7 @@
     <Content Include="LogOff.aspx" />
     <Content Include="Modules\WebForm1.aspx" />
     <Content Include="Modules\WebForm2.aspx" />
+    <Content Include="ReportViewer.aspx" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
     <Content Include="Scripts\admin.common.js" />
@@ -2168,9 +2186,17 @@
     <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\AccountOfficer\List.cshtml" />
     <Content Include="Views\IndividualCustomer\Authorize.cshtml" />
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
     <Content Include="Views\IndividualCustomer\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\SiteMap\Index.cshtml" />
+    <Content Include="Views\GRRules\Create.cshtml" />
+    <Content Include="Views\GRRules\Delete.cshtml" />
+    <Content Include="Views\GRRules\Details.cshtml" />
+    <Content Include="Views\GRRules\Edit.cshtml" />
+    <Content Include="Views\GRRules\Index.cshtml" />
+    <Content Include="Views\Report\ReportViewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
@@ -2209,6 +2235,9 @@
     <Folder Include="Content\customlogin\colorbox\images\" />
     <Folder Include="exceptions\" />
     <Folder Include="font\" />
+    <Folder Include="Models\Messaging\" />
+    <Folder Include="Models\Report\" />
+    <Folder Include="Report\" />
     <Folder Include="Themes\DefaultClean\Views\Shared\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CusBioData\" />

@@ -1,5 +1,6 @@
 ﻿@model CMdm.UI.Web.Models.Customer.AccInfoCtxModel
 @Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.AccInfoModel.CUSTOMER_NO)
 
 <div class="content">
     <div class="form-horizontal">
@@ -8,15 +9,16 @@
                 <div class="panel-body">
 
                     <div class="row">
+                        <h4 style="color:#dd4b39;margin-left:2%;">ACCOUNT INFORMATION</h4>
+                        <hr />
                         <div class="col-md-6">
-                            <h4>ACCOUNT INFORMATION</h4>
                             <div>
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_NO)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.CMdmEditorFor(model => model.AccInfoModel.CUSTOMER_NO)
+                                        @Html.CMdmDisplayFor(model => model.AccInfoModel.CUSTOMER_NO)
                                     </div>
                                 </div>
                             </div>
@@ -168,8 +170,9 @@
 
                     <br />
                     <div class="row">
+                        <h4 style="color:#dd4b39;margin-left:2%;">ACCOUNT SERVICES REQUIRED</h4>
+                        <hr />
                         <div class="col-md-6">
-                            <h4>ACCOUNT SERVICES REQUIRED</h4>
                             <div>
                                 <div class="form-group">
                                     <div class="col-md-3">
@@ -288,16 +291,8 @@
                                     @Html.LabelFor(model => model.AccServicesModel.TOKEN)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.TOKEN, Model.AccServicesModel.Token)
+                                    @Html.CMdmDropDownListFor(model => model.AccServicesModel.TOKEN, Model.AccServicesModel.Tokens)
                                     @Html.ValidationMessageFor(model => model.AccServicesModel.TOKEN)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.AccInfoModel.CUSTOMER_IC)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.AccInfoModel.CUSTOMER_IC)
                                 </div>
                             </div>
                             <div class="form-group">

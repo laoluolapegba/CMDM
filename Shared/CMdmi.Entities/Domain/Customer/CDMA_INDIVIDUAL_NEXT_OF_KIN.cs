@@ -8,7 +8,7 @@ namespace CMdm.Entities.Domain.Customer
     [Table("CDMA_INDIVIDUAL_NEXT_OF_KIN")]
     public partial class CDMA_INDIVIDUAL_NEXT_OF_KIN
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public int? TITLE { get; set; }
         public string SURNAME { get; set; }
@@ -37,13 +37,14 @@ namespace CMdm.Entities.Domain.Customer
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
         public string BRANCH_CODE { get; set; }
 
-        public string MNT_STATUS { get; set; }
+        //public string MNT_STATUS { get; set; }
 
         public virtual CDMA_CUST_REL_TYPE RelationshipTypes { get; set; }
         public virtual CDMA_CUST_TITLE TitleTypes { get; set; }

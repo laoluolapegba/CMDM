@@ -8,7 +8,7 @@ namespace CMdm.Entities.Domain.Customer
     [Table("CDMA_ACCOUNT_INFO")]
     public partial class CDMA_ACCOUNT_INFO
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public string ACCOUNT_HOLDER { get; set; }
         public string TYPE_OF_ACCOUNT { get; set; }
@@ -27,11 +27,11 @@ namespace CMdm.Entities.Domain.Customer
         public string CUSTOMER_TYPE { get; set; }
         public string OPERATING_INSTRUCTION { get; set; }
         public string ORIGINATING_BRANCH { get; set; }
-
         public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
         public DateTime? AUTHORISED_DATE { get; set; }

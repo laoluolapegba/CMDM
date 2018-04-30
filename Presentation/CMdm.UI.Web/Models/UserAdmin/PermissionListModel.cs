@@ -24,7 +24,7 @@ namespace CMdm.UI.Web.Models.UserAdmin
 
         [Required]
         [StringLength(100)]
-        [DisplayName("Permission Sescription")]
+        [DisplayName("Permission Description")]
         public string PERMISSIONDESCRIPTION { get; set; }
 
         [Required]

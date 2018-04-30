@@ -429,6 +429,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
             try
             {
                 /*
@@ -456,7 +457,7 @@ namespace CMdm.UI.Web.Controllers
 
                 }
                 */
-                _dqQueService.ApproveExceptionQueItems(selectedIds);
+                _dqQueService.ApproveExceptionQueItems(selectedIds, identity.ProfileId);
 
                 return RedirectToAction("AuthList");
 
@@ -495,22 +496,34 @@ namespace CMdm.UI.Web.Controllers
             switch (table)
             {
                 case "CDMA_INDIVIDUAL_BIO_DATA":
-                    controllerName = "customer";
+                    controllerName = "IndividualCustomer";
                     break;
-                case " CDMA_ACCOUNT_INFO":
+                case "CDMA_INDIVIDUAL_ADDRESS_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_CONTACT_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_IDENTIFICATION":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_ACCOUNT_INFO":
+                    controllerName = "AccInfoContext";
+                    break;
+                case "CDMA_ACCT_SERVICES_REQUIRED":
                     controllerName = "AccInfoContext";
                     break;
                 case "CDMA_CUSTOMER_INCOME":
                     controllerName = "CustIncome";
                     break;
                 case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
-                    controllerName = "custnok";
+                    controllerName = "CustNok";
                     break;
                 case "CDMA_FOREIGN_DETAILS":
-                    controllerName = "custforeigner";
+                    controllerName = "CustForeigner";
                     break;
                 case "CDMA_JURAT":
-                    controllerName = "jurat";
+                    controllerName = "CustJurat";
                     break;
                 case "CDMA_EMPLOYMENT_DETAILS":
                     controllerName = "EmployeeInfo";
@@ -530,6 +543,64 @@ namespace CMdm.UI.Web.Controllers
             }
             ///return RedirectToAction("Edit", controllerName, new { id = customerId});
             return Json(new { success = true, url = Url.Action("Authorize", controllerName, new { id = exceptionId }) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual ActionResult ModifyProfile(string customerId, string branch, string rule, string table)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            string controllerName = "";
+
+            switch (table)
+            {
+                case "CDMA_INDIVIDUAL_BIO_DATA":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_ADDRESS_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_CONTACT_DETAIL":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_INDIVIDUAL_IDENTIFICATION":
+                    controllerName = "IndividualCustomer";
+                    break;
+                case "CDMA_ACCOUNT_INFO":
+                    controllerName = "AccInfoContext";
+                    break;
+                case "CDMA_ACCT_SERVICES_REQUIRED":
+                    controllerName = "AccInfoContext";
+                    break;
+                case "CDMA_CUSTOMER_INCOME":
+                    controllerName = "CustIncome";
+                    break;
+                case "CDMA_INDIVIDUAL_NEXT_OF_KIN":
+                    controllerName = "CustNok";
+                    break;
+                case "CDMA_FOREIGN_DETAILS":
+                    controllerName = "CustForeigner";
+                    break;
+                case "CDMA_JURAT":
+                    controllerName = "CustJurat";
+                    break;
+                case "CDMA_EMPLOYMENT_DETAILS":
+                    controllerName = "EmployeeInfo";
+                    break;
+                case "CDMA_TRUSTS_CLIENT_ACCOUNTS":
+                    controllerName = "CustTca";
+                    break;
+                case "CDMA_AUTH_FINANCE_INCLUSION":
+                    controllerName = "AuthFinInclusion";
+                    break;
+                case "CDMA_ADDITIONAL_INFORMATION":
+                    controllerName = "CustAdi";
+                    break;
+                default:
+                    controllerName = "";
+                    break;
+            }
+            ///return RedirectToAction("Edit", controllerName, new { id = customerId});
+            return Json(new { success = true, url = Url.Action("Edit", controllerName, new { id = customerId }) }, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {

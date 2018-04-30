@@ -184,7 +184,7 @@ namespace CMdm.Services.DqQue
             var queitems = new PagedList<CustExceptionsModel>(result, pageIndex, pageSize);
             return queitems;
         }
-        public virtual void ApproveExceptionQueItems(string selectedIds)  //List<MdmDqRunException> queitems
+        public virtual void ApproveExceptionQueItems(string selectedIds, int userId)  //List<MdmDqRunException> queitems
         {
             var modifiedrecords = new List<MdmDqRunException>();
             if (selectedIds != null)
@@ -198,7 +198,7 @@ namespace CMdm.Services.DqQue
             if (modifiedrecords == null)
                 throw new ArgumentNullException("approvedqueitems");
 
-            _dqqueDAC.ApproveExceptionQues(modifiedrecords);
+            _dqqueDAC.ApproveExceptionQues(modifiedrecords, userId);
 
             //event notification
             //_eventPublisher.EntityUpdated(vendor);

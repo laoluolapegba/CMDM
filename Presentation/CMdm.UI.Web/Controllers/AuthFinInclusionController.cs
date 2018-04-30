@@ -14,7 +14,7 @@ namespace CMdm.UI.Web.Controllers
 {
     public class AuthFinInclusionController : BaseController
     {
-        private AppDbContext db = new AppDbContext();
+        private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
 
         public AuthFinInclusionController()
@@ -29,7 +29,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-            var model = new AuthFIModel();
+            //var model = new AuthFIModel();
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -38,12 +38,11 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
-            if (changeId != null)
-            {
-                var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
-                model = (from c in db.CDMA_AUTH_FINANCE_INCLUSION
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_AUTH_FINANCE_INCLUSION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            AuthFIModel model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
                          where c.CUSTOMER_NO == querecord.CUST_ID
+                         where c.AUTHORISED == "U"
                          select new AuthFIModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -60,6 +59,8 @@ namespace CMdm.UI.Web.Controllers
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
 
+            if(model != null)
+            {
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -70,9 +71,8 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                 }
-                model.ReadOnlyForm = "True";
             }
-
+            model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
@@ -84,9 +84,13 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
 
-            var model = (from c in db.CDMA_AUTH_FINANCE_INCLUSION
-
+            int records = _db.CDMA_AUTH_FINANCE_INCLUSION.Count(o => o.CUSTOMER_NO == id);
+            AuthFIModel model = new AuthFIModel();
+            if(records > 1)
+            {
+                model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
                          where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "U"
                          select new AuthFIModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -97,6 +101,24 @@ namespace CMdm.UI.Web.Controllers
                              MANDATE_AUTH_COMBINE_RULE = c.MANDATE_AUTH_COMBINE_RULE,
                              ACCOUNT_WITH_OTHER_BANKS = c.ACCOUNT_WITH_OTHER_BANKS,
                          }).FirstOrDefault();
+            }
+            else if(records == 1)
+            {
+                model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
+                         where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "A"
+                         select new AuthFIModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             SOCIAL_FINANCIAL_DISADVTAGE = c.SOCIAL_FINANCIAL_DISADVTAGE,
+                             SOCIAL_FINANCIAL_DOCUMENTS = c.SOCIAL_FINANCIAL_DOCUMENTS,
+                             ENJOYED_TIERED_KYC = c.ENJOYED_TIERED_KYC,
+                             RISK_CATEGORY = c.RISK_CATEGORY,
+                             MANDATE_AUTH_COMBINE_RULE = c.MANDATE_AUTH_COMBINE_RULE,
+                             ACCOUNT_WITH_OTHER_BANKS = c.ACCOUNT_WITH_OTHER_BANKS,
+                         }).FirstOrDefault();
+            }
+            
 
             PrepareModel(model);
             return View(model);
@@ -113,33 +135,84 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            bool updateFlag = false;
             if (ModelState.IsValid)
             {
+                CDMA_AUTH_FINANCE_INCLUSION originalObject = new CDMA_AUTH_FINANCE_INCLUSION();
+
                 using (var db = new AppDbContext())
                 {
-                    var entity = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO);
-                    if (entity == null)
+                    int records = db.CDMA_AUTH_FINANCE_INCLUSION.Count(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
+                    //if there are more than one records, the 'U' one is the edited one
+                    if (records > 1)
                     {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", afimodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
+                        updateFlag = true;
+                        originalObject = _db.CDMA_AUTH_FINANCE_INCLUSION.Where(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
+
+                        var entity = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO && o.AUTHORISED == "U");
+
+                        if (entity != null)
+                        {
+                            entity.SOCIAL_FINANCIAL_DISADVTAGE = afimodel.SOCIAL_FINANCIAL_DISADVTAGE;
+                            entity.SOCIAL_FINANCIAL_DOCUMENTS = afimodel.SOCIAL_FINANCIAL_DOCUMENTS;
+                            entity.ENJOYED_TIERED_KYC = afimodel.ENJOYED_TIERED_KYC;
+                            entity.RISK_CATEGORY = afimodel.RISK_CATEGORY;
+                            entity.MANDATE_AUTH_COMBINE_RULE = afimodel.MANDATE_AUTH_COMBINE_RULE;
+                            entity.ACCOUNT_WITH_OTHER_BANKS = afimodel.ACCOUNT_WITH_OTHER_BANKS;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+                            db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), afimodel.CUSTOMER_NO, updateFlag, originalObject);
+                        }
                     }
-                    else
+                    else if (records == 1)
                     {
-                        entity.SOCIAL_FINANCIAL_DISADVTAGE = afimodel.SOCIAL_FINANCIAL_DISADVTAGE;
-                        entity.SOCIAL_FINANCIAL_DOCUMENTS = afimodel.SOCIAL_FINANCIAL_DOCUMENTS;
-                        entity.ENJOYED_TIERED_KYC = afimodel.ENJOYED_TIERED_KYC;
-                        entity.RISK_CATEGORY = afimodel.RISK_CATEGORY;
-                        entity.MANDATE_AUTH_COMBINE_RULE = afimodel.MANDATE_AUTH_COMBINE_RULE;
-                        entity.ACCOUNT_WITH_OTHER_BANKS = afimodel.ACCOUNT_WITH_OTHER_BANKS;
-                        entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                        entity.LAST_MODIFIED_DATE = DateTime.Now;
-                        entity.AUTHORISED = "U";
-                        db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
+                        updateFlag = false;
+                        var entity = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO && o.AUTHORISED == "A");
+                        originalObject = _db.CDMA_AUTH_FINANCE_INCLUSION.Where(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
+                        if (originalObject != null)
+                        {
+                            entity.SOCIAL_FINANCIAL_DISADVTAGE = afimodel.SOCIAL_FINANCIAL_DISADVTAGE;
+                            entity.SOCIAL_FINANCIAL_DOCUMENTS = afimodel.SOCIAL_FINANCIAL_DOCUMENTS;
+                            entity.ENJOYED_TIERED_KYC = afimodel.ENJOYED_TIERED_KYC;
+                            entity.RISK_CATEGORY = afimodel.RISK_CATEGORY;
+                            entity.MANDATE_AUTH_COMBINE_RULE = afimodel.MANDATE_AUTH_COMBINE_RULE;
+                            entity.ACCOUNT_WITH_OTHER_BANKS = afimodel.ACCOUNT_WITH_OTHER_BANKS;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+
+                            db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), afimodel.CUSTOMER_NO, updateFlag, originalObject);  //track the audit
+
+
+                            // There is no 'U' status row in the table so, Add new record with mnt_status U
+                            //entity.AUTHORISED = "U";
+                            var newentity = new CDMA_AUTH_FINANCE_INCLUSION();
+                            newentity.SOCIAL_FINANCIAL_DISADVTAGE = afimodel.SOCIAL_FINANCIAL_DISADVTAGE;
+                            newentity.SOCIAL_FINANCIAL_DOCUMENTS = afimodel.SOCIAL_FINANCIAL_DOCUMENTS;
+                            newentity.ENJOYED_TIERED_KYC = afimodel.ENJOYED_TIERED_KYC;
+                            newentity.RISK_CATEGORY = afimodel.RISK_CATEGORY;
+                            newentity.MANDATE_AUTH_COMBINE_RULE = afimodel.MANDATE_AUTH_COMBINE_RULE;
+                            newentity.ACCOUNT_WITH_OTHER_BANKS = afimodel.ACCOUNT_WITH_OTHER_BANKS;
+                            newentity.CREATED_BY = identity.ProfileId.ToString();
+                            newentity.CREATED_DATE = DateTime.Now;
+                            newentity.AUTHORISED = "U";
+                            newentity.CUSTOMER_NO = afimodel.CUSTOMER_NO;
+                            db.CDMA_AUTH_FINANCE_INCLUSION.Add(newentity);
+
+                            db.SaveChanges(); //do not track audit.
+                        }
+                        else
+                        {
+                            string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", afimodel.CUSTOMER_NO);
+                            ModelState.AddModelError("", errorMessage);
+                        }
                     }
                 }
-
                 SuccessNotification("AFI Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = afimodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
@@ -152,7 +225,7 @@ namespace CMdm.UI.Web.Controllers
             //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
             //    return AccessDeniedView();
 
-            var model = new AuthFIModel();
+            AuthFIModel model = new AuthFIModel();
             PrepareModel(model);
             return View(model);
         }
@@ -188,8 +261,8 @@ namespace CMdm.UI.Web.Controllers
                     AUTHORISED_DATE = null,
                     IP_ADDRESS = ip_address
                 };
-                db.CDMA_AUTH_FINANCE_INCLUSION.Add(afi);
-                db.SaveChanges();
+                _db.CDMA_AUTH_FINANCE_INCLUSION.Add(afi);
+                _db.SaveChanges();
                 
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
                 SuccessNotification("New AFI has been Added");
@@ -206,8 +279,8 @@ namespace CMdm.UI.Web.Controllers
         protected virtual void PrepareModel(AuthFIModel model)
         {
 
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -251,70 +324,52 @@ namespace CMdm.UI.Web.Controllers
 
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [FormValueRequired("approve")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(AuthFIModel afimodel, bool continueEditing)
+        public ActionResult Authorize(AuthFIModel afimodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
-                _dqQueService.ApproveExceptionQueItems(afimodel.ExceptionId.ToString());
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
 
-                //    }
-                //}
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), afimodel.AuthoriserRemarks);
+                    SuccessNotification("AFI Not Authorised");
+                }
 
-                SuccessNotification("AFI Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = afimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "AuthFinInclusion");
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("AFI Authorised");
+                }
+
+                return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(afimodel);
             return View(afimodel);
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "continueEditing")]
         [FormValueRequired("disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult DisApprove(AuthFIModel afimodel, bool continueEditing)
+        public ActionResult DisApprove_(AuthFIModel afimodel, bool continueEditing)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
-                using (var db = new AppDbContext())
-                {
-                    var entity = db.CDMA_AUTH_FINANCE_INCLUSION.FirstOrDefault(o => o.CUSTOMER_NO == afimodel.CUSTOMER_NO);
-                    if (entity == null)
-                    {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", afimodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.AUTHORISED = "N";
-                        db.CDMA_AUTH_FINANCE_INCLUSION.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
+                _dqQueService.DisApproveExceptionQueItems(afimodel.ExceptionId.ToString(), afimodel.AuthoriserRemarks);
 
                 SuccessNotification("AFI Authorised");
                 return continueEditing ? RedirectToAction("Authorize", new { id = afimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "AuthFinInclusion");
@@ -400,7 +455,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Create");
             }
              
-            var model = (from c in db.CDMA_AUTH_FINANCE_INCLUSION
+            var model = (from c in _db.CDMA_AUTH_FINANCE_INCLUSION
 
                          where c.CUSTOMER_NO == id
                          select new AuthFIModel
@@ -476,7 +531,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

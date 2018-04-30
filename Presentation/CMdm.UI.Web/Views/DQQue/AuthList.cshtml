@@ -31,7 +31,7 @@
                 <i class="fa fa-check-square-o"></i>
                 Approve Selected
             </button>
-            <button type="button" id="disapprove-modal" data-toggle="modal" data-target="#modal-comment" class="btn bg-navy">
+            <button type="button" id="disapprove-modal" data-toggle="modal" data-target="#modal-comment" class="btn bg-red">
                 <i class="fa fa-minus-square-o"></i>
                 Disapprove Selected
             </button>
@@ -181,8 +181,8 @@
                                         //var dataRow = grid.dataItem(row);
                                         buttons = '<div style="width:80px">';
                                         //buttons += '<buttontype="button" id="validate-profile" class="btn btn-warning">Validate</button>'
-                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
-                                        //buttons += '<button onclick="validateProfile(' + `'${dataItem.EXCEPTION_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning">Validate</button>'
+                                        //buttons += '<button onclick="validateProfile(' + `'${dataItem.CUST_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-primary">Validate</button>'
+                                        buttons += '<button onclick="validateProfile(' + `'${dataItem.EXCEPTION_ID}',${dataItem.BRANCH_CODE},${dataItem.RULE_ID},'${dataItem.CATALOG_TABLE_NAME}'` + ')" type="button" class="btn btn-warning">Validate</button>'
                                         //buttons += '<button type="button" class="btn btn-info" onclick="_modifyProfile(' + `${dataItem}` + ')"  data-toggle="modal" data-target="#modal-primary">Modify</button>'
                                         buttons += '</div>';
                                         //let $button = $(buttons);
@@ -498,7 +498,7 @@
 </script>
 @section Scripts {
   
-    <script type="text/javascript">
+<script type="text/javascript">
 
     //biodata
     function ApproveData() {
@@ -588,9 +588,9 @@
     };
 
     //validateProfile
-        function validateProfile(cus_id,branch,rule,table)
+    function validateProfile(ex_id,branch,rule,table)
     {
-        @*var postData = {
+        var postData = {
             exceptionId: ex_id,
             branch: branch,
             rule: rule,
@@ -614,7 +614,7 @@
             },
             traditional: true
         });
-        return false;*@
+        return false;
 
         @*if(table=='CDMA_INDIVIDUAL_NEXT_OF_KIN'){
 
@@ -622,7 +622,7 @@
             //window.location.href = '@Url.Action("Edit", "CustNok", new { @id = "${cus_id}" })';
             /* Url.Action("Edit", "CustNok", new { id = cus_id});*/
 
-        }else{*@
+        }else{
             $("#update").css({ 'display': 'none' });
             var queryString = "c_id=" + cus_id;
             queryString += "&branch=" + branch + "&rule=" + rule + "&table=" + table;
@@ -645,10 +645,10 @@
                     document.getElementById("display").innerHTML = data;
                 }
             });
-        //}
+        //}*@
 
     }
-    </script>
+</script>
 }
 
 <div class="modal fade" id="modal-comment" role="dialog" aria-labelledby="modal-comment-label" aria-hidden="true">

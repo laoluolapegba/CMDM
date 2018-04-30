@@ -23,22 +23,17 @@ namespace CMdm.Entities.Domain.Customer
         public string LGA_OF_RESIDENCE { get; set; }
         public string NEAREST_BUS_STOP_LANDMARK { get; set; }
         public string STATE_OF_RESIDENCE { get; set; }
-      
         public string COUNTRY_OF_RESIDENCE { get; set; }
         public string RESIDENCE_OWNED_OR_RENT { get; set; }
         public string ZIP_POSTAL_CODE { get; set; }
-        
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
-
         public string TIED { get; set; }
          
     }

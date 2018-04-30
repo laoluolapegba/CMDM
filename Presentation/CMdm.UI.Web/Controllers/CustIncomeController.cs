@@ -16,7 +16,7 @@ namespace CMdm.UI.Web.Controllers
 {
     public class CustIncomeController : BaseController
     {
-        private AppDbContext db = new AppDbContext();
+        private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
 
         public CustIncomeController()
@@ -31,7 +31,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-            var model = new CustomerIncomeModel();
+            CustomerIncomeModel model = new CustomerIncomeModel();
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -40,24 +40,26 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
-            if (changeId != null)
-            {
-                var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId.CHANGEID); //.Select(a=>a.PROPERTYNAME);
-                model = (from c in db.CDMA_CUSTOMER_INCOME
-                         where c.CUSTOMER_NO == querecord.CUST_ID
-                         select new CustomerIncomeModel
-                         {
-                             CUSTOMER_NO = c.CUSTOMER_NO,
-                             INCOME_BAND = c.INCOME_BAND,
-                             INITIAL_DEPOSIT = c.INITIAL_DEPOSIT,
-                             LastUpdatedby = c.LAST_MODIFIED_BY,
-                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
-                             LastAuthdby = c.AUTHORISED_BY,
-                             LastAuthDate = c.AUTHORISED_DATE,
-                             ExceptionId = querecord.EXCEPTION_ID
-                         }).FirstOrDefault();
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_CHANGE_LOGS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            
+            model = (from c in _db.CDMA_CUSTOMER_INCOME
+                        where c.CUSTOMER_NO == querecord.CUST_ID
+                        where c.AUTHORISED == "U"
+                        select new CustomerIncomeModel
+                        {
+                            CUSTOMER_NO = c.CUSTOMER_NO,
+                            INCOME_BAND = c.INCOME_BAND,
+                            INITIAL_DEPOSIT = c.INITIAL_DEPOSIT,
+                            LastUpdatedby = c.LAST_MODIFIED_BY,
+                            LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                            LastAuthdby = c.AUTHORISED_BY,
+                            LastAuthDate = c.AUTHORISED_DATE,
+                            ExceptionId = querecord.EXCEPTION_ID
+                        }).FirstOrDefault();
 
+            if(model != null)
+            {
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -68,9 +70,8 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                 }
-                model.ReadOnlyForm = "True";
             }
-
+            model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
@@ -81,16 +82,33 @@ namespace CMdm.UI.Web.Controllers
             {
                 return RedirectToAction("Create");
             }
-            
-            var model = (from c in db.CDMA_CUSTOMER_INCOME
 
+            int records = _db.CDMA_CUSTOMER_INCOME.Count(o => o.CUSTOMER_NO == id);
+            CustomerIncomeModel model = new CustomerIncomeModel();
+            if (records > 1)
+            {
+                model = (from c in _db.CDMA_CUSTOMER_INCOME
                          where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "U"
                          select new CustomerIncomeModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
                              INCOME_BAND = c.INCOME_BAND,
                              INITIAL_DEPOSIT = c.INITIAL_DEPOSIT
                          }).FirstOrDefault();
+            }
+            else if (records == 1)
+            {
+                model = (from c in _db.CDMA_CUSTOMER_INCOME
+                         where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "A"
+                         select new CustomerIncomeModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             INCOME_BAND = c.INCOME_BAND,
+                             INITIAL_DEPOSIT = c.INITIAL_DEPOSIT
+                         }).FirstOrDefault();
+            }
 
             PrepareModel(model);
             return View(model);
@@ -107,31 +125,73 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            bool updateFlag = false;
             if (ModelState.IsValid)
             {
+                CDMA_CUSTOMER_INCOME originalObject = new CDMA_CUSTOMER_INCOME();
                 using (var db = new AppDbContext())
                 {
-                    var entity = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO);
-                    if (entity == null)
-                    {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", cimodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.INCOME_BAND = cimodel.INCOME_BAND;
-                        entity.INITIAL_DEPOSIT = cimodel.INITIAL_DEPOSIT;
-                        entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                        entity.LAST_MODIFIED_DATE = DateTime.Now;
-                        entity.AUTHORISED = "U";
-                        db.CDMA_CUSTOMER_INCOME.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
 
+                    int records = db.CDMA_CUSTOMER_INCOME.Count(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
+                    //if there are more than one records, the 'U' one is the edited one
+                    if (records > 1)
+                    {
+                        updateFlag = true;
+                        originalObject = _db.CDMA_CUSTOMER_INCOME.Where(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
+
+                        var entity = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO && o.AUTHORISED == "U");
+
+                        if (entity != null)
+                        {
+                            entity.INCOME_BAND = cimodel.INCOME_BAND;
+                            entity.INITIAL_DEPOSIT = cimodel.INITIAL_DEPOSIT;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+
+                            //entity.AUTHORISED = "U";
+                            db.CDMA_CUSTOMER_INCOME.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), cimodel.CUSTOMER_NO, updateFlag, originalObject);
+
+
+                        }
+                        
+                    }
+                    else if (records == 1)
+                    {
+                        updateFlag = false;
+                        var entity = db.CDMA_CUSTOMER_INCOME.FirstOrDefault(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO && o.AUTHORISED == "A");
+                        originalObject = _db.CDMA_CUSTOMER_INCOME.Where(o => o.CUSTOMER_NO == cimodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
+                        if (originalObject != null)
+                        {
+                            entity.INCOME_BAND = cimodel.INCOME_BAND;
+                            entity.INITIAL_DEPOSIT = cimodel.INITIAL_DEPOSIT;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            db.CDMA_CUSTOMER_INCOME.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), cimodel.CUSTOMER_NO, updateFlag, originalObject);  //track the audit
+
+
+                            var newentity = new CDMA_CUSTOMER_INCOME();
+                            newentity.INCOME_BAND = cimodel.INCOME_BAND;
+                            newentity.INITIAL_DEPOSIT = cimodel.INITIAL_DEPOSIT;
+                            newentity.AUTHORISED = "U";
+                            newentity.CREATED_BY = identity.ProfileId.ToString();
+                            newentity.CREATED_DATE = DateTime.Now;
+                            newentity.CUSTOMER_NO = cimodel.CUSTOMER_NO;
+                            db.CDMA_CUSTOMER_INCOME.Add(newentity);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", cimodel.CUSTOMER_NO);
+                            ModelState.AddModelError("", errorMessage);
+                        }
                     }
                 }
 
-                SuccessNotification("CUSTI Updated");
+                    SuccessNotification("CUSTI Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = cimodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
             }
@@ -140,10 +200,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new CustomerIncomeModel();
+            CustomerIncomeModel model = new CustomerIncomeModel();
             PrepareModel(model);
             return View(model);
         }
@@ -176,8 +233,8 @@ namespace CMdm.UI.Web.Controllers
                     AUTHORISED_DATE = null,
                     IP_ADDRESS = ip_address,
                 };
-                db.CDMA_CUSTOMER_INCOME.Add(custi);
-                db.SaveChanges();
+                _db.CDMA_CUSTOMER_INCOME.Add(custi);
+                _db.SaveChanges();
 
 
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
@@ -193,8 +250,8 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerIncomeModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -220,38 +277,35 @@ namespace CMdm.UI.Web.Controllers
             });
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [FormValueRequired("approve")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(CustomerIncomeModel cimodel, bool continueEditing)
+        public ActionResult Authorize(CustomerIncomeModel cimodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
-                _dqQueService.ApproveExceptionQueItems(cimodel.ExceptionId.ToString());
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
 
-                //    }
-                //}
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), cimodel.AuthoriserRemarks);
+                    SuccessNotification("CustI Not Authorised");
+                }
 
-                SuccessNotification("CUSTI Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = cimodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustIncome");
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("CustI Authorised");
+                }
+
+                return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(cimodel);
@@ -297,7 +351,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: CustIncome
         public ActionResult Index()
         {
-            return View(db.CDMA_CUSTOMER_INCOME.ToList());
+            return View(_db.CDMA_CUSTOMER_INCOME.ToList());
         }
 
         // GET: CustIncome/Details/5
@@ -307,7 +361,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.Find(id);
+            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = _db.CDMA_CUSTOMER_INCOME.Find(id);
             if (cDMA_CUSTOMER_INCOME == null)
             {
                 return HttpNotFound();
@@ -330,8 +384,8 @@ namespace CMdm.UI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CDMA_CUSTOMER_INCOME.Add(cDMA_CUSTOMER_INCOME);
-                db.SaveChanges();
+                _db.CDMA_CUSTOMER_INCOME.Add(cDMA_CUSTOMER_INCOME);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -345,7 +399,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.Find(id);
+            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = _db.CDMA_CUSTOMER_INCOME.Find(id);
             if (cDMA_CUSTOMER_INCOME == null)
             {
                 return HttpNotFound();
@@ -362,8 +416,8 @@ namespace CMdm.UI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cDMA_CUSTOMER_INCOME).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(cDMA_CUSTOMER_INCOME).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(cDMA_CUSTOMER_INCOME);
@@ -376,7 +430,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.Find(id);
+            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = _db.CDMA_CUSTOMER_INCOME.Find(id);
             if (cDMA_CUSTOMER_INCOME == null)
             {
                 return HttpNotFound();
@@ -389,9 +443,9 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = db.CDMA_CUSTOMER_INCOME.Find(id);
-            db.CDMA_CUSTOMER_INCOME.Remove(cDMA_CUSTOMER_INCOME);
-            db.SaveChanges();
+            CDMA_CUSTOMER_INCOME cDMA_CUSTOMER_INCOME = _db.CDMA_CUSTOMER_INCOME.Find(id);
+            _db.CDMA_CUSTOMER_INCOME.Remove(cDMA_CUSTOMER_INCOME);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -399,7 +453,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

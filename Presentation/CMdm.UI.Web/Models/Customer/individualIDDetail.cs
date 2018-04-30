@@ -13,7 +13,6 @@ namespace CMdm.UI.Web.Models.Customer
         public individualIDDetail()
         {
             IdType = new List<SelectListItem>();
-
         }
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Identification Type")]
@@ -21,27 +20,31 @@ namespace CMdm.UI.Web.Models.Customer
         [DisplayName("Identification Number")]
         public string ID_NO { get; set; }
         [DisplayName("Expiry Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> ID_EXPIRY_DATE { get; set; }
+        [UIHint("DateNullable")]
+        public DateTime? ID_EXPIRY_DATE { get; set; }
         [DisplayName("Issued Date")]
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> ID_ISSUE_DATE { get; set; }
+        [UIHint("DateNullable")]
+        public DateTime? ID_ISSUE_DATE { get; set; }
         [DisplayName("Place of Issuance")]
         public string PLACE_OF_ISSUANCE { get; set; }
-
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
-
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
 
         public List<SelectListItem> IdType { get; set; }
+
+        public string ReadOnlyForm { get; set; }
+        public string LastUpdatedby { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string LastAuthdby { get; set; }
+        public DateTime? LastAuthDate { get; set; }
+        public int ExceptionId { get; internal set; }
+        public string AuthoriserRemarks { get; internal set; }
 
     }
 }

@@ -46,15 +46,15 @@
                             @Html.ValidationMessageFor(model => model.IS_DEFAULT)
                         </div>
                     </div>
-                    @*<div class="form-group">
+                    <div class="form-group">
                         <div class="col-md-3">
-                            @Html.LabelFor(model => model.PARENT_ID)
+                            @Html.LabelFor(model => model.CHECKER_ID)
                         </div>
                         <div class="col-md-9">
-                            @Html.CMdmDropDownListFor(model => model.PARENT_ID, ViewBag.PARENT_ID)
-                            @Html.ValidationMessageFor(model => model.PARENT_ID)
+                            @Html.CMdmDropDownListFor(model => model.CHECKER_ID, (IEnumerable<SelectListItem>)ViewBag.CHECKERS)
+                            @Html.ValidationMessageFor(model => model.CHECKER_ID)
                         </div>
-                    </div>*@
+                    </div>
                 </div>
             </div>
         </div>

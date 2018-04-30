@@ -12,18 +12,22 @@ using CMdm.UI.Web.Models.Customer;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class CustJuratController : BaseController
     {
-        private AppDbContext db = new AppDbContext();
+        private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
 
         public CustJuratController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
         public ActionResult Authorize(string id)
@@ -33,18 +37,18 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("AuthList", "DQQue");
             }
 
-
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
             {
                 return RedirectToAction("AuthList", "DQQue");
             }
-            //get all changed columns
 
-            var changeId = db.CDMA_CHANGE_LOGS.Where(a => a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in db.CDMA_JURAT
+            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_JURAT" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
+            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+
+            CustomerJuratModel model = (from c in _db.CDMA_JURAT
                          where c.CUSTOMER_NO == querecord.CUST_ID
+                         where c.AUTHORISED == "U"
                          select new CustomerJuratModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -60,17 +64,20 @@ namespace CMdm.UI.Web.Controllers
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
 
-            foreach (var item in model.GetType().GetProperties()) 
+            if(model != null)
             {
-                foreach (var item2 in changedSet)
+                foreach (var item in model.GetType().GetProperties()) 
                 {
-                    if (item2.PROPERTYNAME == item.Name)
+                    foreach (var item2 in changedSet)
                     {
-                        ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
                     }
-                }
-                //props.Add(item.Name);
+                    //props.Add(item.Name);
 
+                }
             }
             //var matchItems = props.Intersect(changedSet);
             model.ReadOnlyForm = "True";
@@ -84,11 +91,14 @@ namespace CMdm.UI.Web.Controllers
             {
                 return RedirectToAction("Create");
             }
+            int records = _db.CDMA_JURAT.Count(o => o.CUSTOMER_NO == id);
 
-
-            var model = (from c in db.CDMA_JURAT
-
+            CustomerJuratModel model = new CustomerJuratModel();
+            if(records > 1)
+            {
+                model = (from c in _db.CDMA_JURAT
                          where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "U"
                          select new CustomerJuratModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
@@ -99,6 +109,22 @@ namespace CMdm.UI.Web.Controllers
                              LANGUAGE_OF_INTERPRETATION = c.LANGUAGE_OF_INTERPRETATION,
                          }).FirstOrDefault();
 
+            }
+            else if(records == 1)
+            {
+                model = (from c in _db.CDMA_JURAT
+                         where c.CUSTOMER_NO == id
+                         where c.AUTHORISED == "A"
+                         select new CustomerJuratModel
+                         {
+                             CUSTOMER_NO = c.CUSTOMER_NO,
+                             DATE_OF_OATH = c.DATE_OF_OATH,
+                             NAME_OF_INTERPRETER = c.NAME_OF_INTERPRETER,
+                             ADDRESS_OF_INTERPRETER = c.ADDRESS_OF_INTERPRETER,
+                             TELEPHONE_NO = c.TELEPHONE_NO,
+                             LANGUAGE_OF_INTERPRETATION = c.LANGUAGE_OF_INTERPRETATION,
+                         }).FirstOrDefault();
+            }
 
             PrepareModel(model);
             return View(model);
@@ -115,46 +141,91 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            bool updateFlag = false;
             if (ModelState.IsValid)
             {
+                CDMA_JURAT originalObject = new CDMA_JURAT();
                 using (var db = new AppDbContext())
                 {
-                    var entity = db.CDMA_JURAT.FirstOrDefault(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO);
-                    if (entity == null)
+                    int records = db.CDMA_JURAT.Count(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
+                    //if there are more than one records, the 'U' one is the edited one
+                    if (records > 1)
                     {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", cjmodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.DATE_OF_OATH = cjmodel.DATE_OF_OATH;
-                        entity.NAME_OF_INTERPRETER = cjmodel.NAME_OF_INTERPRETER;
-                        entity.ADDRESS_OF_INTERPRETER = cjmodel.ADDRESS_OF_INTERPRETER;
-                        entity.TELEPHONE_NO = cjmodel.TELEPHONE_NO;
-                        entity.LANGUAGE_OF_INTERPRETATION = cjmodel.LANGUAGE_OF_INTERPRETATION;
-                        entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
-                        entity.LAST_MODIFIED_DATE = DateTime.Now;
-                        entity.AUTHORISED = "U";
-                        db.CDMA_JURAT.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
+                        updateFlag = true;
+                        originalObject = _db.CDMA_JURAT.Where(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
 
+                        var entity = db.CDMA_JURAT.FirstOrDefault(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO && o.AUTHORISED == "U");
+
+                        if (entity != null)
+                        {
+                            entity.DATE_OF_OATH = cjmodel.DATE_OF_OATH;
+                            entity.NAME_OF_INTERPRETER = cjmodel.NAME_OF_INTERPRETER;
+                            entity.ADDRESS_OF_INTERPRETER = cjmodel.ADDRESS_OF_INTERPRETER;
+                            entity.TELEPHONE_NO = cjmodel.TELEPHONE_NO;
+                            entity.LANGUAGE_OF_INTERPRETATION = cjmodel.LANGUAGE_OF_INTERPRETATION;
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+                            db.CDMA_JURAT.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), cjmodel.CUSTOMER_NO, updateFlag, originalObject);
+                        }
+                    }
+                    else if (records == 1)
+                    {
+                        updateFlag = false;
+                        var entity = db.CDMA_JURAT.FirstOrDefault(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO && o.AUTHORISED == "A");
+                        originalObject = _db.CDMA_JURAT.Where(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
+                        if (originalObject != null)
+                        {
+                            entity.DATE_OF_OATH = cjmodel.DATE_OF_OATH;
+                            entity.NAME_OF_INTERPRETER = cjmodel.NAME_OF_INTERPRETER;
+                            entity.ADDRESS_OF_INTERPRETER = cjmodel.ADDRESS_OF_INTERPRETER;
+                            entity.TELEPHONE_NO = cjmodel.TELEPHONE_NO;
+                            entity.LANGUAGE_OF_INTERPRETATION = cjmodel.LANGUAGE_OF_INTERPRETATION; 
+                            entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity.LAST_MODIFIED_DATE = DateTime.Now;
+
+                            db.CDMA_JURAT.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), cjmodel.CUSTOMER_NO, updateFlag, originalObject);  //track the audit
+
+
+                            // There is no 'U' status row in the table so, Add new record with mnt_status U
+                            //entity.AUTHORISED = "U";
+                            var newentity = new CDMA_JURAT();
+                            newentity.DATE_OF_OATH = cjmodel.DATE_OF_OATH;
+                            newentity.NAME_OF_INTERPRETER = cjmodel.NAME_OF_INTERPRETER;
+                            newentity.ADDRESS_OF_INTERPRETER = cjmodel.ADDRESS_OF_INTERPRETER;
+                            newentity.TELEPHONE_NO = cjmodel.TELEPHONE_NO;
+                            newentity.LANGUAGE_OF_INTERPRETATION = cjmodel.LANGUAGE_OF_INTERPRETATION;
+                            newentity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            newentity.LAST_MODIFIED_DATE = DateTime.Now;
+                            newentity.AUTHORISED = "U";
+                            newentity.CUSTOMER_NO = cjmodel.CUSTOMER_NO;
+                            db.CDMA_JURAT.Add(newentity);
+
+
+                            db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
+                        }
+                        else
+                        {
+                            string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", cjmodel.CUSTOMER_NO);
+                            ModelState.AddModelError("", errorMessage);
+                        }
                     }
                 }
 
                 SuccessNotification("JURAT Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = cjmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
-                //return RedirectToAction("Index");
             }
             PrepareModel(cjmodel);
             return View(cjmodel);
         }
         public ActionResult Create()
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-
-            var model = new CustomerJuratModel();
+            CustomerJuratModel model = new CustomerJuratModel();
             PrepareModel(model);
             return View(model);
         }
@@ -190,8 +261,8 @@ namespace CMdm.UI.Web.Controllers
                     AUTHORISED_DATE = null,
                     IP_ADDRESS = ip_address
                 };
-                db.CDMA_JURAT.Add(jurat);
-                db.SaveChanges();
+                _db.CDMA_JURAT.Add(jurat);
+                _db.SaveChanges();
 
 
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
@@ -207,78 +278,58 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         protected virtual void PrepareModel(CustomerJuratModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
 
             if (model == null)
                 throw new ArgumentNullException("model");
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [FormValueRequired("approve")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult Approve(CustomerJuratModel cjmodel, bool continueEditing)
+        public ActionResult Authorize(CustomerJuratModel cjmodel, bool disapproveRecord)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
 
-                _dqQueService.ApproveExceptionQueItems(cjmodel.ExceptionId.ToString());
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
 
-                //    }
-                //}
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), cjmodel.AuthoriserRemarks);
+                    SuccessNotification("JURAT Not Authorised");
+                }
 
-                SuccessNotification("JURAT Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = cjmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustJurat");
-                //return RedirectToAction("Index");
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("JURAT Authorised");
+                }
+                
+                return RedirectToAction("AuthList", "DQQue");
             }
             PrepareModel(cjmodel);
             return View(cjmodel);
         }
 
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [HttpPost, ParameterBasedOnFormName("disapprove", "continueEditing")]
         [FormValueRequired("disapprove")]
         [ValidateAntiForgeryToken]
-        public ActionResult DisApprove(CustomerJuratModel cjmodel, bool continueEditing)
+        public ActionResult DisApprove_(CustomerJuratModel cjmodel, bool continueEditing)
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
-                using (var db = new AppDbContext())
-                {
-                    var entity = db.CDMA_JURAT.FirstOrDefault(o => o.CUSTOMER_NO == cjmodel.CUSTOMER_NO);
-                    if (entity == null)
-                    {
-                        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", cjmodel.CUSTOMER_NO);
-                        ModelState.AddModelError("", errorMessage);
-                    }
-                    else
-                    {
-                        entity.AUTHORISED = "N";
-                        db.CDMA_JURAT.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
-
-                    }
-                }
+                _dqQueService.DisApproveExceptionQueItems(cjmodel.ExceptionId.ToString(), cjmodel.AuthoriserRemarks);
 
                 SuccessNotification("JURAT Authorised");
                 return continueEditing ? RedirectToAction("Authorize", new { id = cjmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustJurat");
@@ -292,7 +343,7 @@ namespace CMdm.UI.Web.Controllers
         // GET: CustJurat
         public ActionResult Index()
         {
-            return View(db.CDMA_JURAT.ToList());
+            return View(_db.CDMA_JURAT.ToList());
         }
 
         // GET: CustJurat/Details/5
@@ -302,7 +353,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_JURAT cDMA_JURAT = db.CDMA_JURAT.Find(id);
+            CDMA_JURAT cDMA_JURAT = _db.CDMA_JURAT.Find(id);
             if (cDMA_JURAT == null)
             {
                 return HttpNotFound();
@@ -325,8 +376,8 @@ namespace CMdm.UI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CDMA_JURAT.Add(cDMA_JURAT);
-                db.SaveChanges();
+                _db.CDMA_JURAT.Add(cDMA_JURAT);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -340,7 +391,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_JURAT cDMA_JURAT = db.CDMA_JURAT.Find(id);
+            CDMA_JURAT cDMA_JURAT = _db.CDMA_JURAT.Find(id);
             if (cDMA_JURAT == null)
             {
                 return HttpNotFound();
@@ -357,8 +408,8 @@ namespace CMdm.UI.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cDMA_JURAT).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(cDMA_JURAT).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(cDMA_JURAT);
@@ -371,7 +422,7 @@ namespace CMdm.UI.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CDMA_JURAT cDMA_JURAT = db.CDMA_JURAT.Find(id);
+            CDMA_JURAT cDMA_JURAT = _db.CDMA_JURAT.Find(id);
             if (cDMA_JURAT == null)
             {
                 return HttpNotFound();
@@ -384,9 +435,9 @@ namespace CMdm.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            CDMA_JURAT cDMA_JURAT = db.CDMA_JURAT.Find(id);
-            db.CDMA_JURAT.Remove(cDMA_JURAT);
-            db.SaveChanges();
+            CDMA_JURAT cDMA_JURAT = _db.CDMA_JURAT.Find(id);
+            _db.CDMA_JURAT.Remove(cDMA_JURAT);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -394,7 +445,7 @@ namespace CMdm.UI.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

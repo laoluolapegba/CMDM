@@ -25,7 +25,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         }
 
         #endregion
-        #region Methods
+        #region OutstandingDocs
         /// <summary>
         /// Updates the queitem
         /// </summary>
@@ -141,9 +141,6 @@ namespace CMdm.Services.CustomModule.Fcmb
             var queitems = new PagedList<OutStandingDoc>(result, pageIndex, pageSize);
             return queitems;
         }
-
-       
-
-        #endregion
+        #endregion OutstandingDocs
     }
 }

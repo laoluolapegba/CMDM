@@ -13,16 +13,17 @@
     public partial class CDMA_INDIVIDUAL_OTHER_DETAILS
     {
 
-        [Key]
+        [Key, Column(Order = 0)]
         public string CUSTOMER_NO { get; set; }
         public string TIN_NO { get; set; }
-        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
-        public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
- 
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
+        public string LAST_MODIFIED_BY { get; set; }
+        [Key, Column(Order = 1)]
         public string AUTHORISED { get; set; }
         public string AUTHORISED_BY { get; set; }
-        public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
    
         public string IP_ADDRESS { get; set; }
 

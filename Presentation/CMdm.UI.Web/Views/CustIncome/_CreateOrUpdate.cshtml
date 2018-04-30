@@ -1,5 +1,6 @@
 ﻿@model CMdm.UI.Web.Models.Customer.CustomerIncomeModel
 @Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.CUSTOMER_NO)
 
 <div class="content">
     <div class="form-horizontal">
@@ -14,7 +15,7 @@
                                         @Html.LabelFor(model => model.CUSTOMER_NO)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
+                                        @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
                                     </div>
                                 </div>
                             </div>

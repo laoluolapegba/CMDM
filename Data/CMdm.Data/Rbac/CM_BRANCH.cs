@@ -13,7 +13,6 @@ namespace CMdm.Data.Rbac
         public CM_BRANCH()
         {
             this.CM_USER_PROFILE = new HashSet<CM_USER_PROFILE>();
-            this.CdmaAccountInfo = new HashSet<CDMA_ACCOUNT_INFO>();
     }
 
         [Key]
@@ -28,6 +27,5 @@ namespace CMdm.Data.Rbac
         public Nullable<System.DateTime> LAST_UPDATED_DATE { get; set; }
   
         public virtual ICollection<CM_USER_PROFILE> CM_USER_PROFILE { get; set; }
-        public ICollection<CDMA_ACCOUNT_INFO> CdmaAccountInfo { get; private set; }
     }
 }

@@ -17,6 +17,7 @@ namespace CMdm.Data
     using System.Data.Entity.Core.Objects;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     //using Entities.Domain.Courses;
 
@@ -32,7 +33,7 @@ namespace CMdm.Data
             : base("name=AppDbContext")
         {
         }
-        public int SaveChanges(string userId, string custID)
+        public int SaveChanges(string userId, string custID, bool updateFlag, object originalEntity)
         {
             try
             {
@@ -42,12 +43,12 @@ namespace CMdm.Data
                 foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified))
                 {
                     // For each changed record, get the audit record entries and add them
-                    foreach (CDMA_CHANGE_LOG x in GetAuditRecordsForChange(ent, userId, custID))
+                    foreach (CDMA_CHANGE_LOG x in GetAuditRecordsForChange(ent, userId, custID, updateFlag, originalEntity))
                     {
                         this.CDMA_CHANGE_LOGS.Add(x);
                     }
                 }
-                
+
                 return base.SaveChanges();
               /*
               db.ChangeTracker.DetectChanges();
@@ -84,7 +85,35 @@ namespace CMdm.Data
             }
         }
 
-        private IEnumerable<CDMA_CHANGE_LOG> GetAuditRecordsForChange(DbEntityEntry ent, string userId, string primaryKeyId)
+        //public void RollBack()
+        //{
+        //    var context = DataContextFactory.GetDataContext();
+        //    var changedEntries = context.ChangeTracker.Entries()
+        //        .Where(x => x.State != EntityState.Unchanged).ToList();
+
+        //    foreach (var entry in changedEntries)
+        //    {
+        //        switch (entry.State)
+        //        {
+        //            case EntityState.Modified:
+        //                entry.CurrentValues.SetValues(entry.OriginalValues);
+        //                entry.State = EntityState.Unchanged;
+        //                break;
+                    
+        //        }
+        //    }
+        //}
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="ent"></param>
+            /// <param name="userId"></param>
+            /// <param name="primaryKeyId"></param>
+            /// updateflag determines if the actual update should be performed on the DB
+            /// <param name="updateFlag"></param>
+            /// <returns></returns>
+        private IEnumerable<CDMA_CHANGE_LOG> GetAuditRecordsForChange(DbEntityEntry ent, string userId, string primaryKeyId, bool updateFlag, object originalEntity)
         {
             List<CDMA_CHANGE_LOG> result = new List<CDMA_CHANGE_LOG>();
             string changeId = Guid.NewGuid().ToString();
@@ -136,11 +165,39 @@ namespace CMdm.Data
                 
                 foreach (var prop in ent.OriginalValues.PropertyNames)
                 {
-                    var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
+                    //var manager = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager;
+                    //manager.
+                    //var originalValue = this.Entry(ent.Entity).Property(prop).OriginalValue ==null ? "" : this.Entry(ent.Entity).Property(prop).OriginalValue.ToString();
+
+                    //var originalValue = manager.GetObjectStateEntry(ent).OriginalValues[prop].ToString();
+                    //we cant use this because getdatabasevalues will error out when there are 2 rows in the db for this primarykey (U,A)
+                    //var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
+                    //we cant use this because when u attach entity and set entitystate to modified in controller, the original values are reset.
+                    //var originalValue = ent.OriginalValues.GetValue<object>(prop) == null ? null : ent.OriginalValues.GetValue<object>(prop).ToString();
+
+                    /*
+                    //System.Reflection.PropertyInfo pi = originalEntity.GetType().GetProperty(prop);
+                    //var originalValue = (string)(pi.GetValue(originalEntity, null));
+
+                    //var originalValues = Convert.ChangeType(originalEntity, ent.GetType());
+                    */
+                    string propertyName = prop;
+
+                    var parameter = Expression.Parameter(typeof(object));
+                    var cast = Expression.Convert(parameter, originalEntity.GetType());
+                    var propertyGetter = Expression.Property(cast, propertyName);
+                    var castResult = Expression.Convert(propertyGetter, typeof(object));//for boxing
+
+                    var propertyRetriver = Expression.Lambda<Func<object, object>>(castResult, parameter).Compile();
+
+                    var originalValue = propertyRetriver(originalEntity);
+                    
+
                     var currentValue = ent.CurrentValues[prop] == null ? "" : ent.CurrentValues[prop].ToString();
                     // For updates, we only want to capture the columns that actually changed
                     var primaryKey = GetPrimaryKeyValue(ent);
-                    if (originalValue != currentValue)
+                    originalValue = originalValue == null ? "" : originalValue.ToString();
+                    if ((string)originalValue != currentValue)
                     {
                         result.Add(new CDMA_CHANGE_LOG()
                         {
@@ -150,7 +207,7 @@ namespace CMdm.Data
                             ENTITYNAME = entityName,
                             PRIMARYKEYVALUE = primaryKey.ToString(),
                             PROPERTYNAME = prop,
-                            OLDVALUE = originalValue,
+                            OLDVALUE = originalValue.ToString(),
                             NEWVALUE = currentValue,
                             CHANGEID = changeId
                             //OriginalValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString(),
@@ -158,7 +215,8 @@ namespace CMdm.Data
                         });
                     }
 
-
+                        
+                    
                     /*    
                     //var originalValue = change.OriginalValues[prop] == null ? "" :  change.OriginalValues[prop].ToString();
                     var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
@@ -178,6 +236,51 @@ namespace CMdm.Data
                     }
                     */
                 }
+                //Do not update we just need it for audit purpose
+                //We do not want to track update from the authorizer
+                if (updateFlag)
+                    ent.State = EntityState.Modified;
+                else
+                    ent.State = EntityState.Unchanged; //roll
+            }
+            return result;
+        }
+
+        private IEnumerable<CDMA_CHANGE_LOG> GetAuditRecords(DbEntityEntry ent, string userId, string primaryKeyId, bool updateFlag, object originalEntity)
+        {
+            List<CDMA_CHANGE_LOG> result = new List<CDMA_CHANGE_LOG>();
+            string changeId = Guid.NewGuid().ToString();
+            TableAttribute tableAttr = ent.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
+            // Get table name (if it has a Table attribute, use that, otherwise get the pluralized name)
+            string entityName = tableAttr != null ? tableAttr.Name : ObjectContext.GetObjectType(ent.Entity.GetType()).Name;
+            var changeTime = DateTime.UtcNow;
+            if (ent.State == EntityState.Modified)
+            {
+
+                foreach (var prop in ent.OriginalValues.PropertyNames)
+                {                    
+                     //we cant use this because getdatabasevalues will error out when there are 2 rows in the db for this primarykey (U,A)
+                    var originalValue = ent.GetDatabaseValues().GetValue<object>(prop) == null ? "" : ent.GetDatabaseValues().GetValue<object>(prop).ToString();
+                    var currentValue = ent.CurrentValues[prop] == null ? "" : ent.CurrentValues[prop].ToString();
+                    // For updates, we only want to capture the columns that actually changed
+                    var primaryKey = GetPrimaryKeyValue(ent);
+                    if (originalValue != currentValue)
+                    {
+                        result.Add(new CDMA_CHANGE_LOG()
+                        {
+                            USERID = userId,
+                            DATECHANGED = changeTime,
+                            EVENTTYPE = "M",    // Modified
+                            ENTITYNAME = entityName,
+                            PRIMARYKEYVALUE = primaryKey.ToString(),
+                            PROPERTYNAME = prop,
+                            OLDVALUE = originalValue,
+                            NEWVALUE = currentValue,
+                            CHANGEID = changeId
+                        });
+                    }
+                }
+                
             }
             return result;
         }
@@ -357,6 +460,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BRANCH_CLASS> CDMA_BRANCH_CLASS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_SEGMENT> CDMA_CUSTOMER_SEGMENT { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUSTOMER_TYPE> CDMA_CUSTOMER_TYPE { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CM_BACK_JOBS> CM_BACK_JOBS { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.Limit_Range> Limit_Range { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BUSINESS_SIZE> CDMA_BUSINESS_SIZE { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ACCOUNT_TYPE> CDMA_ACCOUNT_TYPE { get; set; }
@@ -383,6 +487,7 @@ namespace CMdm.Data
         
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.AccountOfficer> AccountOfficers { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
@@ -401,15 +506,21 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_AUTH_FINANCE_INCLUSION> CDMA_AUTH_FINANCE_INCLUSION { get; set; }
  
-     //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_FOREIGN_DETAILS> CDMA_FOREIGN_DETAILS { get; set; }
-
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_JURAT> CDMA_JURAT { get; set; }
    
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_ADDITIONAL_INFORMATION> CDMA_ADDITIONAL_INFORMATION { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Logging.Log> LOG { get; set; }
- 
-         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.TMP_ACCOUNTOFFICER_EXCEPTIONS> TMP_ACCOUNTOFFICER_EXCEPTIONS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Dqi.CDMA_DQI_PROCESSING_RESULT> CDMA_DQI_PROCESSING_RESULT { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules> GoldenRecordRules { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Report.CmReportDefn> RptDefinition { get; set; }
+
+        //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
 
     }
