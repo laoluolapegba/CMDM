@@ -1,6 +1,7 @@
 ﻿using CMdm.Data;
 using CMdm.Entities.Domain.Report;
 using CMdm.Services.Report;
+using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,6 +133,24 @@ namespace CMdm.UI.Web.Controllers
             //ViewBag.BRANCH_ID = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
 
             return View(reportDefn);
+        }
+        public ActionResult GetBranches()
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            
+            //string brnId = Convert.ToDecimal(identity.BranchId);
+            var cashdb = new AppDbContext();
+                var branches = (from o in cashdb.CM_BRANCH
+                                where o.BRANCH_ID == identity.BranchId
+                                select new
+                                {
+                                    BranchId = o.BRANCH_ID,
+                                    BranchName = o.BRANCH_NAME,
+                                    BranchSchedulerColor = "#F9722E"
+                                });
+                
+                return Json(branches, JsonRequestBehavior.AllowGet);
+            
         }
     }
 }

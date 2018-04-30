@@ -72,7 +72,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET MVC R3 2017\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Telerik\UI for ASP.NET MVC Q2 2015\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Korzh.EasyQuery.DataGates.NET45, Version=3.8.0.35, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2194,6 +2194,9 @@
     <Content Include="Views\GRRules\Edit.cshtml" />
     <Content Include="Views\GRRules\Index.cshtml" />
     <Content Include="Views\Report\ReportViewer.cshtml" />
+    <Content Include="Views\MessagingTemplates\Authorization.cshtml" />
+    <Content Include="Views\MessagingTemplates\Change.cshtml" />
+    <Content Include="Views\MessagingTemplates\Reject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

@@ -15,21 +15,21 @@ namespace CMdm.UI.Web
 
             RegisterHome(bundles);
 
-            RegisterCharts(bundles);
+            //RegisterCharts(bundles);
 
-            RegisterWidgets(bundles);
+            //RegisterWidgets(bundles);
 
-            RegisterElements(bundles);
+            //RegisterElements(bundles);
 
-            RegisterForms(bundles);
+            //RegisterForms(bundles);
 
             RegisterTables(bundles);
 
-            RegisterCalendar(bundles);
+            //RegisterCalendar(bundles);
 
-            RegisterMailbox(bundles);
+            //RegisterMailbox(bundles);
 
-            RegisterExamples(bundles);
+            //RegisterExamples(bundles);
 
             RegisterDocumentation(bundles);
             RegisterTelerik(bundles);
