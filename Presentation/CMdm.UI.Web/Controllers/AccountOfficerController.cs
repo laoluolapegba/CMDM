@@ -46,7 +46,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            var curBranchList = db.CM_BRANCH; //.Where(a => a.BRANCH_ID == identity.BranchId);
+            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
 
             model.Branches.Add(new SelectListItem
@@ -55,6 +55,8 @@ namespace CMdm.UI.Web.Controllers
                 Text = "All",
                 Selected = true
             });
+            //Test OrderBy
+            //model.Branches.OrderBy(x => x.Text);
 
             model.AccountOfficers.Add(new SelectListItem
             {

@@ -53,15 +53,12 @@ namespace CMdm.UI.Web
 
             rptViewer.LocalReport.DataSources.Clear();
             DateTime _to_date = model.TO_DATE.AddDays(1);
-           _reportService = new ReportService();
+            _reportService = new ReportService();
             var reportDataSet = _reportService.GetPendingExceptions(model);
 
             rptViewer.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource(model.DATASETNAME, reportDataSet));
             
             rptViewer.DataBind();
-            
-
-
         }
     }
 }

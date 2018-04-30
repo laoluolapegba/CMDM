@@ -126,7 +126,8 @@ namespace CMdm.UI.Web.Controllers
             var model = new UsersListViewModel();
             AppDbContext db = new AppDbContext();
             model.UserRoles = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();
-            model.Branches = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
             //var allRoles = db.CM_USER_ROLES.ToList(); // _userService.GetAllRoles("", 1, int.MaxValue,"");
             //foreach (var role in allRoles)
             //{

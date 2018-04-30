@@ -21,7 +21,9 @@ namespace CMdm.UI.Web.Controllers
         // GET: PhoneValidation
         public ActionResult Index(int? page, string branch)
         {
-            ViewBag.BRANCH = new SelectList(db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
+            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME);
+
+            ViewBag.BRANCH = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME");
 
             int pageSize = 50;
             int pageNumber = (page ?? 1);
