@@ -20,27 +20,25 @@
     @Scripts.Render("~/AdminLTE/bootstrap/js")
 
     <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+    
+    
+
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jquery.min.js")"></script>
-    @*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.web.min.js")"></script>
 
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.core.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.data.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.userevents.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.color.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.popup.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.drawing.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.core.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.chart.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.themes.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.sparkline.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.themes.min.js")"></script>    
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.dataviz.gauge.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.pdf.min.js")"></script>
+    
+    
+
+
     <script src="@Url.Content("~/Scripts/kendo/2017.3.1026/kendo.aspnetmvc.min.js")"></script>
+
 
     @Styles.Render("~/Content/customstyle.css")
     @Scripts.Render("~/Scripts/common.js")
@@ -63,9 +61,6 @@
 
 
         }*@
-
-
-    <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
     @*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -83,7 +78,7 @@
         </header>
         <aside class="main-sidebar">
             <section class="sidebar">
-                <div class="user-panel">
+                @*<div class="user-panel">
                     <div class="pull-left image">
                         <img src="~/AdminLTE/dist/img/user.svg" class="img-circle" alt="User Image">
                     </div>
@@ -91,7 +86,7 @@
                         <p>@User.Identity.GetUserNameIdentifier()</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
-                </div>
+                </div>*@
                 <form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Search...">

@@ -60,7 +60,7 @@
         </header>
         <aside class="main-sidebar">
             <section class="sidebar">
-                <div class="user-panel">
+                @*<div class="user-panel">
                     <div class="pull-left image">
                         <img src="~/AdminLTE/dist/img/user.svg" class="img-circle" alt="User Image">
                     </div>
@@ -68,7 +68,7 @@
                         <p>@User.Identity.GetUserNameIdentifier()</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
-                </div>
+                </div>*@
                 <form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -88,10 +88,10 @@
                     @ViewBag.Title
                     <small>@ViewBag.SubTitle</small>
                 </h1>
-                <ol class="breadcrumb">
+                @*<ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i>@ViewBag.SubTitle</a></li>
                     <li class="active">@ViewBag.Title</li>
-                </ol>
+                </ol>*@
             </section>
             <section class="content">
                 @RenderBody()
