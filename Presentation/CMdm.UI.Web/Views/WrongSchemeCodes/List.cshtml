@@ -1,7 +1,7 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.AccountOfficerModel
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.WrongSchemeCodeModel
 @{
-    ViewBag.Title = "Account Officer Validation";
+    ViewBag.Title = "Wrong Scheme Codes";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Account Officer Validation
+            Wrong Scheme Codes
         </h1>
         <div class="pull-right">
 
@@ -55,7 +55,7 @@
                                         @Html.Label("Account Number")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.SearchName)
+                                        @Html.CMdmEditorFor(model => model.FORACID)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -66,15 +66,6 @@
                                         @Html.CMdmDropDownList("SOL_ID", Model.Branches)
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        @Html.LabelFor(model => model.AO_NAME)
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmDropDownList("AO_NAME", Model.AccountOfficers)
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="col-md-7">
                             </div>
@@ -99,7 +90,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("AccountOfficersList", "AccountOfficer"))",
+                                                url: "@Html.Raw(Url.Action("WrongSchemeCodesList", "WrongSchemeCodes"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -141,72 +132,56 @@
                                             width: 50
                                         },
                                         {
-                                            field: "ACCOUNT_NUMBER",
-                                            title: "Account Number",
+                                            field: "CIF_ID",
+                                            title: "CIF ID",
                                             width: 100
                                         },
                                         {
-                                            field: "ACCOUNT_NAME",
-                                            title: "Account  Name",
-                                            width: 200
+                                            field: "FORACID",
+                                            title: "Account  Number",
+                                            width: 100
                                         },
                                         {
-                                       field: "SOL_ID",
-                                       title: "Branch Code",
+                                       field: "SCHM_CODE",
+                                       title: "Scheme Code",
                                        width: 70,
                                         },
 
                                     {
-                                        field: "BRANCH",
-                                        title: "Branch Name",
-                                        width: 100,
-                                    },
-                                    {
-                                        field: "SCHM_CODE",
-                                        title: "Product Code",
-                                        width: 200
-                                    },
-                                    {
-                                        field: "ACCT_OPN_DATE",
-                                        title: "Account Open Date",
+                                        field: "ACCOUNTOFFICER_CODE",
+                                        title: "Account Officer Code",
                                         width: 70,
-                                        template: "#= kendo.toString(kendo.parseDate(ACCT_OPN_DATE, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                    },
+                                    {
+                                        field: "ACCOUNTOFFICER_NAME",
+                                        title: "Account Officer",
+                                        width: 100
                                     },
                                      {
-                                         field: "AO_CODE",
-                                         title: "Account Officer Code",
+                                         field: "SCHMECODE_CLASSIFIATION",
+                                         title: "Scheme Code Classification",
                                          width: 50
                                         },
                                         {
-                                            field: "AO_NAME",
-                                            title: "Account Officer",
+                                            field: "ACCT_NAME",
+                                            title: "Account Name",
                                             width: 200
                                         },
                                         {
-                                            field: "SBU_CODE",
-                                            title: "SBU Code",
+                                            field: "SOL_ID",
+                                            title: "Branch Code",
                                             width: 50
                                         },
                                         {
-                                            field: "SBU_NAME",
-                                            title: "SBU Name",
-                                            width: 50
+                                            field: "CUSTOMER_TYPE",
+                                            title: "Customer Type",
+                                            width: 100
                                         },
                                         {
-                                            field: "BROKER_CODE",
-                                            title: "Broker Code",
-                                            width: 50
-                                        },
-                                        {
-                                            field: "BROKER_NAME",
-                                            title: "Broker Name",
-                                            width: 50
-                                        },
-                                    {
-                                        field: "RUN_DATE",
-                                        title: "Run date",
-                                        width: 100,
-                                        template: "#= kendo.toString(kendo.parseDate(RUN_DATE, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                            field: "DATE_OF_RUN",
+                                            title: "Run date",
+                                            width: 100,
+                                            template: "#= kendo.toString(kendo.parseDate(DATE_OF_RUN, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
                                     },
                                     ]
                                 });
@@ -234,7 +209,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.FORACID)").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -271,9 +246,8 @@
 
                 function additionalData() {
                     var data = {
-                        SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                        FORACID: $('#FORACID').val(),
                         SOL_ID: $('#SOL_ID').val(),
-                        AO_NAME: $('#AO_NAME').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -300,12 +274,13 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "AccountOfficer", FormMethod.Post, new { id = "export-excel-selected-form" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" id="selectedIds" name="selectedIds" value="" />
-    }
-    <script type="text/javascript">$(document).ready(function () {
+@using (Html.BeginForm("ExportExcelSelected", "WrongSchemeCodes", FormMethod.Post, new { id = "export-excel-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+<script type="text/javascript">
+$(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");

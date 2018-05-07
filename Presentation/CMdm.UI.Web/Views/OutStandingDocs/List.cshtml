@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Account No")
+                                        @Html.Label("Account Number")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.ACID)
@@ -151,7 +151,7 @@
                                         },
                                         {
                                             field: "ACID",
-                                            title: "Account No",
+                                            title: "Account Number",
                                             width: 100
                                         },
                                         {
@@ -195,6 +195,16 @@
                                     {
                                         field: "FREZ_REASON_CODE",
                                         title: "Reason",
+                                        width: 100
+                                    },
+                                    {
+                                        field: "ACCTOFFICER_CODE",
+                                        title: "Account Officer Code",
+                                        width: 100
+                                    },
+                                    {
+                                        field: "ACCTOFFICER_NAME",
+                                        title: "Account Officer Name",
                                         width: 100
                                     },
                                     {

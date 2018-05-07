@@ -36,7 +36,7 @@ namespace CMdm.UI.Web.Models.DqQue
         public string RULE_NAME { get; set; }
         [DisplayName("Error Description")]
         public string CUST_ID { get; set; }
-        [DisplayName("Branch Code")]
+        [DisplayName("Branch Name")]
         public string BRANCH_CODE { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_NAME { get; set; }

@@ -1,5 +1,7 @@
-﻿@{
+﻿@using CMdm.Entities.Domain.Kpi
+@{
     ViewBag.Title = "Common Statistics";
+    List < BrnKpi > allKpi = ViewBag.allkpi;
 }
 
 @section Menu {
@@ -16,7 +18,29 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>@ViewBag.openbrnExceptions</h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-aqua">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-aqua">
+                                @{int increment = 1;  int pos = (int)allKpi.IndexOf(brnkpi) + increment;  }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Open Exceptions</p>
             </div>
             <div class="icon">
@@ -25,12 +49,33 @@
             <a href="@Url.Action("Index", "DQQue")" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
+
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>
-                    @ViewBag.brnPct<sup style="font-size: 20px">%</sup>
-                </h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-green">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)%</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-green">
+                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)%</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Bankwide % Contribution</p>
             </div>
             <div class="icon">
@@ -42,7 +87,29 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>@ViewBag.recurringExption</h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-yellow">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-yellow">
+                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Recurring Exceptions</p>
             </div>
             <div class="icon">
@@ -51,12 +118,34 @@
             <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    
+
     <div class="col-lg-3 col-xs-6">
-        
-       <div class="small-box bg-red">
+
+        <div class="small-box bg-red">
             <div class="inner">
-                <h3>@ViewBag.brnDQI%</h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-red">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-red">
+                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Data Quality Index</p>
             </div>
             <div class="icon">
@@ -70,7 +159,29 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>@ViewBag.brnCustomers</h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-aqua">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-aqua">
+                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Branch Customers</p>
             </div>
             <div class="icon">
@@ -108,7 +219,29 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>@ViewBag.bankCustomers</h3>
+                @foreach (var brnkpi in allKpi)
+                {
+                    if (brnkpi == allKpi.Last())
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-red">
+                                <span class="info-box-text">Total</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BANK_CUST_COUNT)</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-xs-6">
+                            <div class="small-box bg-red">
+                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                <span class="info-box-text">Tier @pos</span>
+                                <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BANK_CUST_COUNT)</span>
+                            </div>
+                        </div>
+                    }
+
+                }
                 <p>Total Bank Customers</p>
             </div>
             <div class="icon">
@@ -134,6 +267,7 @@
         
         </section>
 </div>
+
 @*<div class="row">
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-aqua">

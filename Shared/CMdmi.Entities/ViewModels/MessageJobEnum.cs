@@ -17,6 +17,10 @@ namespace CMdm.UI.Web.Models.Messaging
             Authorize = 1,
             Change = 2,
             Reject = 3,
+            PhoneValidation = 4,
+            OutstandingDocuments = 5,
+            AccountOfficer = 6,
+            SectorSubsector = 7,
         }
     }
 }

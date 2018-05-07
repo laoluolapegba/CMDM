@@ -12,14 +12,15 @@ using System.Drawing;
 
 namespace CMdm.Services.ExportImport
 {
+
     /// <summary>
     /// Export manager
     /// </summary>
-    public partial class ExportManager : IExportManager
+    public partial class WscExportManager : IWscExportManager
     {
         #region Ctor
 
-        public ExportManager()
+        public WscExportManager()
         {
 
         }
@@ -34,26 +35,24 @@ namespace CMdm.Services.ExportImport
         /// Export documents list to XLSX
         /// </summary>
         /// <param name="documents">documents</param>
-        public virtual byte[] ExportDocumentsToXlsx(IList<OutStandingDoc> documents)
+        public virtual byte[] ExportDocumentsToXlsx(IList<WrongSchemeCode> documents)
         {
             //property array
             var properties = new[]
             {
-                
-                new PropertyByName<OutStandingDoc>("Account No", p => p.ACID),
-                new PropertyByName<OutStandingDoc>("Account Name", p => p.ACCT_NAME),
 
-                new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
-                new PropertyByName<OutStandingDoc>("Product Name", p => p.SCHM_DESC),
-                new PropertyByName<OutStandingDoc>("Schm Type", p => p.SCHM_TYPE),
-                new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),                
-                new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),             
-                
-                new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE),
-                new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE),
-                new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
-                new PropertyByName<OutStandingDoc>("Account Officer Code", p => p.ACCTOFFICER_CODE),
-                new PropertyByName<OutStandingDoc>("Account Officer Name", p => p.ACCTOFFICER_NAME),
+                new PropertyByName<WrongSchemeCode>("CIF ID", p => p.CIF_ID),
+                new PropertyByName<WrongSchemeCode>("Account Number", p => p.FORACID),
+
+                new PropertyByName<WrongSchemeCode>("Scheme Code", p => p.SCHM_CODE),
+                new PropertyByName<WrongSchemeCode>("Account Officer Code", p => p.ACCOUNTOFFICER_CODE),
+                new PropertyByName<WrongSchemeCode>("Account Officer", p => p.ACCOUNTOFFICER_NAME),
+                new PropertyByName<WrongSchemeCode>("Scheme Classification", p => p.SCHMECODE_CLASSIFIATION),
+
+                new PropertyByName<WrongSchemeCode>("Account Name", p => p.ACCT_NAME),
+                new PropertyByName<WrongSchemeCode>("Branch Code", p => p.SOL_ID),
+                new PropertyByName<WrongSchemeCode>("Customer Type", p => p.CUSTOMER_TYPE),
+                new PropertyByName<WrongSchemeCode>("Run Date", p => p.DATE_OF_RUN),
             };
 
             return ExportToXlsx(properties, documents);

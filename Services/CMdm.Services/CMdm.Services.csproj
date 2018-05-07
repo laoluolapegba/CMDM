@@ -103,6 +103,8 @@
     <Compile Include="CustomModule\Fcmb\IAccountOfficerService.cs" />
     <Compile Include="CustomModule\Fcmb\ICustomService.cs" />
     <Compile Include="CustomModule\Fcmb\ICustSegmentService.cs" />
+    <Compile Include="CustomModule\Fcmb\IWrongSchemeCodeService.cs" />
+    <Compile Include="CustomModule\Fcmb\WrongSchemeCodeService.cs" />
     <Compile Include="DqParam\DqParamService.cs" />
     <Compile Include="DqParam\IDqParamService.cs" />
     <Compile Include="DqQue\DqQueService.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="ExportImport\IAccExportManager.cs" />
     <Compile Include="ExportImport\ICustExportManager.cs" />
     <Compile Include="ExportImport\IExportManager.cs" />
+    <Compile Include="ExportImport\IWscExportManager.cs" />
+    <Compile Include="ExportImport\WscExportManager.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GoldenRecord\GoldenRecordService.cs" />
     <Compile Include="GoldenRecord\IGoldenRecordService.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
+    <Compile Include="Messaging\ExceptionLog.cs" />
     <Compile Include="Messaging\IMessagingService.cs" />
     <Compile Include="Messaging\MessagingService.cs" />
     <Compile Include="Notification\INotificationService.cs" />

@@ -90,6 +90,7 @@
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CDMA_TRUSTS_CLIENT_ACCOUNTS.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
+    <Compile Include="Domain\Customer\CMDM_WRONGSCHCODECLASS.cs" />
     <Compile Include="Domain\Customer\CM_BACK_JOBS.cs" />
     <Compile Include="Domain\Customer\IndCustomerBioData.cs" />
     <Compile Include="Domain\Customer\Limit_Range.cs" />
@@ -99,6 +100,8 @@
     <Compile Include="Domain\Customer\TMP_SEC_SUB3.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\GoldenRecord.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\WrongSchemeCode.cs" />
     <Compile Include="Domain\Dqi\BranchDqiSummary.cs" />
     <Compile Include="Domain\Dqi\CDMA_DQI_PROCESSING_RESULT.cs" />
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />

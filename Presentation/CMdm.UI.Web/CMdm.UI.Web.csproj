@@ -345,6 +345,7 @@
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
+    <Compile Include="Controllers\WrongSchemeCodesController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
       <DependentUpon>AuditReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -600,6 +601,7 @@
     <Compile Include="Models\Customer\OtherDetails.cs" />
     <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\WrongSchemeCodeModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
     <Compile Include="Models\DqParam\DqParamListModel.cs" />
@@ -2201,6 +2203,7 @@
     <Content Include="Views\GRRules\Index.cshtml" />
     <Content Include="Views\Report\ReportViewer.cshtml" />
     <Content Include="Views\CustSegment\List.cshtml" />
+    <Content Include="Views\WrongSchemeCodes\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

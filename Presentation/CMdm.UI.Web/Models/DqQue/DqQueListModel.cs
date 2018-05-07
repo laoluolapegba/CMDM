@@ -44,7 +44,7 @@ namespace CMdm.UI.Web.Models.DqQue
         public DateTime? CREATED_DATE { get; set; }
         [DisplayName("Violated Quality Rule")]
         public int RULE_ID { get; set; }
-        [DisplayName("Branch Code")]
+        [DisplayName("Branch Name")]
         public string BRANCH_CODE { get; set; }
         public decimal PCT_COMPLETION { get; set; }
         public string DaysonQue { get; set; }
