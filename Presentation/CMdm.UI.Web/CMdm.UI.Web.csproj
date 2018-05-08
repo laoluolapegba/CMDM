@@ -2207,6 +2207,10 @@
     <Content Include="Views\MessagingTemplates\Authorization.cshtml" />
     <Content Include="Views\MessagingTemplates\Change.cshtml" />
     <Content Include="Views\MessagingTemplates\Reject.cshtml" />
+    <Content Include="Views\MessagingTemplates\AccountOfficer.cshtml" />
+    <Content Include="Views\MessagingTemplates\OutstandingDocuments.cshtml" />
+    <Content Include="Views\MessagingTemplates\PhoneValidation.cshtml" />
+    <Content Include="Views\MessagingTemplates\SectorSubsector.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
