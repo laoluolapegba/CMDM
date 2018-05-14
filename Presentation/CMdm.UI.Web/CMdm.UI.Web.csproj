@@ -299,6 +299,7 @@
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CustSegmentController.cs" />
     <Compile Include="Controllers\DQISummaryController.cs" />
+    <Compile Include="Controllers\EmailPhoneController.cs" />
     <Compile Include="Controllers\GRRulesController.cs" />
     <Compile Include="Controllers\IndividualCustomerController.cs" />
     <Compile Include="Controllers\CustIncomeController.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="Controllers\MdmDimensionsController.cs" />
     <Compile Include="Controllers\MdmValidatorsController.cs" />
     <Compile Include="Controllers\MdmWeightsController.cs" />
+    <Compile Include="Controllers\MultipleRefCodeController.cs" />
     <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\OutStandingDocsController.cs" />
     <Compile Include="Controllers\ParamsController.cs" />
@@ -600,6 +602,8 @@
     <Compile Include="Models\Customer\individualIDDetail.cs" />
     <Compile Include="Models\Customer\OtherDetails.cs" />
     <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\EmailPhoneModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\MultipleRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\WrongSchemeCodeModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
@@ -2211,6 +2215,8 @@
     <Content Include="Views\MessagingTemplates\OutstandingDocuments.cshtml" />
     <Content Include="Views\MessagingTemplates\PhoneValidation.cshtml" />
     <Content Include="Views\MessagingTemplates\SectorSubsector.cshtml" />
+    <Content Include="Views\EmailPhone\List.cshtml" />
+    <Content Include="Views\MultipleRefCode\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
