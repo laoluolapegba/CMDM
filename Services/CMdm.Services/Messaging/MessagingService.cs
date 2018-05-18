@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CMdm.Data;
 using CMdm.Entities.Domain.Customer;
-using CMdm.UI.Web.Models.Messaging;
+using CMdm.Entities.ViewModels;
 using System.Web.WebPages.Razor.Configuration;
 using RazorEngine;
 using RazorEngine.Configuration.Xml;

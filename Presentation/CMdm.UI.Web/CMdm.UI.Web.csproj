@@ -2260,7 +2260,6 @@
     <Folder Include="Content\customlogin\colorbox\images\" />
     <Folder Include="exceptions\" />
     <Folder Include="font\" />
-    <Folder Include="Models\Messaging\" />
     <Folder Include="Models\Report\" />
     <Folder Include="Report\" />
     <Folder Include="Themes\DefaultClean\Views\Shared\" />

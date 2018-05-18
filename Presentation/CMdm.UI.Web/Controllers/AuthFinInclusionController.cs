@@ -10,7 +10,7 @@ using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using CMdm.Services.DqQue;
 using CMdm.Services.Messaging;
-using CMdm.UI.Web.Models.Messaging;
+using CMdm.Entities.ViewModels;
 
 namespace CMdm.UI.Web.Controllers
 {
