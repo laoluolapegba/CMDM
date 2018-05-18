@@ -332,6 +332,7 @@
     <Compile Include="Controllers\MdmDimensionsController.cs" />
     <Compile Include="Controllers\MdmValidatorsController.cs" />
     <Compile Include="Controllers\MdmWeightsController.cs" />
+    <Compile Include="Controllers\MultipleIdsController.cs" />
     <Compile Include="Controllers\MultipleRefCodeController.cs" />
     <Compile Include="Controllers\OtherDetailsController.cs" />
     <Compile Include="Controllers\OutStandingDocsController.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\WrongSchemeCodesController.cs" />
+    <Compile Include="Controllers\WrongSegmentController.cs" />
     <Compile Include="CustomerInfo\AuditReport.aspx.cs">
       <DependentUpon>AuditReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -606,6 +608,7 @@
     <Compile Include="Models\CustomModule\Fcmb\MultipleRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\WrongSchemeCodeModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\WrongSegmentModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
     <Compile Include="Models\DqCatalogs\DqCatalogListModel.cs" />
     <Compile Include="Models\DqParam\DqParamListModel.cs" />
@@ -2217,6 +2220,8 @@
     <Content Include="Views\MessagingTemplates\SectorSubsector.cshtml" />
     <Content Include="Views\EmailPhone\List.cshtml" />
     <Content Include="Views\MultipleRefCode\List.cshtml" />
+    <Content Include="Views\WrongSegment\List.cshtml" />
+    <Content Include="Views\MultipleIds\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

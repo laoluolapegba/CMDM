@@ -41,5 +41,6 @@ namespace CMdm.Entities.Domain.GoldenRecord
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RECORD_ID { get; set; }
         public string RECORD_STATUS { get; set; }
+        public string PHONE_NUMBER { get; set; }
     }
 }

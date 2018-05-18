@@ -1,7 +1,7 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.EmailPhoneModel
+@model CMdm.UI.Web.Models.GoldenRecord.GoldenRecordModel
 @{
-    ViewBag.Title = "Email / Phone Validation";
+    ViewBag.Title = "Customers With Multiple IDs";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -11,9 +11,10 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Email / Phone Validation
+            Customers With Multiple IDs
         </h1>
         <div class="pull-right">
+
             <div class="btn-group">
                 <button type="button" class="btn bg-purple">
                     <i class="fa fa-download"></i>
@@ -51,36 +52,21 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Customer ID")
+                                        @Html.Label("Name")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.ORGKEY)
+                                        @Html.CMdmEditorFor(model => model.FULL_NAME)
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("First Name")
+                                        @Html.LabelFor(model => model.BRANCH_CODE)
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
+                                        @Html.CMdmDropDownList("SOL_ID", Model.Branches)
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        @Html.Label("Middle Name")
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        @Html.Label("Last Name")
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.CUST_LAST_NAME)
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-md-7">
                             </div>
@@ -105,7 +91,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("EmailPhoneList", "EmailPhone"))",
+                                                url: "@Html.Raw(Url.Action("GoldenRecordsList", "MultipleIds"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -147,59 +133,55 @@
                                             width: 50
                                         },
                                         {
-                                            field: "ORGKEY",
+                                            field: "GOLDEN_RECORD",
+                                            title: "Record Id",
+                                            width: 70
+                                        },
+                                        {
+                                            field: "CUSTOMER_NO",
                                             title: "Customer ID",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "DUPLICATE_ID",
-                                            title: "Duplicate ID",
                                             width: 100,
-                                        },
-                                        {
-                                            field: "CUST_FIRST_NAME",
-                                            title: "First Name",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "CUST_MIDDLE_NAME",
-                                            title: "Middle Name",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "CUST_LAST_NAME",
-                                            title: "Last Name",
-                                            width: 50
-                                        },
-                                        {
-                                            field: "CUST_DOB",
-                                            title: "Date of Birth",
-                                            width: 100,
-                                            template: "#= kendo.toString(kendo.parseDate(CUST_DOB, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
                                         },
                                         {
                                             field: "BVN",
                                             title: "BVN",
-                                            width: 100
+                                            width: 70,
+                                        },
+
+                                    {
+                                        field: "FULL_NAME",
+                                        title: "Name",
+                                        width: 200,
+                                    },
+                                    {
+                                        field: "DATE_OF_BIRTH",
+                                        title: "Date of Birth",
+                                        width: 100,
+                                        template: "#= kendo.toString(kendo.parseDate(DATE_OF_BIRTH, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                    },
+                                    {
+                                        field: "RESIDENTIAL_ADDRESS",
+                                        title: "Residential Address",
+                                        width: 200
+                                    },
+                                     {
+                                         field: "CUSTOMER_TYPE",
+                                         title: "Customer Type",
+                                         width: 50
                                         },
                                         {
-                                            field: "GENDER",
+                                            field: "SEX",
                                             title: "Gender",
-                                            width: 100
+                                            width: 50
                                         },
                                         {
-                                            field: "CUSTOMERMINOR",
-                                            title: "Customer Minor",
-                                            width: 100
+                                            field: "BRANCH_CODE",
+                                            title: "Branch Code",
+                                            width: 50
                                         },
                                         {
-                                            field: "PREFERREDPHONE",
-                                            title: "Preferred Phone",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "EMAIL",
-                                            title: "Email",
+                                            field: "PHONE_NUMBER",
+                                            title: "Phone Number",
                                             width: 100
                                         },
                                     ]
@@ -228,7 +210,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.ORGKEY)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.FULL_NAME)").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -265,10 +247,10 @@
 
                 function additionalData() {
                     var data = {
-                        ORGKEY: $('#ORGKEY').val(),
-                        CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
-                        CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
-                        CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
+                        SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                        BRANCH_CODE: $('#BRANCH_CODE').val(),
+                        CUSTOMER_NO: $('#CUSTOMER_NO').val(),
+                        FULL_NAME: $('#FULL_NAME').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -295,7 +277,7 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "EmailPhone", FormMethod.Post, new { id = "export-excel-selected-form" }))
+@using (Html.BeginForm("ExportExcelSelected", "MultipleIds", FormMethod.Post, new { id = "export-excel-selected-form" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />

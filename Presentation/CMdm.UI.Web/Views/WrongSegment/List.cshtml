@@ -1,7 +1,7 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.EmailPhoneModel
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.WrongSegmentModel
 @{
-    ViewBag.Title = "Email / Phone Validation";
+    ViewBag.Title = "Segment / Subsegment Mapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -11,9 +11,10 @@
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         <h1 class="pull-left">
-            Email / Phone Validation
+            Segment / Subsegment Mapping
         </h1>
         <div class="pull-right">
+
             <div class="btn-group">
                 <button type="button" class="btn bg-purple">
                     <i class="fa fa-download"></i>
@@ -51,14 +52,6 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Customer ID")
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.ORGKEY)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
                                         @Html.Label("First Name")
                                     </div>
                                     <div class="col-md-8">
@@ -67,18 +60,18 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Middle Name")
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
                                         @Html.Label("Last Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.CUST_LAST_NAME)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.PRIMARY_SOL_ID)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownList("PRIMARY_SOL_ID", Model.Branches)
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +98,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("EmailPhoneList", "EmailPhone"))",
+                                                url: "@Html.Raw(Url.Action("WrongSegmentsList", "WrongSegment"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -148,13 +141,8 @@
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "Customer ID",
+                                            title: "ORGKEY",
                                             width: 100
-                                        },
-                                        {
-                                            field: "DUPLICATE_ID",
-                                            title: "Duplicate ID",
-                                            width: 100,
                                         },
                                         {
                                             field: "CUST_FIRST_NAME",
@@ -164,44 +152,60 @@
                                         {
                                             field: "CUST_MIDDLE_NAME",
                                             title: "Middle Name",
-                                            width: 100
+                                            width: 100,
                                         },
                                         {
                                             field: "CUST_LAST_NAME",
                                             title: "Last Name",
-                                            width: 50
-                                        },
-                                        {
-                                            field: "CUST_DOB",
-                                            title: "Date of Birth",
                                             width: 100,
-                                            template: "#= kendo.toString(kendo.parseDate(CUST_DOB, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
-                                        },
-                                        {
-                                            field: "BVN",
-                                            title: "BVN",
-                                            width: 100
                                         },
                                         {
                                             field: "GENDER",
                                             title: "Gender",
+                                            width: 50,
+                                        },
+                                        {
+                                            field: "CUST_DOB",
+                                            title: "Date of Birth",
+                                            width: 70,
+                                            template: "#= kendo.toString(kendo.parseDate(CUST_DOB, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                        },
+                                        {
+                                            field: "PRIMARY_SOL_ID",
+                                            title: "Branch Code",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "SEGMENTATION_CLASS",
+                                            title: "Segmentation Class",
                                             width: 100
                                         },
                                         {
-                                            field: "CUSTOMERMINOR",
-                                            title: "Customer Minor",
+                                            field: "SEGMENTNAME",
+                                            title: "Segment Name",
                                             width: 100
                                         },
                                         {
-                                            field: "PREFERREDPHONE",
-                                            title: "Preferred Phone",
+                                            field: "SUBSEGMENT",
+                                            title: "Subsegment",
                                             width: 100
                                         },
                                         {
-                                            field: "EMAIL",
-                                            title: "Email",
+                                            field: "SUBSEGMENTNAME",
+                                            title: "Subsegment Name",
                                             width: 100
                                         },
+                                        {
+                                            field: "CORP_ID",
+                                            title: "Corp ID",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "DATE_OF_RUN",
+                                            title: "Run date",
+                                            width: 100,
+                                            template: "#= kendo.toString(kendo.parseDate(DATE_OF_RUN, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                    },
                                     ]
                                 });
                             });
@@ -265,10 +269,9 @@
 
                 function additionalData() {
                     var data = {
-                        ORGKEY: $('#ORGKEY').val(),
                         CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
-                        CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
                         CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
+                        PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -295,7 +298,7 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "EmailPhone", FormMethod.Post, new { id = "export-excel-selected-form" }))
+@using (Html.BeginForm("ExportExcelSelected", "WrongSegment", FormMethod.Post, new { id = "export-excel-selected-form" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />

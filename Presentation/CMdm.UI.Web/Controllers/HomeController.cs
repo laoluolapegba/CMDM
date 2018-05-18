@@ -53,6 +53,15 @@ namespace CMdm.UI.Web.Controllers
             ViewData["CatalogId"] = 1;
             return View();
         }
+
+        public JsonResult StatisticsTrend()
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var trendingData = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+
+            return Json(trendingData, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)

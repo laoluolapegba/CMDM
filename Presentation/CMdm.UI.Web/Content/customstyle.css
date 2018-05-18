@@ -48,3 +48,45 @@ span.grid-report-item.red {
     border: 1px solid #ff0000 !important;
     background-color: #ffeeee !important;
 }
+
+/*FCMB CUSTOM*/
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0 !important;
+}
+
+.box.box-purple {
+    border-top-color: #BB16A3;
+}
+
+.box.box-solid.box-purple {
+    border: 1px solid #BB16A3
+}
+
+.box.box-solid.box-purple > .box-header {
+    color: #fff;
+    background: #BB16A3
+}
+
+.box.box-solid.box-purple > .box-header .btn, .box.box-solid.box-purple > .box-header a {
+    color: #fff
+}
+
+/*FCMB CUSTOM*/

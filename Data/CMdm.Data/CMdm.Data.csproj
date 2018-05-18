@@ -84,6 +84,7 @@
     <Compile Include="DAC\PermissionsDAC.cs" />
     <Compile Include="DAC\UserAdminDAC.cs" />
     <Compile Include="DAC\WrongSchemeCodesDAC.cs" />
+    <Compile Include="DAC\WrongSegmentDAC.cs" />
     <Compile Include="DynamicExpressions.cs" />
     <Compile Include="EfRepository.cs" />
     <Compile Include="FormattedDbEntityValidationException.cs" />
