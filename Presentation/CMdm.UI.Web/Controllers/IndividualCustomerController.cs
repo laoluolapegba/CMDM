@@ -15,7 +15,8 @@ using System.Reflection;
 using CMdm.Services.DqQue;
 using CMdm.Entities.ViewModels; 
 using CMdm.Data.Rbac;
- 
+using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers 
 {
@@ -23,10 +24,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
+        private IMessagingService _messageService;
         public IndividualCustomerController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messageService = new MessagingService();
         }
 
 
@@ -314,7 +317,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_BIO_DATA.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), bioDatamodel.BioData.CUSTOMER_NO, updateFlag, originalObject);
-
+                            _messageService.LogEmailJob(identity.ProfileId, entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                     }
@@ -380,7 +383,7 @@ namespace CMdm.UI.Web.Controllers
                             newentity.CUSTOMER_NO = bioDatamodel.BioData.CUSTOMER_NO;
                             db.CDMA_INDIVIDUAL_BIO_DATA.Add(newentity);
                             db.SaveChanges(); //do not track audit.
-
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         else
@@ -390,7 +393,6 @@ namespace CMdm.UI.Web.Controllers
                         }
                     }
                     #endregion
-
                     #region ContactData
                     int records1 = db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Count(o => o.CUSTOMER_NO == bioDatamodel.BioData.CUSTOMER_NO);  // && o.AUTHORISED == "U" && o.LAST_MODIFIED_BY == identity.ProfileId.ToString()
                     //if there are more than one records, the 'U' one is the edited one
@@ -413,7 +415,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Attach(contact_entity);
                             db.Entry(contact_entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), bioDatamodel.BioData.CUSTOMER_NO, updateFlag, originalObject1);
-
+                            _messageService.LogEmailJob(identity.ProfileId, contact_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                     }
@@ -447,7 +449,7 @@ namespace CMdm.UI.Web.Controllers
                             new_contact_entity.AUTHORISED = "U";
                             db.CDMA_INDIVIDUAL_CONTACT_DETAIL.Add(new_contact_entity);
                             db.SaveChanges(); //do not track audit.
-
+                            _messageService.LogEmailJob(identity.ProfileId, new_contact_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         else
@@ -484,7 +486,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Attach(Address_entity);
                             db.Entry(Address_entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), bioDatamodel.BioData.CUSTOMER_NO, updateFlag, originalObject2);
-
+                            _messageService.LogEmailJob(identity.ProfileId, Address_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                     }
@@ -528,7 +530,7 @@ namespace CMdm.UI.Web.Controllers
                             new_Address_entity.AUTHORISED = "U";
                             db.CDMA_INDIVIDUAL_ADDRESS_DETAIL.Add(new_Address_entity);
                             db.SaveChanges(); //do not track audit.
-
+                            _messageService.LogEmailJob(identity.ProfileId, new_Address_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         else
@@ -562,7 +564,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_IDENTIFICATION.Attach(ID_entity);
                             db.Entry(ID_entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), bioDatamodel.BioData.CUSTOMER_NO, updateFlag, originalObject3);
-
+                            _messageService.LogEmailJob(identity.ProfileId, ID_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                     }
@@ -589,19 +591,19 @@ namespace CMdm.UI.Web.Controllers
                             //entity.AUTHORISED = "U";
                             var new_ID_entity = new CDMA_INDIVIDUAL_IDENTIFICATION();
 
-                            ID_entity.CUSTOMER_NO = bioDatamodel.BioData.CUSTOMER_NO;
-                            ID_entity.IDENTIFICATION_TYPE = bioDatamodel.identification.IDENTIFICATION_TYPE;
-                            ID_entity.ID_NO = bioDatamodel.identification.ID_NO;
-                            ID_entity.ID_EXPIRY_DATE = bioDatamodel.identification.ID_EXPIRY_DATE;
-                            ID_entity.ID_ISSUE_DATE = bioDatamodel.identification.ID_ISSUE_DATE;
-                            ID_entity.PLACE_OF_ISSUANCE = bioDatamodel.identification.PLACE_OF_ISSUANCE;
+                            new_ID_entity.CUSTOMER_NO = bioDatamodel.BioData.CUSTOMER_NO;
+                            new_ID_entity.IDENTIFICATION_TYPE = bioDatamodel.identification.IDENTIFICATION_TYPE;
+                            new_ID_entity.ID_NO = bioDatamodel.identification.ID_NO;
+                            new_ID_entity.ID_EXPIRY_DATE = bioDatamodel.identification.ID_EXPIRY_DATE;
+                            new_ID_entity.ID_ISSUE_DATE = bioDatamodel.identification.ID_ISSUE_DATE;
+                            new_ID_entity.PLACE_OF_ISSUANCE = bioDatamodel.identification.PLACE_OF_ISSUANCE;
 
                             new_ID_entity.CREATED_BY = identity.ProfileId.ToString();
                             new_ID_entity.CREATED_DATE = DateTime.Now;
                             new_ID_entity.AUTHORISED = "U";
                             db.CDMA_INDIVIDUAL_IDENTIFICATION.Add(new_ID_entity);
                             db.SaveChanges(); //do not track audit.
-
+                            _messageService.LogEmailJob(identity.ProfileId, new_ID_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         else
@@ -630,7 +632,7 @@ namespace CMdm.UI.Web.Controllers
                             db.CDMA_INDIVIDUAL_OTHER_DETAILS.Attach(Other_entity);
                             db.Entry(Other_entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), bioDatamodel.BioData.CUSTOMER_NO, updateFlag, originalObject4);
-
+                            _messageService.LogEmailJob(identity.ProfileId, Other_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                     }
@@ -661,7 +663,7 @@ namespace CMdm.UI.Web.Controllers
                             new_Other_entity.AUTHORISED = "U";
                             db.CDMA_INDIVIDUAL_OTHER_DETAILS.Add(new_Other_entity);
                             db.SaveChanges(); //do not track audit.
-
+                            _messageService.LogEmailJob(identity.ProfileId, new_Other_entity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
 
                         }
                         else
@@ -1084,13 +1086,15 @@ namespace CMdm.UI.Web.Controllers
 
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), indivmodel.BioData.AuthoriserRemarks);
                     SuccessNotification("Customer record Not Authorised");
-                }
+                _messageService.LogEmailJob(identity.ProfileId, indivmodel.BioData.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(indivmodel.BioData.LastUpdatedby));
+            }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(),  identity.ProfileId);
                     SuccessNotification("Customer record Authorised");
-                }
+                _messageService.LogEmailJob(identity.ProfileId, indivmodel.BioData.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(indivmodel.BioData.LastUpdatedby));
+            }
 
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");

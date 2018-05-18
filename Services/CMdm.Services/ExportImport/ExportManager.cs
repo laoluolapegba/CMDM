@@ -52,6 +52,8 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE),
                 new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE),
                 new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
+                new PropertyByName<OutStandingDoc>("Account Officer Code", p => p.ACCTOFFICER_CODE),
+                new PropertyByName<OutStandingDoc>("Account Officer Name", p => p.ACCTOFFICER_NAME),
             };
 
             return ExportToXlsx(properties, documents);

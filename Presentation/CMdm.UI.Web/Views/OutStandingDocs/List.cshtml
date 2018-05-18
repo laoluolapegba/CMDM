@@ -21,11 +21,11 @@
 
 
             <div class="btn-group">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn bg-purple">
                     <i class="fa fa-download"></i>
                     Export
                 </button>
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">&nbsp;</span>
                 </button>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Account No")
+                                        @Html.Label("Account Number")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.ACID)
@@ -88,7 +88,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                <button type="button" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -151,7 +151,7 @@
                                         },
                                         {
                                             field: "ACID",
-                                            title: "Account No",
+                                            title: "Account Number",
                                             width: 100
                                         },
                                         {
@@ -195,6 +195,16 @@
                                     {
                                         field: "FREZ_REASON_CODE",
                                         title: "Reason",
+                                        width: 100
+                                    },
+                                    {
+                                        field: "ACCTOFFICER_CODE",
+                                        title: "Account Officer Code",
+                                        width: 100
+                                    },
+                                    {
+                                        field: "ACCTOFFICER_NAME",
+                                        title: "Account Officer Name",
                                         width: 100
                                     },
                                     {

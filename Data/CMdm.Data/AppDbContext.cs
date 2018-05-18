@@ -488,6 +488,11 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.OutStandingDoc> OutStandingDocs { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.AccountOfficer> AccountOfficers { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.WrongSchemeCode> WrongSchemeCodes { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.CustSegment> CustSegment { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.MultipleRefCode> MultipleRefCode { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.EmailPhone> EmailPhone { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.WrongSegment> WrongSegment { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
@@ -519,6 +524,16 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.GoldenRecord.GoldenRecordRules> GoldenRecordRules { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Report.CmReportDefn> RptDefinition { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.TMP_SEC_SUB3> TMP_SEC_SUB3 { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_WRONGSCHCODECLASS> CMDM_WRONGSCHCODECLASS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_MULTIPLE_REF_CODE> CMDM_MULTIPLE_REF_CODE { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_CMMN_EMAIL_PHONENO> CMDM_CMMN_EMAIL_PHONENO { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_WRONG_SEGMENTSUBSEGMENT> CMDM_WRONG_SEGMENTSUBSEGMENT { get; set; }
 
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 

@@ -91,7 +91,7 @@ namespace CMdm.Services.Messaging
             backJob.MAILBODY = htmlbody;
             db.CM_BACK_JOBS.Add(backJob);
             db.SaveChanges();
-            //SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
+            SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
         {
@@ -125,7 +125,7 @@ namespace CMdm.Services.Messaging
 
                 var smtp = new SmtpClient();
                 smtp.Host = smtpHost;
-                smtp.EnableSsl = true;
+                smtp.EnableSsl = false; //Can be sent to true if authentication is needed
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
                 var networkCred = new System.Net.NetworkCredential(smtpMail, smtpPassword /*smtp domain if needed*/);
@@ -202,7 +202,45 @@ namespace CMdm.Services.Messaging
                     var rejectEmailTemplate = File.ReadAllText(Path.Combine(TemplateFolderPath, job.MAIL_TEMPLATE));
 
                     AddDefaultNamespacesFromWebConfig(_templateService);
-                    htmlBody = _templateService.Parse(rejectEmailTemplate, reject_model, null, "ChangeNotifyApprover");
+                    htmlBody = _templateService.Parse(rejectEmailTemplate, reject_model, null, "RejectNotifyApprover");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.PhoneValidation:
+                    var phone_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.CUSTOMER_NO == job.CUSTOMER_NO);
+                    // start template 
+                    var phone_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = phone_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(phone_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME
+                    };
+
+                    var phoneEmailTemplate = File.ReadAllText(Path.Combine(TemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(phoneEmailTemplate, phone_model, null, "PhoneNotifyApprover");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.OutstandingDocuments:
+                    var outstanding_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.CUSTOMER_NO == job.CUSTOMER_NO);
+                    // start template 
+                    var outstanding_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = outstanding_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(outstanding_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME
+                    };
+
+                    var outstandingEmailTemplate = File.ReadAllText(Path.Combine(TemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(outstandingEmailTemplate, outstanding_model, null, "OutsNotifyApprover");
                     //end template
                     break;
                 default:

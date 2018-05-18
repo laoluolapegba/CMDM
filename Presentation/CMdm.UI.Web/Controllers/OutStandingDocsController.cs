@@ -58,7 +58,7 @@ namespace CMdm.UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FORACID,ACCT_NAME,SOL_ID,SCHM_CODE,SCHM_DESC,SCHM_TYPE,ACID,DOCUMENT_CODE,DUE_DATE,FREZ_REASON_CODE")] OutStandingDoc outStandingDoc)
+        public ActionResult Edit([Bind(Include = "FORACID,ACCT_NAME,SOL_ID,SCHM_CODE,SCHM_DESC,SCHM_TYPE,ACID,DOCUMENT_CODE,DUE_DATE,FREZ_REASON_CODE,ACCTOFFICER_CODE,ACCTOFFICER_NAME")] OutStandingDoc outStandingDoc)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            var curBranchList = db.CM_BRANCH; //.Where(a => a.BRANCH_ID == identity.BranchId);
+            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
 
 
@@ -111,7 +111,9 @@ namespace CMdm.UI.Web.Controllers
                     SCHM_DESC = x.SCHM_DESC,
                     SCHM_TYPE = x.SCHM_TYPE,
                     FREZ_REASON_CODE = x.FREZ_REASON_CODE,
-                    SOL_ID = x.SOL_ID
+                    SOL_ID = x.SOL_ID,
+                    ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
+                    ACCTOFFICER_NAME = x.ACCTOFFICER_NAME
                     //Id = x.RECORD_ID
 
                 }),

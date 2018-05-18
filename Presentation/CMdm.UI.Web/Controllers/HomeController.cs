@@ -46,13 +46,22 @@ namespace CMdm.UI.Web.Controllers
                 return AccessDeniedView();
 
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            BrnKpi kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
-            ViewBag.brnDQI = kpirow.BRN_DQI;
+            List<BrnKpi> kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+            ViewBag.brnDQI = kpirow[0].BRN_DQI;
 
             ViewData["BranchId"] = identity.BranchId;
             ViewData["CatalogId"] = 1;
             return View();
         }
+
+        public JsonResult StatisticsTrend()
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var trendingData = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+
+            return Json(trendingData, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
@@ -60,7 +69,7 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
 
              
-            BrnKpi kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+            List<BrnKpi> kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
             //using (AppDbContext ctx = new AppDbContext())
             //{
             //    /*
@@ -85,12 +94,17 @@ namespace CMdm.UI.Web.Controllers
             //}
             if(kpirow != null)
             {
-                ViewBag.openbrnExceptions = kpirow.BRN_OPEN_EXCEPTIONS;
-                ViewBag.brnPct = kpirow.BRN_PCT_CONTRIB;
-                ViewBag.brnDQI = kpirow.BRN_DQI;
-                ViewBag.brnCustomers = kpirow.BRN_CUST_COUNT.ToString("##,##");
-                ViewBag.recurringExption = kpirow.BRN_RECURRING_ERRORS;
-                ViewBag.bankCustomers = kpirow.BANK_CUST_COUNT.ToString("##,##");
+                ViewBag.allkpi = kpirow;
+                //ViewBag.openbrnExceptions = kpirow[0].BRN_OPEN_EXCEPTIONS.ToString("##,##");
+                //ViewBag.openbrnExceptions1 = kpirow[1].BRN_OPEN_EXCEPTIONS.ToString("##,##");
+                //ViewBag.openbrnExceptions2 = kpirow[2].BRN_OPEN_EXCEPTIONS.ToString("##,##");
+                //ViewBag.openbrnExceptions3 = kpirow[3].BRN_OPEN_EXCEPTIONS.ToString("##,##");
+
+                //ViewBag.brnPct = kpirow[kpirow.Count].BRN_PCT_CONTRIB;
+                //ViewBag.brnDQI = kpirow[kpirow.Count].BRN_DQI;
+                //ViewBag.brnCustomers = kpirow[kpirow.Count].BRN_CUST_COUNT.ToString("##,##");
+                //ViewBag.recurringExption = kpirow[kpirow.Count].BRN_RECURRING_ERRORS;
+                //ViewBag.bankCustomers = kpirow[kpirow.Count].BANK_CUST_COUNT.ToString("##,##");
             }
            
             /*

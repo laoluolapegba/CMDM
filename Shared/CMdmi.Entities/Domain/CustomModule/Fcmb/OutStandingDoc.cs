@@ -5,7 +5,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
    
-    [Table("VW_OUTSTANDING_DOCUMENTATION")]
+    [Table("VW_OUSTANDING_DOCUMENTATION")]
     public partial class OutStandingDoc
     {
         public OutStandingDoc()
@@ -42,6 +42,9 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
 
         public string FREZ_REASON_CODE { get; set; }
 
-        
+        public string ACCTOFFICER_CODE { get; set; }
+
+        public string ACCTOFFICER_NAME { get; set; }
+
     }
 }

@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMdm.UI.Web", "Presentation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMdm.Core", "Shared\CMdm.Core\CMdm.Core.csproj", "{C2EE2738-0AC8-4A7A-A737-0EF76AE9ED72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMdm.BackService", "Services\CMdm.BackService\CMdm.BackService.csproj", "{47D189E8-B476-4855-8022-DE586723BD93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +134,10 @@ Global
 		{C2EE2738-0AC8-4A7A-A737-0EF76AE9ED72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2EE2738-0AC8-4A7A-A737-0EF76AE9ED72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2EE2738-0AC8-4A7A-A737-0EF76AE9ED72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D189E8-B476-4855-8022-DE586723BD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D189E8-B476-4855-8022-DE586723BD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D189E8-B476-4855-8022-DE586723BD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D189E8-B476-4855-8022-DE586723BD93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{1E2D609D-1A57-4EE1-9DE8-D06893345329} = {7F9349B5-1108-4853-84E2-1616221F2B9F}
 		{2AD3ACB9-AE01-4AA2-8B82-A06137109700} = {7F9349B5-1108-4853-84E2-1616221F2B9F}
 		{C2EE2738-0AC8-4A7A-A737-0EF76AE9ED72} = {1434453E-E49D-47D6-BC73-51B15256AB1B}
+		{47D189E8-B476-4855-8022-DE586723BD93} = {D2A81E36-7365-4338-BEE2-0DFA70B29DF6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {727294B2-7479-492C-83DF-2EACCD6602C4}

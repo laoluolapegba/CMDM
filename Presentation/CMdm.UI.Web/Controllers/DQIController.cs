@@ -160,7 +160,8 @@ namespace CMdm.UI.Web.Controllers
             model.Dimensions.Add(new SelectListItem
             {
                 Value = "0",
-                Text = "All"
+                Text = "All",
+                Selected = true
             });
             //var weights = from Weights in db.MDM_WEIGHTS
             //              select new WeightsViewModel
