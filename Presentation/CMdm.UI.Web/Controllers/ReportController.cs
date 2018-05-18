@@ -24,7 +24,7 @@ namespace CMdm.UI.Web.Controllers
             //        break;
             //}
             ViewBag.ShowIFrame = false;
-            ReportRequestViewModel model = new ReportRequestViewModel();
+            ReportRequestModel model = new ReportRequestModel();
             model.FROM_DATE = DateTime.Now;
             model.TO_DATE = DateTime.Now.AddDays(5);
 
@@ -70,7 +70,7 @@ namespace CMdm.UI.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ReportViewer(ReportRequestViewModel reportDefn, FormCollection formitems)
+        public ActionResult ReportViewer(ReportRequestModel reportDefn, FormCollection formitems)
         {
             #region ReportFieldValidations
             switch (reportDefn.REPORT_ID)

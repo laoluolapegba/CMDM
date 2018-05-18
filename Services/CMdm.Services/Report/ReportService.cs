@@ -8,9 +8,9 @@ using CMdm.Entities.Domain.Dqi;
 
 namespace CMdm.Services.Report
 {
-    public class ReportService : IReportService
+    public class ReportServiceImp : IReportService
     {
-        public MdmDqRunException GetPendingExceptions(ReportRequestViewModel reportParams)
+        public MdmDqRunException GetPendingExceptions(ReportRequestModel reportParams)
         {
             throw new NotImplementedException();
         }

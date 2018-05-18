@@ -40,7 +40,7 @@ namespace CMdm.UI.Web
             rptViewer.ProcessingMode = ProcessingMode.Local;
 
             rptViewer.LocalReport.ReportPath = "";
-            ReportRequestViewModel model = (ReportRequestViewModel)Session["ReportModel"];
+            ReportRequestModel model = (ReportRequestModel)Session["ReportModel"];
             rptViewer.LocalReport.ReportPath = Server.MapPath(model.REPORT_URL);
             rptViewer.LocalReport.EnableExternalImages = true;
 
@@ -53,7 +53,7 @@ namespace CMdm.UI.Web
 
             rptViewer.LocalReport.DataSources.Clear();
             DateTime _to_date = model.TO_DATE.AddDays(1);
-            _reportService = new ReportService();
+            _reportService = new ReportServiceImp();
             var reportDataSet = _reportService.GetPendingExceptions(model);
 
             rptViewer.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource(model.DATASETNAME, reportDataSet));

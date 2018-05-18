@@ -13,6 +13,6 @@ namespace CMdm.Services.Report
     /// </summary>
     public interface IReportService
     {
-        MdmDqRunException GetPendingExceptions(ReportRequestViewModel reportParams);
+        MdmDqRunException GetPendingExceptions(ReportRequestModel reportParams);
     }
 }
