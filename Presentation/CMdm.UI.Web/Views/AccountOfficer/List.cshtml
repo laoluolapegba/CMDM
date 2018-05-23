@@ -1,7 +1,7 @@
 ﻿@using CMdm.Framework;
 @model CMdm.UI.Web.Models.CustomModule.Fcmb.AccountOfficerModel
 @{
-    ViewBag.Title = "Account Officer Validation";
+    ViewBag.Title = "Accounts With No AO Codes";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
-            Account Officer Validation
-        </h1>
+        @*<h1 class="pull-left">
+            Accounts With No AO Codes
+        </h1>*@
         <div class="pull-right">
 
             <div class="btn-group">
@@ -153,7 +153,7 @@
                                         {
                                        field: "SOL_ID",
                                        title: "Branch Code",
-                                       width: 70,
+                                       width: 50,
                                         },
 
                                     {
@@ -164,7 +164,7 @@
                                     {
                                         field: "SCHM_CODE",
                                         title: "Product Code",
-                                        width: 200
+                                        width: 50
                                     },
                                     {
                                         field: "ACCT_OPN_DATE",
@@ -180,7 +180,7 @@
                                         {
                                             field: "AO_NAME",
                                             title: "Account Officer",
-                                            width: 200
+                                            width: 100
                                         },
                                         {
                                             field: "SBU_CODE",
@@ -190,7 +190,7 @@
                                         {
                                             field: "SBU_NAME",
                                             title: "SBU Name",
-                                            width: 50
+                                            width: 200
                                         },
                                         {
                                             field: "BROKER_CODE",
@@ -200,12 +200,12 @@
                                         {
                                             field: "BROKER_NAME",
                                             title: "Broker Name",
-                                            width: 50
+                                            width: 100
                                         },
                                     {
                                         field: "RUN_DATE",
                                         title: "Run date",
-                                        width: 100,
+                                        width: 50,
                                         template: "#= kendo.toString(kendo.parseDate(RUN_DATE, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
                                     },
                                     ]
@@ -242,8 +242,24 @@
                     });
 
 
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
 
                     //wire up checkboxes.

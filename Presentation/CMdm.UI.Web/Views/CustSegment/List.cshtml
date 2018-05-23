@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Wrong Sector / Subsector Mapping
-        </h1>
+        </h1>*@
         <div class="pull-right">
             <div class="btn-group">
                 <button type="button" class="btn bg-purple">
@@ -140,12 +140,12 @@
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "ORGKEY",
+                                            title: "Customer Number",
                                             width: 50
                                         },
                                         {
                                             field: "CUST_FIRST_NAME",
-                                            title: "First  Name",
+                                            title: "First Name",
                                             width: 100
                                         },
                                         {
@@ -201,7 +201,7 @@
                                         },
                                         {
                                             field: "SECTOR",
-                                            title: "Sector",
+                                            title: "Sector Code",
                                             width: 50
                                         },
                                         {
@@ -211,7 +211,7 @@
                                         },
                                         {
                                             field: "SUBSECTOR",
-                                            title: "Subsector",
+                                            title: "Subsector Code",
                                             width: 50
                                         },
                                         {
@@ -265,9 +265,25 @@
         });
 
 
-        $('#mastercheckbox').click(function () {
-            $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
-        });
+            //$('#mastercheckbox').click(function () {
+            //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+            //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+            //});
+
+            $('#mastercheckbox').change(function (ev) {
+                var checked = ev.target.checked;
+                $('.checkboxGroups').each(function (idx, item) {
+                    if (checked) {
+                        if (!($(item).closest('tr').is('.k-state-selected'))) {
+                            $(item).click();
+                        }
+                    } else {
+                        if ($(item).closest('tr').is('.k-state-selected')) {
+                            $(item).click();
+                        }
+                    }
+                });
+            });
 
         //wire up checkboxes.
         $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {

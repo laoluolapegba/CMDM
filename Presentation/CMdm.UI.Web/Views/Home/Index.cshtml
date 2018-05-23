@@ -1,7 +1,7 @@
 ﻿@using CMdm.Entities.Domain.Kpi
 @{
     ViewBag.Title = "Common Statistics";
-    List < BrnKpi > allKpi = ViewBag.allkpi;
+    List<BrnKpi> allKpi = ViewBag.allkpi;
 }
 
 @section Menu {
@@ -18,7 +18,7 @@
     <section class="content">
         <!--Branch Customers-->
         <div class="col-lg-6 col-xs-6">
-            <div class="box box-purple">
+            <div class="box box-solid">
                 <div class="box-header with-border">
                     <i class="fa fa-users"></i>
                     <h3 class="box-title">Total Customers</h3>
@@ -36,38 +36,38 @@
                 <div class="box-body">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
-                    {
-                        if (brnkpi == allKpi.Last())
                         {
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                                <div class="info-box">
-                                    <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">Total Customers</span>
-                                        <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                            if (brnkpi == allKpi.Last())
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Customers</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
                                     </div>
-                                    <!-- /.info-box-content -->
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box -->
-                            </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <div class="info-box">
-                                <span class="info-box-icon bg-purple"><i class="fa fa-user"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Tier @pos</span>
-                                    <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-purple"><i class="fa fa-user"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Tier @pos</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_CUST_COUNT)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                }
-            }
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
         <!--/Branch Customers-->
         <!--Branch DQI-->
         <div class="col-lg-6 col-xs-6">
-            <div class="box box-purple">
+            <div class="box box-solid">
                 <div class="box-header with-border">
                     <i class="fa fa-check-circle"></i>
                     <h3 class="box-title">Data Quality Index</h3>
@@ -92,64 +92,75 @@
 
                 <div class="box-body">
                     <div class="row">
-                        @foreach (var brnkpi in allKpi)
-                    {
-                        if (brnkpi == allKpi.Last())
-                        {
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                                <div class="info-box">
-                                    <span class="info-box-icon bg-red"><i class="fa fa-check-circle"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">Total Open Exceptions</span>
-                                        <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
-                                    </div>
-                                    <!-- /.info-box-content -->
-                                </div>
-                                <!-- /.info-box -->
-                            </div>
-                    }
-                    else
-                    {
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <div class="info-box">
-                                <span class="info-box-icon bg-purple"><i class="fa fa-check-circle-o"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Tier @pos</span>
-                                    <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                            <div id="gauge1" class="200x160px"></div>
                         </div>
-                }
-            }
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gauge2" class="200x160px"></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gauge3" class="200x160px"></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gauge4" class="200x160px"></div>
+                        </div>
+                        @*@foreach (var brnkpi in allKpi)
+                        {
+                            if (brnkpi == allKpi.Last())
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="fa fa-check-circle"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Open Exceptions</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-purple"><i class="fa fa-check-circle-o"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Tier @pos</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_DQI)%</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </div>
+                            }
+                        }*@
                     </div>
                     <a href="@Url.Action("BranchDqi", "Home")" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
         <!--/Branch DQI-->
-        
         <!--Exceptions Graph-->
         @*<div class="col-lg-6 col-xs-6">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Exceptions By Tier</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Exceptions By Tier</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="exceptions-chart" style="height:280px;"></div>
                     </div>
                 </div>
-
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="exceptions-chart" style="height:280px;"></div>
-                </div>
-            </div>
-        </div>*@
+            </div>*@
         <!--/Exceptions Graph-->
     </section>
 </div>
@@ -158,7 +169,7 @@
     <section class="content">
         <!--Open Exeptions-->
         <div class="col-lg-6 col-xs-6">
-            <div class="box box-purple">
+            <div class="box box-solid">
                 <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
                     <h3 class="box-title">Open Exceptions</h3>
@@ -176,38 +187,38 @@
                 <div class="box-body">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
-                    {
-                        if (brnkpi == allKpi.Last())
                         {
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                                <div class="info-box">
-                                    <span class="info-box-icon bg-red"><i class="fa fa-bar-chart-o"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">Total Open Exceptions</span>
-                                        <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                            if (brnkpi == allKpi.Last())
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="fa fa-bar-chart-o"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Open Exceptions</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
                                     </div>
-                                    <!-- /.info-box-content -->
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box -->
-                            </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <div class="info-box">
-                                <span class="info-box-icon bg-purple"><i class="fa fa-bar-chart-o"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Tier @pos</span>
-                                    <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-yellow"><i class="fa fa-bar-chart-o"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Tier @pos</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_OPEN_EXCEPTIONS)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                }
-            }
+                            }
+                        }
                     </div>
                     <a href="@Url.Action("Index", "DQQue")" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
@@ -216,7 +227,7 @@
         <!--/Open Exeptions-->
         <!--Bankwide % Contribution-->
         <div class="col-lg-6 col-xs-6">
-            <div class="box box-purple">
+            <div class="box box-solid">
                 <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
                     <h3 class="box-title">Bankwide % Contribution</h3>
@@ -234,27 +245,27 @@
                 <div class="box-body">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
-                    {
-                        if (brnkpi == allKpi.Last())
                         {
-                            <div class="col-xs-6 col-md-6 text-center">
-                                <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
-                                       data-width="100"
-                                       data-height="100" data-fgColor="#a94442">
-                                <div class="knob-label"><b>Total Contributions</b></div>
-                            </div>
-                    }
-                    else
-                    {
-                        <div class="col-xs-6 col-md-6 text-center">
-                            @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
-                                   data-width="100"
-                                   data-height="100" data-fgColor="#605ca8">
-                            <div class="knob-label"><b>Tier @pos</b></div>
-                        </div>
-                }
-            }
+                            if (brnkpi == allKpi.Last())
+                            {
+                                <div class="col-xs-6 col-md-6 text-center">
+                                    <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
+                                           data-width="100"
+                                           data-height="100" data-fgColor="#a94442">
+                                    <div class="knob-label"><b>Total Contributions</b></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-6 col-md-6 text-center">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
+                                           data-width="100"
+                                           data-height="100" data-fgColor="#605ca8">
+                                    <div class="knob-label"><b>Tier @pos</b></div>
+                                </div>
+                            }
+                        }
 
                     </div>
                 </div>
@@ -262,13 +273,13 @@
         </div>
         <!--/Bankwide % Contribution-->
     </section>
- </div>
+</div>
 
 <div class="row">
     <section class="content">
         <!--Recurring Errors-->
         <div class="col-lg-6 col-xs-6">
-            <div class="box box-purple">
+            <div class="box box-solid">
                 <div class="box-header with-border">
                     <i class="fa fa-exclamation-circle"></i>
                     <h3 class="box-title">Recurring Errors</h3>
@@ -286,38 +297,38 @@
                 <div class="box-body">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
-                    {
-                        if (brnkpi == allKpi.Last())
                         {
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                                <div class="info-box">
-                                    <span class="info-box-icon bg-red"><i class="fa fa-exclamation-circle"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">Total Recurring Errors</span>
-                                        <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                            if (brnkpi == allKpi.Last())
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="fa fa-exclamation-circle"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Recurring Errors</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
                                     </div>
-                                    <!-- /.info-box-content -->
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box -->
-                            </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <div class="info-box">
-                                <span class="info-box-icon bg-purple"><i class="fa fa-exclamation-triangle"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Tier @pos</span>
-                                    <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-purple"><i class="fa fa-exclamation-triangle"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Tier @pos</span>
+                                            <span class="info-box-number">@Html.DisplayFor(modelItem => brnkpi.BRN_RECURRING_ERRORS)</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                }
-            }
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -334,7 +345,7 @@
                     <a href="@Url.Action("AuthList", "DQQue")" class="btn btn-warning">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
                 <!-- /.info-box-content -->
-                
+
             </div>
             <!-- /.info-box -->
         </div>
@@ -355,26 +366,26 @@
         <!--/New Customers-->
         <!--Branch DQI Graph-->
         @*<div class="col-lg-6 col-xs-6">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">DQI By Tier</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">DQI By Tier</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="dqi-chart" style="height:280px;"></div>
                     </div>
                 </div>
-
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="dqi-chart" style="height:280px;"></div>
-                </div>
-            </div>
-        </div>*@
+            </div>*@
         <!--/Branch DQI Graph-->
     </section>
 </div>
-  
+
 @section Scripts {
     @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
     <script>
@@ -390,54 +401,96 @@
     @Scripts.Render("~/AdminLTE/plugins/morris/js")
     @Scripts.Render("~/AdminLTE/plugins/datepicker/js")
     @Scripts.Render("~/Scripts/Home/DashboardV1")
-    <script>    
+    @Scripts.Render("~/AdminLTE/plugins/justgage-1.2.2")
+    <script>
+        
+        var g = new JustGage({
+            id: "gauge1",
+            value: @allKpi[0].BRN_DQI + "%",
+            min: 0,
+            max: 100,
+            levelColors: ["#f0ad4e"],
+            title: "Tier 1"
+        });
+
+        //Find a way to not hard code this guy
+        @*var g1 = new JustGage({
+            id: "gauge2",
+            value: @allKpi[1].BRN_DQI,
+            min: 0,
+            max: 100,
+            levelColors: ["#f0ad4e"],
+            title: "Tier 2"
+        });
+
+        var g2 = new JustGage({
+            id: "gauge3",
+            value: @allKpi[2].BRN_DQI,
+            min: 0,
+            max: 100,
+            levelColors: ["#f0ad4e"],
+            title: "Tier 3"
+        });
+
+        var g3 = new JustGage({
+            id: "gauge4",
+            value: @allKpi[3].BRN_DQI,
+            min: 0,
+            max: 100,
+            levelColors: ["#d9534f"],
+            title: "Total DQI"
+        });
+        
+
         var address = "/CMDM/Home";
-        //var address = "/Home";
+        var address = "/Home";
 
-            $.ajax({
-                type: "GET",
-                url: address + "/StatisticsTrend",
-                contentType: "application/json",
-                datatype: 'json',
-                async: false,
-                success: function (data) {
-                    console.log(data);
-                    for (var i = 0; i < data.lenght; i++) {
-                        exceptions[i] = data[i][i];
-                    }
-
-                    config = {
-                        data: data,
-                        xkey: 'BRN_OPEN_EXCEPTIONS',
-                        ykeys: ['BRN_OPEN_EXCEPTIONS'],
-                        labels: ['Open Exceptions'],
-                        fillOpacity: 0.6,
-                        hideHover: 'auto',
-                        behaveLikeLine: true,
-                        resize: true,
-                        pointFillColors: ['#ffffff'],
-                        pointStrokeColors: ['black'],
-                        lineColors: ['gray', 'red']
-                    };
-                    //config.element = 'exceptions-chart';
-                    //Morris.Bar(config);
-
-                    dqiconfig = {
-                        data: data,
-                        xkey: 'BRN_DQI',
-                        ykeys: ['BRN_DQI'],
-                        labels: ['Data Quality'],
-                        fillOpacity: 0.6,
-                        hideHover: 'auto',
-                        behaveLikeLine: true,
-                        resize: true,
-                        pointFillColors: ['#ffffff'],
-                        pointStrokeColors: ['black'],
-                        lineColors: ['gray', 'red']
-                    };
-                    //dqiconfig.element = 'dqi-chart';
-                    //Morris.Bar(dqiconfig);
+        $.ajax({
+            type: "GET",
+            url: address + "/StatisticsTrend",
+            contentType: "application/json",
+            datatype: 'json',
+            async: false,
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    exceptions[i] = data[i][i];
                 }
-            });
+            }
+        });
+
+
+                config = {
+                    data: data,
+                    xkey: 'BRN_OPEN_EXCEPTIONS',
+                    ykeys: ['BRN_OPEN_EXCEPTIONS'],
+                    labels: ['Open Exceptions'],
+                    fillOpacity: 0.6,
+                    hideHover: 'auto',
+                    behaveLikeLine: true,
+                    resize: true,
+                    pointFillColors: ['#ffffff'],
+                    pointStrokeColors: ['black'],
+                    lineColors: ['gray', 'red']
+                };
+                config.element = 'exceptions-chart';
+                Morris.Bar(config);
+
+                dqiconfig = {
+                    data: data,
+                    xkey: 'BRN_DQI',
+                    ykeys: ['BRN_DQI'],
+                    labels: ['Data Quality'],
+                    fillOpacity: 0.6,
+                    hideHover: 'auto',
+                    behaveLikeLine: true,
+                    resize: true,
+                    pointFillColors: ['#ffffff'],
+                    pointStrokeColors: ['black'],
+                    lineColors: ['gray', 'red']
+                };
+                dqiconfig.element = 'dqi-chart';
+                Morris.Bar(dqiconfig);
+            }*@
     </script>
 }

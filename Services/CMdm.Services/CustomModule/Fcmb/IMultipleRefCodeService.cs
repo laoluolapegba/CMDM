@@ -31,7 +31,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<MultipleRefCode> GetAllMultipleRefCodes(string name = "", string branchCode = "",
+        IPagedList<MultipleRefCode> GetAllMultipleRefCodes(string name = "", string refCode = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
     }
 }

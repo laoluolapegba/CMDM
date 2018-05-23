@@ -78,7 +78,6 @@
         });
     }
     function onCriteriaChange() {
-        alert('got here');
         var catalogId = $("#Catalog").data("kendoDropDownList"),
             branchCode = $("#Branch").data("kendoDropDownList"),
         dqibreakdownChart = $("#dqibreakdown").data("kendoChart");
@@ -106,38 +105,12 @@
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
                         <div class="chartgoeshere">
-                            <div>
-                                @Html.Label("Select Tier")
-                            </div>
-
-                            @(Html.Kendo().DropDownList()
-                                  .Name("tier")
-                                  .DataTextField("Text")
-                                  .DataValueField("Value")
-                                  .Events(e => e.Change("onCriteriaChange"))
-                                  .BindTo(new List<SelectListItem>() {
-                                      new SelectListItem() {
-                                          Text = "Tier 1",
-                                          Value = "1"
-                                      },
-                                      new SelectListItem() {
-                                          Text = "Tier 2",
-                                          Value = "2"
-                                      },
-                                      new SelectListItem() {
-                                          Text = "Tier 3",
-                                          Value = "3"
-                                      }
-                                  })
-                                  .Value("1")
-
-                            )
                             <div id="dqigauge">
                                 <a data-toggle="tooltip" title="Tooltip"></a>
                             </div>
 
                             
-                            <p class="text-center">Average Data Quality Score (@ViewBag.brnDQI %)</p>
+                            <p class="text-center">DQI Score (@ViewBag.brnDQI %)</p>
                         </div>
                     </div>
                     
@@ -163,19 +136,18 @@
                     <div class="col-md-9 col-sm-8">
                         <div class="chart2goeshere">
                             <div id="criteria">
-                                <div>
-                                    @Html.Label("Select Branch")
-                                </div>
-                                @( Html.Kendo().DropDownList()
+                                @(Html.Kendo().DropDownList()
+                             .OptionLabel("Select Branch Code...")
                                 .Name("Branch")
+                                .ValuePrimitive(true)
+                                .Value(ViewData["BranchId"].ToString())
                                     .HtmlAttributes(new { @style = "width:250px" })
                                         .Filter(FilterType.Contains)
                                 .DataSource(datasource => datasource
                                               .Read(read => read.Action("GetBranches", "Home")
                                               )).DataTextField("BranchName").DataValueField("BranchId")
                                                       .Events(ev => ev.Change("onCriteriaChange"))
-                                )
-                                
+                                                            )
                                 @(Html.Kendo().DropDownList()
                                  .OptionLabel("Select Catalog...")
                                     .Name("Catalog")
@@ -189,7 +161,6 @@
                                                   .DataValueField("CATALOG_ID")
                                      .Events(ev => ev.Change("onCriteriaChange"))
                                 )
-                                
                             </div>
 
                             <div class="barchart-wrapper">
@@ -213,16 +184,12 @@
                                             series.Column(model => model.DQI).Name("Attribute").Axis("").Color("#2E1A47");
 
                                         })
-                                          .CategoryAxis(
-
-                                                axis => axis
-                                                .Categories(a=>a.ATTRIBUTE)
+                                          .CategoryAxis(axis => axis
+                                                .Categories("Sex", "Title", "Surname", "Firstname", "Othername", "DOB", "Marital Status")
                                                 .MajorGridLines(lines => lines.Visible(false))
-
-
                                             )
                                          .ValueAxis(axis => axis.Numeric("Percent")
-                                         .Title("DQI")
+                                         .Title("Percent")
                                          .MajorGridLines(m => m.Visible(false))
                                          .Line(line => line.Visible(false))
                                          .MajorUnit(10)
@@ -235,8 +202,6 @@
                                 )
                                 <div id="NoData" class="overlay"><div></div></div>
                             </div>
-
-                            <p class="text-center">Data Quality by Field</p>
 
                         </div>
                     </div>
@@ -261,14 +226,7 @@
     function onListDataBound(e) {
         //this.value(0);
     }
-    function BranchDataBound() {
-        this.value("205");
 
-    }
-    function CatalogDataBound() {
-        this.value("1");
-
-    }
 </script>
 @section Scripts {
     @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")

@@ -63,10 +63,10 @@ namespace CMdm.UI.Web.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult MultipleRefCodesList(DataSourceRequest command, WrongSchemeCodeModel model, string sort, string sortDir)
+        public virtual ActionResult MultipleRefCodesList(DataSourceRequest command, MultipleRefCodeModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllMultipleRefCodes(model.FORACID, model.SOL_ID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllMultipleRefCodes(model.FORACID, model.REF_CODE, model.SOL_ID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -81,6 +81,78 @@ namespace CMdm.UI.Web.Controllers
                     ACCOUNTOFFICER_NAME = x.ACCOUNTOFFICER_NAME,
                     REF_CODE = x.REF_CODE,
                     SOL_ID = x.SOL_ID,
+                }),
+                Total = items.TotalCount
+            };
+
+            return Json(gridModel);
+        }
+
+        public ActionResult AuthList(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var model = new MultipleRefCodeModel();
+            model.REF_CODE = id;
+
+            //foreach (var at in _dqService.GetAllActivityTypes())
+            //{
+            //    model.ActivityLogType.Add(new SelectListItem
+            //    {
+            //        Value = at.Id.ToString(),
+            //        Text = at.Name
+            //    });
+            //}
+            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+
+            model.Branches.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            //model.Branches.Add(new SelectListItem
+            //{
+            //    Value = "0",
+            //    Text = "All"
+            //});
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AuthList(DataSourceRequest command, MultipleRefCodeModel model, string sort, string sortDir)
+        {
+            //DateTime? startDateValue = (model.CreatedOnFrom == null) ? null
+            //    : (DateTime?)model.CreatedOnFrom.Value;
+
+            //DateTime? endDateValue = (model.CreatedOnTo == null) ? null
+            //                : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
+
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+            //RouteValueDictionary routeValues;
+
+            string goldenRecord = "";
+            if (routeValues.ContainsKey("id"))
+                goldenRecord = (string)routeValues["id"];
+
+            var items = _dqQueService.GetAllMultipleRefCodes(model.FORACID, goldenRecord, model.SOL_ID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new MultipleRefCodeModel
+                {
+                    Id = x.ID,
+                    CIF_ID = x.CIF_ID,
+                    FORACID = x.FORACID,
+                    DUPLICATION_ID = x.DUPLICATION_ID,
+                    ACCOUNTOFFICER_NAME = x.ACCOUNTOFFICER_NAME,
+                    REF_CODE = x.REF_CODE,
+                    SOL_ID = x.SOL_ID
                 }),
                 Total = items.TotalCount
             };

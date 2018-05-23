@@ -14,9 +14,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Outstanding Records
-        </h1>
+        </h1>*@
         <div class="pull-right">
             
            
@@ -59,7 +59,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Customer Name")
+                                        @Html.Label("Account Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.SearchName)
@@ -230,9 +230,26 @@
                     });
 
                     
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
+
 
                     //wire up checkboxes.
                     $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {

@@ -1,46 +1,29 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.WrongSchemeCodeModel
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.MultipleRefCodeModel
 @{
-    ViewBag.Title = "Wrong Customer/Scheme Code Mapping";
+    ViewBag.Title = "Multiple Ref Code Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
 }
+<style>
+
+    .nav-tabs-custom > .tab-content {
+        color: black;
+    }
+
+    .modal-dialog {
+        width: 900px;
+    }
+</style>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
         @*<h1 class="pull-left">
-            Wrong Customer/Scheme Code Mapping
+            Multiple Ref Code Details
         </h1>*@
-        <div class="pull-right">
-
-            <div class="btn-group">
-                <button type="button" class="btn bg-purple">
-                    <i class="fa fa-download"></i>
-                    Export
-                </button>
-                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">&nbsp;</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="divider"></li>
-                    <li>
-                        <button type="submit" name="exportexcel-all">
-                            <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel All
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" id="exportexcel-selected">
-                            <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel Selected
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
 
     <div class="content">
@@ -90,7 +73,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("WrongSchemeCodesList", "WrongSchemeCodes"))",
+                                                url: "@Html.Raw(Url.Action("AuthList", "MultipleRefCode"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -132,8 +115,8 @@
                                             width: 50
                                         },
                                         {
-                                            field: "CIF_ID",
-                                            title: "Customer Number",
+                                            field: "REF_CODE",
+                                            title: "AO Code",
                                             width: 100
                                         },
                                         {
@@ -142,30 +125,14 @@
                                             width: 100
                                         },
                                         {
-                                       field: "SCHM_CODE",
-                                       title: "Scheme Code",
-                                       width: 70,
-                                        },
-
-                                    {
-                                        field: "ACCOUNTOFFICER_CODE",
-                                        title: "Account Officer Code",
-                                        width: 70,
-                                    },
-                                    {
-                                        field: "ACCOUNTOFFICER_NAME",
-                                        title: "Account Officer",
-                                        width: 100
-                                    },
-                                     {
-                                         field: "SCHMECODE_CLASSIFIATION",
-                                         title: "Scheme Code Classification",
-                                         width: 50
+                                            field: "DUPLICATION_ID",
+                                            title: "Duplication ID",
+                                            width: 100
                                         },
                                         {
-                                            field: "ACCT_NAME",
-                                            title: "Account Name",
-                                            width: 200
+                                            field: "ACCOUNTOFFICER_NAME",
+                                            title: "Account Officer",
+                                            width: 100
                                         },
                                         {
                                             field: "SOL_ID",
@@ -173,16 +140,10 @@
                                             width: 50
                                         },
                                         {
-                                            field: "CUSTOMER_TYPE",
-                                            title: "Customer Type",
+                                            field: "CIF_ID",
+                                            title: "Customer Number",
                                             width: 100
                                         },
-                                        {
-                                            field: "DATE_OF_RUN",
-                                            title: "Run date",
-                                            width: 100,
-                                            template: "#= kendo.toString(kendo.parseDate(DATE_OF_RUN, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
-                                    },
                                     ]
                                 });
                             });
@@ -290,7 +251,7 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "WrongSchemeCodes", FormMethod.Post, new { id = "export-excel-selected-form" }))
+@using (Html.BeginForm("ExportExcelSelected", "MultipleRefCode", FormMethod.Post, new { id = "export-excel-selected-form" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />

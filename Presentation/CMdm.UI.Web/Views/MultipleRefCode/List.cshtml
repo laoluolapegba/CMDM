@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Multiple AO Codes
-        </h1>
+        </h1>*@
         <div class="pull-right">
             <div class="btn-group">
                 <button type="button" class="btn bg-purple">
@@ -131,6 +131,12 @@
                                             width: 50
                                         },
                                         {
+                                            field: "REF_CODE",
+                                            title: "AO Code",
+                                            width: 100,
+                                            template: '<a href="@Url.Content("~/MultipleRefCode/AuthList/")#=REF_CODE#">#:REF_CODE#</a>'
+                                        },
+                                        {
                                             field: "FORACID",
                                             title: "Account  Number",
                                             width: 100
@@ -146,18 +152,13 @@
                                             width: 100
                                         },
                                         {
-                                            field: "REF_CODE",
-                                            title: "Ref Code",
-                                            width: 100
-                                        },
-                                        {
                                             field: "SOL_ID",
                                             title: "Branch Code",
                                             width: 50
                                         },
                                         {
                                             field: "CIF_ID",
-                                            title: "CIF ID",
+                                            title: "Customer Number",
                                             width: 100
                                         },
                                     ]
@@ -194,8 +195,24 @@
                     });
 
 
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
 
                     //wire up checkboxes.
