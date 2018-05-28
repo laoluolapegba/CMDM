@@ -1,4 +1,5 @@
 ﻿using CMdm.Core;
+using CMdm.Data.Identity.Models;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.Dqi;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMdm.Services.UserAdmin
+namespace CMdm.Services.Security
 {
     public interface IPermissionsService
     {
@@ -28,5 +29,10 @@ namespace CMdm.Services.UserAdmin
         IPagedList<CM_PERMISSIONS> GetAllPermissions(string permdesc,int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
         IPagedList<CM_PERMISSIONS> GetAllRoles(string name = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
+        bool HasPermission(string requiredController, string requiredAction);
+        bool Authorize(string permissionName, ApplicationUser user);
+        bool HasRole(string role);
+        bool IsLevel(CMdm.Entities.Domain.User.AuthorizationLevel AuthLevel);
+
     }
 }

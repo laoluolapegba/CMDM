@@ -10,6 +10,7 @@ using CMdm.Data;
 using CMdm.Data.Rbac;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
+using CMdm.Entities.Domain.User;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -45,6 +46,7 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult Create()
         {
             ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            ViewBag.USER_LEVELS = new SelectList(db.CM_AUTH_LEVELS, "LEVEL_ID", "LEVEL_NAME");
             return View();
         }
 
@@ -73,6 +75,7 @@ namespace CMdm.UI.Web.Controllers
                 //return RedirectToAction("Index");
             }
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            ViewBag.USER_LEVELS = new SelectList(db.CM_AUTH_LEVELS, "LEVEL_ID", "LEVEL_NAME");
             return View(cM_USER_ROLES);
         }
 
@@ -80,6 +83,7 @@ namespace CMdm.UI.Web.Controllers
         public ActionResult Edit(int? id)
         {
             ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            ViewBag.USER_LEVELS = new SelectList(db.CM_AUTH_LEVELS, "LEVEL_ID", "LEVEL_NAME");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -115,6 +119,12 @@ namespace CMdm.UI.Web.Controllers
                 //return RedirectToAction("Index");
             }
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            //var userLevels = Enum.GetValues(typeof(CMdm.Entities.Domain.User.AuthorizationLevel))
+            //                .Cast<CMdm.Entities.Domain.User.AuthorizationLevel>()
+            //                .Select(v => v.ToString())
+            //                .ToList();
+            //List<AuthorizationLevelModel> userLevels = ((CMdm.Entities.Domain.User.AuthorizationLevel[])Enum.GetValues(typeof(CMdm.Entities.Domain.User.AuthorizationLevel))).Select(c => new AuthorizationLevelModel() { Value = (int)c, Name = c.ToString() }).ToList();
+            ViewBag.USER_LEVELS = new SelectList(db.CM_AUTH_LEVELS, "LEVEL_ID", "LEVEL_NAME");
             return View(cM_USER_ROLES);
         }
 

@@ -534,8 +534,9 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_CMMN_EMAIL_PHONENO> CMDM_CMMN_EMAIL_PHONENO { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_WRONG_SEGMENTSUBSEGMENT> CMDM_WRONG_SEGMENTSUBSEGMENT { get; set; }
+        public DbSet<CMdm.Entities.Domain.User.CM_AUTH_LEVEL> CM_AUTH_LEVELS { get; set; }
 
-        //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
+        //public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
 
     }

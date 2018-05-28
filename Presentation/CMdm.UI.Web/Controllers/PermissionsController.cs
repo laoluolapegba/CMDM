@@ -10,7 +10,7 @@ using CMdm.Data;
 using CMdm.Data.Rbac;
 using CMdm.UI.Web.Models.UserAdmin;
 using CMdm.Framework.Kendoui;
-using CMdm.Services.UserAdmin;
+using CMdm.Services.Security;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
 
