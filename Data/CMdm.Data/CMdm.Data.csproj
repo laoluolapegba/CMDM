@@ -93,6 +93,7 @@
     <Compile Include="Initializers\SQLServerInitializer.cs" />
     <Compile Include="OracleEFExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rbac\CMDM_BRANCH_MAIL.cs" />
     <Compile Include="Rbac\CM_AUDIT_TRAIL.cs" />
     <Compile Include="Rbac\CM_BRANCH.cs" />
     <Compile Include="Rbac\CM_MAKER_CHECKER_XREF.cs" />

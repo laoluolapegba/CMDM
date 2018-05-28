@@ -1,17 +1,83 @@
-﻿
+﻿@model CMdm.Entities.ViewModels.MessageModel
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Amu</title>
+    <title>CMDM Summary Notification</title>
+    <style>
+        body {
+            margin: 100px 400px;
+        }
+
+        .head-text {
+            text-align: center;
+            background-color: purple;
+            color: white;
+        }
+
+        .date {
+            float: right;
+            color: #DAA520;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            height: 30px;
+            background-color: #DAA520;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <div> 
-    </div>
+    <h1 class="head-text">CMDM Notification Service</h1>
+    <p class="date">@Model.RequiredDate</p>
+    <p>Dear <b style="color:purple">@Model.RECIPIENTNAME</b></p>
+    <p>This is to inform you that the following customer data in these reports are pending for your attention. Please login and make corrections</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Report</th>
+                <th>No of Customers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Customers With Multiple IDs</td>
+                <td>@Model.MULTIPLE_ID</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Branch Details</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Branch ID</th>
+                <th>Branch Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.BRANCH_ID</td>
+                <td>@Model.BRANCHNAME</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
+
 </html>

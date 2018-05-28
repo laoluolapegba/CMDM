@@ -17,10 +17,17 @@ namespace CMdm.Entities.ViewModels
             Authorize = 1,
             Change = 2,
             Reject = 3,
-            PhoneValidation = 4,
-            OutstandingDocuments = 5,
-            AccountOfficer = 6,
-            SectorSubsector = 7,
+            CsoNotification = 4,
+            CsmNotification = 5,
+            ZsmNotification = 6,
+            AmuNotification = 7,
+            AmuCsmNotification = 8,
+            AmuZsmNotification = 9,
+            FinconNotification = 10,
+            BmNotification = 11,
+            HelpdeskNotification = 12,
+            ZonalControlNotification = 13,
+            ZonalHeadNotification = 14,
         }
     }
 }

@@ -23,6 +23,7 @@ namespace CMdm.Services.Messaging
         private AppDbContext db;
         private TemplateService _templateService;
         static readonly string TemplateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Views", "MessagingTemplates");
+        static readonly string BackTemplateFolderPath = Path.Combine("C:\\Users\\salam\\Documents\\Visual Studio 2017\\Projects\\CMDM\\Presentation\\CMdm.UI.Web\\", "Views", "MessagingTemplates");
         static bool mailSent = false;
         private SymmetricAlgorithm mobjCryptoService;
 
@@ -205,42 +206,237 @@ namespace CMdm.Services.Messaging
                     htmlBody = _templateService.Parse(rejectEmailTemplate, reject_model, null, "RejectNotifyApprover");
                     //end template
                     break;
-                case (int)MessageJobEnum.MailType.PhoneValidation:
-                    var phone_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.CUSTOMER_NO == job.CUSTOMER_NO);
+                case (int)MessageJobEnum.MailType.CsoNotification:
+                    var cso_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
                     // start template 
-                    var phone_model = new MessageModel()
+                    var cso_model = new MessageModel()
                     {
-                        CUSTOMER_NO = phone_customer.CUSTOMER_NO,
-                        RequiredDate = Convert.ToDateTime(phone_customer.REQUIREDDATE),
+                        CUSTOMER_NO = cso_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(cso_customer.REQUIREDDATE),
                         UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
                         BRANCHNAME = job.BRANCHNAME,
                         RCPT_EMAIL = job.RCPT_EMAIL,
-                        RECIPIENTNAME = job.RECIPIENTNAME
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        OUTSTANDING_DOCS = job.OUTSTANDING_DOCS,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES,
+                        PHONE_NUMBER_VAL = job.PHONE_NUMBER_VAL,
+                        ACCOUNT_OFFICER = job.ACCOUNT_OFFICER,
+                        WRONG_SECTOR = job.WRONG_SECTOR,
+                        SEGMENT_MAPPING = job.SEGMENT_MAPPING,
+                        WRONG_SCHEME_CODES = job.WRONG_SCHEME_CODES
                     };
 
-                    var phoneEmailTemplate = File.ReadAllText(Path.Combine(TemplateFolderPath, job.MAIL_TEMPLATE));
+                    var csoEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
 
                     AddDefaultNamespacesFromWebConfig(_templateService);
-                    htmlBody = _templateService.Parse(phoneEmailTemplate, phone_model, null, "PhoneNotifyApprover");
+                    htmlBody = _templateService.Parse(csoEmailTemplate, cso_model, null, "NotifyCSO");
                     //end template
                     break;
-                case (int)MessageJobEnum.MailType.OutstandingDocuments:
-                    var outstanding_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.CUSTOMER_NO == job.CUSTOMER_NO);
+                case (int)MessageJobEnum.MailType.CsmNotification:
+                    var csm_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
                     // start template 
-                    var outstanding_model = new MessageModel()
+                    var csm_model = new MessageModel()
                     {
-                        CUSTOMER_NO = outstanding_customer.CUSTOMER_NO,
-                        RequiredDate = Convert.ToDateTime(outstanding_customer.REQUIREDDATE),
+                        CUSTOMER_NO = csm_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(csm_customer.REQUIREDDATE),
                         UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
                         BRANCHNAME = job.BRANCHNAME,
                         RCPT_EMAIL = job.RCPT_EMAIL,
-                        RECIPIENTNAME = job.RECIPIENTNAME
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        OUTSTANDING_DOCS = job.OUTSTANDING_DOCS,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES,
+                        PHONE_NUMBER_VAL = job.PHONE_NUMBER_VAL,
+                        ACCOUNT_OFFICER = job.ACCOUNT_OFFICER,
+                        WRONG_SECTOR = job.WRONG_SECTOR,
+                        SEGMENT_MAPPING = job.SEGMENT_MAPPING,
+                        WRONG_SCHEME_CODES = job.WRONG_SCHEME_CODES
                     };
 
-                    var outstandingEmailTemplate = File.ReadAllText(Path.Combine(TemplateFolderPath, job.MAIL_TEMPLATE));
+                    var csmEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
 
                     AddDefaultNamespacesFromWebConfig(_templateService);
-                    htmlBody = _templateService.Parse(outstandingEmailTemplate, outstanding_model, null, "OutsNotifyApprover");
+                    htmlBody = _templateService.Parse(csmEmailTemplate, csm_model, null, "NotifyCsm");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.ZsmNotification:
+                    var zsm_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var zsm_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = zsm_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(zsm_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        OUTSTANDING_DOCS = job.OUTSTANDING_DOCS,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES,
+                        PHONE_NUMBER_VAL = job.PHONE_NUMBER_VAL,
+                        ACCOUNT_OFFICER = job.ACCOUNT_OFFICER,
+                        WRONG_SECTOR = job.WRONG_SECTOR,
+                        SEGMENT_MAPPING = job.SEGMENT_MAPPING,
+                        WRONG_SCHEME_CODES = job.WRONG_SCHEME_CODES
+                    };
+
+                    var zsmEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(zsmEmailTemplate, zsm_model, null, "NotifyZsm");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.AmuNotification:
+                    var amu_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var amu_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = amu_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(amu_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_ID = job.MULTIPLE_ID
+                    };
+
+                    var amuEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(amuEmailTemplate, amu_model, null, "NotifyAmu");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.AmuCsmNotification:
+                    var amuCsm_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var amuCsm_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = amuCsm_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(amuCsm_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_ID = job.MULTIPLE_ID
+                    };
+
+                    var amuCsmEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(amuCsmEmailTemplate, amuCsm_model, null, "NotifyAmuCsm");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.AmuZsmNotification:
+                    var amuZsm_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var amuZsm_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = amuZsm_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(amuZsm_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_ID = job.MULTIPLE_ID
+                    };
+
+                    var amuZsmEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(amuZsmEmailTemplate, amuZsm_model, null, "NotifyAmuZsm");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.FinconNotification:
+                    var fincon_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var fincon_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = fincon_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(fincon_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES
+                    };
+
+                    var finconEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(finconEmailTemplate, fincon_model, null, "NotifyFincon");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.BmNotification:
+                    var bm_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var bm_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = bm_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(bm_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES
+                    };
+
+                    var bmEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(bmEmailTemplate, bm_model, null, "NotifyBm");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.ZonalControlNotification:
+                    var zonal_control_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var zonal_control_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = zonal_control_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(zonal_control_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        OUTSTANDING_DOCS = job.OUTSTANDING_DOCS,
+                        PHONE_NUMBER_VAL = job.PHONE_NUMBER_VAL,
+                        ACCOUNT_OFFICER = job.ACCOUNT_OFFICER,
+                        WRONG_SECTOR = job.WRONG_SECTOR,
+                        SEGMENT_MAPPING = job.SEGMENT_MAPPING,
+                        WRONG_SCHEME_CODES = job.WRONG_SCHEME_CODES
+                    };
+
+                    var zonalControlEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(zonalControlEmailTemplate, zonal_control_model, null, "NotifyZonalControl");
+                    //end template
+                    break;
+                case (int)MessageJobEnum.MailType.ZonalHeadNotification:
+                    var zonal_head_customer = db.CM_BACK_JOBS.FirstOrDefault(o => o.JOBID == job.JOBID);
+                    // start template 
+                    var zonal_head_model = new MessageModel()
+                    {
+                        CUSTOMER_NO = zonal_head_customer.CUSTOMER_NO,
+                        RequiredDate = Convert.ToDateTime(zonal_head_customer.REQUIREDDATE),
+                        UserID = job.USERFULLNAME,
+                        BRANCH_ID = job.BRANCH_ID,
+                        BRANCHNAME = job.BRANCHNAME,
+                        RCPT_EMAIL = job.RCPT_EMAIL,
+                        RECIPIENTNAME = job.RECIPIENTNAME,
+                        MULTIPLE_AO_CODES = job.MULTIPLE_AO_CODES
+                    };
+
+                    var zonalHeadEmailTemplate = File.ReadAllText(Path.Combine(BackTemplateFolderPath, job.MAIL_TEMPLATE));
+
+                    AddDefaultNamespacesFromWebConfig(_templateService);
+                    htmlBody = _templateService.Parse(zonalHeadEmailTemplate, zonal_head_model, null, "NotifyZonalHead");
                     //end template
                     break;
                 default:
@@ -311,6 +507,94 @@ namespace CMdm.Services.Messaging
              where p.PROFILE_ID == userid
              select p.BRANCH_ID
             ).SingleOrDefault();
+        }
+        public string GetCSOEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.CSO_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetCSMEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.CSM_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetZSMEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.ZSM_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetFinconEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.FINCON_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetBMEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.BM_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetZonalHeadEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.ZONALHEAD_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetZonalControlEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.ZONALCONTROLHEAD_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetAMUEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.AMU_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetAMUCSMEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.AMUCSM_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetAMUZSMEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.AMUZSM_MAIL
+                ).SingleOrDefault();
+        }
+        public string GetHRHelpDeskEscalationMail(string branchId)
+        {
+            return (
+                from p in db.CMDM_BRANCH_MAIL
+                where p.BRANCH_ID == branchId
+                select p.HRHELPDESK_MAIL
+                ).SingleOrDefault();
         }
         private static void AddDefaultNamespacesFromWebConfig(TemplateService templateService)
         {

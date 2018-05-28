@@ -535,6 +535,8 @@ namespace CMdm.Data
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_WRONG_SEGMENTSUBSEGMENT> CMDM_WRONG_SEGMENTSUBSEGMENT { get; set; }
 
+        public System.Data.Entity.DbSet<CMdm.Data.Rbac.CMDM_BRANCH_MAIL> CMDM_BRANCH_MAIL { get; set; }
+
         //  public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_SRC_BRANCH> CMDM_SRC_BRANCH { get; set; }
 
 

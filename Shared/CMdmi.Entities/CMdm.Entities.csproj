@@ -104,6 +104,7 @@
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\EmailPhone.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\Exceptions.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\MultipleRefCode.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\WrongSchemeCode.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\WrongSegment.cs" />
