@@ -32,5 +32,14 @@ namespace CMdm.Entities.Domain.Customer
         public string USERFULLNAME { get; set; }
         public string BRANCHNAME { get; set; }
         public string CUSTOMER_NO { get; set; }
+        public int ACCOUNT_OFFICER { get; set; }
+        public int WRONG_SECTOR { get; set; }
+        public int WRONG_SCHEME_CODES { get; set; }
+        public int MULTIPLE_AO_CODES { get; set; }
+        public int EMAIL_PHONE_VAL { get; set; }
+        public int SEGMENT_MAPPING { get; set; }
+        public int MULTIPLE_ID { get; set; }
+        public int OUTSTANDING_DOCS { get; set; }
+        public int PHONE_NUMBER_VAL { get; set; }
     }
 }

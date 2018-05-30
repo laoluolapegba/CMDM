@@ -1,17 +1,103 @@
-﻿
+﻿@model CMdm.Entities.ViewModels.MessageModel
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Zsm</title>
+    <title>CMDM Summary Notification</title>
+    <style>
+        body {
+            margin: 100px 400px;
+        }
+
+        .head-text {
+            text-align: center;
+            background-color: purple;
+            color: white;
+        }
+
+        .date {
+            float: right;
+            color: #DAA520;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            height: 30px;
+            background-color: #DAA520;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <div> 
-    </div>
+    <h1 class="head-text">CMDM Escalation Service</h1>
+    <p class="date">@Model.RequiredDate</p>
+    <p>Dear <b style="color:purple">@Model.RECIPIENTNAME</b></p>
+    <p>This is to inform you that the following customer data in these reports are pending for a while and requires attention</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Report</th>
+                <th>No of Customers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Customers With No AO Codes</td>
+                <td>@Model.ACCOUNT_OFFICER</td>
+            </tr>
+            <tr>
+                <td>Customers With Outstanding Documnents</td>
+                <td>@Model.OUTSTANDING_DOCS</td>
+            </tr>
+            <tr>
+                <td>Phone Number Validation</td>
+                <td>@Model.PHONE_NUMBER_VAL</td>
+            </tr>
+            <tr>
+                <td>Wrong Sector / Subsector Mapping</td>
+                <td>@Model.WRONG_SECTOR</td>
+            </tr>
+            <tr>
+                <td>Wrong Segment Mapping</td>
+                <td>@Model.SEGMENT_MAPPING</td>
+            </tr>
+            <tr>
+                <td>Wrong Scheme Codes</td>
+                <td>@Model.WRONG_SCHEME_CODES</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Branch Details</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Branch ID</th>
+                <th>Branch Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.BRANCH_ID</td>
+                <td>@Model.BRANCHNAME</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
+
 </html>
