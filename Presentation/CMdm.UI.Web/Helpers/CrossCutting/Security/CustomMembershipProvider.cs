@@ -531,7 +531,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             using (var context = new AppDbContext())
             {
                 var user = (from u in context.CM_USER_PROFILE.Include(usr => usr.CM_USER_ROLES)
-                            where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
+                            where String.Compare(u.USER_ID.ToUpper(), username.ToUpper(), StringComparison.OrdinalIgnoreCase) == 0
                             //&& !u.Deleted
                             select u).FirstOrDefault();
 
