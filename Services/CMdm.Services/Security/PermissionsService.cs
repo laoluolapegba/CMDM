@@ -20,6 +20,7 @@ namespace CMdm.Services.Security
         public string UserId { get; set; }
         public int RoleId { get; set; }
         private List<CM_USER_ROLES> Roles = new List<CM_USER_ROLES>();
+        private List<CM_PERMISSIONS> Permissions = new List<CM_PERMISSIONS>();
         #endregion
         #region Ctor
 
@@ -73,7 +74,7 @@ namespace CMdm.Services.Security
         public bool IsLevel(CMdm.Entities.Domain.User.AuthorizationLevel AuthLevel)
         {
             int level = (int)AuthLevel;
-            return (Roles.Where(p => p.USER_LEVEL == level).ToList().Count > 0);
+            return (Roles.Where(p => p.ROLE_ID == RoleId &&  p.USER_LEVEL == level).ToList().Count > 0);
         }
         private void GetDatabaseUserRolesPermissions()
         {
@@ -86,9 +87,12 @@ namespace CMdm.Services.Security
 
                     CM_USER_ROLES _userRole = _data.CM_USER_ROLES.Where(u => u.ROLE_ID == this.RoleId).FirstOrDefault();
 
-                    foreach (CM_PERMISSIONS _permission in _userRole.CM_PERMISSIONS)
+                    List<CM_ROLE_PERM_XREF> _permxref = _data.CM_ROLE_PERM_XREF.Where(p => p.ROLE_ID == _userRole.ROLE_ID).ToList();
+
+                    foreach (CM_ROLE_PERM_XREF _permission in _permxref)
                     {
-                        _userRole.CM_PERMISSIONS.Add(new CM_PERMISSIONS { PERMISSION_ID = (int)_permission.PERMISSION_ID, PERMISSIONDESCRIPTION = _permission.PERMISSIONDESCRIPTION });
+                        //_userRole.CM_PERMISSIONS.Add(new CM_PERMISSIONS { PERMISSION_ID = (int)_permission.PERMISSION_ID, PERMISSIONDESCRIPTION = _permission.PERMISSIONDESCRIPTION });
+                        Permissions.Add(new CM_PERMISSIONS { PERMISSION_ID = (int)_permission.PERMISSION_ID, PERMISSIONDESCRIPTION = "" });
                     }
                     this.Roles.Add(_userRole);
                     //foreach (CM_USER_ROLES _role in _user.CM_USER_ROLES)
