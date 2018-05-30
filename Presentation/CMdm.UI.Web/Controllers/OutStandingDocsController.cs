@@ -27,11 +27,13 @@ namespace CMdm.UI.Web.Controllers
         private ICustomService _dqQueService;
         private IExportManager _exportManager;
         private IPermissionsService _permissionservice;
+        private CustomIdentity identity;
         #region Constructors
         public OutStandingDocsController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new CustomService();
+             
             _exportManager = new ExportManager();
             _permissionservice = new PermissionsService();
         }
@@ -80,7 +82,10 @@ namespace CMdm.UI.Web.Controllers
             var model = new OutstandingDocModel();
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            identity = ((CustomPrincipal)User).CustomIdentity;
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+
             IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH; //.Where(a => a.BRANCH_ID == identity.BranchId);
 
             if(_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
@@ -107,7 +112,7 @@ namespace CMdm.UI.Web.Controllers
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
 
 
-            if(_permissionservice.HasRole("AMU"))
+            if(_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
             {
                 model.Branches.Add(new SelectListItem
                 {
