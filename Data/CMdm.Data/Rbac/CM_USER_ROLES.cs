@@ -32,7 +32,7 @@ namespace CMdm.Data.Rbac
         [DisplayName("User Authorization Level")]
 
 
-        public long? USER_LEVEL { get; set; }
+        public int USER_LEVEL { get; set; }
 
         [StringLength(20)]
         public string CREATED_BY { get; set; }

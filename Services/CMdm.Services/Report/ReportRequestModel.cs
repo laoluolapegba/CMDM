@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace CMdm.Services.Report
 {
-    public class ReportRequestViewModel
+    public class ReportRequestModel
     {
-        public ReportRequestViewModel()
+        public ReportRequestModel()
         {
             Branches = new List<SelectListItem>();
             ReportList = new List<SelectListItem>();

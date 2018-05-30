@@ -24,7 +24,8 @@
                             @Html.LabelFor(model => model.USER_LEVEL)
                         </div>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.USER_LEVEL, new { htmlAttributes = new { min = 0, required = "required" } })
+                            @*@Html.EditorFor(model => model.USER_LEVEL, new { htmlAttributes = new { min = 0, required = "required" } })*@
+                            @Html.CMdmDropDownListFor(model => model.USER_LEVEL, (IEnumerable<SelectListItem>)ViewBag.USER_LEVELS)
                             @Html.ValidationMessageFor(model => model.USER_LEVEL)
                         </div>
                     </div>
@@ -55,6 +56,7 @@
                             @Html.ValidationMessageFor(model => model.CHECKER_ID)
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

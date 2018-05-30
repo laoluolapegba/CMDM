@@ -148,13 +148,12 @@
     <Compile Include="Messaging\MessagingService.cs" />
     <Compile Include="Notification\INotificationService.cs" />
     <Compile Include="Notification\NotificationService.cs" />
-    <Compile Include="Permissions\IPermissionsService.cs" />
-    <Compile Include="Permissions\PermissionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\IReportService.cs" />
-    <Compile Include="Report\ReportRequestViewModel.cs" />
+    <Compile Include="Report\ReportRequestModel.cs" />
     <Compile Include="Report\ReportService.cs" />
-    <Compile Include="Security\PermissionService.cs" />
+    <Compile Include="Security\IPermissionsService.cs" />
+    <Compile Include="Security\PermissionsService.cs" />
     <Compile Include="UserAdmin\IUserService.cs" />
     <Compile Include="UserAdmin\UserService.cs" />
   </ItemGroup>

@@ -30,8 +30,10 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         public string BranchName { get; set; }
 
         public int ProfileId { get; set; }
+        public string RegionId { get; set; }
+        public string ZoneId { get; set; }
         #endregion
-  
+
 
         #region Implementation of IIdentity
 
@@ -85,8 +87,8 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                 BranchId = customMembershipUser.BranchId;
                 BranchName = customMembershipUser.BranchName;
                 ProfileId = customMembershipUser.ProfileId;
-
-
+                RegionId = customMembershipUser.RegionId;
+                ZoneId = customMembershipUser.ZoneId;
 
             }
         }

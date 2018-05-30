@@ -143,6 +143,8 @@
     <Compile Include="Domain\Configuration\Setting.cs" />
     <Compile Include="Domain\Report\CmReportDefn.cs" />
     <Compile Include="Domain\User\ApplicationUser.cs" />
+    <Compile Include="Domain\User\AuthorizationLevel.cs" />
+    <Compile Include="Domain\User\CM_AUTH_LEVELS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CustExceptionsModel.cs" />
     <Compile Include="ViewModels\DynamicViewModel.cs" />

@@ -15,6 +15,9 @@ using CMdm.UI.Web.Models.CustomModule.Fcmb;
 using CMdm.Framework.Controllers;
 using CMdm.Core;
 using CMdm.Services.ExportImport;
+using CMdm.Services.Security;
+using CMdm.Data.Rbac;
+using CMdm.Entities.Domain.User;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -23,12 +26,14 @@ namespace CMdm.UI.Web.Controllers
         private AppDbContext db = new AppDbContext();
         private ICustomService _dqQueService;
         private IExportManager _exportManager;
+        private IPermissionsService _permissionservice;
         #region Constructors
         public OutStandingDocsController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new CustomService();
             _exportManager = new ExportManager();
+            _permissionservice = new PermissionsService();
         }
         #endregion
         // GET: OutStandingDocs
@@ -68,7 +73,7 @@ namespace CMdm.UI.Web.Controllers
             }
             return View(outStandingDoc);
         }
-
+        //[Authorize]
         public ActionResult List()
         {
 
@@ -76,18 +81,45 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
+            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH; //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            if(_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+                
+            }
+            else if(_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = curBranchList.Where(a => a.REGION_ID == identity.RegionId);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = curBranchList.Where(a => a.ZONECODE == identity.ZoneId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == identity.BranchId).OrderBy(a=>a.BRANCH_NAME);
+            }
+            else
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == "-1");
+            }
+
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
 
 
-            model.Branches.Add(new SelectListItem
+            if(_permissionservice.HasRole("AMU"))
             {
-                Value = "0",
-                Text = "All"
-            });
+                model.Branches.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = "All"
+                });
+            }
+           
             return View(model);
         }
         [HttpPost]
+        
         public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
