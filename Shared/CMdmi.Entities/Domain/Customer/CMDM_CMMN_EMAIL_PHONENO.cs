@@ -20,5 +20,7 @@ namespace CMdm.Entities.Domain.Customer
         public string CUSTOMERMINOR { get; set; }
         public string PREFERREDPHONE { get; set; }
         public string EMAIL { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
     }
 }

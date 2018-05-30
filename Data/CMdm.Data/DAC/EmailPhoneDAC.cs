@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<EmailPhone> SelectEmailPhone(string custid, string firstname, string midname, string lastname, int startRowIndex, int maximumRows, string sortExpression)
+        public List<EmailPhone> SelectEmailPhone(string custid, string firstname, string midname, string lastname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -105,11 +105,14 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(lastname))
                     query = query.Where(v => v.CUST_LAST_NAME.ToUpper().Contains(lastname.ToUpper()));
+
+                if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
+                    query = query.Where(v => v.BRANCH_CODE.Contains(branchCode));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderByDescending(a => a.CUST_DOB);//    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderBy(a => a.DUPLICATE_ID);//    //OrderBy(a => a.CREATED_DATE)  //
                                                                        //  .Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.

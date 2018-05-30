@@ -1,7 +1,7 @@
 ﻿@using CMdm.Framework;
 @model CMdm.UI.Web.Models.CustomModule.Fcmb.EmailPhoneModel
 @{
-    ViewBag.Title = "Email / Phone Validation";
+    ViewBag.Title = "Multiple Customers With Same Email and Phone Number";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -9,38 +9,38 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="content-header clearfix">
-        <h1 class="pull-left">
-            Email / Phone Validation
-        </h1>
-        <div class="pull-right">
-            <div class="btn-group">
-                <button type="button" class="btn bg-purple">
-                    <i class="fa fa-download"></i>
-                    Export
-                </button>
-                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">&nbsp;</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="divider"></li>
-                    <li>
-                        <button type="submit" name="exportexcel-all">
-                            <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel All
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" id="exportexcel-selected">
-                            <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel Selected
-                        </button>
-                    </li>
-                </ul>
-            </div>
+<div class="content-header clearfix">
+    @*<h1 class="pull-left">
+            Multiple Customers With Same Email and Phone Number
+        </h1>*@
+    <div class="pull-right">
+        <div class="btn-group">
+            <button type="button" class="btn bg-purple">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li class="divider"></li>
+                <li>
+                    <button type="submit" name="exportexcel-all">
+                        <i class="fa fa-file-excel-o"></i>
+                        ExportToExcel All
+                    </button>
+                </li>
+                <li>
+                    <button type="button" id="exportexcel-selected">
+                        <i class="fa fa-file-excel-o"></i>
+                        ExportToExcel Selected
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
 
     <div class="content">
         <div class="form-horizontal">
@@ -51,10 +51,18 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Customer ID")
+                                        @Html.Label("Customer Number")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.ORGKEY)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Branch Name")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -65,6 +73,8 @@
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Middle Name")
@@ -81,8 +91,6 @@
                                         @Html.CMdmEditorFor(model => model.CUST_LAST_NAME)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                             </div>
                         </div>
                         <div class="row">
@@ -147,15 +155,16 @@
                                             width: 50
                                         },
                                         {
-                                            field: "ORGKEY",
-                                            title: "Customer ID",
-                                            width: 100
-                                        },
-                                        {
                                             field: "DUPLICATE_ID",
                                             title: "Duplicate ID",
                                             width: 100,
                                         },
+                                        {
+                                            field: "ORGKEY",
+                                            title: "Customer Number",
+                                            width: 100
+                                        },
+                                        
                                         {
                                             field: "CUST_FIRST_NAME",
                                             title: "First Name",
@@ -175,7 +184,17 @@
                                             field: "CUST_DOB",
                                             title: "Date of Birth",
                                             width: 100,
-                                            template: "#= kendo.toString(kendo.parseDate(CUST_DOB, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                            template: "#= kendo.toString(kendo.parseDate(CUST_DOB, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
+                                        },
+                                        {
+                                            field: "BRANCH_CODE",
+                                            title: "Branch ID",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "BRANCH_NAME",
+                                            title: "Branch Name",
+                                            width: 100
                                         },
                                         {
                                             field: "BVN",
@@ -236,8 +255,24 @@
                     });
 
 
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
 
                     //wire up checkboxes.
@@ -269,6 +304,7 @@
                         CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
                         CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
                         CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
+                        BRANCH_CODE: $('#BRANCH_CODE').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;

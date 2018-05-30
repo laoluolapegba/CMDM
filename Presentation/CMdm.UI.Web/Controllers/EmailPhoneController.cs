@@ -48,6 +48,16 @@ namespace CMdm.UI.Web.Controllers
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
 
+            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+            model.Branches.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
             return View(model);
         }
 
@@ -55,7 +65,8 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult EmailPhoneList(DataSourceRequest command, EmailPhoneModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
+                command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -70,6 +81,8 @@ namespace CMdm.UI.Web.Controllers
                     CUST_MIDDLE_NAME = x.CUST_MIDDLE_NAME,
                     CUST_LAST_NAME = x.CUST_LAST_NAME,
                     CUST_DOB = x.CUST_DOB,
+                    BRANCH_CODE = x.BRANCH_CODE,
+                    BRANCH_NAME = x.BRANCH_NAME,
                     BVN = x.BVN,
                     GENDER = x.GENDER,
                     CUSTOMERMINOR = x.CUSTOMERMINOR,

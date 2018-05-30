@@ -44,6 +44,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("Account Name", p => p.ACCT_NAME),
 
                 new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
+                new PropertyByName<OutStandingDoc>("Branch Name", p => p.BRANCH_NAME),
                 new PropertyByName<OutStandingDoc>("Product Name", p => p.SCHM_DESC),
                 new PropertyByName<OutStandingDoc>("Schm Type", p => p.SCHM_TYPE),
                 new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),                

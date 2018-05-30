@@ -9,6 +9,11 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
 {
     public class EmailPhoneModel
     {
+        public EmailPhoneModel()
+        {
+            Branches = new List<SelectListItem>();
+        }
+
         [DisplayName("ORG Key")]
         public string ORGKEY { get; set; }
         [DisplayName("Duplicate ID")]
@@ -31,10 +36,15 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string PREFERREDPHONE { get; set; }
         [DisplayName("Email")]
         public string EMAIL { get; set; }
+        [DisplayName("Branch Code")]
+        public string BRANCH_CODE { get; set; }
+        [DisplayName("Branch Name")]
+        public string BRANCH_NAME { get; set; }
 
         public int Id
         {
             get; set;
         }
+        public IList<SelectListItem> Branches { get; set; }
     }
 }

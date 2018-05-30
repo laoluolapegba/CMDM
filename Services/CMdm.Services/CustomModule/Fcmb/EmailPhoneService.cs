@@ -116,14 +116,14 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
         public virtual IPagedList<EmailPhone> GetAllEmailPhones(string custid = "", string firstname = "", string midname = "", string lastname = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
+            string branchCode = "", int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<EmailPhone> result = default(List<EmailPhone>);
 
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "CUST_DOB DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _emailPhoneDAC.SelectEmailPhone(custid, firstname, midname, lastname, pageIndex, pageSize, sortExpression);
+            result = _emailPhoneDAC.SelectEmailPhone(custid, firstname, midname, lastname, branchCode, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

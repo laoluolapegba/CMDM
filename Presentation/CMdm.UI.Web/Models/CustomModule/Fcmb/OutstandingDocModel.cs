@@ -61,10 +61,12 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public IList<SelectListItem> Branches { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
         [DisplayName("Account Officer Code")]
         public string ACCTOFFICER_CODE { get; set; }
         [DisplayName("Account Officer Name")]
         public string ACCTOFFICER_NAME { get; set; }
+
         public int Id { get; set; }
     }
 }

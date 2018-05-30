@@ -46,5 +46,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
 
         public string ACCTOFFICER_NAME { get; set; }
 
+        public string BRANCH_NAME { get; set; }
+
     }
 }

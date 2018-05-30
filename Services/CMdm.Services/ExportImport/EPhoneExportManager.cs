@@ -45,6 +45,8 @@ namespace CMdm.Services.ExportImport
 
                 new PropertyByName<EmailPhone>("Last Name", p => p.CUST_LAST_NAME),
                 new PropertyByName<EmailPhone>("Date of Birth", p => p.CUST_DOB),
+                new PropertyByName<EmailPhone>("Branch Code", p => p.BRANCH_CODE),
+                new PropertyByName<EmailPhone>("Branch Name", p => p.BRANCH_NAME),
                 new PropertyByName<EmailPhone>("BVN", p => p.BVN),
 
                 new PropertyByName<EmailPhone>("Gender", p => p.GENDER),

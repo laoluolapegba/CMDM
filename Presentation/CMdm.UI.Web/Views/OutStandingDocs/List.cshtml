@@ -162,7 +162,12 @@
                                         {
                                        field: "SOL_ID",
                                        title: "Branch Code",
-                                       width: 70,
+                                       width: 50,
+                                        },
+                                        {
+                                            field: "BRANCH_NAME",
+                                            title: "Branch Name",
+                                            width: 100,
                                         },
                                         
                                     {
@@ -190,7 +195,7 @@
                                         field: "DUE_DATE",
                                         title: "Due date",
                                         width: 100,
-                                        template: "#= kendo.toString(kendo.parseDate(DUE_DATE, 'yyyy-MM-dd'), 'dd-MM-yyyy') #"
+                                        template: "#= kendo.toString(kendo.parseDate(DUE_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
                                     },                                    
                                     {
                                         field: "FREZ_REASON_CODE",

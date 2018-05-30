@@ -145,7 +145,12 @@
                                        field: "SOL_ID",
                                        title: "Record Id",
                                        width: 70,
-                                   },
+                                        },
+                                        {
+                                            field: "BRANCH_NAME",
+                                            title: "Branch Name",
+                                            width: 100,
+                                        },
                                    {
                                        field: "DOCUMENT_CODE",
                                        title: "Document Code",
@@ -195,6 +200,7 @@
                                         field: "DUE_DATE",
                                         title: "Due date",
                                         width: 80,
+                                        template: "#= kendo.toString(kendo.parseDate(DUE_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
                                     }
                                     ]
                                 });
