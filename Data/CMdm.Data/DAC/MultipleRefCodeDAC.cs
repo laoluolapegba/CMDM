@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<MultipleRefCode> SelectMultipleRefCode(string accountnum, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<MultipleRefCode> SelectMultipleRefCode(string accountnum, string refCode, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,6 +96,11 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(accountnum))
                     query = query.Where(v => v.FORACID.Contains(accountnum));
+                if (!string.IsNullOrWhiteSpace(refCode))
+                    query = query.Where(v => v.REF_CODE.Contains(refCode));
+                else
+                    query = db.MultipleRefCode.GroupBy(v => v.REF_CODE).SelectMany(q => q.Take(1));
+                //To add distinct code here
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.

@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Segment / Subsegment Mapping
-        </h1>
+        </h1>*@
         <div class="pull-right">
 
             <div class="btn-group">
@@ -141,23 +141,23 @@
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "ORGKEY",
-                                            width: 100
+                                            title: "Customer Number",
+                                            width: 50
                                         },
                                         {
                                             field: "CUST_FIRST_NAME",
                                             title: "First Name",
-                                            width: 100
+                                            width: 70
                                         },
                                         {
                                             field: "CUST_MIDDLE_NAME",
                                             title: "Middle Name",
-                                            width: 100,
+                                            width: 70,
                                         },
                                         {
                                             field: "CUST_LAST_NAME",
                                             title: "Last Name",
-                                            width: 100,
+                                            width: 70,
                                         },
                                         {
                                             field: "GENDER",
@@ -177,7 +177,7 @@
                                         },
                                         {
                                             field: "SEGMENTATION_CLASS",
-                                            title: "Segmentation Class",
+                                            title: "Segment Class",
                                             width: 100
                                         },
                                         {
@@ -198,7 +198,7 @@
                                         {
                                             field: "CORP_ID",
                                             title: "Corp ID",
-                                            width: 100
+                                            width: 50
                                         },
                                         {
                                             field: "DATE_OF_RUN",
@@ -240,9 +240,26 @@
                     });
 
 
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
+
 
                     //wire up checkboxes.
                     $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {

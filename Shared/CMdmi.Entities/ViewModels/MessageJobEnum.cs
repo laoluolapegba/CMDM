@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CMdm.UI.Web.Models.Messaging
+namespace CMdm.Entities.ViewModels
 {
     public class MessageJobEnum
     {

@@ -15,21 +15,21 @@ namespace CMdm.UI.Web
 
             RegisterHome(bundles);
 
-            //RegisterCharts(bundles);
+            RegisterCharts(bundles);
 
-            //RegisterWidgets(bundles);
+            RegisterWidgets(bundles);
 
-            //RegisterElements(bundles);
+            RegisterElements(bundles);
 
-            //RegisterForms(bundles);
+            RegisterForms(bundles);
 
             RegisterTables(bundles);
 
-            //RegisterCalendar(bundles);
+            RegisterCalendar(bundles);
 
-            //RegisterMailbox(bundles);
+            RegisterMailbox(bundles);
 
-            //RegisterExamples(bundles);
+            RegisterExamples(bundles);
 
             RegisterDocumentation(bundles);
             RegisterTelerik(bundles);
@@ -459,6 +459,11 @@ namespace CMdm.UI.Web
             // plugins | morris
             bundles.Add(new ScriptBundle("~/AdminLTE/plugins/morris/js").Include(
                                          "~/AdminLTE/plugins/morris/js/morris.min.js"));
+
+            // plugins | justgage
+            bundles.Add(new ScriptBundle("~/AdminLTE/plugins/justgage-1.2.2").Include(
+                                        "~/AdminLTE/plugins/justgage-1.2.2/raphael-2.1.4.js",
+                                        "~/AdminLTE/plugins/justgage-1.2.2/justgage.js"));
 
             //Create bundel for jQueryUI  
             //js  

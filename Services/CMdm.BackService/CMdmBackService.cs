@@ -1,6 +1,6 @@
 ﻿using CMdm.Data;
 using CMdm.Services.Messaging;
-using CMdm.UI.Web.Models.Messaging;
+using CMdm.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,4 +1,4 @@
-﻿using CMdm.UI.Web.Models.Messaging;
+﻿using CMdm.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

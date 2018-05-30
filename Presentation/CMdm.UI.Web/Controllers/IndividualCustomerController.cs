@@ -16,7 +16,6 @@ using CMdm.Services.DqQue;
 using CMdm.Entities.ViewModels; 
 using CMdm.Data.Rbac;
 using CMdm.Services.Messaging;
-using CMdm.UI.Web.Models.Messaging;
 
 namespace CMdm.UI.Web.Controllers 
 {

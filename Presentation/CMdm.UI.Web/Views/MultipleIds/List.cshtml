@@ -10,9 +10,9 @@
 {
     @Html.AntiForgeryToken()
     <div class="content-header clearfix">
-        <h1 class="pull-left">
+        @*<h1 class="pull-left">
             Customers With Multiple IDs
-        </h1>
+        </h1>*@
         <div class="pull-right">
 
             <div class="btn-group">
@@ -139,8 +139,8 @@
                                         },
                                         {
                                             field: "CUSTOMER_NO",
-                                            title: "Customer ID",
-                                            width: 100,
+                                            title: "Customer Number",
+                                            width: 70,
                                         },
                                         {
                                             field: "BVN",
@@ -151,7 +151,7 @@
                                     {
                                         field: "FULL_NAME",
                                         title: "Name",
-                                        width: 200,
+                                        width: 100,
                                     },
                                     {
                                         field: "DATE_OF_BIRTH",
@@ -218,8 +218,24 @@
                     });
 
 
-                    $('#mastercheckbox').click(function () {
-                        $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
                     });
 
                     //wire up checkboxes.
