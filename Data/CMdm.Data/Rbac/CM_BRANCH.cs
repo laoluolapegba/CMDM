@@ -27,6 +27,7 @@ namespace CMdm.Data.Rbac
         public Nullable<System.DateTime> LAST_UPDATED_DATE { get; set; }
         public string ZONECODE { get; set; }
         public string ZONENAME { get; set; }
+        public string REGION_NAME { get; set; }
         public virtual ICollection<CM_USER_PROFILE> CM_USER_PROFILE { get; set; }
 
     }

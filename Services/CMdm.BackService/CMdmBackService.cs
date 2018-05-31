@@ -132,10 +132,10 @@ namespace CMdm.BackService
                     int WRONG_SECTOR = db.CustSegment.Where(x => x.PRIMARY_SOL_ID == branch.BRANCH_ID).Count();
                     int WRONG_SCHEME_CODES = db.WrongSchemeCodes.Where(x => x.SOL_ID == branch.BRANCH_ID).Count();
                     int MULTIPLE_AO_CODES = db.MultipleRefCode.Where(x => x.SOL_ID == branch.BRANCH_ID).Count();
-                    int EMAIL_PHONE_VAL = 0;
+                    int EMAIL_PHONE_VAL = db.EmailPhone.Where(x => x.BRANCH_CODE == branch.BRANCH_ID).Count();
                     int SEGMENT_MAPPING = db.WrongSegment.Where(x => x.PRIMARY_SOL_ID == branch.BRANCH_ID).Count();
                     int MULTIPLE_ID = db.CdmaGoldenRecords.Where(x => x.BRANCH_CODE == branch.BRANCH_ID).Count();
-                    int OUTSTANDING_DOCS = db.OutStandingDocs.Where(x => x.SOL_ID == branch.BRANCH_ID).Count(); ;
+                    int OUTSTANDING_DOCS = db.OutStandingDocs.Where(x => x.SOL_ID == branch.BRANCH_ID).Count();
                     int PHONE_NUMBER_VAL = db.CMDM_PHONEVALIDATION_RESULTS.Where(x => x.BRANCH_CODE == branch.BRANCH_ID).Count();
 
                     int cso = ACCOUNT_OFFICER + WRONG_SECTOR + WRONG_SCHEME_CODES + SEGMENT_MAPPING + OUTSTANDING_DOCS + PHONE_NUMBER_VAL;
