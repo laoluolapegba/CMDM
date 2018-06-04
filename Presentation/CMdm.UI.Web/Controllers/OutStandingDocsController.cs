@@ -86,7 +86,7 @@ namespace CMdm.UI.Web.Controllers
             identity = ((CustomPrincipal)User).CustomIdentity;
             _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
 
-            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH; //.Where(a => a.BRANCH_ID == identity.BranchId);
+            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
 
             if(_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
             {
@@ -142,7 +142,7 @@ namespace CMdm.UI.Web.Controllers
                     FORACID = x.FORACID,
                     DOCUMENT_CODE = x.DOCUMENT_CODE,
                     DUE_DATE = x.DUE_DATE,
-
+                    BRANCH_NAME = x.BRANCH_NAME,
                     REF_DESC = x.REF_DESC,
                     SCHM_CODE = x.SCHM_CODE,
                     SCHM_DESC = x.SCHM_DESC,

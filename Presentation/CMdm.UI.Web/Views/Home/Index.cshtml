@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="box-body">
+                <div class="box-body" style="height: 365px;">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
                         {
@@ -414,7 +414,8 @@
         });
 
         //Find a way to not hard code this guy
-        @*var g1 = new JustGage({
+        @*
+        var g1 = new JustGage({
             id: "gauge2",
             value: @allKpi[1].BRN_DQI,
             min: 0,

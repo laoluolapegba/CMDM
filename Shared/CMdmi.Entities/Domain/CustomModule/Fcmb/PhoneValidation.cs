@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CMdm.Entities.Domain.Customer
+namespace CMdm.Entities.Domain.CustomModule.Fcmb
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("CMDM_PHONEVALIDATION_RESULTS")]
-    public partial class CMDM_PHONEVALIDATION_RESULTS
+    [Table("VW_PHONEVALIDATION_RESULTS")]
+    public partial class PhoneValidation
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
         public string CUSTOMER_NO { get; set; }
         public string BRANCH_CODE { get; set; }
         public string CUST_LAST_NAME { get; set; }

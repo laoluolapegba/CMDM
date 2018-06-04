@@ -21,9 +21,11 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         public string BranchId { get; set; }
         public string BranchName { get; set; }
         public int ProfileId { get; set; }
-        public string RegionId { get; set; }
 
+        public string RegionId { get; set; }
+        public string RegionName { get; set; }
         public string ZoneId { get; set; }
+        public string ZoneName { get; set; }
 
         #endregion
 
@@ -40,8 +42,9 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             BranchId = user.BRANCH_ID;
             BranchName = user.CM_BRANCH.BRANCH_NAME;
             RegionId = user.CM_BRANCH.REGION_ID;
+            RegionName = user.CM_BRANCH.REGION_NAME;
             ZoneId = user.CM_BRANCH.ZONECODE;
-
+            ZoneName = user.CM_BRANCH.ZONENAME;
         }
 
     }

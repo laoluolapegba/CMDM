@@ -82,6 +82,7 @@
     <Compile Include="DAC\LogDAC.cs" />
     <Compile Include="DAC\MultipleRefCodeDAC.cs" />
     <Compile Include="DAC\PermissionsDAC.cs" />
+    <Compile Include="DAC\PhoneValidationDAC.cs" />
     <Compile Include="DAC\UserAdminDAC.cs" />
     <Compile Include="DAC\WrongSchemeCodesDAC.cs" />
     <Compile Include="DAC\WrongSegmentDAC.cs" />

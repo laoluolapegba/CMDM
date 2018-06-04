@@ -14,6 +14,9 @@ using CMdm.UI.Web.Models.CustomModule.Fcmb;
 using CMdm.Framework.Controllers;
 using CMdm.Core;
 using CMdm.Services.ExportImport;
+using CMdm.Services.Security;
+using CMdm.Data.Rbac;
+using CMdm.Entities.Domain.User;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -22,13 +25,16 @@ namespace CMdm.UI.Web.Controllers
         private AppDbContext db = new AppDbContext();
         private IAccountOfficerService _dqQueService;
         private IAccExportManager _exportManager;
-
+        private IPermissionsService _permissionservice;
+        private CustomIdentity identity;
         #region Constructors
         public AccountOfficerController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new AccountOfficerService();
             _exportManager = new AccExportManager();
+
+            _permissionservice = new PermissionsService();
         }
         #endregion Constructors
 
@@ -41,22 +47,47 @@ namespace CMdm.UI.Web.Controllers
 
         public ActionResult List()
         {
-
             var model = new AccountOfficerModel();
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            identity = ((CustomPrincipal)User).CustomIdentity;
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+
+            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = curBranchList.Where(a => a.REGION_ID == identity.RegionId);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = curBranchList.Where(a => a.ZONECODE == identity.ZoneId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == identity.BranchId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == "-1");
+            }
+
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
 
-            model.Branches.Add(new SelectListItem
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
             {
-                Value = "0",
-                Text = "All",
-                Selected = true
-            });
-            //Test OrderBy
-            //model.Branches.OrderBy(x => x.Text);
+                model.Branches.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = "All"
+                });
+            }
 
             model.AccountOfficers.Add(new SelectListItem
             {

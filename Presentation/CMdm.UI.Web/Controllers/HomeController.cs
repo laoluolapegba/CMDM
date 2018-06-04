@@ -13,6 +13,9 @@ using CMdm.Entities.Domain.Kpi;
 using System.Configuration;
 using CMdm.Data.DAC;
 using System;
+using CMdm.Services.Security;
+using CMdm.Data.Rbac;
+using CMdm.Entities.Domain.User;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -23,6 +26,8 @@ namespace CMdm.UI.Web.Controllers
         private AppDbContext dashdata;
         private IDqQueService _dqQueService;
         private KPIDAC _kpidac;
+        private IPermissionsService _permissionservice;
+        private CustomIdentity identity;
         #endregion
         #region Ctor
         public HomeController()
@@ -30,6 +35,7 @@ namespace CMdm.UI.Web.Controllers
             dashdata = new AppDbContext();
             //_dqQueService = new DqQueService();
             _kpidac = new KPIDAC();
+            _permissionservice = new PermissionsService();
         }
         #endregion
         public ActionResult DashboardV1()
@@ -45,7 +51,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
-            var identity = ((CustomPrincipal)User).CustomIdentity;
+            identity = ((CustomPrincipal)User).CustomIdentity;
             List<BrnKpi> kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
             ViewBag.brnDQI = kpirow[0].BRN_DQI;
 
@@ -56,7 +62,7 @@ namespace CMdm.UI.Web.Controllers
 
         public JsonResult StatisticsTrend()
         {
-            var identity = ((CustomPrincipal)User).CustomIdentity;
+            identity = ((CustomPrincipal)User).CustomIdentity;
             var trendingData = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
 
             return Json(trendingData, JsonRequestBehavior.AllowGet);
@@ -66,10 +72,40 @@ namespace CMdm.UI.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
 
-             
-            List<BrnKpi> kpirow = _kpidac.GetBrnKPI(DateTime.Now, identity.BranchId);
+            identity = ((CustomPrincipal)User).CustomIdentity;
+
+
+            List<BrnKpi> kpirow = new List<BrnKpi>();
+
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+
+            string[] curBranchList = dashdata.CM_BRANCH.Select(x => x.BRANCH_ID).ToArray(); //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+                curBranchList = curBranchList;
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.REGION_ID == identity.RegionId).Select(x => x.BRANCH_ID).ToArray();
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.ZONECODE == identity.ZoneId).Select(x => x.BRANCH_ID).ToArray();
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId).Select(x => x.BRANCH_ID).ToArray(); ;
+            }
+            else
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.BRANCH_ID == "-1").Select(x => x.BRANCH_ID).ToArray();
+            }
+
+            
+
+            kpirow = _kpidac.GetMultipleBrnKPI(DateTime.Now, curBranchList);
             //using (AppDbContext ctx = new AppDbContext())
             //{
             //    /*

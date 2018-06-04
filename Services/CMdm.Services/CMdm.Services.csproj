@@ -106,9 +106,11 @@
     <Compile Include="CustomModule\Fcmb\ICustSegmentService.cs" />
     <Compile Include="CustomModule\Fcmb\IEmailPhoneService.cs" />
     <Compile Include="CustomModule\Fcmb\IMultipleRefCodeService.cs" />
+    <Compile Include="CustomModule\Fcmb\IPhoneValidationService.cs" />
     <Compile Include="CustomModule\Fcmb\IWrongSchemeCodeService.cs" />
     <Compile Include="CustomModule\Fcmb\IWrongSegmentService.cs" />
     <Compile Include="CustomModule\Fcmb\MultipleRefCodeService.cs" />
+    <Compile Include="CustomModule\Fcmb\PhoneValidationService.cs" />
     <Compile Include="CustomModule\Fcmb\WrongSchemeCodeService.cs" />
     <Compile Include="CustomModule\Fcmb\WrongSegmentService.cs" />
     <Compile Include="DqParam\DqParamService.cs" />
@@ -131,9 +133,11 @@
     <Compile Include="ExportImport\IExportManager.cs" />
     <Compile Include="ExportImport\IGrdExportManager.cs" />
     <Compile Include="ExportImport\IMrcExportManager.cs" />
+    <Compile Include="ExportImport\IPValExportManager.cs" />
     <Compile Include="ExportImport\IWscExportManager.cs" />
     <Compile Include="ExportImport\IWSegExportManager.cs" />
     <Compile Include="ExportImport\MrcExportManager.cs" />
+    <Compile Include="ExportImport\PValExportManager.cs" />
     <Compile Include="ExportImport\WscExportManager.cs" />
     <Compile Include="ExportImport\WSegExportManager.cs" />
     <Compile Include="Extensions.cs" />

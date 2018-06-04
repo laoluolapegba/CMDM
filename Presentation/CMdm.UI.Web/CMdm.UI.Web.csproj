@@ -328,6 +328,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageCustController.cs" />
     <Compile Include="Controllers\MdmCatalogsController.cs" />
     <Compile Include="Controllers\MdmDimensionsController.cs" />
     <Compile Include="Controllers\MdmValidatorsController.cs" />
@@ -607,6 +608,7 @@
     <Compile Include="Models\CustomModule\Fcmb\EmailPhoneModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\MultipleRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\PhoneValidationModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\WrongSchemeCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\WrongSegmentModel.cs" />
     <Compile Include="Models\Dashboard\CommonStats.cs" />
@@ -2200,23 +2202,13 @@
     <Content Include="Views\CustAdi\Create.cshtml" />
     <Content Include="Views\CustAdi\Edit.cshtml" />
     <Content Include="Views\CustAdi\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\CustForeigner\Create.cshtml" />
-    <Content Include="Views\CustForeigner\Edit.cshtml" />
-    <Content Include="Views\CustForeigner\_CreateOrUpdate.cshtml" />
     <Content Include="Views\CustJurat\Create.cshtml" />
     <Content Include="Views\CustJurat\Edit.cshtml" />
     <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\EmpDetail\Create.cshtml" />
-    <Content Include="Views\EmpDetail\Edit.cshtml" />
-    <Content Include="Views\EmpDetail\Index.cshtml" />
-    <Content Include="Views\EmpDetail\_CreateOrUpdate.cshtml" />
     <Content Include="Views\FinInclusion\Create.cshtml" />
     <Content Include="Views\FinInclusion\Edit.cshtml" />
     <Content Include="Views\FinInclusion\Index.cshtml" />
     <Content Include="Views\FinInclusion\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\CustJurat\Create.cshtml" />
-    <Content Include="Views\CustJurat\Edit.cshtml" />
-    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
     <Content Include="Views\AccountOfficer\List.cshtml" />
     <Content Include="Views\IndividualCustomer\Authorize.cshtml" />
     <Content Include="Views\IndividualCustomer\Edit.cshtml" />
@@ -2254,6 +2246,7 @@
     <Content Include="Views\MessagingTemplates\AmuZsm.cshtml" />
     <Content Include="Views\MessagingTemplates\ZonalControl.cshtml" />
     <Content Include="Views\MessagingTemplates\ZonalHead.cshtml" />
+    <Content Include="Views\PhoneValidation\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />
@@ -2266,9 +2259,6 @@
     <Content Include="Views\AuthFinInclusion\Create.cshtml" />
     <Content Include="Views\AuthFinInclusion\Edit.cshtml" />
     <Content Include="Views\AuthFinInclusion\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\CustJurat\Create.cshtml" />
-    <Content Include="Views\CustJurat\Edit.cshtml" />
-    <Content Include="Views\CustJurat\_CreateOrUpdate.cshtml" />
     <Content Include="Views\AuthFinInclusion\Authorize.cshtml" />
     <Content Include="Views\CustIncome\Create.cshtml" />
     <Content Include="Views\CustIncome\Edit.cshtml" />
@@ -2281,8 +2271,6 @@
     <Content Include="Views\AccInfoContext\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Log\List.cshtml" />
-    <Content Include="Views\Log\View.cshtml" />
     <Content Include="Views\CustForeigner\Authorize.cshtml" />
     <Content Include="Views\CustJurat\Authorize.cshtml" />
     <Content Include="Views\CustAdi\Authorize.cshtml" />

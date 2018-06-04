@@ -9,7 +9,7 @@
 @{
     List<NotificationViewModel> Notifications = ViewBag.Notifications;
     List<NotificationViewModel> Messages = ViewBag.Messages;
-    
+
     <nav class="navbar navbar-static-top" role="navigation">
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
@@ -19,10 +19,11 @@
             @if (Request.IsAuthenticated)
             {
                 var identity = ((CustomPrincipal)HttpContext.Current.User).CustomIdentity;
+                
                 <li>                   
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-home"></i>
-                        <span class="text">@identity.BranchName</span>
+                        <span class="text">@identity.BranchName, @identity.ZoneName, @identity.RegionName</span>
                     </a>
                 </li>                
                 @*<li class="dropdown messages-menu">
@@ -186,7 +187,7 @@
 
                         <img src="@Html.ImageOrDefault(identity.Name)" alt="" />                       
                         <span style="float:right; font-size: small;">
-                            @Html.Label(string.Format("Welcome {0},", identity.FirstName))
+                            @Html.Label(string.Format("Welcome {0}", identity.FirstName))
                             <span class="caret"></span>
                         </span>
 
@@ -207,7 +208,7 @@
                                     @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-flat", title = "Manage" })
                                 </div>*@
                                 <div class="pull-right">
-                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-warning btn-flat">Sign out</a>
                                 </div>
                             }
                         </li>

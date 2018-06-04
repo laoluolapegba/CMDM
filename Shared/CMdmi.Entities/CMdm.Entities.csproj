@@ -106,6 +106,7 @@
     <Compile Include="Domain\CustomModule\Fcmb\EmailPhone.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\Exceptions.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\MultipleRefCode.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\PhoneValidation.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\WrongSchemeCode.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\WrongSegment.cs" />
     <Compile Include="Domain\Dqi\BranchDqiSummary.cs" />
