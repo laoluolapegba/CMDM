@@ -210,6 +210,7 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -262,6 +263,10 @@
     <Reference Include="Telerik.Web.UI, Version=2017.3.913.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET AJAX R3 2017\Bin45\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="TwoFactorAuthenticationSvc, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\TwoFactorAuthenticationSvc.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -2073,7 +2078,7 @@
     <Content Include="Views\Account\Login3.cshtml" />
     <Content Include="Views\Account\LoginAdminLte.cshtml" />
     <Content Include="Views\Rules\List.cshtml" />
-    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />

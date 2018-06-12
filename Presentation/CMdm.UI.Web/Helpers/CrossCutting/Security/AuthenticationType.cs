@@ -12,7 +12,8 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
     {
         LDAP = 1,
         OpenAuth = 2,
-        ApplicationAuth = 0
+        ApplicationAuth = 0,
+        TwoFactor = 3
     }
    
 }

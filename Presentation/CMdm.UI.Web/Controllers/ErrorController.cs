@@ -13,7 +13,7 @@ namespace CMdm.UI.Web.Controllers
 
         public ViewResult Index()
         {
-            return View("Error");
+            return View("InternalServerError");
         }
         public ViewResult NotFound()
         {
@@ -24,10 +24,10 @@ namespace CMdm.UI.Web.Controllers
         {
             return View();
         }
-        public ViewResult Error()
+        public ViewResult InternalServerError()
         {
             Response.StatusCode = 500;
-            return View("Error");
+            return View("InternalServerError");
         }
     }
 }

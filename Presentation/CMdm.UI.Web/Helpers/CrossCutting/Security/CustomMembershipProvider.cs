@@ -17,6 +17,8 @@ using System.Configuration;
 using System.Data;
 using CMdm.Services.Authentication;
 using Elmah;
+using CMdm.Services;
+using TwoFactorAuthenticationSvc;
 
 namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 {
@@ -27,8 +29,8 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         private int _cacheTimeoutInMinutes = 30;
         static PasswordManager pwdManager = new PasswordManager();
         public AppDbContext db = new AppDbContext();
-        private CustomIdentity identity;
 
+        private const string successStat = "STAT_SUCCESS";
         private static string logs = "";
         //private Customer custObj;
         //public static string connString = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
@@ -71,10 +73,48 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                 return false;
             //Authenticate _auth = new Authenticate();
             int authSetting = int.Parse(ConfigurationManager.AppSettings["LDAPAuth"]);
- 
+
             AuthenticationType authType = (AuthenticationType)(authSetting);
+
+            //string OTPtoke = "";
             switch (authType)
             {
+                case AuthenticationType.TwoFactor:
+                    #region TwoFactor
+
+                    string domainName1 = db.Settings.Where(a => a.SETTING_NAME == "SMTP_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();
+
+
+                    //domain: “fcmb.com” All FCMB UserIDs in FCMB AD is imported into this container in VASCO IAS
+                    //userID: Provide the “userID” from the banking application
+                    //pin: leave blank
+                    //dpResponse: the “AD Password +OTP” (One Time Password) displayed when the hardware token(digipass) is pressed
+                    //password: leave blank
+                    //reqHostCode: “false”
+                    bool authenticated1 = false;
+                    try
+                    {
+                        ServiceSoapClient client = new ServiceSoapClient();
+                        string hostResponse = client.AuthoriseUser(domainName1, username, "", password, "", false);
+                        if (hostResponse == successStat)
+                        {
+                            authenticated1 = true;
+                        }
+                        //if (true == adAuth.IsAuthenticated(loginDomain, username, password))
+                        //{
+                        //    authenticated1 = true;
+
+                        //}
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
+                    }
+
+
+                    return authenticated1;
+                #endregion;
                 case AuthenticationType.LDAP:
                     #region LDAPAuth
                     string domainName = db.Settings.Where(a => a.SETTING_NAME == "DOMAIN_NAME").Select(a => a.SETTING_VALUE).FirstOrDefault();
@@ -95,16 +135,16 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                             //            where u.USER_ID.ToLower() == username.ToLower()
                             //            select u).FirstOrDefault();
                             authenticated = true;
-                            
+
                         }
-                        
+
                     }
                     catch (Exception ex)
                     {
                         ErrorSignal.FromCurrentContext().Raise(ex);
                     }
 
-                    
+
                     return authenticated;
                 #endregion;
                 case AuthenticationType.OpenAuth:
@@ -114,12 +154,12 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     using (var context = new AppDbContext())
                     {
                         var localuser = (from u in context.CM_USER_PROFILE
-                                    where u.USER_ID.ToLower() == username.ToLower()
-                                    where u.ISLOCKED == 0
-                                    //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
+                                         where u.USER_ID.ToLower() == username.ToLower()
+                                         where u.ISLOCKED == 0
+                                         //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
 
-                                    //&& !u.Deleted
-                                    select u).FirstOrDefault();
+                                         //&& !u.Deleted
+                                         select u).FirstOrDefault();
 
                         if (localuser != null)
                         {
@@ -897,7 +937,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 
         }
 
-       
+
 
         public Boolean checkDateDiff(DateTime issueDate, DateTime expiryDate)
         {
