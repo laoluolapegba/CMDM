@@ -17,6 +17,7 @@ using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -27,11 +28,14 @@ namespace CMdm.UI.Web.Controllers
         private IPValExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
+
         public PhoneValidationController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new PhoneValidationService();
             _exportManager = new PValExportManager();
+            _messagingService = new MessagingService();
 
             _permissionservice = new PermissionsService();
         }
@@ -85,6 +89,7 @@ namespace CMdm.UI.Web.Controllers
                 });
             }
 
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Phone Number Validation Report", DateTime.Now);
             return View(model);
         }
 
@@ -131,6 +136,8 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Phone Number Validation Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "phoneValidation.xlsx");
             }
             catch (Exception exc)
@@ -159,6 +166,8 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Phone Number Validation Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "phoneValidation.xlsx");
             }
             catch (Exception exc)

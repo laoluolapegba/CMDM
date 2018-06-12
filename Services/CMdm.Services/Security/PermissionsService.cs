@@ -80,7 +80,7 @@ namespace CMdm.Services.Security
         {
             using (AppDbContext _data = new AppDbContext())
             {
-                CM_USER_PROFILE _user = _data.CM_USER_PROFILE.Where(u => u.USER_ID == this.UserId).FirstOrDefault();
+                CM_USER_PROFILE _user = _data.CM_USER_PROFILE.Where(u => u.USER_ID.ToUpper() == this.UserId.ToUpper()).FirstOrDefault();
                 if (_user != null)
                 {
                     this.ProfileId = (int)_user.PROFILE_ID;

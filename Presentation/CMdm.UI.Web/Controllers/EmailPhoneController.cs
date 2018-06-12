@@ -19,6 +19,7 @@ using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -29,12 +30,15 @@ namespace CMdm.UI.Web.Controllers
         private IEPhoneExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
+
         #region Constructors
         public EmailPhoneController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new EmailPhoneService();
             _exportManager = new EPhoneExportManager();
+            _messagingService = new MessagingService();
 
             _permissionservice = new PermissionsService();
         }
@@ -91,6 +95,7 @@ namespace CMdm.UI.Web.Controllers
                 });
             }
 
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Multiple Customers With Same Email and Phone Number Report", DateTime.Now);
             return View(model);
         }
 
@@ -98,11 +103,84 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult EmailPhoneList(DataSourceRequest command, EmailPhoneModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
                 command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new EmailPhoneModel
+                {
+                    Id = x.ID,
+                    ORGKEY = x.ORGKEY,
+                    DUPLICATE_ID = x.DUPLICATE_ID,
+                    CUST_FIRST_NAME = x.CUST_FIRST_NAME,
+                    CUST_MIDDLE_NAME = x.CUST_MIDDLE_NAME,
+                    CUST_LAST_NAME = x.CUST_LAST_NAME,
+                    CUST_DOB = x.CUST_DOB,
+                    BRANCH_CODE = x.BRANCH_CODE,
+                    BRANCH_NAME = x.BRANCH_NAME,
+                    BVN = x.BVN,
+                    GENDER = x.GENDER,
+                    CUSTOMERMINOR = x.CUSTOMERMINOR,
+                    PREFERREDPHONE = x.PREFERREDPHONE,
+                    EMAIL = x.EMAIL,
+                }),
+                Total = items.TotalCount
+            };
+
+            return Json(gridModel);
+        }
+
+        public ActionResult AuthList(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var model = new EmailPhoneModel();
+            model.PREFERREDPHONE = id;
+
+            //foreach (var at in _dqService.GetAllActivityTypes())
+            //{
+            //    model.ActivityLogType.Add(new SelectListItem
+            //    {
+            //        Value = at.Id.ToString(),
+            //        Text = at.Name
+            //    });
+            //}
+            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+
+            model.Branches.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            //model.Branches.Add(new SelectListItem
+            //{
+            //    Value = "0",
+            //    Text = "All"
+            //});
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AuthList(DataSourceRequest command, EmailPhoneModel model, string sort, string sortDir)
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+
+            string goldenRecord = "";
+            if (routeValues.ContainsKey("id"))
+                goldenRecord = (string)routeValues["id"];
+
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, goldenRecord, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
+                command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new EmailPhoneModel
@@ -135,11 +213,13 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME);
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME);
 
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple Customers with Same Email Phone Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "emailPhone.xlsx");
             }
             catch (Exception exc)
@@ -148,6 +228,7 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("List");
             }
         }
+        
 
         [HttpPost]
         public virtual ActionResult ExportExcelSelected(string selectedIds)
@@ -168,6 +249,8 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple Customers with Same Email Phone Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "emailPhone.xlsx");
             }
             catch (Exception exc)

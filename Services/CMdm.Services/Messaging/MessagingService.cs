@@ -94,6 +94,39 @@ namespace CMdm.Services.Messaging
             db.SaveChanges();
             SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
+
+        public void SaveUserActivity(int userProfile, string activity, DateTime activityDate)
+        {
+            string username = GetUserNamebyUserId(userProfile);
+            string fullname = GetUserFullNamebyProdileId(userProfile);
+            string desc = username + " " + activity + " on " + activityDate;
+            string branchCode = GetBranchIdbyProdileId(userProfile);
+            string branchName = GetBranchName(branchCode);
+
+            CMDM_ACTIVITY_LOG activity_log = new CMDM_ACTIVITY_LOG();
+
+            try
+            {
+                activity_log = new CMDM_ACTIVITY_LOG
+                {
+                    USER_ID = userProfile,
+                    USER_NAME = username,
+                    FULLNAME = fullname,
+                    BRANCH_CODE = branchCode,
+                    BRANCH_NAME = branchName,
+                    ACTIVITY_DESC = desc,
+                    ACTIVITY_DATE = activityDate
+                };
+
+                db.CMDM_ACTIVITY_LOG.Add(activity_log);
+                db.SaveChanges();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            
+        }
+
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
         {
             string smtpHost = db.Settings.Where(a => a.SETTING_NAME == "SMTP_HOST").Select(a => a.SETTING_VALUE).FirstOrDefault();

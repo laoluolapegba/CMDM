@@ -66,6 +66,8 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string ACCTOFFICER_CODE { get; set; }
         [DisplayName("Account Officer Name")]
         public string ACCTOFFICER_NAME { get; set; }
+        [DisplayName("Customer ID")]
+        public string CIF_ID { get; set; }
 
         public int Id { get; set; }
     }

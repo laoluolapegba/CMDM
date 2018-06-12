@@ -13,6 +13,8 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public CustSegmentModel()
         {
             Branches = new List<SelectListItem>();
+            CustomerTypes = new List<SelectListItem>();
+            Reasons = new List<SelectListItem>();
         }
 
         [DisplayName("Organization Key ")]
@@ -51,10 +53,20 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string SUBSEGMENT { get; set; }
         [DisplayName("Corporate ID ")]
         public int? CORP_ID { get; set; }
+        [DisplayName("Scheme Code ")]
+        public string SCHEME_CODE { get; set; }
+        [DisplayName("Account No ")]
+        public string ACCOUNT_NO { get; set; }
+        [DisplayName("Customer Type")]
+        public string CUSTOMER_TYPE { get; set; }
+        [DisplayName("Reason")]
+        public string REASON { get; set; }
         public int Id
         {
             get; set;
         }
         public IList<SelectListItem> Branches { get; set; }
+        public IList<SelectListItem> CustomerTypes { get; set; }
+        public IList<SelectListItem> Reasons { get; set; }
     }
 }

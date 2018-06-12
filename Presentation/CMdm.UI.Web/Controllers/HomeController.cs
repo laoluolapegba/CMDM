@@ -68,6 +68,54 @@ namespace CMdm.UI.Web.Controllers
             return Json(trendingData, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Corporate()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            identity = ((CustomPrincipal)User).CustomIdentity;
+
+
+            List<CorpKpi> kpirow = new List<CorpKpi>();
+
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+
+            string[] curBranchList = dashdata.CM_BRANCH.Select(x => x.BRANCH_ID).ToArray(); //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+                curBranchList = curBranchList;
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.REGION_ID == identity.RegionId).Select(x => x.BRANCH_ID).ToArray();
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.ZONECODE == identity.ZoneId).Select(x => x.BRANCH_ID).ToArray();
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId).Select(x => x.BRANCH_ID).ToArray(); ;
+            }
+            else
+            {
+                curBranchList = dashdata.CM_BRANCH.Where(a => a.BRANCH_ID == "-1").Select(x => x.BRANCH_ID).ToArray();
+            }
+
+            kpirow = _kpidac.GetCorpKPI(DateTime.Now, curBranchList);
+
+            if (kpirow != null)
+            {
+                ViewBag.allkpi = kpirow;
+            }
+
+            //Change this to corporate table
+            int unAuthorized = dashdata.CDMA_INDIVIDUAL_BIO_DATA.Where(a => a.BRANCH_CODE == identity.BranchId && a.AUTHORISED == "U").Count();
+            ViewBag.unAuthorized = unAuthorized;
+            return View();
+        }
+
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)

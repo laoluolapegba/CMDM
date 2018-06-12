@@ -96,7 +96,8 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of Leave objects.</returns>		
-        public List<CdmaGoldenRecord> Select(string name, int startRowIndex, int maximumRows, string sortExpression, int? GoldenrecordId = null, string BranchId = null)
+        public List<CdmaGoldenRecord> Select(string name, string custid, string email, string accno, string bvn,
+            int startRowIndex, int maximumRows, string sortExpression, int? GoldenrecordId = null, string BranchId = null)
         {
             using (var db = new AppDbContext())
             {
@@ -106,6 +107,14 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.FULL_NAME.ToUpper().Contains(name.ToUpper()));
+                if (!string.IsNullOrWhiteSpace(accno))
+                    query = query.Where(v => v.ACCOUNT_NO.Contains(accno));
+                if (!string.IsNullOrWhiteSpace(bvn))
+                    query = query.Where(v => v.BVN.Contains(bvn));
+                if (!string.IsNullOrWhiteSpace(custid))
+                    query = query.Where(v => v.CUSTOMER_NO.Contains(custid));
+                if (!string.IsNullOrWhiteSpace(email))
+                    query = query.Where(v => v.EMAIL.ToUpper().Contains(email.ToUpper()));
                 //if (createdOnFrom.HasValue)
                 //    query = query.Where(al => createdOnFrom.Value <= al.RUN_DATE);
                 //if (createdOnTo.HasValue)
@@ -120,7 +129,7 @@ namespace CMdm.Data.DAC
                
 
                 // Sort and page.
-                query = query.OrderBy(a => a.FULL_NAME);//    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderBy(a => a.GOLDEN_RECORD);//    //OrderBy(a => a.CREATED_DATE)  //
                         //.Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.

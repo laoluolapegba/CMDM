@@ -125,9 +125,17 @@ namespace CMdm.UI.Web.Controllers
 
             var model = new UsersListViewModel();
             AppDbContext db = new AppDbContext();
+
             model.UserRoles = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();
+
             var curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME);
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+            var currZoneList = db.CM_BRANCH.Select(x => new { x.ZONECODE, x.ZONENAME }).OrderBy(x => x.ZONENAME).Distinct();
+            model.Zones = new SelectList(currZoneList, "ZONECODE", "ZONENAME").ToList();
+
+            var currRegionList = db.CM_BRANCH.Select(x => new {x.REGION_ID, x.REGION_NAME }).OrderBy(x => x.REGION_NAME).Distinct();
+            model.Regions = new SelectList(currRegionList, "REGION_ID", "REGION_NAME").ToList();
             //var allRoles = db.CM_USER_ROLES.ToList(); // _userService.GetAllRoles("", 1, int.MaxValue,"");
             //foreach (var role in allRoles)
             //{
@@ -177,6 +185,23 @@ namespace CMdm.UI.Web.Controllers
                     CREATED_DATE = DateTime.Now
 
                 };
+
+                x.UserTypes = Request.Form["UserTypes"];
+
+                if (x.UserTypes.ToString().Equals("Branch User"))
+                    mdmUser.BRANCH_ID = x.BRANCH_ID;
+                if (x.UserTypes.Equals("Zonal User"))
+                {
+                    var branch = database.CM_BRANCH.Where(v => v.ZONECODE == x.ZONE_ID).Select(m => m.BRANCH_ID).FirstOrDefault();
+                    mdmUser.BRANCH_ID = branch;
+                }
+                if (x.UserTypes.Equals("Regional User"))
+                {
+                    var branch = database.CM_BRANCH.Where(m => m.REGION_ID == x.REGION_ID).Select(m => m.BRANCH_ID).FirstOrDefault();
+                    mdmUser.BRANCH_ID = branch;
+                }
+                    
+
                 database.CM_USER_PROFILE.Add(mdmUser);
                 database.SaveChanges();
                 database.Entry(mdmUser).GetDatabaseValues();
@@ -240,6 +265,12 @@ namespace CMdm.UI.Web.Controllers
             };
             model.UserRoles = new SelectList(database.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();
             model.Branches = new SelectList(database.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+            var currZoneList = database.CM_BRANCH.Select(x => new { x.ZONECODE, x.ZONENAME }).OrderBy(x => x.ZONENAME).Distinct();
+            model.Zones = new SelectList(currZoneList, "ZONECODE", "ZONENAME").ToList();
+
+            var currRegionList = database.CM_BRANCH.Select(x => new { x.REGION_ID, x.REGION_NAME }).OrderBy(x => x.REGION_NAME).Distinct();
+            model.Regions = new SelectList(currRegionList, "REGION_ID", "REGION_NAME").ToList();
             return View(model);
         }
 
@@ -255,6 +286,8 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
+                mdmUser.UserTypes = Request.Form["UserTypes"];
+
                 using (var db = new AppDbContext())
                 {
                     var entity = db.CM_USER_PROFILE.FirstOrDefault(o => o.PROFILE_ID == mdmUser.PROFILE_ID);
@@ -273,6 +306,19 @@ namespace CMdm.UI.Web.Controllers
                         //Still defaulting
                         entity.ISLOCKED = Convert.ToDecimal(!mdmUser.ISACTIVE);
                         //entity.USER_ID = mdmUser.USER_ID;
+
+                        if (mdmUser.UserTypes.ToString().Equals("Branch User"))
+                            entity.BRANCH_ID = mdmUser.BRANCH_ID;
+                        if (mdmUser.UserTypes.Equals("Zonal User"))
+                        {
+                            var branch = database.CM_BRANCH.Where(v => v.ZONECODE == mdmUser.ZONE_ID).Select(m => m.BRANCH_ID).FirstOrDefault();
+                            entity.BRANCH_ID = branch;
+                        }
+                        if (mdmUser.UserTypes.Equals("Regional User"))
+                        {
+                            var branch = database.CM_BRANCH.Where(m => m.REGION_ID == mdmUser.REGION_ID).Select(m => m.BRANCH_ID).FirstOrDefault();
+                            entity.BRANCH_ID = branch;
+                        }
                         db.CM_USER_PROFILE.Attach(entity);
                         db.Entry(entity).State = EntityState.Modified;
                         db.SaveChanges();
@@ -1146,7 +1192,8 @@ namespace CMdm.UI.Web.Controllers
             {
                 ViewBag.ROLE_ID = new SelectList(database.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
                 ViewBag.BRANCH_ID = new SelectList(database.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME");
-                return View();
+
+            return View();
             }
 
             // POST: Users/Create
@@ -1163,8 +1210,9 @@ namespace CMdm.UI.Web.Controllers
                     string passwordHash = pwdManager.GeneratePasswordHash(cM_USER_PROFILE.COD_PASSWORD, out salt);
                     cM_USER_PROFILE.COD_PASSWORD = passwordHash;
                     cM_USER_PROFILE.PASSWORDSALT = salt;
-                database.CM_USER_PROFILE.Add(cM_USER_PROFILE);
-                database.SaveChanges();
+
+                    database.CM_USER_PROFILE.Add(cM_USER_PROFILE);
+                    database.SaveChanges();
                     return RedirectToAction("Index");
                 }
 

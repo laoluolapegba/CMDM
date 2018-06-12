@@ -10,6 +10,7 @@ namespace CMdm.Services.Messaging
     public partial interface IMessagingService
     {
         void LogEmailJob(int userProfile, string customerNo, MessageJobEnum.MailType mailType, int? createdBy = null);
+        void SaveUserActivity(int userProfile, string activity, DateTime activityDate);
         void SendMail(List<string> address = null, string subject = null, string body = null, string from = null, string sender = null);
         string GenerateBody(Entities.Domain.Customer.CM_BACK_JOBS job);
         string GetCSOEscalationMail(string branchId);

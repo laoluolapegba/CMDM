@@ -37,7 +37,7 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
 
-                new PropertyByName<PhoneValidation>("Customer Number", p => p.CUSTOMER_NO),
+                new PropertyByName<PhoneValidation>("Customer ID", p => p.CUSTOMER_NO),
 
                 new PropertyByName<PhoneValidation>("Branch Code", p => p.BRANCH_CODE),
                 new PropertyByName<PhoneValidation>("Branch Name", p => p.BRANCH_NAME),
@@ -49,7 +49,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<PhoneValidation>("Phone Number", p => p.PHONE_NO),
                 
                 new PropertyByName<PhoneValidation>("Type", p => p.TYPE),
-                new PropertyByName<PhoneValidation>("Run Date", p => p.LAST_RUN_DATE),
+                new PropertyByName<PhoneValidation>("Run Date", p => p.LAST_RUN_DATE.ToString()),
             };
 
             return ExportToXlsx(properties, documents);

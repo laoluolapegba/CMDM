@@ -48,5 +48,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
 
         public string BRANCH_NAME { get; set; }
 
+        public string CIF_ID { get; set; }
+
     }
 }

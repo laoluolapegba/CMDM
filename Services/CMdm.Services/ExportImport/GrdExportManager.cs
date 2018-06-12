@@ -37,20 +37,22 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
 
-                new PropertyByName<CdmaGoldenRecord>("Golden Record", p => p.GOLDEN_RECORD),
-                new PropertyByName<CdmaGoldenRecord>("Customer No", p => p.CUSTOMER_NO),
+                new PropertyByName<CdmaGoldenRecord>("Record ID", p => p.GOLDEN_RECORD),
+                new PropertyByName<CdmaGoldenRecord>("Customer ID", p => p.CUSTOMER_NO),
+                new PropertyByName<CdmaGoldenRecord>("Account Number", p => p.ACCOUNT_NO),
+                new PropertyByName<CdmaGoldenRecord>("Scheme Code", p => p.SCHEME_CODE),
 
                 new PropertyByName<CdmaGoldenRecord>("BVN", p => p.BVN),
-                new PropertyByName<CdmaGoldenRecord>("FullName", p => p.FULL_NAME),
-                new PropertyByName<CdmaGoldenRecord>("Date of Birth", p => p.DATE_OF_BIRTH),
+                new PropertyByName<CdmaGoldenRecord>("Name", p => p.FULL_NAME),
+                new PropertyByName<CdmaGoldenRecord>("Date of Birth", p => p.DATE_OF_BIRTH.ToString()),
                 new PropertyByName<CdmaGoldenRecord>("Residential Address", p => p.RESIDENTIAL_ADDRESS),
 
                 new PropertyByName<CdmaGoldenRecord>("Customer Type", p => p.CUSTOMER_TYPE),
                 new PropertyByName<CdmaGoldenRecord>("Gender", p => p.SEX),
-                new PropertyByName<CdmaGoldenRecord>("Branch", p => p.BRANCH_CODE),
-                new PropertyByName<CdmaGoldenRecord>("Record ID", p => p.RECORD_ID),
-                new PropertyByName<CdmaGoldenRecord>("Record Status", p => p.RECORD_STATUS),
+                new PropertyByName<CdmaGoldenRecord>("Branch Code", p => p.BRANCH_CODE),
                 new PropertyByName<CdmaGoldenRecord>("Phone Number", p => p.PHONE_NUMBER),
+
+                new PropertyByName<CdmaGoldenRecord>("Email", p => p.EMAIL),
             };
 
             return ExportToXlsx(properties, documents);

@@ -1,6 +1,6 @@
 ﻿@using CMdm.Entities.Domain.Kpi
 @{
-    ViewBag.Title = "Common Statistics";
+    ViewBag.Title = "Individual Customers Statistics";
     List<BrnKpi> allKpi = ViewBag.allkpi;
 }
 
@@ -242,7 +242,7 @@
                     </div>
                 </div>
 
-                <div class="box-body">
+                <div class="box-body" style="height: 295px;">
                     <div class="row">
                         @foreach (var brnkpi in allKpi)
                         {
@@ -442,7 +442,7 @@
             title: "Total DQI"
         });
         
-
+        
         var address = "/CMDM/Home";
         var address = "/Home";
 

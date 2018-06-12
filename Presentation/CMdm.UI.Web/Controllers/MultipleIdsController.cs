@@ -17,6 +17,7 @@ using CMdm.Entities.Domain.GoldenRecord;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -27,10 +28,13 @@ namespace CMdm.UI.Web.Controllers
         private IGrdExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
+
         public MultipleIdsController()
         {
             _dqQueService = new GoldenRecordService();
             _exportManager = new GrdExportManager();
+            _messagingService = new MessagingService();
 
             _permissionservice = new PermissionsService();
         }
@@ -84,6 +88,7 @@ namespace CMdm.UI.Web.Controllers
                     Text = "All"
                 });
             }
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Customers with Multiple Ids Report", DateTime.Now);
 
             return View(model);
         }
@@ -92,7 +97,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult GoldenRecordsList(DataSourceRequest command, GoldenRecordModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllQueItems(model.FULL_NAME, Convert.ToInt32(model.CUSTOMER_NO), model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllQueItems(model.FULL_NAME, model.CUSTOMER_NO, model.EMAIL, model.ACCOUNT_NO, model.BVN, model.GOLDEN_RECORD, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -111,6 +116,9 @@ namespace CMdm.UI.Web.Controllers
                     SEX = x.SEX,
                     BRANCH_CODE = x.BRANCH_CODE,
                     PHONE_NUMBER = x.PHONE_NUMBER,
+                    SCHEME_CODE = x.SCHEME_CODE,
+                    ACCOUNT_NO = x.ACCOUNT_NO,
+                    EMAIL = x.EMAIL,
                 }),
                 Total = items.TotalCount
             };
@@ -125,12 +133,14 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllQueItems(model.FULL_NAME, model.GOLDEN_RECORD, model.BRANCH_CODE);
+            var items = _dqQueService.GetAllQueItems(model.FULL_NAME, model.CUSTOMER_NO, model.EMAIL, model.ACCOUNT_NO, model.BVN, model.GOLDEN_RECORD, model.BRANCH_CODE);
 
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
-                return File(bytes, MimeTypes.TextXlsx, "goldenRecords.xlsx");
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Customers with Multiple Ids Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "multipleIDs.xlsx");
             }
             catch (Exception exc)
             {
@@ -158,7 +168,9 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
-                return File(bytes, MimeTypes.TextXlsx, "goldenRecords.xlsx");
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Customers with Multiple Ids Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "multipleIDs.xlsx");
             }
             catch (Exception exc)
             {

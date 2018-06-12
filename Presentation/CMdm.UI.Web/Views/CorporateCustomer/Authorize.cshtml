@@ -1,0 +1,52 @@
+﻿@model CMdm.UI.Web.Models.Customer.CorpCustModel
+@{
+    ViewBag.Title = "Authorize";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("ReadOnlyForm", Model.CompDetailsModel.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.CompDetailsModel.ExceptionId);
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Authorize Customer - @Model.CompDetailsModel.CUSTOMER_NO
+            @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="approve" class="btn bg-green">
+                <i class="fa fa-check-square-o"></i>
+                Approve
+            </button>
+            <button type="submit" name="disapprove" class="btn bg-red">
+                <i class="fa fa-minus-square-o"></i>
+                Disapprove
+            </button>
+
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+    <div class="content">
+        <div class="form-inline">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompDetailsModel.LastUpdatedby)
+            </div>
+            <div class="form-group">
+                @Html.CMdmDisplayFor(model => model.CompDetailsModel.LastUpdatedby)
+            </div>
+            @Html.LabelFor(model => model.CompDetailsModel.LastUpdatedDate)
+            <div class="form-group">
+                @Html.CMdmDisplayFor(model => model.CompDetailsModel.LastUpdatedDate)
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+            $(document).ready(function () {
+                if ($("#ReadOnlyForm").val() == "True") {
+                    $('input', 'form').attr('readonly', true);
+                    $('select', 'form').attr('disabled', true).attr('readonly', true);
+                }
+                $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
+            });
+</script>

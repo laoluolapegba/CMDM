@@ -27,7 +27,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
         private int _cacheTimeoutInMinutes = 30;
         static PasswordManager pwdManager = new PasswordManager();
         public AppDbContext db = new AppDbContext();
-
+        private CustomIdentity identity;
 
         private static string logs = "";
         //private Customer custObj;
@@ -95,7 +95,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                             //            where u.USER_ID.ToLower() == username.ToLower()
                             //            select u).FirstOrDefault();
                             authenticated = true;
-
+                            
                         }
                         
                     }

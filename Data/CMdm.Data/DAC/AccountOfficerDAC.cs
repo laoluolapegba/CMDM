@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<AccountOfficer> SelectAccountOfficer(string name, string aoname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<AccountOfficer> SelectAccountOfficer(string name, string accountname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,10 +96,8 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.ACCOUNT_NUMBER.Contains(name));
-                if (aoname == "1")
-                    query = query.Where(v => v.AO_NAME == null);
-                if(aoname == "2")
-                    query = query.Where(v => v.AO_NAME.ToUpper().Contains("VACANT"));
+                if(!string.IsNullOrEmpty(accountname))
+                    query = query.Where(v => v.ACCOUNT_NAME.ToUpper().Contains(accountname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.

@@ -115,15 +115,15 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<CustSegment> GetAllCustSegments(string fname = "", string lname = "", string branchCode = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
+        public virtual IPagedList<CustSegment> GetAllCustSegments(string custid = "", string custtype = "", string accno = "", string fname = "", string mname = "", string lname = "", 
+            string branchCode = "", string reason = "", int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<CustSegment> result = default(List<CustSegment>);
 
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "CUST_DOB DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _csDAC.SelectCustSegment(fname, lname, branchCode, pageIndex, pageSize, sortExpression);
+            result = _csDAC.SelectCustSegment(custid, custtype, accno, fname, mname, lname, branchCode, reason, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

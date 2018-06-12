@@ -26,6 +26,10 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string SOL_ID { get; set; }
         [DisplayName("CIF ID")]
         public string CIF_ID { get; set; }
+        [DisplayName("Run Date")]
+        public DateTime? RUN_DATE { get; set; }
+        [DisplayName("Scheme Code")]
+        public string SCHM_CODE { get; set; }
 
         public int Id
         {

@@ -18,6 +18,7 @@ using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -28,12 +29,14 @@ namespace CMdm.UI.Web.Controllers
         private ICustExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
         #region Constructors
         public CustSegmentController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new CustSegmentService();
             _exportManager = new CustExportManager();
+            _messagingService = new MessagingService();
 
             _permissionservice = new PermissionsService();
         }
@@ -55,6 +58,40 @@ namespace CMdm.UI.Web.Controllers
 
             identity = ((CustomPrincipal)User).CustomIdentity;
             _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Text = "INDIVIDUAL",
+                Value = "INDIVIDUAL"
+            });
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Text = "CORPORATE",
+                Value = "CORPORATE"
+            });
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            model.Reasons.Add(new SelectListItem
+            {
+                Text = "MISMATCH SECTOR AND SUBSECTOR",
+                Value = "MISMATCH SECTOR AND SUBSECTOR"
+            });
+            model.Reasons.Add(new SelectListItem
+            {
+                Text = "SECTOR AND SUBSECTOR ARE NULL",
+                Value = "SECTOR AND SUBSECTOR ARE NULL"
+            });
+            model.Reasons.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
 
             IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
 
@@ -90,6 +127,9 @@ namespace CMdm.UI.Web.Controllers
                     Text = "All"
                 });
             }
+
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Wrong Sector / Subsector Mapping Report", DateTime.Now);
+
             return View(model);
         }
 
@@ -97,7 +137,8 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult CustSegmentList(DataSourceRequest command, CustSegmentModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllCustSegments(model.CUST_FIRST_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllCustSegments(model.ORGKEY, model.CUSTOMER_TYPE, model.ACCOUNT_NO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, 
+                model.REASON, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -124,6 +165,10 @@ namespace CMdm.UI.Web.Controllers
                     SUBSECTORNAME = x.SUBSECTORNAME,
                     SUBSEGMENT = x.SUBSEGMENT,
                     CORP_ID = x.CORP_ID,
+                    SCHEME_CODE = x.SCHEME_CODE,
+                    ACCOUNT_NO = x.ACCOUNT_NO,
+                    CUSTOMER_TYPE = x.CUSTOMER_TYPE,
+                    REASON = x.REASON
                 }),
                 Total = items.TotalCount
             };
@@ -138,12 +183,15 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllCustSegments(model.CUST_FIRST_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID);
+            var items = _dqQueService.GetAllCustSegments(model.ORGKEY, model.CUSTOMER_TYPE, model.ACCOUNT_NO, model.CUST_FIRST_NAME, 
+                model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, model.REASON);
 
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
-                return File(bytes, MimeTypes.TextXlsx, "customerSegments.xlsx");
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Wrong Sector / Subsector Mapping Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "wrongSectorSubsector.xlsx");
             }
             catch (Exception exc)
             {
@@ -171,7 +219,9 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
-                return File(bytes, MimeTypes.TextXlsx, "customerSegments.xlsx");
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Wrong Sector / Subsector Mapping Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "wrongSectorSubsector.xlsx");
             }
             catch (Exception exc)
             {

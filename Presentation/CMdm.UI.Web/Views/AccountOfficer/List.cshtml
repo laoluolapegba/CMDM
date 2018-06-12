@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.LabelFor(model => model.SOL_ID)
+                                        @Html.Label("Branch Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmDropDownList("SOL_ID", Model.Branches)
@@ -68,10 +68,10 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.LabelFor(model => model.AO_NAME)
+                                        @Html.Label("Account Name")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmDropDownList("AO_NAME", Model.AccountOfficers)
+                                        @Html.CMdmEditorFor(model => model.ACCOUNT_NAME)
                                     </div>
                                 </div>
 
@@ -163,7 +163,7 @@
                                     },
                                     {
                                         field: "SCHM_CODE",
-                                        title: "Product Code",
+                                        title: "Scheme Code",
                                         width: 50
                                     },
                                     {
@@ -289,7 +289,7 @@
                     var data = {
                         SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
                         SOL_ID: $('#SOL_ID').val(),
-                        AO_NAME: $('#AO_NAME').val(),
+                        ACCOUNT_NAME: $('#ACCOUNT_NAME').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -325,8 +325,13 @@
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
+                
                 return false;
             });
         });</script>

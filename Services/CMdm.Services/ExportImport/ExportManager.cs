@@ -40,7 +40,7 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
                 
-                new PropertyByName<OutStandingDoc>("Account No", p => p.ACID),
+                new PropertyByName<OutStandingDoc>("Account Number", p => p.FORACID),
                 new PropertyByName<OutStandingDoc>("Account Name", p => p.ACCT_NAME),
 
                 new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
@@ -50,9 +50,9 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),                
                 new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),             
                 
-                new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE),
+                new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE.ToString()),
                 new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE),
-                new PropertyByName<OutStandingDoc>("CustomerId", p => p.FORACID),
+                new PropertyByName<OutStandingDoc>("CustomerId", p => p.CIF_ID),
                 new PropertyByName<OutStandingDoc>("Account Officer Code", p => p.ACCTOFFICER_CODE),
                 new PropertyByName<OutStandingDoc>("Account Officer Name", p => p.ACCTOFFICER_NAME),
             };

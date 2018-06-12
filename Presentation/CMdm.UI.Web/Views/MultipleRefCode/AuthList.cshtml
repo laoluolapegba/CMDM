@@ -20,11 +20,35 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="content-header clearfix">
-        @*<h1 class="pull-left">
+<div class="content-header clearfix">
+    @*<h1 class="pull-left">
             Multiple Ref Code Details
         </h1>*@
+    <h1 class="pull-left">
+        <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("To List", "List")</small>
+    </h1>
+    <div class="pull-right">
+        <div class="btn-group">
+            <button type="button" class="btn bg-purple">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li class="divider"></li>
+                <li>
+                    <button type="button" id="exportexcel-selected">
+                        <i class="fa fa-file-excel-o"></i>
+                        ExportToExcel Selected
+                    </button>
+                </li>
+            </ul>
+        </div>
     </div>
+</div>
 
     <div class="content">
         <div class="form-horizontal">
@@ -141,8 +165,19 @@
                                         },
                                         {
                                             field: "CIF_ID",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
                                             width: 100
+                                        },
+                                        {
+                                            field: "SCHM_CODE",
+                                            title: "Scheme Code",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "RUN_DATE",
+                                            title: "Run Date",
+                                            width: 100,
+                                            template: "#= kendo.toString(kendo.parseDate(RUN_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
                                         },
                                     ]
                                 });
@@ -251,7 +286,7 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "MultipleRefCode", FormMethod.Post, new { id = "export-excel-selected-form" }))
+@using (Html.BeginForm("ExportMultExcelSelected", "MultipleRefCode", FormMethod.Post, new { id = "export-excel-selected-form" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />
@@ -261,8 +296,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

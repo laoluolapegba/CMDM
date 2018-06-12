@@ -13,17 +13,16 @@
                     <div class="panel-group">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            @Html.LabelFor(model => model.USER_ID)
-                                        </div>
-                                        <div class="col-md-9">
-                                            @Html.CMdmEditorFor(model => model.USER_ID)
-                                            @Html.ValidationMessageFor(model => model.USER_ID)
-                                        </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.USER_ID)
                                     </div>
-                                
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.USER_ID)
+                                        @Html.ValidationMessageFor(model => model.USER_ID)
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.EMAIL_ADDRESS)
@@ -44,7 +43,7 @@
                                                 @if (Model.PROFILE_ID > 0)
                                                 {
                                                     <button type="submit" name="changepassword" class="btn btn-info">
-                                                       Change
+                                                        Change
                                                     </button>
                                                 }
                                             </div>
@@ -52,7 +51,7 @@
                                         @Html.ValidationMessageFor(model => model.COD_PASSWORD)
                                     </div>
                                 </div>
-                               
+
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.ROLE_ID)
@@ -64,10 +63,28 @@
                                                 @Html.RequiredHint()
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
+
                                 <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.Label("User Level")
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="UserTypes" id="branchid" value="Branch User" checked>Branch User
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="UserTypes" value="Zonal User" id="zonalid">Zonal User
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="UserTypes" value="Regional User" id="regionalid">Regional User
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="branchdiv">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.BRANCH_ID)
                                     </div>
@@ -78,9 +95,37 @@
                                                 @Html.RequiredHint()
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
+
+                                <div class="form-group" id="zonediv">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.ZONE_ID)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmDropDownListFor(model => model.ZONE_ID, Model.Zones)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="regiondiv">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.REGION_ID)
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group input-group-required">
+                                            @Html.CMdmDropDownListFor(model => model.REGION_ID, Model.Regions)
+                                            <div class="input-group-btn">
+                                                @Html.RequiredHint()
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.FIRSTNAME)
@@ -99,10 +144,10 @@
                                         @Html.ValidationMessageFor(model => model.LASTNAME)
                                     </div>
                                 </div>
-                               
-                                
-                                
-                               
+
+
+
+
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         @Html.LabelFor(model => model.ISLOCKED)
@@ -112,7 +157,7 @@
                                         @Html.ValidationMessageFor(model => model.ISLOCKED)
                                     </div>
                                 </div>
-                                
+
                                 @if (Model.PROFILE_ID > 0)
                                 {
                                     <div class="form-group">
@@ -135,7 +180,7 @@
                                         </div>
                                     </div>
                                 }
-                                
+
                             </div>
                         </div>
                     </div>
@@ -144,3 +189,29 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#zonediv').addClass("hidden");
+        $('#regiondiv').addClass('hidden');
+
+        $('#branchid').on("click", function () {
+            $('#zonediv').addClass('hidden');
+            $('#regiondiv').addClass('hidden');
+            $('#branchdiv').removeClass('hidden');
+        });
+
+        $('#zonalid').on("click", function () {
+            $('#zonediv').removeClass("hidden");
+            $('#regiondiv').addClass('hidden');
+            $('#branchdiv').addClass('hidden');
+        });
+
+        $('#regionalid').on("click", function () {
+            $('#zonediv').addClass('hidden');
+            $('#regiondiv').removeClass('hidden');
+            $('#branchdiv').addClass('hidden');
+        });
+    });
+</script>

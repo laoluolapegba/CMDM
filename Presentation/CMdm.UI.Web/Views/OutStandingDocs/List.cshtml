@@ -3,7 +3,7 @@
 
 @{
     //page title
-    ViewBag.Title = "Outstanding Documents";
+    ViewBag.Title = "Customer Outstanding Documents";
     //ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
@@ -67,10 +67,19 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Customer ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.CIF_ID)
+                                    </div>
+                                </div>
+                                <div cl
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("Account Number")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.ACID)
+                                        @Html.CMdmEditorFor(model => model.FORACID)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -82,10 +91,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
-
+                                <div class="col-md-7">
+                                </div>
                             </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
                                 <button type="button" id="search-products" class="btn btn-warning btn-search">
@@ -150,7 +158,7 @@
                                             width: 50
                                         },
                                         {
-                                            field: "ACID",
+                                            field: "FORACID",
                                             title: "Account Number",
                                             width: 100
                                         },
@@ -213,7 +221,7 @@
                                         width: 100
                                     },
                                     {
-                                        field: "FORACID",
+                                        field: "CIF_ID",
                                         title: "Customer Id",
                                         width: 100,
                                         headerAttributes: { style: "text-align:left" },
@@ -302,7 +310,8 @@
                     var data = {
                         SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
-                        ACID: $('#ACID').val(),
+                        FORACID: $('#FORACID').val(),
+                        CIF_ID: $('#CIF_ID').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -342,8 +351,12 @@
         $('#exportexcel-selected').click(function (e) {
             e.preventDefault();
             var ids = selectedIds.join(",");
-            $('#export-excel-selected-form #selectedIds').val(ids);
-            $('#export-excel-selected-form').submit();
+            if (ids.length < 1) {
+                alert("Please select records to export");
+            } else {
+                $('#export-excel-selected-form #selectedIds').val(ids);
+                $('#export-excel-selected-form').submit();
+            }
             return false;
         });
     });

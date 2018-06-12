@@ -31,20 +31,32 @@ namespace CMdm.Services.ExportImport
         /// Export documents list to XLSX
         /// </summary>
         /// <param name="documents">documents</param>
-        public virtual byte[] ExportDocumentsToXlsx(IList<MultipleRefCode> documents)
+        public virtual byte[] ExportDocumentsToXlsx(IList<DistinctRefCode> documents)
         {
             //property array
             var properties = new[]
             {
+                new PropertyByName<DistinctRefCode>("Account Officer", p => p.ACCOUNTOFFICER_NAME),
 
+                new PropertyByName<DistinctRefCode>("Ref Code", p => p.REF_CODE),
+            };
+
+            return ExportToXlsx(properties, documents);
+        }
+
+        public virtual byte[] ExportMrcToXlsx(IList<MultipleRefCode> documents)
+        {
+            //property array
+            var properties = new[]
+            {
                 new PropertyByName<MultipleRefCode>("Account Number", p => p.FORACID),
-
                 new PropertyByName<MultipleRefCode>("Duplication ID", p => p.DUPLICATION_ID),
                 new PropertyByName<MultipleRefCode>("Account Officer", p => p.ACCOUNTOFFICER_NAME),
-                new PropertyByName<MultipleRefCode>("Ref Code", p => p.REF_CODE),
-
+                new PropertyByName<MultipleRefCode>("AO Code", p => p.REF_CODE),
                 new PropertyByName<MultipleRefCode>("Branch Code", p => p.SOL_ID),
-                new PropertyByName<MultipleRefCode>("CIF ID", p => p.CIF_ID),
+                new PropertyByName<MultipleRefCode>("Customer ID", p => p.CIF_ID),
+                new PropertyByName<MultipleRefCode>("Scheme Code", p => p.SCHM_CODE),
+                new PropertyByName<MultipleRefCode>("Run Date", p => p.RUN_DATE.ToString()),
             };
 
             return ExportToXlsx(properties, documents);

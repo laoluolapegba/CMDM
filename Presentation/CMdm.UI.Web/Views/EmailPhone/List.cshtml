@@ -51,7 +51,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Customer Number")
+                                        @Html.Label("Customer ID")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.ORGKEY)
@@ -67,14 +67,30 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Email")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.EMAIL)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Phone Number")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.PREFERREDPHONE)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("First Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Middle Name")
@@ -155,16 +171,22 @@
                                             width: 50
                                         },
                                         {
+                                            field: "PREFERREDPHONE",
+                                            title: "Preferred Phone",
+                                            width: 100,
+                                            template: '<a href="@Url.Content("~/EmailPhone/AuthList/")#=PREFERREDPHONE#">#:PREFERREDPHONE#</a>'
+                                        },
+                                        {
                                             field: "DUPLICATE_ID",
                                             title: "Duplicate ID",
                                             width: 100,
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
                                             width: 100
                                         },
-                                        
+
                                         {
                                             field: "CUST_FIRST_NAME",
                                             title: "First Name",
@@ -188,7 +210,7 @@
                                         },
                                         {
                                             field: "BRANCH_CODE",
-                                            title: "Branch ID",
+                                            title: "Branch Code",
                                             width: 50
                                         },
                                         {
@@ -209,11 +231,6 @@
                                         {
                                             field: "CUSTOMERMINOR",
                                             title: "Customer Minor",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "PREFERREDPHONE",
-                                            title: "Preferred Phone",
                                             width: 100
                                         },
                                         {
@@ -305,6 +322,8 @@
                         CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
                         CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
+                        EMAIL: $('#EMAIL').val(),
+                        PREFERREDPHONE: $('#PREFERREDPHONE').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -341,8 +360,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

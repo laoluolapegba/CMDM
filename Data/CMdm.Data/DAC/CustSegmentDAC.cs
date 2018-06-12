@@ -84,16 +84,27 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<CustSegment> SelectCustSegment(string fname, string lname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<CustSegment> SelectCustSegment(string custid, string custtype, string accno, string fname, string mname, string lname, string branchCode, string reason,
+            int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
                 var query = db.CustSegment.Select(q => q);
 
+                if (!string.IsNullOrWhiteSpace(custid))
+                    query = query.Where(v => v.ORGKEY.Contains(custid));
+                if (!string.IsNullOrWhiteSpace(accno))
+                    query = query.Where(v => v.ACCOUNT_NO.Contains(accno));
+                if (!string.IsNullOrWhiteSpace(custtype) && custtype != "0")
+                    query = query.Where(v => v.CUSTOMER_TYPE.ToUpper().Contains(custtype.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(fname))
                     query = query.Where(v => v.CUST_FIRST_NAME.ToUpper().Contains(fname.ToUpper()));
+                if (!string.IsNullOrWhiteSpace(mname))
+                    query = query.Where(v => v.CUST_MIDDLE_NAME.ToUpper().Contains(mname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(lname))
                     query = query.Where(v => v.CUST_LAST_NAME.ToUpper().Contains(lname.ToUpper()));
+                if (!string.IsNullOrWhiteSpace(reason) && reason != "0")
+                    query = query.Where(v => v.REASON.ToUpper().Contains(reason.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.PRIMARY_SOL_ID.Contains(branchCode));
                 // Append filters.

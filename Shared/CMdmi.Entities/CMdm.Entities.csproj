@@ -48,11 +48,15 @@
     <Compile Include="Domain\Customer\CDMA_ACCT_SERVICES_REQUIRED.cs" />
     <Compile Include="Domain\Customer\CDMA_ADDITIONAL_INFORMATION.cs" />
     <Compile Include="Domain\Customer\CDMA_AUTH_FINANCE_INCLUSION.cs" />
+    <Compile Include="Domain\Customer\CDMA_BENEFICIALOWNERS.cs" />
     <Compile Include="Domain\Customer\CDMA_BRANCH_CLASS.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_DIVISION.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SEGMENT.cs" />
     <Compile Include="Domain\Customer\CDMA_BUSINESS_SIZE.cs" />
     <Compile Include="Domain\Customer\CDMA_CHEQUE_CONFIRM_THRESHOLD.cs" />
+    <Compile Include="Domain\Customer\CDMA_COMPANY_DETAILS.cs" />
+    <Compile Include="Domain\Customer\CDMA_COMPANY_INFORMATION.cs" />
+    <Compile Include="Domain\Customer\CDMA_CORP_ADDITIONAL_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_COUNTRIES.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME_LOG.cs" />
     <Compile Include="Domain\Customer\CDMA_CUSTOMER_INCOME.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="Domain\Customer\CDMA_ONLINE_TRANSFER_LIMIT.cs" />
     <Compile Include="Domain\Customer\CDMA_RELIGION.cs" />
     <Compile Include="Domain\Customer\CDMA_TRUSTS_CLIENT_ACCOUNTS.cs" />
+    <Compile Include="Domain\Customer\CMDM_ACTIVITY_LOG.cs" />
     <Compile Include="Domain\Customer\CMDM_CMMN_EMAIL_PHONENO.cs" />
     <Compile Include="Domain\Customer\CMDM_MULTIPLE_REF_CODE.cs" />
     <Compile Include="Domain\Customer\CMDM_PHONEVALIDATION_RESULTS.cs" />
@@ -102,7 +107,10 @@
     <Compile Include="Domain\Customer\TMP_ACCOUNTOFFICER_EXCEPTIONS.cs" />
     <Compile Include="Domain\Customer\TMP_SEC_SUB3.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\ActivityLog.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\DistinctRefCode.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\DqiSummary.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\EmailPhone.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\Exceptions.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\MultipleRefCode.cs" />
@@ -122,6 +130,7 @@
     <Compile Include="Domain\GoldenRecord\CdmaGoldenRecord.cs" />
     <Compile Include="Domain\GoldenRecord\GoldenRecordRules.cs" />
     <Compile Include="Domain\Kpi\BrnKpi.cs" />
+    <Compile Include="Domain\Kpi\CorpKpi.cs" />
     <Compile Include="Domain\Localization\Language.cs" />
     <Compile Include="Domain\Localization\LocaleStringResource.cs" />
     <Compile Include="Domain\Logging\Log.cs" />

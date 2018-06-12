@@ -57,7 +57,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult List(DataSourceRequest command, GoldenRecordModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllQueItems(model.SearchName, model.GOLDEN_RECORD, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllQueItems(model.SearchName, model.CUSTOMER_NO, model.EMAIL, model.ACCOUNT_NO, model.BVN, model.GOLDEN_RECORD, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -146,7 +146,7 @@ namespace CMdm.UI.Web.Controllers
             if (routeValues.ContainsKey("id"))
                 goldenRecord = int.Parse((string)routeValues["id"]);
 
-            var items = _dqQueService.GetAllQueItems(model.SearchName, goldenRecord, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllQueItems(model.SearchName, model.CUSTOMER_NO, model.EMAIL, model.ACCOUNT_NO, model.BVN, goldenRecord, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new GoldenRecordModel

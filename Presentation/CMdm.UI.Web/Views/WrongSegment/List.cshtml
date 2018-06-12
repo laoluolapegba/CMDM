@@ -52,12 +52,30 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Customer ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ORGKEY)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("First Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Middle Name")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Last Name")
@@ -74,8 +92,6 @@
                                         @Html.CMdmDropDownList("PRIMARY_SOL_ID", Model.Branches)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                             </div>
                         </div>
                         <div class="row">
@@ -141,7 +157,7 @@
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
                                             width: 50
                                         },
                                         {
@@ -286,7 +302,9 @@
 
                 function additionalData() {
                     var data = {
+                        ORGKEY: $('#ORGKEY').val(),
                         CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
+                        CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
                         CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
                         PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
                     };
@@ -325,8 +343,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

@@ -53,6 +53,12 @@ namespace CMdm.UI.Web.Models.GoldenRecord
         public string BRANCH_CODE { get; set; }
         [DisplayName("Phone Number")]
         public string PHONE_NUMBER { get; set; }
+        [DisplayName("Email")]
+        public string EMAIL { get; set; }
+        [DisplayName("Scheme Code")]
+        public string SCHEME_CODE { get; set; }
+        [DisplayName("Account Number")]
+        public string ACCOUNT_NO { get; set; }
         public int Id { get; set; }
     }
 }

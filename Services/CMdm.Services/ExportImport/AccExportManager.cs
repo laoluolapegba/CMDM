@@ -40,13 +40,13 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
                 
-                new PropertyByName<AccountOfficer>("Account No", p => p.ACCOUNT_NUMBER),
+                new PropertyByName<AccountOfficer>("Account Number", p => p.ACCOUNT_NUMBER),
                 new PropertyByName<AccountOfficer>("Account Name", p => p.ACCOUNT_NAME),
 
                 new PropertyByName<AccountOfficer>("Branch Code", p => p.SOL_ID),
                 new PropertyByName<AccountOfficer>("Branch Name", p => p.BRANCH),
                 new PropertyByName<AccountOfficer>("Schm Code", p => p.SCHM_CODE),        
-                new PropertyByName<AccountOfficer>("Acct Open Date", p => p.ACCT_OPN_DATE),             
+                new PropertyByName<AccountOfficer>("Acct Open Date", p => p.ACCT_OPN_DATE.ToString()),             
                 
                 new PropertyByName<AccountOfficer>("A0 Code", p => p.AO_CODE),
                 new PropertyByName<AccountOfficer>("AO Name", p => p.AO_NAME),
@@ -54,7 +54,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<AccountOfficer>("SBU Name", p => p.SBU_NAME),
                 new PropertyByName<AccountOfficer>("Broker Code", p => p.BROKER_CODE),
                 new PropertyByName<AccountOfficer>("Broker Name", p => p.BROKER_NAME),
-                new PropertyByName<AccountOfficer>("Run Date", p => p.RUN_DATE),
+                new PropertyByName<AccountOfficer>("Run Date", p => p.RUN_DATE.ToString()),
             };
 
             return ExportToXlsx(properties, documents);

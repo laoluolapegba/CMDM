@@ -51,10 +51,44 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Account Number")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ACCOUNT_NO)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ORGKEY)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer Type")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.CUSTOMER_TYPE, Model.CustomerTypes)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.LabelFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.CUST_MIDDLE_NAME)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -67,14 +101,20 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.LabelFor(model => model.PRIMARY_SOL_ID)
+                                        @Html.Label("Branch Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmDropDownList("PRIMARY_SOL_ID", Model.Branches)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Reason")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.REASON, Model.Reasons)
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -140,7 +180,22 @@
                                         },
                                         {
                                             field: "ORGKEY",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "ACCOUNT_NO",
+                                            title: "Account Number",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "CUSTOMER_TYPE",
+                                            title: "Customer Type",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "SCHEME_CODE",
+                                            title: "Scheme Code",
                                             width: 50
                                         },
                                         {
@@ -191,7 +246,7 @@
                                         },
                                         {
                                             field: "PRIMARY_SOL_ID",
-                                            title: "Branch",
+                                            title: "Branch Code",
                                             width: 50
                                         },
                                         {
@@ -226,8 +281,13 @@
                                         },
                                         {
                                             field: "CORP_ID",
-                                            title: "Corporate ID",
+                                            title: "Corp ID",
                                             width: 50
+                                        },
+                                        {
+                                            field: "REASON",
+                                            title: "Reason",
+                                            width: 100
                                         },
                                     ]
                                 });
@@ -310,9 +370,14 @@
 
     function additionalData() {
         var data = {
+            ORGKEY: $('#ORGKEY').val(),
             CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
+            CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
             CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
             PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
+            ACCOUNT_NO: $("#ACCOUNT_NO").val(),
+            CUSTOMER_TYPE: $("#CUSTOMER_TYPE").val(),
+            REASON: $("#REASON").val(),
         };
         addAntiForgeryToken(data);
         return data;
@@ -347,8 +412,12 @@
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

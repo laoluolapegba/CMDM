@@ -318,14 +318,18 @@
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />
 }
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#exportexcel-selected').click(function (e) {
             e.preventDefault();
             var ids = selectedIds.join(",");
-            $('#export-excel-selected-form #selectedIds').val(ids);
-            $('#export-excel-selected-form').submit();
+            if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
             return false;
         });
     });
-</script>
+    </script>

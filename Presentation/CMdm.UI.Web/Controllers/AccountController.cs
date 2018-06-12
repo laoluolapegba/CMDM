@@ -11,6 +11,9 @@ using System.Web.Security;
 using System.Configuration;
 using System;
 using CMdm.Data;
+using CMdm.Services.Messaging;
+using System.Security.Principal;
+using CMdm.UI.Web.Helpers.CrossCutting.Security;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -18,9 +21,12 @@ namespace CMdm.UI.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IMessagingService _messagingService;
+        private CustomIdentity identity;
 
         public AccountController()
         {
+            _messagingService = new MessagingService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -117,7 +123,6 @@ namespace CMdm.UI.Web.Controllers
 
                     return this.Redirect(returnUrl);
                 }
-
 
                 return this.RedirectToAction("Index", "Home");
             }

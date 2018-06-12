@@ -16,7 +16,7 @@ using CMdm.UI.Web.Controllers;
 using CMdm.Services.Messaging;
 using CMdm.Entities.ViewModels;
 
-namespace CMdm.UI.Web.Models.Customer
+namespace CMdm.UI.Web.Controllers
 {
     public class AccInfoContextController : BaseController
     {

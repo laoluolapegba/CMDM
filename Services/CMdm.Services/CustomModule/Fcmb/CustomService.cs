@@ -115,7 +115,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string acctid = "", string branchCode = "",
+        public virtual IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string custid = "", string acctid = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<OutStandingDoc> result = default(List<OutStandingDoc>);
@@ -123,7 +123,7 @@ namespace CMdm.Services.CustomModule.Fcmb
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "DUE_DATE DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.SelectOutStandingDoc(name, acctid, branchCode, pageIndex, pageSize, sortExpression);
+            result = _dqqueDAC.SelectOutStandingDoc(name, custid, acctid, branchCode, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

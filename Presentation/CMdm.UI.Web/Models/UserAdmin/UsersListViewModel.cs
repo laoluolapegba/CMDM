@@ -18,6 +18,8 @@ namespace CMdm.UI.Web.Models.UserAdmin
             AvailableRoles = new List<SelectListItem>();
             Branches = new List<SelectListItem>();
             UserRoles = new List<SelectListItem>();
+            Regions = new List<SelectListItem>();
+            Zones = new List<SelectListItem>();
         }
         [UIHint("MultiSelect")]
         [DisplayName("Roles")]
@@ -103,8 +105,17 @@ namespace CMdm.UI.Web.Models.UserAdmin
         public string EMAIL_ADDRESS { get; set; }
         [DisplayName("Branch")]
         public string BRANCH_ID { get; set; }
+        [DisplayName("Zone")]
+        public string ZONE_ID { get; set; }
+        [DisplayName("Region")]
+        public string REGION_ID { get; set; }
+        public string UserTypes { get; set; }
+
         public IList<SelectListItem> UserRoles { get; set; }
         public IList<SelectListItem> Branches { get; set; }
+        public IList<SelectListItem> Zones { get; set; }
+        public IList<SelectListItem> Regions { get; set; }
+
         [DisplayName("Active")]
         public bool ISACTIVE
         {

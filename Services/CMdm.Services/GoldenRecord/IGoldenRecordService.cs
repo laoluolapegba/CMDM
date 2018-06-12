@@ -36,7 +36,7 @@ namespace CMdm.Services.GoldenRecord
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<CdmaGoldenRecord> GetAllQueItems(string name = "", int? recordId = null, string BranchId = null,
+        IPagedList<CdmaGoldenRecord> GetAllQueItems(string name = "", string custid = "", string email = "", string accno = "", string bvn = "", int? recordId = null, string BranchId = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
             
     }

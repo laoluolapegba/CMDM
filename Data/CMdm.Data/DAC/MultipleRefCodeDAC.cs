@@ -98,16 +98,13 @@ namespace CMdm.Data.DAC
                     query = query.Where(v => v.FORACID.Contains(accountnum));
                 if (!string.IsNullOrWhiteSpace(refCode))
                     query = query.Where(v => v.REF_CODE.Contains(refCode));
-                else
-                    query = db.MultipleRefCode.GroupBy(v => v.REF_CODE).SelectMany(q => q.Take(1));
-                //To add distinct code here
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderByDescending(a => a.DUPLICATION_ID);//    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderBy(a => a.ACCOUNTOFFICER_NAME);//    //OrderBy(a => a.CREATED_DATE)  //
                                                                     //  .Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.

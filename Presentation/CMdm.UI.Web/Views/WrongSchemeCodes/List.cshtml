@@ -52,6 +52,14 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Customer ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.CIF_ID)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("Account Number")
                                     </div>
                                     <div class="col-md-8">
@@ -133,7 +141,7 @@
                                         },
                                         {
                                             field: "CIF_ID",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
                                             width: 100
                                         },
                                         {
@@ -264,6 +272,7 @@
                     var data = {
                         FORACID: $('#FORACID').val(),
                         SOL_ID: $('#SOL_ID').val(),
+                        CIF_ID: $('#CIF_ID').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -300,8 +309,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

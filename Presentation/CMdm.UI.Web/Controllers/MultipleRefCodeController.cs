@@ -19,6 +19,7 @@ using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -29,12 +30,15 @@ namespace CMdm.UI.Web.Controllers
         private IMrcExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
+
         #region Constructors
         public MultipleRefCodeController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new MultipleRefCodeService();
             _exportManager = new MrcExportManager();
+            _messagingService = new MessagingService();
 
             _permissionservice = new PermissionsService();
         }
@@ -49,50 +53,39 @@ namespace CMdm.UI.Web.Controllers
 
         public ActionResult List()
         {
-            var model = new MultipleRefCodeModel();
+            var model = new DistinctRefCodeModel();
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
             identity = ((CustomPrincipal)User).CustomIdentity;
             _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
 
-            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
-
-            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
-            {
-
-            }
-            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
-            {
-                curBranchList = curBranchList.Where(a => a.REGION_ID == identity.RegionId);
-            }
-            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
-            {
-                curBranchList = curBranchList.Where(a => a.ZONECODE == identity.ZoneId).OrderBy(a => a.BRANCH_NAME);
-            }
-            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
-            {
-                curBranchList = curBranchList.Where(a => a.BRANCH_ID == identity.BranchId).OrderBy(a => a.BRANCH_NAME);
-            }
-            else
-            {
-                curBranchList = curBranchList.Where(a => a.BRANCH_ID == "-1");
-            }
-
-            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
-
-
-            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
-            {
-                model.Branches.Add(new SelectListItem
-                {
-                    Value = "0",
-                    Text = "All"
-                });
-            }
-
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Multiple AO Codes Report", DateTime.Now);
             return View(model);
         }
+
+        [HttpPost]
+        public virtual ActionResult DistinctRefCodesList(DataSourceRequest command, DistinctRefCodeModel model, string sort, string sortDir)
+        {
+
+            var items = _dqQueService.GetAllDistinctRefCodes(model.ACCOUNTOFFICER_NAME, model.REF_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
+            //    logLevel, command.Page - 1, command.PageSize);
+            DateTime _today = DateTime.Now.Date;
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new DistinctRefCodeModel
+                {
+                    Id = x.ID,
+                    ACCOUNTOFFICER_NAME = x.ACCOUNTOFFICER_NAME,
+                    REF_CODE = x.REF_CODE,
+                }),
+                Total = items.TotalCount
+            };
+
+            return Json(gridModel);
+        }
+
 
         [HttpPost]
         public virtual ActionResult MultipleRefCodesList(DataSourceRequest command, MultipleRefCodeModel model, string sort, string sortDir)
@@ -184,7 +177,9 @@ namespace CMdm.UI.Web.Controllers
                     DUPLICATION_ID = x.DUPLICATION_ID,
                     ACCOUNTOFFICER_NAME = x.ACCOUNTOFFICER_NAME,
                     REF_CODE = x.REF_CODE,
-                    SOL_ID = x.SOL_ID
+                    SOL_ID = x.SOL_ID,
+                    RUN_DATE = x.RUN_DATE,
+                    SCHM_CODE = x.SCHM_CODE
                 }),
                 Total = items.TotalCount
             };
@@ -194,12 +189,12 @@ namespace CMdm.UI.Web.Controllers
 
         [HttpPost, ActionName("List")]
         [FormValueRequired("exportexcel-all")]
-        public virtual ActionResult ExportExcelAll(MultipleRefCode model)
+        public virtual ActionResult ExportExcelAll(DistinctRefCode model)
         {
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllMultipleRefCodes(model.FORACID, model.SOL_ID);
+            var items = _dqQueService.GetAllDistinctRefCodes(model.ACCOUNTOFFICER_NAME, model.REF_CODE);
 
             try
             {
@@ -219,6 +214,36 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
+            var docs = new List<DistinctRefCode>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                docs.AddRange(_dqQueService.GetDistinctRefCodebyIds(ids));
+            }
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple AO Codes Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "multipleRefCodes.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        [HttpPost]
+        public virtual ActionResult ExportMultExcelSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
             var docs = new List<MultipleRefCode>();
             if (selectedIds != null)
             {
@@ -231,7 +256,9 @@ namespace CMdm.UI.Web.Controllers
 
             try
             {
-                byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                byte[] bytes = _exportManager.ExportMrcToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple AO Codes Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "multipleRefCodes.xlsx");
             }
             catch (Exception exc)

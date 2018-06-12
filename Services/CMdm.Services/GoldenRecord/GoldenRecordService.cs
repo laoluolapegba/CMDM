@@ -100,15 +100,15 @@ namespace CMdm.Services.GoldenRecord
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<CdmaGoldenRecord> GetAllQueItems(string name = "", int? recordId = null, string BranchId = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
+        public virtual IPagedList<CdmaGoldenRecord> GetAllQueItems(string name = "", string custid = "", string email = "", string accno = "", string bvn = "",
+            int? recordId = null, string BranchId = null, int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<CdmaGoldenRecord> result = default(List<CdmaGoldenRecord>);
 
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "FULL_NAME DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.Select(name, pageIndex, pageSize, sortExpression, recordId, BranchId);
+            result = _dqqueDAC.Select(name, custid, email, accno, bvn, pageIndex, pageSize, sortExpression, recordId, BranchId);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

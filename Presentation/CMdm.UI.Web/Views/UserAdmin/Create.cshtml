@@ -1,11 +1,9 @@
 ﻿@model CMdm.UI.Web.Models.UserAdmin.UsersListViewModel
-
 @{
     //page title
     ViewBag.Title = "AddNew";
 
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -21,9 +19,13 @@
             </button>
             <button type="submit" name="save-continue" class="btn bg-purple">
                 <i class="fa fa-floppy-o"></i>
-               Save and Continue Edit
+                Save and Continue Edit
             </button>
         </div>
     </div>
     @Html.Partial("_CreateOrUpdate", Model)
 }
+
+
+
+

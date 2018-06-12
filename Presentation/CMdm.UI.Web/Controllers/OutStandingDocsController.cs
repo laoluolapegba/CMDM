@@ -18,6 +18,7 @@ using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
 using CMdm.Data.Rbac;
 using CMdm.Entities.Domain.User;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -28,13 +29,16 @@ namespace CMdm.UI.Web.Controllers
         private IExportManager _exportManager;
         private IPermissionsService _permissionservice;
         private CustomIdentity identity;
+        private IMessagingService _messagingService;
+
         #region Constructors
         public OutStandingDocsController()
         {
             //bizrule = new DQQueBiz();
-            _dqQueService = new CustomService();
-             
+            _dqQueService = new CustomService();             
             _exportManager = new ExportManager();
+            _messagingService = new MessagingService();
+
             _permissionservice = new PermissionsService();
         }
         #endregion
@@ -120,7 +124,8 @@ namespace CMdm.UI.Web.Controllers
                     Text = "All"
                 });
             }
-           
+
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Customer Outstanding Documents Report", DateTime.Now);
             return View(model);
         }
         [HttpPost]
@@ -128,7 +133,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.ACID, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -150,7 +155,8 @@ namespace CMdm.UI.Web.Controllers
                     FREZ_REASON_CODE = x.FREZ_REASON_CODE,
                     SOL_ID = x.SOL_ID,
                     ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
-                    ACCTOFFICER_NAME = x.ACCTOFFICER_NAME
+                    ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
+                    CIF_ID = x.CIF_ID
                     //Id = x.RECORD_ID
 
                 }),
@@ -179,13 +185,15 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.ACID);
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID);
 
            
 
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Customers With Outstanding Documents Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "outstandingDocs.xlsx");
             }
             catch (Exception exc)
@@ -214,6 +222,8 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Customers With Outstanding Documents Report", DateTime.Now);
                 return File(bytes, MimeTypes.TextXlsx, "outstandingDocs.xlsx");
             }
             catch (Exception exc)

@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<WrongSchemeCode> SelectWrongSchemeCode(string name, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<WrongSchemeCode> SelectWrongSchemeCode(string custid, string accno, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -94,8 +94,10 @@ namespace CMdm.Data.DAC
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
                 var query = db.WrongSchemeCodes.Select(q => q);
 
-                if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.FORACID.Contains(name));
+                if (!string.IsNullOrWhiteSpace(custid))
+                    query = query.Where(v => v.CIF_ID.Contains(custid));
+                if (!string.IsNullOrWhiteSpace(accno))
+                    query = query.Where(v => v.FORACID.Contains(accno));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.

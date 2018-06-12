@@ -132,5 +132,54 @@ namespace CMdm.Data.DAC
             #endregion
 
         }
+
+        public List<CorpKpi> GetCorpKPI(DateTime trandate, string[] BranchCodes)
+        {
+            // decimal openingBal = 0;
+            string connString = ConfigurationManager.ConnectionStrings["AppDbContext"].ToString();
+            List<CorpKpi> allKpis = new List<CorpKpi>();
+            #region Corp
+            using (OracleConnection connection = new OracleConnection(connString))
+            {
+                string allBranches = "";
+                foreach (string branch in BranchCodes)
+                {
+                    if (branch == BranchCodes.Last())
+                        allBranches += "\'" + branch + "\'";
+                    else
+                        allBranches += "\'" + branch + "\',";
+                }
+                //BrnKpi kpirow = new BrnKpi();                
+                connection.Open();
+
+                string sqlSelect = "SELECT  SUM(BRN_CUST_COUNT) AS BRN_CUST_COUNT, ROUND(AVG(BRN_DQI),2) AS BRN_DQI, SUM(BRN_OPEN_EXCEPTIONS) AS BRN_OPEN_EXCEPTIONS, " +
+                "ROUND(AVG(BRN_PCT_CONTRIB),2) AS BRN_PCT_CONTRIB, SUM(BRN_RECURRING_ERRORS) AS BRN_RECURRING_ERRORS, SUM(BRN_RESOLVED_ERRORS) AS BRN_RESOLVED_ERRORS, " +
+                "SUM(BANK_CUST_COUNT) AS BANK_CUST_COUNT " +
+                "FROM cmdm_corp_common_kpi WHERE BRANCH_CODE IN (" + allBranches + ") ";
+
+                OracleCommand command = new OracleCommand(sqlSelect, connection);
+                OracleDataReader rdr = command.ExecuteReader();
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        CorpKpi kpirow = new CorpKpi
+                        {
+                            BANK_CUST_COUNT = rdr.GetInt32(rdr.GetOrdinal("BANK_CUST_COUNT")),
+                            BRN_CUST_COUNT = rdr.GetInt32(rdr.GetOrdinal("BRN_CUST_COUNT")),
+                            BRN_DQI = rdr.GetDecimal(rdr.GetOrdinal("BRN_DQI")),
+                            BRN_OPEN_EXCEPTIONS = rdr.GetInt32(rdr.GetOrdinal("BRN_OPEN_EXCEPTIONS")),
+                            BRN_PCT_CONTRIB = rdr.GetDecimal(rdr.GetOrdinal("BRN_PCT_CONTRIB")),
+                            BRN_RECURRING_ERRORS = rdr.GetInt32(rdr.GetOrdinal("BRN_RECURRING_ERRORS")),
+                            BRN_RESOLVED_ERRORS = rdr.GetInt32(rdr.GetOrdinal("BRN_RESOLVED_ERRORS"))
+                        };
+                        allKpis.Add(kpirow);
+                    }
+                }
+
+                return allKpis;
+            }
+            #endregion Corp
+        }
     }
 }

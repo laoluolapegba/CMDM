@@ -52,10 +52,52 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Record ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.GOLDEN_RECORD, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.FULL_NAME)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Account Number")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ACCOUNT_NO)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("BVN")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.BVN)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer ID")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.CUSTOMER_NO)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Email")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.EMAIL)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -66,9 +108,6 @@
                                         @Html.CMdmDropDownList("SOL_ID", Model.Branches)
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="col-md-7">
                             </div>
                         </div>
                         <div class="row">
@@ -139,7 +178,17 @@
                                         },
                                         {
                                             field: "CUSTOMER_NO",
-                                            title: "Customer Number",
+                                            title: "Customer ID",
+                                            width: 70,
+                                        },
+                                        {
+                                            field: "ACCOUNT_NO",
+                                            title: "Account Number",
+                                            width: 100,
+                                        },
+                                        {
+                                            field: "SCHEME_CODE",
+                                            title: "Scheme Code",
                                             width: 70,
                                         },
                                         {
@@ -182,6 +231,11 @@
                                         {
                                             field: "PHONE_NUMBER",
                                             title: "Phone Number",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "EMAIL",
+                                            title: "Email",
                                             width: 100
                                         },
                                     ]
@@ -267,6 +321,10 @@
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
                         CUSTOMER_NO: $('#CUSTOMER_NO').val(),
                         FULL_NAME: $('#FULL_NAME').val(),
+                        EMAIL: $('#EMAIL').val(),
+                        GOLDEN_RECORD: $('#GOLDEN_RECORD').val(),
+                        ACCOUNT_NO: $('#ACCOUNT_NO').val(),
+                        BVN: $('#BVN').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -303,8 +361,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

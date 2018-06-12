@@ -491,9 +491,12 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.WrongSchemeCode> WrongSchemeCodes { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.CustSegment> CustSegment { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.MultipleRefCode> MultipleRefCode { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.DistinctRefCode> DistinctRefCode { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.EmailPhone> EmailPhone { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.WrongSegment> WrongSegment { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.PhoneValidation> PhoneValidation { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.DqiSummary> DqiSummary { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.ActivityLog> ActivityLog { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CUST_REL_TYPE> CDMA_CUST_REL_TYPE { get; set; }
@@ -538,6 +541,13 @@ namespace CMdm.Data
         public DbSet<CMdm.Entities.Domain.User.CM_AUTH_LEVEL> CM_AUTH_LEVELS { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Data.Rbac.CMDM_BRANCH_MAIL> CMDM_BRANCH_MAIL { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_COMPANY_DETAILS> CDMA_COMPANY_DETAILS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_COMPANY_INFORMATION> CDMA_COMPANY_INFORMATION { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_BENEFICIALOWNERS> CDMA_BENEFICIALOWNERS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_CORP_ADDITIONAL_DETAILS> CDMA_CORP_ADDITIONAL_DETAILS { get; set; }
+
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CMDM_ACTIVITY_LOG> CMDM_ACTIVITY_LOG { get; set; }
 
     }
 

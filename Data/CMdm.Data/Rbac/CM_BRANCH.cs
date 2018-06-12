@@ -30,5 +30,9 @@ namespace CMdm.Data.Rbac
         public string REGION_NAME { get; set; }
         public virtual ICollection<CM_USER_PROFILE> CM_USER_PROFILE { get; set; }
 
+        public static implicit operator string(CM_BRANCH v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

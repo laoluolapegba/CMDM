@@ -31,7 +31,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<WrongSegment> GetAllWrongSegments(string fname = "", string lname = "", string branchCode = "",
+        IPagedList<WrongSegment> GetAllWrongSegments(string custid = "", string fname = "", string mname = "", string lname = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
     }
 }

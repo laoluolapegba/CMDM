@@ -17,5 +17,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
         public string REF_CODE { get; set; }
         public string SOL_ID { get; set; }
         public string CIF_ID { get; set; }
+        public DateTime? RUN_DATE { get; set; }
+        public string SCHM_CODE { get; set; }
     }
 }

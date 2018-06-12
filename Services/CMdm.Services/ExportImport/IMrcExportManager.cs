@@ -16,6 +16,8 @@ namespace CMdm.Services.ExportImport
         /// Export documents list to XLSX
         /// </summary>
         /// <param name="documents">documents</param>
-        byte[] ExportDocumentsToXlsx(IList<MultipleRefCode> documents);
+        byte[] ExportDocumentsToXlsx(IList<DistinctRefCode> documents);
+
+        byte[] ExportMrcToXlsx(IList<MultipleRefCode> documents);
     }
 }

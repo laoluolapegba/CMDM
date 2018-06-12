@@ -41,7 +41,7 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
 
-                new PropertyByName<WrongSchemeCode>("CIF ID", p => p.CIF_ID),
+                new PropertyByName<WrongSchemeCode>("Customer ID", p => p.CIF_ID),
                 new PropertyByName<WrongSchemeCode>("Account Number", p => p.FORACID),
 
                 new PropertyByName<WrongSchemeCode>("Scheme Code", p => p.SCHM_CODE),
@@ -52,7 +52,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<WrongSchemeCode>("Account Name", p => p.ACCT_NAME),
                 new PropertyByName<WrongSchemeCode>("Branch Code", p => p.SOL_ID),
                 new PropertyByName<WrongSchemeCode>("Customer Type", p => p.CUSTOMER_TYPE),
-                new PropertyByName<WrongSchemeCode>("Run Date", p => p.DATE_OF_RUN),
+                new PropertyByName<WrongSchemeCode>("Run Date", p => p.DATE_OF_RUN.ToString()),
             };
 
             return ExportToXlsx(properties, documents);

@@ -42,5 +42,8 @@ namespace CMdm.Entities.Domain.GoldenRecord
         public int RECORD_ID { get; set; }
         public string RECORD_STATUS { get; set; }
         public string PHONE_NUMBER { get; set; }
+        public string EMAIL { get; set; }
+        public string SCHEME_CODE { get; set; }
+        public string ACCOUNT_NO { get; set; }
     }
 }

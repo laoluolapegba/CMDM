@@ -115,7 +115,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<WrongSegment> GetAllWrongSegments(string fname = "", string lname = "", string branchCode = "",
+        public virtual IPagedList<WrongSegment> GetAllWrongSegments(string custid = "", string fname = "", string mname = "", string lname = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<WrongSegment> result = default(List<WrongSegment>);
@@ -123,7 +123,7 @@ namespace CMdm.Services.CustomModule.Fcmb
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "DATE_OF_RUN DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _wsDAC.SelectWrongSegment(fname, lname, branchCode, pageIndex, pageSize, sortExpression);
+            result = _wsDAC.SelectWrongSegment(custid, fname, mname, lname, branchCode, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

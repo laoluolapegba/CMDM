@@ -71,8 +71,11 @@
     <Compile Include="CmdmEntityTypeConfiguration.cs" />
     <Compile Include="CMdmObjectContext.cs" />
     <Compile Include="DAC\AccountOfficerDAC.cs" />
+    <Compile Include="DAC\ActivityLogDAC.cs" />
     <Compile Include="DAC\CustomActionsDAC.cs" />
     <Compile Include="DAC\CustSegmentDAC.cs" />
+    <Compile Include="DAC\DistinctRefCodeDAC.cs" />
+    <Compile Include="DAC\DqiSummaryDAC.cs" />
     <Compile Include="DAC\EmailPhoneDAC.cs" />
     <Compile Include="DAC\GoldenRecordDAC.cs" />
     <Compile Include="DAC\DqParamDAC.cs" />

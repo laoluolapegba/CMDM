@@ -1,0 +1,272 @@
+﻿@using CMdm.Framework;
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.DqiSummaryModel
+@{
+    ViewBag.Title = "DQI Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultGridPageSize = 10;
+    var gridPageSizes = "10, 15, 20, 50, 100";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        @*<h1 class="pull-left">
+                Accounts With No AO Codes
+            </h1>*@
+        <div class="pull-right">
+
+            <div class="btn-group">
+                <button type="button" class="btn bg-purple">
+                    <i class="fa fa-download"></i>
+                    Export
+                </button>
+                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">&nbsp;</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="divider"></li>
+                    <li>
+                        <button type="submit" name="exportexcel-all">
+                            <i class="fa fa-file-excel-o"></i>
+                            ExportToExcel All
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportexcel-selected">
+                            <i class="fa fa-file-excel-o"></i>
+                            ExportToExcel Selected
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default panel-search">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Branch Name")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.BRANCH_CODE, Model.Branches)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-5">
+                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                    <i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="products-grid"></div>
+                        <script>
+                            $(document).ready(function() {
+                                $("#products-grid").kendoGrid({
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("DqiSummaryList", "DQISummary"))",
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: additionalData
+                                            }
+                                        },
+                                        schema: {
+                                            data: "Data",
+                                            total: "Total",
+                                            errors: "Errors"
+                                        },
+                                        error: function(e) {
+                                            display_kendoui_grid_error(e);
+                                            // Cancel the changes
+                                            this.cancelChanges();
+                                        },
+                                        pageSize: @(defaultGridPageSize),
+                                        serverPaging: true,
+                                        serverFiltering: true,
+                                        serverSorting: true
+                                    },
+                                    pageable: {
+                                        refresh: true,
+                                        pageSizes: [@(gridPageSizes)],
+                                        @Html.Partial("_GridPagerMessages")
+                                    },
+                                    editable: {
+                                        confirmation: "Delete?",
+                                        mode: "inline"
+                                    },
+                                    scrollable: false,
+                                    dataBound: onDataBound,
+                                    columns: [
+                                        {
+                                            field: "Id",
+                                            headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                                            headerAttributes: { style: "text-align:center" },
+                                            attributes: { style: "text-align:center" },
+                                            template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "BRANCH_CODE",
+                                            title: "Branch Code",
+                                            width: 70
+                                        },
+                                        {
+                                            field: "PREVIOUS_DQI_RESULT",
+                                            title: "Previous DQI Result",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "DQI_RESULT",
+                                            title: "DQI Result",
+                                            width: 50,
+                                        },
+                                    {
+                                        field: "DAT_LAST_RUN",
+                                        title: "Last Run date",
+                                        width: 100,
+                                        template: "#= kendo.toString(kendo.parseDate(DAT_LAST_RUN, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
+                                    },
+                                    ]
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+                var selectedIds = [];
+
+                $(document).ready(function () {
+                    //search button
+                    $('#search-products').click(function () {
+                        //search
+                        var grid = $('#products-grid').data('kendoGrid');
+                        grid.dataSource.page(1); //new search. Set page size to 1
+                        //grid.dataSource.read(); we already loaded the grid above using "page" function
+                        //clear selected checkboxes
+                        $('.checkboxGroups').attr('checked', false).change();
+                        selectedIds = [];
+                        return false;
+                    });
+
+                    $("#@Html.FieldIdFor(model => model.BRANCH_CODE)").keydown(function (event) {
+                        if (event.keyCode === 13) {
+                            $("#search-products").click();
+                            return false;
+                        }
+                    });
+
+
+                    //$('#mastercheckbox').click(function () {
+                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+                    //});
+
+                    $('#mastercheckbox').change(function (ev) {
+                        var checked = ev.target.checked;
+                        $('.checkboxGroups').each(function (idx, item) {
+                            if (checked) {
+                                if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                    $(item).click();
+                                }
+                            } else {
+                                if ($(item).closest('tr').is('.k-state-selected')) {
+                                    $(item).click();
+                                }
+                            }
+                        });
+                    });
+
+                    //wire up checkboxes.
+                    $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {
+                        var $check = $(this);
+                        if ($check.is(":checked") == true) {
+                            var checked = jQuery.inArray($check.val(), selectedIds);
+                            if (checked == -1) {
+                                //add id to selectedIds.
+                                selectedIds.push($check.val());
+                            }
+                        }
+                        else {
+                            var checked = jQuery.inArray($check.val(), selectedIds);
+                            if (checked > -1) {
+                                //remove id from selectedIds.
+                                selectedIds = $.grep(selectedIds, function (item, index) {
+                                    return item != $check.val();
+                                });
+                            }
+                        }
+                        updateMasterCheckbox();
+                    });
+                });
+
+                function additionalData() {
+                    var data = {
+                        BRANCH_CODE: $('#BRANCH_CODE').val(),
+                    };
+                    addAntiForgeryToken(data);
+                    return data;
+                }
+
+                function onDataBound(e) {
+                    $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function () {
+                        var currentId = $(this).val();
+                        var checked = jQuery.inArray(currentId, selectedIds);
+                        //set checked based on if current checkbox's value is in selectedIds.
+                        $(this).attr('checked', checked > -1);
+                    });
+
+                    updateMasterCheckbox();
+                }
+
+                function updateMasterCheckbox() {
+                    var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+                    var numChkBoxesChecked = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+                    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                }
+    </script>
+}
+
+
+@*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+@using (Html.BeginForm("ExportExcelSelected", "DQISummary", FormMethod.Post, new { id = "export-excel-selected-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+<script type="text/javascript">
+$(document).ready(function () {
+            $('#exportexcel-selected').click(function (e) {
+                e.preventDefault();
+                var ids = selectedIds.join(",");
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
+
+                return false;
+            });
+        });</script>

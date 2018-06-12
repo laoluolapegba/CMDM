@@ -292,11 +292,13 @@
     <Compile Include="Controllers\AccountInfoController.cs" />
     <Compile Include="Controllers\AccountOfficerController.cs" />
     <Compile Include="Controllers\AcctServicesRequiredController.cs" />
+    <Compile Include="Controllers\ActivityLogController.cs" />
     <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
+    <Compile Include="Controllers\CorporateCustomerController.cs" />
     <Compile Include="Controllers\CustSegmentController.cs" />
     <Compile Include="Controllers\DQISummaryController.cs" />
     <Compile Include="Controllers\EmailPhoneController.cs" />
@@ -590,7 +592,12 @@
     <Compile Include="Models\Customer\AccInfoModel.cs" />
     <Compile Include="Models\Customer\AccServicesModel.cs" />
     <Compile Include="Models\Customer\AuthFIModel.cs" />
+    <Compile Include="Models\Customer\BenOwnersModel.cs" />
     <Compile Include="Models\Customer\BiodataInfoViewModel.cs" />
+    <Compile Include="Models\Customer\CompDetailsModel.cs" />
+    <Compile Include="Models\Customer\CompInfoModel.cs" />
+    <Compile Include="Models\Customer\CorpADDModel.cs" />
+    <Compile Include="Models\Customer\CorpCustModel.cs" />
     <Compile Include="Models\Customer\CustomerADIModel.cs" />
     <Compile Include="Models\Customer\CustomerForeignerModel.cs" />
     <Compile Include="Models\Customer\CustomerIncomeModel.cs" />
@@ -604,7 +611,10 @@
     <Compile Include="Models\Customer\IndividualContactDetails.cs" />
     <Compile Include="Models\Customer\individualIDDetail.cs" />
     <Compile Include="Models\Customer\OtherDetails.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\ActivityLogModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\DistinctRefCodeModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\DqiSummaryModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\EmailPhoneModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\MultipleRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\OutstandingDocModel.cs" />
@@ -621,6 +631,7 @@
     <Compile Include="Models\DqRules\DqRuleListModel.cs" />
     <Compile Include="Models\DqValidator\DqValidatorModel.cs" />
     <Compile Include="Models\GoldenRecord\GoldenRecordModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logging\LogListModel.cs" />
     <Compile Include="Models\Logging\LogModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -2247,6 +2258,14 @@
     <Content Include="Views\MessagingTemplates\ZonalControl.cshtml" />
     <Content Include="Views\MessagingTemplates\ZonalHead.cshtml" />
     <Content Include="Views\PhoneValidation\List.cshtml" />
+    <Content Include="Views\ActivityLog\List.cshtml" />
+    <Content Include="Views\CorporateCustomer\Authorize.cshtml" />
+    <Content Include="Views\CorporateCustomer\Create.cshtml" />
+    <Content Include="Views\CorporateCustomer\Edit.cshtml" />
+    <Content Include="Views\CorporateCustomer\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\DQISummary\List.cshtml" />
+    <Content Include="Views\EmailPhone\AuthList.cshtml" />
+    <Content Include="Views\Home\Corporate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

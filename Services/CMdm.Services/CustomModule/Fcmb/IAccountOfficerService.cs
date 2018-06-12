@@ -31,7 +31,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<AccountOfficer> GetAllAccountOfficers(string name = "", string aoname= "", string branchCode = "",
+        IPagedList<AccountOfficer> GetAllAccountOfficers(string name = "", string accountname= "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
           }
 }

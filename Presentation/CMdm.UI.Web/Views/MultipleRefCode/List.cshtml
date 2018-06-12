@@ -1,5 +1,5 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.MultipleRefCodeModel
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.DistinctRefCodeModel
 @{
     ViewBag.Title = "Multiple AO Codes";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -51,18 +51,10 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Account Number")
+                                        @Html.Label("Account Officer")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.FORACID)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        @Html.LabelFor(model => model.SOL_ID)
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmDropDownList("SOL_ID", Model.Branches)
+                                        @Html.CMdmEditorFor(model => model.ACCOUNTOFFICER_NAME)
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +81,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("MultipleRefCodesList", "MultipleRefCode"))",
+                                                url: "@Html.Raw(Url.Action("DistinctRefCodesList", "MultipleRefCode"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -137,28 +129,8 @@
                                             template: '<a href="@Url.Content("~/MultipleRefCode/AuthList/")#=REF_CODE#">#:REF_CODE#</a>'
                                         },
                                         {
-                                            field: "FORACID",
-                                            title: "Account  Number",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "DUPLICATION_ID",
-                                            title: "Duplication ID",
-                                            width: 100,
-                                        },
-                                        {
                                             field: "ACCOUNTOFFICER_NAME",
                                             title: "Account Officer",
-                                            width: 100
-                                        },
-                                        {
-                                            field: "SOL_ID",
-                                            title: "Branch Code",
-                                            width: 50
-                                        },
-                                        {
-                                            field: "CIF_ID",
-                                            title: "Customer Number",
                                             width: 100
                                         },
                                     ]
@@ -187,7 +159,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.FORACID)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.REF_CODE)").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -240,8 +212,8 @@
 
                 function additionalData() {
                     var data = {
-                        FORACID: $('#FORACID').val(),
-                        SOL_ID: $('#SOL_ID').val(),
+                        ACCOUNTOFFICER_NAME: $('#ACCOUNTOFFICER_NAME').val(),
+                        REF_CODE: $('#REF_CODE').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;
@@ -278,8 +250,12 @@ $(document).ready(function () {
             $('#exportexcel-selected').click(function (e) {
                 e.preventDefault();
                 var ids = selectedIds.join(",");
-                $('#export-excel-selected-form #selectedIds').val(ids);
-                $('#export-excel-selected-form').submit();
+                if (ids.length < 1) {
+                    alert("Please select records to export");
+                } else {
+                    $('#export-excel-selected-form #selectedIds').val(ids);
+                    $('#export-excel-selected-form').submit();
+                }
                 return false;
             });
         });</script>

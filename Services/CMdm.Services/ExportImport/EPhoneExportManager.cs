@@ -37,14 +37,14 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
 
-                new PropertyByName<EmailPhone>("ORGKEY", p => p.ORGKEY),
+                new PropertyByName<EmailPhone>("Customer ID", p => p.ORGKEY),
 
                 new PropertyByName<EmailPhone>("Duplicate ID", p => p.DUPLICATE_ID),
                 new PropertyByName<EmailPhone>("First Name", p => p.CUST_FIRST_NAME),
                 new PropertyByName<EmailPhone>("Middle Name", p => p.CUST_MIDDLE_NAME),
 
                 new PropertyByName<EmailPhone>("Last Name", p => p.CUST_LAST_NAME),
-                new PropertyByName<EmailPhone>("Date of Birth", p => p.CUST_DOB),
+                new PropertyByName<EmailPhone>("Date of Birth", p => p.CUST_DOB.ToString()),
                 new PropertyByName<EmailPhone>("Branch Code", p => p.BRANCH_CODE),
                 new PropertyByName<EmailPhone>("Branch Name", p => p.BRANCH_NAME),
                 new PropertyByName<EmailPhone>("BVN", p => p.BVN),

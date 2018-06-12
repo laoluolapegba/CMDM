@@ -13,12 +13,21 @@ using CMdm.Framework.Mvc;
 using Kendo.Mvc.Extensions;
 using CMdm.Data;
 using CMdm.UI.Web.Models.Audit;
+using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
 {
     public class AuditTrailController : BaseController
     {
         private AppDbContext db = new AppDbContext();
+        private IMessagingService _messagingService;
+
+        public AuditTrailController()
+        {
+            _messagingService = new MessagingService();
+        }
+
+
         public ActionResult Index()
         {
             return RedirectToAction("List");
@@ -48,6 +57,7 @@ namespace CMdm.UI.Web.Controllers
             //              };
 
             //model.Weights = weights.ToList();
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Audit Trail Report", DateTime.Now);
             return View(model);
         }
         [HttpPost]

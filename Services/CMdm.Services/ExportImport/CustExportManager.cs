@@ -37,12 +37,15 @@ namespace CMdm.Services.ExportImport
             var properties = new[]
             {
 
-                new PropertyByName<CustSegment>("Org Key", p => p.ORGKEY),
+                new PropertyByName<CustSegment>("Customer ID", p => p.ORGKEY),
+                new PropertyByName<CustSegment>("Account Number", p => p.ACCOUNT_NO),
+                new PropertyByName<CustSegment>("Customer Type", p => p.CUSTOMER_TYPE),
+                new PropertyByName<CustSegment>("Scheme Code", p => p.SCHEME_CODE),
                 new PropertyByName<CustSegment>("First Name", p => p.CUST_FIRST_NAME),
                 new PropertyByName<CustSegment>("Middle Name", p => p.CUST_MIDDLE_NAME),
                 new PropertyByName<CustSegment>("Last Name", p => p.CUST_LAST_NAME),
                 new PropertyByName<CustSegment>("Gender", p => p.GENDER),
-                new PropertyByName<CustSegment>("Date Of Birth", p => p.CUST_DOB),
+                new PropertyByName<CustSegment>("Date Of Birth", p => p.CUST_DOB.ToString()),
                 new PropertyByName<CustSegment>("Customer Minor", p => p.CUSTOMERMINOR),
                 new PropertyByName<CustSegment>("Maiden Name of Mother", p => p.MAIDENNAMEOFMOTHER),
                 new PropertyByName<CustSegment>("Nickname", p => p.NICK_NAME),
@@ -54,7 +57,8 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<CustSegment>("Sub Sector", p => p.SUBSECTOR),
                 new PropertyByName<CustSegment>("Sub Sector Name", p => p.SUBSECTORNAME),
                 new PropertyByName<CustSegment>("Sub Segment", p => p.SUBSEGMENT),
-                new PropertyByName<CustSegment>("Corporate ID", p => p.CORP_ID),
+                new PropertyByName<CustSegment>("Corp ID", p => p.CORP_ID),
+                new PropertyByName<CustSegment>("Reason", p => p.REASON),
             };
 
             return ExportToXlsx(properties, documents);
