@@ -14,9 +14,12 @@ namespace CMdm.Entities.Domain.Logging
     /// <summary>
     /// Represents a log record
     /// </summary>
-    [Table("MDM_EXCEPTION_LOG")]
+    [Table("MDM_EXCEPTION_LOG")] //mdm_activitylog
     public partial class Log
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int ID { get; set; }
         /// <summary>
         /// Gets or sets the log level identifier

@@ -155,7 +155,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     {
                         var localuser = (from u in context.CM_USER_PROFILE
                                          where u.USER_ID.ToLower() == username.ToLower()
-                                         where u.ISLOCKED == 0
+                                         where u.ISLOCKED == false
                                          //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
 
                                          //&& !u.Deleted
@@ -198,14 +198,14 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     COD_PASSWORD = passwordHash,
                     PASSWORDSALT = salt,
                     USER_ID = username,
-                    ISLOCKED = 0,  //isLoggedin
+                    ISLOCKED = false,  //isLoggedin
                     CREATED_DATE = DateTime.Now,
                     ROLE_ID = Convert.ToInt32(RoleId),
                     FIRSTNAME = FName,
                     LASTNAME = LName,
                     DISPLAY_NAME = (FName.Substring(0, 1) + LName).ToLower(),
                     EMAIL_ADDRESS = Email,
-                    ISAPPROVED = 1,
+                    ISAPPROVED = true,
                     LASTLOGINDATE = DateTime.Now,
                     LASTLOCKOUTDATE = DateTime.Now,
                     LASTPASSWORDCHANGEDDATE = DateTime.Now
@@ -883,7 +883,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
             CM_USER_PROFILE up = new CM_USER_PROFILE();
 
             var count = from n in db.CM_USER_PROFILE
-                        where n.ISLOCKED == 1
+                        //where n.ISLOCKED == 1
                         select new { n.PROFILE_ID };
 
 

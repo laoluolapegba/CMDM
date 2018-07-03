@@ -20,7 +20,7 @@ namespace CMdm.Data.Rbac
         public string BRANCH_NAME { get; set; }
         public Nullable<decimal> VAULT_LIMIT { get; set; }
         public string REGION_ID { get; set; }
-        public Nullable<decimal> STATE_ID { get; set; }
+        public int? STATE_ID { get; set; }
         public string CREATED_BY { get; set; }
         public Nullable<System.DateTime> CREATED_DATE { get; set; }
         public string LAST_UPDATED_BY { get; set; }

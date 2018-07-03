@@ -189,7 +189,7 @@ namespace Cdma.Web.CustomerInfo
                                          LASTNAME = u.LASTNAME,
                                          EMAIL_ADDRESS = u.EMAIL_ADDRESS,
                                          USER_ID = u.USER_ID,
-                                         ISAPPROVED = u.ISAPPROVED == 1 ? "yes" : "No",
+                                         ISAPPROVED = u.ISAPPROVED == true ? "yes" : "No",
                                          CREATED_DATE = u.CREATED_DATE,
                                          ROLE_NAME = u.CM_USER_ROLES.ROLE_NAME
 

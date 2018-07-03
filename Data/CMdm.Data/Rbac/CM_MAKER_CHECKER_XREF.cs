@@ -28,7 +28,7 @@ namespace CMdm.Data.Rbac
         //public DateTime? CREATED_DATE { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public decimal RECORD_ID { get; set; }
+        public int RECORD_ID { get; set; }
 
         public virtual CM_USER_PROFILE CM_USER_PROFILE { get; set; }
 

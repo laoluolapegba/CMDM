@@ -5,8 +5,6 @@ using CMdm.UI.Web.Helpers.CrossCutting.Security;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;
-using Oracle.DataAccess.Client;
 using System.Data;
 using System.Collections.Generic;
 using CMdm.Entities.Domain.Kpi;

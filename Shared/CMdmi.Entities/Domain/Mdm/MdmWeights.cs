@@ -21,7 +21,7 @@ namespace CMdm.Entities.Domain.Mdm
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int WEIGHT_ID { get; set; }
 
-        public short? WEIGHT_VALUE { get; set; }
+        public int? WEIGHT_VALUE { get; set; }
 
         [StringLength(20)]
         public string CREATED_BY { get; set; }

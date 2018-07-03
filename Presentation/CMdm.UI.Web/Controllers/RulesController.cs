@@ -7,9 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CMdm.Data;
-using System.Data.Entity.Core.Objects;
-using System.Data.Common;
-using Oracle.DataAccess.Client;
 using System.Configuration;
 using Elmah;
 //using CMdm.UI.Web.ActionFilters;
@@ -26,6 +23,8 @@ using CMdm.Entities.Domain.Dqi;
 using CMdm.UI.Web.Models.DqRule;
 using CMdm.Framework.Kendoui;
 using CMdm.Services.DqRule;
+using System.Data.SqlClient;
+
 namespace CMdm.UI.Web.Controllers
 {
     [ValidateInput(false)]
@@ -238,18 +237,18 @@ namespace CMdm.UI.Web.Controllers
         static string  ExecuteSql(string in_strSQL)
         {
            
-            using (OracleConnection connection = new OracleConnection(connString))
+            using (SqlConnection connection = new SqlConnection(connString))
             {
                 string strSQL = in_strSQL + " and 1 = 0";
                 try
                 {
                     connection.Open();
-                    OracleCommand command = new OracleCommand(strSQL, connection);
-                    command.BindByName = true;
+                    SqlCommand command = new SqlCommand(strSQL, connection);
+                    //command.BindByName = true;
                     command.CommandType = System.Data.CommandType.Text;
 
                     //command.Parameters.Add(":table_name", OracleDbType.Varchar2).Value = RadListBoxSource.SelectedValue;
-                    OracleDataReader rdr = command.ExecuteReader();
+                    SqlDataReader rdr = command.ExecuteReader();
                     //gridCat.Rebind();
                     if (rdr.HasRows)
                     { }
@@ -296,7 +295,7 @@ namespace CMdm.UI.Web.Controllers
             string dataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
             eqService.DataPath = dataPath;
             //eqService.Connection = new SqlCeConnection("Data Source=" + System.IO.Path.Combine(dataPath, "Northwind.sdf"));
-            eqService.Connection = new OracleConnection(ConfigurationManager.ConnectionStrings["ConnectionStringCDMA"].ToString());
+            eqService.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStringCDMA"].ToString());
             eqService.CustomListResolver = (listname) =>
             {
                 if (listname == "Regions")

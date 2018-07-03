@@ -21,7 +21,7 @@ namespace CMdm.Data.Rbac
         public int ROLE_ID { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public decimal RECORD_ID { get; set; }
+        public int RECORD_ID { get; set; }
 
 
         

@@ -20,7 +20,7 @@ namespace CMdm.Data.Rbac
 
         [Key]
         [Column(Order = 1)]
-        public decimal PERMISSION_ID { get; set; }
+        public int PERMISSION_ID { get; set; }
 
         [Required]
 
@@ -31,7 +31,7 @@ namespace CMdm.Data.Rbac
 
         public DateTime? CREATED_DATE { get; set; }
 
-        public decimal RECORD_ID { get; set; }
+        public int RECORD_ID { get; set; }
 
         public virtual CM_PERMISSIONS CM_PERMISSIONS { get; set; }
 

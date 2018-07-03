@@ -5,7 +5,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
    
-    [Table("VW_OUSTANDING_DOCUMENTATION")]
+    [Table("VW_OUTSTANDING_DOCUMENTATION")]
     public partial class OutStandingDoc
     {
         public OutStandingDoc()

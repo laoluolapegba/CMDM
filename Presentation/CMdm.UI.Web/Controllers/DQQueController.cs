@@ -23,7 +23,7 @@ namespace CMdm.UI.Web.Controllers
 
         private IDqQueService _dqQueService;
         private AppDbContext db = new AppDbContext();
-        private DQQueBiz bizrule;
+        //private DQQueBiz bizrule;
         #endregion
         #region Constructors
         public DQQueController()
@@ -47,19 +47,7 @@ namespace CMdm.UI.Web.Controllers
             return RedirectToAction("List");
         }
         // GET: MdmDQQues
-        public ActionResult Index_()
-        {
-            //|TODO implement a permission provider Service
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageDataQualityQue))o
-            //    return AccessDeniedView();
-            //var dqQue - new 
-            if(User == null)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            ViewBag.BrnQueCount = bizrule.GetDQQuesCountbyBrn(identity.BranchId);
-            var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
-            return View(mdmDQQues.ToList().OrderBy(a=>a.RECORD_ID));
-        }
+        
         public ActionResult List()
         {
 

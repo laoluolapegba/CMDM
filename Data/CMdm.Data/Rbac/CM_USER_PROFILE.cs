@@ -38,9 +38,9 @@ namespace CMdm.Data.Rbac
         [StringLength(255)]
         public string PASSWORDANSWER { get; set; }
 
-        public decimal? ISAPPROVED { get; set; }
+        public bool ISAPPROVED { get; set; }
 
-        public decimal ISLOCKED { get; set; }
+        public bool ISLOCKED { get; set; }
 
         public DateTime CREATED_DATE { get; set; }
 
@@ -50,11 +50,11 @@ namespace CMdm.Data.Rbac
 
         public DateTime? LASTLOCKOUTDATE { get; set; }
 
-        public decimal? FAILEDPASSWORDATTEMPTCOUNT { get; set; }
+        public int? FAILEDPASSWORDATTEMPTCOUNT { get; set; }
 
-        public decimal? FLAG_ALLOW_DOC_SHARING { get; set; }
+        public bool FLAG_ALLOW_DOC_SHARING { get; set; }
 
-        public decimal? FLAG_ALLOW_SMS_ALERT { get; set; }
+        public bool FLAG_ALLOW_SMS_ALERT { get; set; }
 
         public int ROLE_ID { get; set; }
 

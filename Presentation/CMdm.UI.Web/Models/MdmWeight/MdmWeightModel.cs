@@ -13,7 +13,7 @@ namespace CMdm.UI.Web.Models.MdmWeight
         public int WEIGHT_ID { get; set; }
         [DisplayName("Weight value")]
 
-        public short? WEIGHT_VALUE { get; set; }
+        public int? WEIGHT_VALUE { get; set; }
 
         [StringLength(20)]
         [DisplayName("Created by")]

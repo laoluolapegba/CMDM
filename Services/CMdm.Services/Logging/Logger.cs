@@ -262,6 +262,7 @@ namespace CMdm.Services.Logging
                 CREATEDBY = UserId,
                 CREATEDDATE = DateTime.Now
             };
+            //log.ID = null;
             _logDAC.Insert(log);
             //_logRepository.Insert(log);
 

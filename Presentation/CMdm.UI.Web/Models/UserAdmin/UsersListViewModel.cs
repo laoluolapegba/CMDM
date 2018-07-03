@@ -66,7 +66,7 @@ namespace CMdm.UI.Web.Models.UserAdmin
 
         public decimal? ISAPPROVED { get; set; }
         [DisplayName("Active")]
-        public decimal ISLOCKED { get; set; }
+        public bool ISLOCKED { get; set; }
         [DisplayName("CreatedOn")]
 
         public DateTime CREATED_DATE { get; set; }
@@ -117,11 +117,14 @@ namespace CMdm.UI.Web.Models.UserAdmin
         public IList<SelectListItem> Regions { get; set; }
 
         [DisplayName("Active")]
+        //public bool ISACTIVE { get; set; }
+
+        //this conversion no longer required cos SQL Server has bit
         public bool ISACTIVE
         {
             get
             {
-                return !(ISLOCKED > 0);
+                return ISLOCKED; // return !(ISLOCKED > 0);
             }
         }
         public string ROLE_NAME;

@@ -15,7 +15,7 @@ namespace CMdm.Data.Rbac
 
 
         [Key]
-        public decimal PERMISSION_ID { get; set; }
+        public int PERMISSION_ID { get; set; }
 
         [Required]
         [StringLength(100)]

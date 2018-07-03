@@ -179,18 +179,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=2.112.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
-      <HintPath>..\..\packages\Oracle.DataAccess.x86.2.112.1.0\lib\Oracle.DataAccess.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Oracle.ManagedDataAccess.EntityFramework.12.2.1100\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -282,14 +270,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BLL\Customer.cs" />
-    <Compile Include="BLL\CustomerRepository.cs" />
-    <Compile Include="BLL\DataCatalogBiz.cs" />
     <Compile Include="BLL\DQIParamSettingClass.cs" />
-    <Compile Include="BLL\DQIProfileBiz.cs" />
-    <Compile Include="BLL\DQQueBiz.cs" />
-    <Compile Include="BLL\EmailHelper.cs" />
-    <Compile Include="BLL\getCustID.cs" />
-    <Compile Include="BLL\get_Biz_id.cs" />
     <Compile Include="BLL\LdapAuthentication.cs" />
     <Compile Include="BLL\MessageFormatter.cs" />
     <Compile Include="BLL\Utility.cs" />
@@ -358,89 +339,12 @@
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\WrongSchemeCodesController.cs" />
     <Compile Include="Controllers\WrongSegmentController.cs" />
-    <Compile Include="CustomerInfo\AuditReport.aspx.cs">
-      <DependentUpon>AuditReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\AuditReport.aspx.designer.cs">
-      <DependentUpon>AuditReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\AuthCorpCustInfo.aspx.cs">
-      <DependentUpon>AuthCorpCustInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\AuthCorpCustInfo.aspx.designer.cs">
-      <DependentUpon>AuthCorpCustInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\AuthIndividualCust.aspx.cs">
-      <DependentUpon>AuthIndividualCust.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\AuthIndividualCust.aspx.designer.cs">
-      <DependentUpon>AuthIndividualCust.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\CorporateCustInfo.aspx.cs">
-      <DependentUpon>CorporateCustInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\CorporateCustInfo.aspx.designer.cs">
-      <DependentUpon>CorporateCustInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\CreateRoles.aspx.cs">
-      <DependentUpon>CreateRoles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\CreateRoles.aspx.designer.cs">
-      <DependentUpon>CreateRoles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\CreateUser.aspx.cs">
-      <DependentUpon>CreateUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\CreateUser.aspx.designer.cs">
-      <DependentUpon>CreateUser.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\CustomerReports.aspx.cs">
-      <DependentUpon>CustomerReports.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\CustomerReports.aspx.designer.cs">
-      <DependentUpon>CustomerReports.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\IndividualCustomer.aspx.cs">
-      <DependentUpon>IndividualCustomer.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\IndividualCustomer.aspx.designer.cs">
-      <DependentUpon>IndividualCustomer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerInfo\ManageUsers.aspx.cs">
-      <DependentUpon>ManageUsers.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerInfo\ManageUsers.aspx.designer.cs">
-      <DependentUpon>ManageUsers.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DQI\CorrectnessDetails.aspx.cs">
       <DependentUpon>CorrectnessDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DQI\CorrectnessDetails.aspx.designer.cs">
       <DependentUpon>CorrectnessDetails.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DataCatalog.aspx.cs">
-      <DependentUpon>DataCatalog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DataCatalog.aspx.designer.cs">
-      <DependentUpon>DataCatalog.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DataQualityIndex.aspx.cs">
-      <DependentUpon>DataQualityIndex.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DataQualityIndex.aspx.designer.cs">
-      <DependentUpon>DataQualityIndex.aspx</DependentUpon>
     </Compile>
     <Compile Include="DQI\DataQualityQueue.aspx.cs">
       <DependentUpon>DataQualityQueue.aspx</DependentUpon>
@@ -449,54 +353,12 @@
     <Compile Include="DQI\DataQualityQueue.aspx.designer.cs">
       <DependentUpon>DataQualityQueue.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DQI\DQIBrnResults.aspx.cs">
-      <DependentUpon>DQIBrnResults.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQIBrnResults.aspx.designer.cs">
-      <DependentUpon>DQIBrnResults.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DQICatResult.aspx.cs">
-      <DependentUpon>DQICatResult.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQICatResult.aspx.designer.cs">
-      <DependentUpon>DQICatResult.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DQIParameterSetting.aspx.cs">
-      <DependentUpon>DQIParameterSetting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQIParameterSetting.aspx.designer.cs">
-      <DependentUpon>DQIParameterSetting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DQIProfileDirty.aspx.cs">
-      <DependentUpon>DQIProfileDirty.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQIProfileDirty.aspx.designer.cs">
-      <DependentUpon>DQIProfileDirty.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DQI\DQQualityCheck.aspx.cs">
       <DependentUpon>DQQualityCheck.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DQI\DQQualityCheck.aspx.designer.cs">
       <DependentUpon>DQQualityCheck.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DQWizard.aspx.cs">
-      <DependentUpon>DQWizard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQWizard.aspx.designer.cs">
-      <DependentUpon>DQWizard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\DQWizard1.aspx.cs">
-      <DependentUpon>DQWizard1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\DQWizard1.aspx.designer.cs">
-      <DependentUpon>DQWizard1.aspx</DependentUpon>
     </Compile>
     <Compile Include="DQI\GoldenRecord1.aspx.cs">
       <DependentUpon>GoldenRecord1.aspx</DependentUpon>
@@ -525,34 +387,6 @@
     </Compile>
     <Compile Include="DQI\GoldenRecordProcess.aspx.designer.cs">
       <DependentUpon>GoldenRecordProcess.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\GRRawData.aspx.cs">
-      <DependentUpon>GRRawData.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\GRRawData.aspx.designer.cs">
-      <DependentUpon>GRRawData.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\GRUnmatched.aspx.cs">
-      <DependentUpon>GRUnmatched.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\GRUnmatched.aspx.designer.cs">
-      <DependentUpon>GRUnmatched.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\MergedWriteback.aspx.cs">
-      <DependentUpon>MergedWriteback.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\MergedWriteback.aspx.designer.cs">
-      <DependentUpon>MergedWriteback.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DQI\ValidityDetails.aspx.cs">
-      <DependentUpon>ValidityDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DQI\ValidityDetails.aspx.designer.cs">
-      <DependentUpon>ValidityDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
@@ -1357,34 +1191,13 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\wizstyle.css" />
-    <Content Include="CustomerInfo\AuditReport.aspx" />
-    <Content Include="CustomerInfo\AuthCorpCustInfo.aspx" />
-    <Content Include="CustomerInfo\AuthIndividualCust.aspx" />
-    <Content Include="CustomerInfo\CorporateCustInfo.aspx" />
-    <Content Include="CustomerInfo\CreateRoles.aspx" />
-    <Content Include="CustomerInfo\CreateUser.aspx" />
-    <Content Include="CustomerInfo\CustomerReports.aspx" />
-    <Content Include="CustomerInfo\IndividualCustomer.aspx" />
-    <Content Include="CustomerInfo\ManageUsers.aspx" />
     <Content Include="DQI\CorrectnessDetails.aspx" />
-    <Content Include="DQI\DataCatalog.aspx" />
-    <Content Include="DQI\DataQualityIndex.aspx" />
     <Content Include="DQI\DataQualityQueue.aspx" />
-    <Content Include="DQI\DQIBrnResults.aspx" />
-    <Content Include="DQI\DQICatResult.aspx" />
-    <Content Include="DQI\DQIParameterSetting.aspx" />
-    <Content Include="DQI\DQIProfileDirty.aspx" />
     <Content Include="DQI\DQQualityCheck.aspx" />
-    <Content Include="DQI\DQWizard.aspx" />
-    <Content Include="DQI\DQWizard1.aspx" />
     <Content Include="DQI\GoldenRecord1.aspx" />
     <Content Include="DQI\GoldenRecord2.aspx" />
     <Content Include="DQI\GoldenRecord3.aspx" />
     <Content Include="DQI\GoldenRecordProcess.aspx" />
-    <Content Include="DQI\GRRawData.aspx" />
-    <Content Include="DQI\GRUnmatched.aspx" />
-    <Content Include="DQI\MergedWriteback.aspx" />
-    <Content Include="DQI\ValidityDetails.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
