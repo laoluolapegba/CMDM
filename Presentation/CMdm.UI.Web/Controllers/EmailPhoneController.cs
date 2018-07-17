@@ -91,7 +91,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
 
@@ -103,7 +104,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult EmailPhoneList(DataSourceRequest command, EmailPhoneModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.ACCOUNT_NO, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
                 command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
@@ -126,6 +127,8 @@ namespace CMdm.UI.Web.Controllers
                     CUSTOMERMINOR = x.CUSTOMERMINOR,
                     PREFERREDPHONE = x.PREFERREDPHONE,
                     EMAIL = x.EMAIL,
+                    ACCOUNT_NO = x.ACCOUNT_NO,
+                    SCHM_CODE = x.SCHM_CODE,
                 }),
                 Total = items.TotalCount
             };
@@ -179,7 +182,7 @@ namespace CMdm.UI.Web.Controllers
             if (routeValues.ContainsKey("id"))
                 goldenRecord = (string)routeValues["id"];
 
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, goldenRecord, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.ACCOUNT_NO, goldenRecord, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE,
                 command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
@@ -199,6 +202,8 @@ namespace CMdm.UI.Web.Controllers
                     CUSTOMERMINOR = x.CUSTOMERMINOR,
                     PREFERREDPHONE = x.PREFERREDPHONE,
                     EMAIL = x.EMAIL,
+                    ACCOUNT_NO = x.ACCOUNT_NO,
+                    SCHM_CODE = x.SCHM_CODE,
                 }),
                 Total = items.TotalCount
             };
@@ -213,7 +218,7 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME);
+            var items = _dqQueService.GetAllEmailPhones(model.ORGKEY, model.ACCOUNT_NO, model.PREFERREDPHONE, model.EMAIL, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME);
 
             try
             {

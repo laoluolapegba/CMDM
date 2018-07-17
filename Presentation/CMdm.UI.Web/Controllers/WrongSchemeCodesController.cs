@@ -92,7 +92,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
             _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Wrong Customer / Scheme Codes Mapping Report", DateTime.Now);

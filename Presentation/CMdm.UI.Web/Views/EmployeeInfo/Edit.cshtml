@@ -3,32 +3,37 @@
     ViewBag.Title = "Employee Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.Hidden("ReadOnlyForm", Model.ReadOnlyForm);
+    @Html.Hidden("ExceptionId", Model.ExceptionId);
     <div class="content-header clearfix">
         <h1 class="pull-left">
             Edit Customer - @Model.CUSTOMER_NO
             @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
         </h1>
         <div class="pull-right">
-            <button type="submit" name="save" class="btn bg-blue">
+            <button type="submit" name="save" class="btn bg-yellow">
                 <i class="fa fa-floppy-o"></i>
                 Save
             </button>
-            <button type="submit" name="save-continue" class="btn bg-blue">
+            <button type="submit" name="save-continue" class="btn bg-purple">
                 <i class="fa fa-floppy-o"></i>
                 SaveContinue
             </button>
-
         </div>
     </div>
     @Html.Partial("_CreateOrUpdate", Model)
 }
 
-
-
-
+<script type="text/javascript">
+        $(document).ready(function () {
+            if ($("#ReadOnlyForm").val() == "True") {
+                $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
+            }
+            $(".input-validation-error").css({ background: "#ff9", color: "#000 !important;", });
+        });
+</script>
 
 

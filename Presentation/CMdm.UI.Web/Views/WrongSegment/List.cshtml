@@ -60,12 +60,22 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Account Number")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ACCOUNTNO)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("First Name")
                                     </div>
                                     <div class="col-md-8">
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Middle Name")
@@ -74,8 +84,6 @@
                                         @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Last Name")
@@ -96,7 +104,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -158,6 +166,16 @@
                                         {
                                             field: "ORGKEY",
                                             title: "Customer ID",
+                                            width: 50
+                                        },
+                                        {
+                                            field: "ACCOUNTNO",
+                                            title: "Account Number",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "SCHEME_CODE",
+                                            title: "Scheme Code",
                                             width: 50
                                         },
                                         {
@@ -233,101 +251,104 @@
     </div>
 
     <script type="text/javascript">
-                var selectedIds = [];
+        var selectedIds = [];
 
-                $(document).ready(function () {
-                    //search button
-                    $('#search-products').click(function () {
-                        //search
-                        var grid = $('#products-grid').data('kendoGrid');
-                        grid.dataSource.page(1); //new search. Set page size to 1
-                        //grid.dataSource.read(); we already loaded the grid above using "page" function
-                        //clear selected checkboxes
-                        $('.checkboxGroups').attr('checked', false).change();
-                        selectedIds = [];
-                        return false;
-                    });
+        $(document).ready(function () {
+            //search button
+            $('#search-products').click(function () {
+                //search
+                var grid = $('#products-grid').data('kendoGrid');
+                grid.dataSource.page(1); //new search. Set page size to 1
+                //grid.dataSource.read(); we already loaded the grid above using "page" function
+                //clear selected checkboxes
+                $('.checkboxGroups').attr('checked', false).change();
+                selectedIds = [];
+                return false;
+            });
 
-                    $("#@Html.FieldIdFor(model => model.ORGKEY)").keydown(function (event) {
-                        if (event.keyCode === 13) {
-                            $("#search-products").click();
-                            return false;
-                        }
-                    });
-
-
-                    //$('#mastercheckbox').click(function () {
-                    //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
-                    //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
-                    //});
-
-                    $('#mastercheckbox').change(function (ev) {
-                        var checked = ev.target.checked;
-                        $('.checkboxGroups').each(function (idx, item) {
-                            if (checked) {
-                                if (!($(item).closest('tr').is('.k-state-selected'))) {
-                                    $(item).click();
-                                }
-                            } else {
-                                if ($(item).closest('tr').is('.k-state-selected')) {
-                                    $(item).click();
-                                }
-                            }
-                        });
-                    });
+            /**/
+            $("#ORGKEY, #ACCOUNTNO, #CUST_FIRST_NAME, #CUST_MIDDLE_NAME, #CUST_LAST_NAME, #PRIMARY_SOL_ID").keydown(function (event) {
+            /**/
+            if (event.keyCode === 13) {
+                $("#search-products").click();
+                return false;
+            }
+        });
 
 
-                    //wire up checkboxes.
-                    $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {
-                        var $check = $(this);
-                        if ($check.is(":checked") == true) {
-                            var checked = jQuery.inArray($check.val(), selectedIds);
-                            if (checked == -1) {
-                                //add id to selectedIds.
-                                selectedIds.push($check.val());
-                            }
-                        }
-                        else {
-                            var checked = jQuery.inArray($check.val(), selectedIds);
-                            if (checked > -1) {
-                                //remove id from selectedIds.
-                                selectedIds = $.grep(selectedIds, function (item, index) {
-                                    return item != $check.val();
-                                });
-                            }
-                        }
-                        updateMasterCheckbox();
-                    });
-                });
+        //$('#mastercheckbox').click(function () {
+        //    //$('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+        //    $('#products-grid tbody input:checkbox').attr('checked', this.checked);
+        //});
 
-                function additionalData() {
-                    var data = {
-                        ORGKEY: $('#ORGKEY').val(),
-                        CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
-                        CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
-                        CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
-                        PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
-                    };
-                    addAntiForgeryToken(data);
-                    return data;
+        $('#mastercheckbox').change(function (ev) {
+            var checked = ev.target.checked;
+            $('.checkboxGroups').each(function (idx, item) {
+                if (checked) {
+                    if (!($(item).closest('tr').is('.k-state-selected'))) {
+                        $(item).click();
+                    }
+                } else {
+                    if ($(item).closest('tr').is('.k-state-selected')) {
+                        $(item).click();
+                    }
                 }
+            });
+        });
 
-                function onDataBound(e) {
-                    $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function () {
-                        var currentId = $(this).val();
-                        var checked = jQuery.inArray(currentId, selectedIds);
-                        //set checked based on if current checkbox's value is in selectedIds.
-                        $(this).attr('checked', checked > -1);
+
+        //wire up checkboxes.
+        $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {
+            var $check = $(this);
+            if ($check.is(":checked") == true) {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked == -1) {
+                    //add id to selectedIds.
+                    selectedIds.push($check.val());
+                }
+            }
+            else {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked > -1) {
+                    //remove id from selectedIds.
+                    selectedIds = $.grep(selectedIds, function (item, index) {
+                        return item != $check.val();
                     });
-
-                    updateMasterCheckbox();
                 }
+            }
+            updateMasterCheckbox();
+        });
+    });
 
-                function updateMasterCheckbox() {
-                    var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
-                    var numChkBoxesChecked = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
-                    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
-                }
+    function additionalData() {
+        var data = {
+            ORGKEY: $('#ORGKEY').val(),
+            CUST_FIRST_NAME: $('#CUST_FIRST_NAME').val(),
+            CUST_MIDDLE_NAME: $('#CUST_MIDDLE_NAME').val(),
+            CUST_LAST_NAME: $('#CUST_LAST_NAME').val(),
+            PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
+            ACCOUNTNO: $('#ACCOUNTNO').val(),
+        };
+        addAntiForgeryToken(data);
+        return data;
+    }
+
+    function onDataBound(e) {
+        $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function () {
+            var currentId = $(this).val();
+            var checked = jQuery.inArray(currentId, selectedIds);
+            //set checked based on if current checkbox's value is in selectedIds.
+            $(this).attr('checked', checked > -1);
+        });
+
+        updateMasterCheckbox();
+    }
+
+    function updateMasterCheckbox() {
+        var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+        var numChkBoxesChecked = $('#products-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+        $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+    }
     </script>
 }
 

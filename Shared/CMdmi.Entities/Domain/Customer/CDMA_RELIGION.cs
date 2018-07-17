@@ -14,7 +14,7 @@
     public partial class CDMA_RELIGION
     {
         [Key]
-        public decimal CODE { get; set; }
+        public int CODE { get; set; }
         public string RELIGION { get; set; }
         
     }

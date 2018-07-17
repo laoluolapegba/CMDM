@@ -17,8 +17,6 @@ using CMdm.Framework.Controllers;
 using CMdm.Core;
 using CMdm.Services.ExportImport;
 using CMdm.Services.Security;
-using CMdm.Data.Rbac;
-using CMdm.Entities.Domain.User;
 using CMdm.Services.Messaging;
 
 namespace CMdm.UI.Web.Controllers
@@ -199,7 +197,7 @@ namespace CMdm.UI.Web.Controllers
             try
             {
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(items);
-                return File(bytes, MimeTypes.TextXlsx, "multipleRefCodes.xlsx");
+                return File(bytes, MimeTypes.TextXlsx, "multipleAOCodes.xlsx");
             }
             catch (Exception exc)
             {
@@ -229,7 +227,7 @@ namespace CMdm.UI.Web.Controllers
                 byte[] bytes = _exportManager.ExportDocumentsToXlsx(docs);
                 identity = ((CustomPrincipal)User).CustomIdentity;
                 _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple AO Codes Report", DateTime.Now);
-                return File(bytes, MimeTypes.TextXlsx, "multipleRefCodes.xlsx");
+                return File(bytes, MimeTypes.TextXlsx, "multipleAOCodes.xlsx");
             }
             catch (Exception exc)
             {
@@ -259,7 +257,7 @@ namespace CMdm.UI.Web.Controllers
                 byte[] bytes = _exportManager.ExportMrcToXlsx(docs);
                 identity = ((CustomPrincipal)User).CustomIdentity;
                 _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Multiple AO Codes Report", DateTime.Now);
-                return File(bytes, MimeTypes.TextXlsx, "multipleRefCodes.xlsx");
+                return File(bytes, MimeTypes.TextXlsx, "multipleAOCodes.xlsx");
             }
             catch (Exception exc)
             {

@@ -16,7 +16,7 @@ namespace CMdm.Entities.Domain.Customer
 
         
         [Key]
-        public decimal LGA_ID { get; set; }
+        public int LGA_ID { get; set; }
         public string LGA_NAME { get; set; }
         public decimal STATE_ID { get; set; }
         public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }

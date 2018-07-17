@@ -5,17 +5,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reject Notification</title>
+    <title>CDMD Rejection Notification</title>
+    <style>
+
+        body {
+            margin: 100px 400px;
+        }
+
+        .head-text {
+            text-align: center;
+            background-color: purple;
+            color: white;
+        }
+
+        .date {
+            float: right;
+            color: #DAA520;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            height: 30px;
+            background-color: #DAA520;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h4><u>CMDM Notification Service</u></h4>
-    <p>@DateTime.Today</p>
+    <h1 class="head-text">CMDM Customer Information Update</h1>
+    <p class="date">@DateTime.Today</p>
+    <p>Dear <b style="color:purple">@Model.RECIPIENTNAME.ToUpper()</b>,</p>
     <p>
-        Dear @Model.RECIPIENTNAME.ToUpper(),<br />
-        Please be informed that your pending customer details has been rejected<br />
-        The details of the request is shown below:<br />
+        Please be informed that your pending customer details has been rejected
+        Please login <a href="http://172.27.15.201/CMDM">here</a> to view details
     </p>
-    <table style="border: none">
+    <table border="1">
         <thead>
             <tr>
                 <th>Field</th>

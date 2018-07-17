@@ -22,6 +22,7 @@ namespace CMdm.UI.Web.Models.Customer
         public string NAMES_OF_BENEFICIARY { get; set; }
         [DisplayName("Branch name")]
         public string PRIMARY_SOL_ID { get; set; }
+        public int? QUEUE_STATUS { get; set; }
 
         public List<SelectListItem> Branches { get; set; }
 

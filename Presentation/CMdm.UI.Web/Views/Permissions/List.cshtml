@@ -9,14 +9,20 @@
     var gridPageSizes = "10, 15, 20, 50, 100";
 }
 <div class="content-header clearfix">
-       
-        <div class="pull-right">
-            <a href="@Url.Action("Create")" class="btn bg-purple">
-                <i class="fa fa-plus-square"></i>
-                Add New
-            </a>
-        </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-purple">
+            <i class="fa fa-plus-square"></i>
+            Add New
+        </a>
     </div>
+    <div class="pull-right">
+        <a href="@Url.Action("Loadnew")" class="btn bg-yellow">
+            <i class="fa fa-refresh"></i>
+            Load new Permissions
+        </a>
+    </div>
+</div>
 @Html.AntiForgeryToken()
 <div class="content">
     <div class="form-horizontal">

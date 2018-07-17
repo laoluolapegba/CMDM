@@ -19,8 +19,7 @@ namespace CMdm.UI.Web.Models.Customer
         public string BRANCH_CODE { get; set; }
         [DisplayName("Counterparties Clients of Customer")]
         public string COUNTERPARTIES_CLIENTS_OF_CUST { get; set; }
-        [DisplayName("Parent Company")]
-        public string PARENT_COMPANY_CTRY_INCORP { get; set; }
+        public int? QUEUE_STATUS { get; set; }
 
         public List<SelectListItem> Branches { get; set; }
 

@@ -71,6 +71,21 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Telerik\UI for ASP.NET MVC Q2 2015\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
     </Reference>
@@ -285,6 +300,7 @@
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ContactDetailsController.cs" />
     <Compile Include="Controllers\CorporateCustomerController.cs" />
+    <Compile Include="Controllers\CustInfoUpdateController.cs" />
     <Compile Include="Controllers\CustSegmentController.cs" />
     <Compile Include="Controllers\DQISummaryController.cs" />
     <Compile Include="Controllers\EmailPhoneController.cs" />
@@ -390,6 +406,7 @@
     </Compile>
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -433,6 +450,7 @@
     <Compile Include="Models\Customer\AuthFIModel.cs" />
     <Compile Include="Models\Customer\BenOwnersModel.cs" />
     <Compile Include="Models\Customer\BiodataInfoViewModel.cs" />
+    <Compile Include="Models\Customer\CIUModel.cs" />
     <Compile Include="Models\Customer\CompDetailsModel.cs" />
     <Compile Include="Models\Customer\CompInfoModel.cs" />
     <Compile Include="Models\Customer\CorpADDModel.cs" />
@@ -444,6 +462,7 @@
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\CustomerTCAModel.cs" />
     <Compile Include="Models\Customer\EmpInfoModel.cs" />
+    <Compile Include="Models\Customer\GuarantorModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\AccountOfficerModel.cs" />
     <Compile Include="Models\Customer\IndividualAddressDetails.cs" />
     <Compile Include="Models\Customer\IndividualBioDataModel.cs" />
@@ -452,6 +471,7 @@
     <Compile Include="Models\Customer\OtherDetails.cs" />
     <Compile Include="Models\CustomModule\Fcmb\ActivityLogModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\DistinctDocsModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\DistinctRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\DqiSummaryModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\EmailPhoneModel.cs" />
@@ -2084,6 +2104,8 @@
     <Content Include="Views\DQISummary\List.cshtml" />
     <Content Include="Views\EmailPhone\AuthList.cshtml" />
     <Content Include="Views\Home\Corporate.cshtml" />
+    <Content Include="Views\CustInfoUpdate\Index.cshtml" />
+    <Content Include="Views\CustInfoUpdate\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\List.cshtml" />

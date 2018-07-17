@@ -1,14 +1,16 @@
 ﻿@model CMdm.UI.Web.Models.Customer.BiodataInfoViewModel
 @Html.ValidationSummary(true)
 @Html.HiddenFor(model => model.BioData.CUSTOMER_NO)
-
+@Html.HiddenFor(model => model.BioData.TIER)
+@Html.HiddenFor(model => model.contact.TIER)
+@Html.HiddenFor(model => model.identification.TIER)
 
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    
+
                     <div class="row">
                         <h4 style="color:#dd4b39;margin-left:2%;">CUSTOMER BIO DATA</h4>
                         <hr />
@@ -69,15 +71,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.NICKNAME_ALIAS)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.BioData.NICKNAME_ALIAS)
-                                    @Html.ValidationMessageFor(model => model.BioData.NICKNAME_ALIAS, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
                                     @Html.LabelFor(model => model.BioData.DATE_OF_BIRTH)
                                 </div>
                                 <div class="col-md-9">
@@ -87,11 +80,38 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.PLACE_OF_BIRTH)
+                                    @Html.LabelFor(model => model.BioData.SEX)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.BioData.PLACE_OF_BIRTH, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
-                                    @Html.ValidationMessageFor(model => model.BioData.PLACE_OF_BIRTH, "", new { @class = "text-danger" })
+                                    @Html.CMdmDropDownListFor(model => model.BioData.SEX, Model.BioData.Gender)
+                                    @Html.ValidationMessageFor(model => model.BioData.SEX, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.MARITAL_STATUS)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BioData.MARITAL_STATUS, Model.BioData.MaritalStatus)
+                                    @Html.ValidationMessageFor(model => model.BioData.MARITAL_STATUS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.LGAOFORIGIN)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BioData.LGAOFORIGIN, Model.BioData.LGAs)
+                                    @Html.ValidationMessageFor(model => model.BioData.LGAOFORIGIN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.MOTHER_MAIDEN_NAME)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
+                                    @Html.ValidationMessageFor(model => model.BioData.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -105,36 +125,13 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.SEX)
+                                    @Html.LabelFor(model => model.BioData.RESIDENCE_COUNTRY)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.BioData.SEX, Model.BioData.Gender)
-                                    @Html.ValidationMessageFor(model => model.BioData.SEX, "", new { @class = "text-danger" })
+                                    @Html.CMdmDropDownListFor(model => model.BioData.RESIDENCE_COUNTRY, Model.BioData.Nationalities)
+                                    @Html.ValidationMessageFor(model => model.BioData.RESIDENCE_COUNTRY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.AGE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.BioData.AGE, new { htmlAttributes = new { @class = "form-control", @type = "number", @readonly = true, @min = "0" } })
-                                    @Html.ValidationMessageFor(model => model.BioData.AGE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.MARITAL_STATUS)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.BioData.MARITAL_STATUS, Model.BioData.MaritalStatus)
-                                    @Html.ValidationMessageFor(model => model.BioData.MARITAL_STATUS, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <div class="col-md-3">
                                     @Html.LabelFor(model => model.BioData.NATIONALITY)
@@ -144,57 +141,8 @@
                                     @Html.ValidationMessageFor(model => model.BioData.NATIONALITY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.STATE_OF_ORIGIN)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.BioData.STATE_OF_ORIGIN, Model.BioData.State, htmlAttributes: new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" })
-                                    @Html.ValidationMessageFor(model => model.BioData.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.MOTHER_MAIDEN_NAME)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.BioData.MOTHER_MAIDEN_NAME, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
-                                    @Html.ValidationMessageFor(model => model.BioData.MOTHER_MAIDEN_NAME, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.DISABILITY)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.BioData.DISABILITY, Model.BioData.IndDisAbility)
-                                    @Html.ValidationMessageFor(model => model.BioData.DISABILITY, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.COMPLEXION)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.BioData.COMPLEXION, Model.BioData.CusComplexion)
-                                    @Html.ValidationMessageFor(model => model.BioData.COMPLEXION, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.BioData.NUMBER_OF_CHILDREN)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.BioData.NUMBER_OF_CHILDREN, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
-                                    @Html.ValidationMessageFor(model => model.BioData.NUMBER_OF_CHILDREN, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-3">
                                     @Html.LabelFor(model => model.BioData.RELIGION)
@@ -204,101 +152,182 @@
                                     @Html.ValidationMessageFor(model => model.BioData.RELIGION, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.STATE_OF_ORIGIN)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BioData.STATE_OF_ORIGIN, Model.BioData.State, htmlAttributes: new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" })
+                                    @Html.ValidationMessageFor(model => model.BioData.STATE_OF_ORIGIN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.TIN)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.TIN)
+                                    @Html.ValidationMessageFor(model => model.BioData.TIN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.BVN)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.BVN)
+                                    @Html.ValidationMessageFor(model => model.BioData.BVN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.RESIDENCEPERMIT_ISSDATE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.RESIDENCEPERMIT_ISSDATE)
+                                    @Html.ValidationMessageFor(model => model.BioData.RESIDENCEPERMIT_ISSDATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.RESIDENCEPERMIT_EXPDATE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.RESIDENCEPERMIT_EXPDATE)
+                                    @Html.ValidationMessageFor(model => model.BioData.RESIDENCEPERMIT_EXPDATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.PURPOSEOFACCOUNT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.PURPOSEOFACCOUNT)
+                                    @Html.ValidationMessageFor(model => model.BioData.PURPOSEOFACCOUNT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.SECONDNATIONALITY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BioData.SECONDNATIONALITY, Model.BioData.Nationalities)
+                                    @Html.ValidationMessageFor(model => model.BioData.SECONDNATIONALITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.RESIDENCEPERMITNO)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.BioData.RESIDENCEPERMITNO)
+                                    @Html.ValidationMessageFor(model => model.BioData.RESIDENCEPERMITNO, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BioData.BRANCH_CODE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BioData.BRANCH_CODE, Model.BioData.Branches)
+                                    @Html.ValidationMessageFor(model => model.BioData.BRANCH_CODE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
                         </div>
                     </div>
 
-
                     <div class="row">
-                        <h4 style="color:#dd4b39; margin-left:2%;">ADDRESS DETAILS</h4>
-                        <hr />
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.AddressDetails.STATE_OF_RESIDENCE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.AddressDetails.STATE_OF_RESIDENCE, Model.AddressDetails.StateofResidence, htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();" })
-                                    @Html.ValidationMessageFor(model => model.AddressDetails.STATE_OF_RESIDENCE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.LGA_OF_RESIDENCE)
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div id="lgloading">
-                                            <div style="display:none;" id="lgloading">Loading LGA Please wait...</div>
-                                            @Html.CMdmDropDownListFor(model => model.AddressDetails.LGA_OF_RESIDENCE, Model.AddressDetails.LGAofResidence)
-                                            @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK)
-                                    </div>
-                                    <div class="col-md-9">
-                                        @Html.CMdmEditorFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK)
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS)
-                                    </div>
-                                    <div class="col-md-9">
-                                        @Html.CMdmEditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS)
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
+                        <!--Address-->
+                        @*
+                            <h4 style="color:#dd4b39; margin-left:2%;">ADDRESS DETAILS</h4>
+                            <hr />
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE)
+                                        @Html.LabelFor(model => model.AddressDetails.STATE_OF_RESIDENCE)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.CMdmDropDownListFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, Model.AddressDetails.CountryofResidence)
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                        @Html.CMdmDropDownListFor(model => model.AddressDetails.STATE_OF_RESIDENCE, Model.AddressDetails.StateofResidence, htmlAttributes: new { @class = "form-control", @required = "required", onchange = "loadlga();" })
+                                        @Html.ValidationMessageFor(model => model.AddressDetails.STATE_OF_RESIDENCE, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT)
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.LGA_OF_RESIDENCE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div id="lgloading">
+                                                <div style="display:none;" id="lgloading">Loading LGA Please wait...</div>
+                                                @Html.CMdmDropDownListFor(model => model.AddressDetails.LGA_OF_RESIDENCE, Model.AddressDetails.LGAofResidence)
+                                                @Html.ValidationMessageFor(model => model.AddressDetails.LGA_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-9">
-                                        @Html.CMdmDropDownListFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, Model.AddressDetails.ResidenceStatus)
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "", new { @class = "text-danger" })
-                                        <div class="iradio_minimal-blue disabled" aria-checked="false" aria-disabled="true" style="position: relative;"><input type="radio" name="r1" class="minimal" disabled="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CMdmEditorFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK)
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.NEAREST_BUS_STOP_LANDMARK, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CMdmEditorFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS)
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENTIAL_ADDRESS, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE)
+
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CMdmDropDownListFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, Model.AddressDetails.CountryofResidence)
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.COUNTRY_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.CMdmDropDownListFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, Model.AddressDetails.ResidenceStatus)
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.RESIDENCE_OWNED_OR_RENT, "", new { @class = "text-danger" })
+                                            <div class="iradio_minimal-blue disabled" aria-checked="false" aria-disabled="true" style="position: relative;"><input type="radio" name="r1" class="minimal" disabled="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        @Html.LabelFor(model => model.AddressDetails.ZIP_POSTAL_CODE)
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.EditorFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.CITY_TOWN_OF_RESIDENCE, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @id = "zip" } })
-                                        @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.AddressDetails.ZIP_POSTAL_CODE)
+                                        </div>
+                                        <div class="col-md-9">
+                                            @Html.EditorFor(model => model.AddressDetails.ZIP_POSTAL_CODE, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @id = "zip" } })
+                                            @Html.ValidationMessageFor(model => model.AddressDetails.ZIP_POSTAL_CODE, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </div>*@
+                    </div>
 
                     <div class="row">
                         <h4 style="color:#dd4b39;margin-left:2%;">CONTACT DETAILS</h4>
@@ -322,9 +351,6 @@
                                     @Html.ValidationMessageFor(model => model.contact.EMAIL_ADDRESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-3">
                                     @Html.LabelFor(model => model.contact.MAILING_ADDRESS)
@@ -334,13 +360,85 @@
                                     @Html.ValidationMessageFor(model => model.contact.MAILING_ADDRESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.ALTERNATEPHONENO)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.contact.ALTERNATEPHONENO)
+                                    @Html.ValidationMessageFor(model => model.contact.ALTERNATEPHONENO, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.RESIDENCE_LGA)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.contact.RESIDENCE_LGA, Model.contact.LGAs)
+                                    @Html.ValidationMessageFor(model => model.contact.RESIDENCE_LGA, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.NEAREST_BUSTOP_LANDMARK)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.contact.NEAREST_BUSTOP_LANDMARK)
+                                    @Html.ValidationMessageFor(model => model.contact.NEAREST_BUSTOP_LANDMARK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.BRANCH_CODE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.contact.BRANCH_CODE, Model.contact.Branches)
+                                    @Html.ValidationMessageFor(model => model.contact.BRANCH_CODE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.STATE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.contact.STATE, Model.contact.States)
+                                    @Html.ValidationMessageFor(model => model.contact.STATE, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.CITY)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.contact.CITY)
+                                    @Html.ValidationMessageFor(model => model.contact.CITY, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.ADDRESS_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.contact.ADDRESS_NUMBER)
+                                    @Html.ValidationMessageFor(model => model.contact.ADDRESS_NUMBER, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.contact.MAILING_ADDRESS_STREET)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.contact.MAILING_ADDRESS_STREET)
+                                    @Html.ValidationMessageFor(model => model.contact.MAILING_ADDRESS_STREET, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <h4 style="color:#dd4b39;margin-left:2%;">IDENTIFICATION DETAILS</h4>
                         <hr />
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -382,46 +480,65 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.identification.PLACE_OF_ISSUANCE)
+                                    @Html.LabelFor(model => model.identification.BRANCH_CODE)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.identification.PLACE_OF_ISSUANCE)
-                                    @Html.ValidationMessageFor(model => model.identification.PLACE_OF_ISSUANCE, "", new { @class = "text-danger" })
+                                    @Html.CMdmDropDownListFor(model => model.identification.BRANCH_CODE, Model.identification.Branches)
+                                    @Html.ValidationMessageFor(model => model.identification.BRANCH_CODE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!--Other Details-->
+                    <div class="row">
+                        @*
+                            <h4 style="color:#dd4b39; margin-left:2%;">Other Details</h4>
+                            <hr/>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                    @Html.LabelFor(model => model.otherdetails.TIN_NO)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmEditorFor(model => model.otherdetails.TIN_NO)
+                                        @Html.ValidationMessageFor(model => model.otherdetails.TIN_NO, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        *@
                     </div>
 
-                    <div class="row">
-                        <h4 style="color:#dd4b39; margin-left:2%;">Other Details</h4>
-                        <hr/>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.otherdetails.TIN_NO)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.otherdetails.TIN_NO)
-                                    @Html.ValidationMessageFor(model => model.otherdetails.TIN_NO, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#BioData_DATE_OF_BIRTH').change(function (e) {
+            var dateString = $('#BioData_DATE_OF_BIRTH').val();
+            var today = new Date();
+            var birthDate = new Date(dateString);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 0) {
+                age = 0;
+            }
 
+            $('#BioData_AGE').val(age);
+        });
+
+        $('#AddressDetails_ZIP_POSTAL_CODE').keyup(function (e) {
+            $('#AddressDetails_ZIP_POSTAL_CODE').val().replace(/\-/g, '');
+        });
+    });
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function () {
-            $('#zip').keyup(function (e) {
-                $('#zip').val().replace(/\-/g, '');
-            });
-        });
-    </script>
+
 }
 <!--
 <style>

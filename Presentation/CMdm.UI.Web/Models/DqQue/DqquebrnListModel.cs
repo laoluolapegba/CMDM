@@ -17,6 +17,7 @@ namespace CMdm.UI.Web.Models.DqQue
             Statuses = new List<SelectListItem>();
             Branches = new List<SelectListItem>();
             Catalogs = new List<SelectListItem>();
+            Tiers = new List<SelectListItem>();
         }
         [DisplayName("Search")]
         [AllowHtml]
@@ -60,11 +61,13 @@ namespace CMdm.UI.Web.Models.DqQue
         public string REASON { get; set; }
         [DisplayName("Table Name")]
         public string CATALOG_TABLE_NAME { get; set; }
-        [DisplayName("Catalog Id")]
+        [DisplayName("Catalog Name")]
         public int CATALOG_ID { get; set; }
+        public int? TIER { get; set; }
         public IList<SelectListItem> Branches { get; set; }
         public IList<SelectListItem> Priorities { get; set; }
         public IList<SelectListItem> Statuses { get; set; }
         public IList<SelectListItem> Catalogs { get; set; }
+        public IList<SelectListItem> Tiers { get; set; }
     }
 }

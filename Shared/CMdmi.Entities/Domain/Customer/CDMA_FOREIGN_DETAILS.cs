@@ -16,7 +16,7 @@ namespace CMdm.Entities.Domain.Customer
         public DateTime? PERMIT_EXPIRY_DATE { get; set; }
         public string FOREIGN_ADDRESS { get; set; }
         public string CITY { get; set; }
-        public decimal? COUNTRY { get; set; }
+        public int? COUNTRY { get; set; }
         public string ZIP_POSTAL_CODE { get; set; }
         public string FOREIGN_TEL_NUMBER { get; set; }
         public string PURPOSE_OF_ACCOUNT { get; set; }

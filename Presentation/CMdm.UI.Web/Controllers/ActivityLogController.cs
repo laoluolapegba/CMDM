@@ -89,7 +89,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
                     
@@ -102,8 +103,14 @@ namespace CMdm.UI.Web.Controllers
         [HttpPost]
         public virtual ActionResult ActivityLogsList(DataSourceRequest command, ActivityLogModel model, string sort, string sortDir)
         {
+            DateTime? startDateValue = (model.CreatedOnFrom == null) ? null
+                : (DateTime?)model.CreatedOnFrom.Value;
 
-            var items = _dqQueService.GetAllActivityLogs(model.USER_NAME, model.FULLNAME, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            DateTime? endDateValue = (model.CreatedOnTo == null) ? null
+                            : (DateTime?)model.CreatedOnTo.Value.AddDays(1);
+
+            var items = _dqQueService.GetAllActivityLogs(model.USER_NAME, model.FULLNAME, model.BRANCH_CODE, startDateValue, endDateValue,
+                command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -134,7 +141,7 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllActivityLogs(model.USER_NAME, model.FULLNAME, model.BRANCH_CODE);
+            var items = _dqQueService.GetAllActivityLogs(model.USER_NAME, model.FULLNAME, model.BRANCH_CODE, model.CreatedOnFrom, model.CreatedOnTo);
 
             try
             {

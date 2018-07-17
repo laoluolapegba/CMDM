@@ -31,6 +31,14 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         [DisplayName("Branch Name")]
         public string BRANCH_NAME { get; set; }
 
+        [DisplayName("Start Date")]
+        [UIHint("DateNullable")]
+        public DateTime? CreatedOnFrom { get; set; }
+
+        [DisplayName("End Date")]
+        [UIHint("DateNullable")]
+        public DateTime? CreatedOnTo { get; set; }
+
         public int Id
         {
             get; set;

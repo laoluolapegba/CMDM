@@ -142,9 +142,9 @@ namespace CMdm.UI.Web.Controllers
             var model = new DqParamListModel();
             model.CATALOG_ID = CatalogId;
 
-            model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME").ToList();
+            model.Catalogs = new SelectList(db.MdmCatalogs.Where(x => x.ENABLED == 1), "CATALOG_ID", "CATALOG_NAME").ToList();
             //model.RegexList = new SelectList(db.MdmRegex, "REGEX_ID", "REGEX_NAME").ToList();
-            model.EntityList = new SelectList(db.EntityMast, "ENTITY_ID", "ENTITY_NAME").ToList();
+            model.EntityList = new SelectList(db.EntityMast.Where(x => x.RECORD_STATUS == "1"), "ENTITY_ID", "ENTITY_NAME").ToList();
             model.Dimensions = new SelectList(db.MDM_AGGR_DIMENSION, "DIMENSIONID", "DIMENSION_NAME").ToList();
             model.Catalogs.Add(new SelectListItem
             {

@@ -18,7 +18,7 @@ namespace CMdm.UI.Web.Models.DqQue
         public string SearchName { get; set; }
         public DqQueListModel()
         {
-            
+            MdmList = new List<SelectListItem>();
         }
         public int RECORD_ID { get; set; }
         [DisplayName("Datasource Name")]
@@ -49,6 +49,9 @@ namespace CMdm.UI.Web.Models.DqQue
         public decimal PCT_COMPLETION { get; set; }
         public string DaysonQue { get; set; }
         public int CATALOG_ID { get; set; }
+        public int? MDM_ID { get; set; }
         public string ISSUE_PRIORITY_DESC;
+
+        public IList<SelectListItem> MdmList;
     }
 }

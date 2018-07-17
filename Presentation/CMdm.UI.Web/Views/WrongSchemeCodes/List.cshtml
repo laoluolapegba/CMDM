@@ -217,7 +217,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.FORACID)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.FORACID), #CIF_ID, #FORACID, #SOL_ID").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;

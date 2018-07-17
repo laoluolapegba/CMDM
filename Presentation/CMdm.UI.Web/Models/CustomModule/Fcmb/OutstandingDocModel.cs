@@ -13,6 +13,7 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public OutstandingDocModel()
         {
             Branches = new List<SelectListItem>();
+            CustomerTypes = new List<SelectListItem>();
         }
         
 
@@ -59,6 +60,7 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string FREZ_REASON_CODE { get; set; }
 
         public IList<SelectListItem> Branches { get; set; }
+        public IList<SelectListItem> CustomerTypes { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_CODE { get; set; }
         public string BRANCH_NAME { get; set; }
@@ -68,6 +70,8 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string ACCTOFFICER_NAME { get; set; }
         [DisplayName("Customer ID")]
         public string CIF_ID { get; set; }
+        [DisplayName("Customer Type")]
+        public string CUSTOMERTYPE { get; set; }
 
         public int Id { get; set; }
     }

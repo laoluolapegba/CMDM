@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Data Quality Issues";
-    ViewBag.SubTitle = "List";
+    //ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 20;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -45,6 +45,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        @*<div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    Customer Type
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownListFor(model => model.MDM_ID, Model.MdmList)
+                                </div>
+                            </div>
+                        </div>*@
+
                     </div>
                 </div>
             </div>
@@ -92,7 +104,7 @@
                                 },
                                 scrollable: false,
                                 columns: [
-                                    @if (1==1)
+                                    @*@if (1==1)
                                 {
                                         <text>{
                                         field: "PRIORITY",
@@ -106,7 +118,7 @@
                                                 '# if(PRIORITY == 5) {# green #} #' +
                                                 '">#=ISSUE_PRIORITY_DESC#</span>'
                                         },</text>
-                                    } 
+                                    }*@ 
                                     {
                                     field: "DQ_PROCESS_NAME",
                                     title: "Process Name",
@@ -133,14 +145,14 @@
                                     attributes: { style: "text-align:center" },
 
                                 },
-                                {
-                                    field: "PCT_COMPLETION",
-                                    title: "% Resolved",
-                                    width: 80,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
-                                    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
-                                },
+                                //{
+                                //    field: "PCT_COMPLETION",
+                                //    title: "% Resolved",
+                                //    width: 80,
+                                //    headerAttributes: { style: "text-align:left" },
+                                //    attributes: { style: "text-align:left" },
+                                //    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
+                                //},
                                 {
                                     field: "DaysonQue",
                                     title: "Days",
@@ -179,7 +191,8 @@
 
                         function additionalData() {
                             var data = {
-                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                CATALOG_ID: $('#CATALOG_ID').val(),
                             };
                             addAntiForgeryToken(data);
                             return data;
@@ -190,3 +203,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function()
+    {
+        $('#BTN_PROCESS_NAME').click(function () {
+            @HttpContext.Current.Session["CATALOG_ID"] = id;
+        })
+    });
+
+</script>

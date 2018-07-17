@@ -11,5 +11,6 @@ namespace CMdm.UI.Web.Models.Customer
         public CompInfoModel CompInfoModel { get; set; }
         public BenOwnersModel BenOwnersModel { get; set; }
         public CorpADDModel CorpADDModel { get; set; }
+        public GuarantorModel GuarantorModel { get; set; }
     }
 }

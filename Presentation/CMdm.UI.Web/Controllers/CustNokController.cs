@@ -34,8 +34,7 @@ namespace CMdm.UI.Web.Controllers
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("AuthList","DQQue");
-            }
-            
+            }            
 
             var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
@@ -44,37 +43,31 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_NEXT_OF_KIN" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            var model = (from c in _db.CDMA_INDIVIDUAL_NEXT_OF_KIN
+
+            CustomerNOKModel model = new CustomerNOKModel();
+            model = (from c in _db.CDMA_INDIVIDUAL_NEXT_OF_KIN
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new CustomerNOKModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             COUNTRY = c.COUNTRY,
-                             CITY_TOWN = c.CITY_TOWN,
-                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
-                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
-                             FIRST_NAME = c.FIRST_NAME,
-                             HOUSE_NUMBER = c.HOUSE_NUMBER,
-                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
-                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
-                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
-                             LGA = c.LGA,
-                             MOBILE_NO = c.MOBILE_NO,
-                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
-                             OFFICE_NO = c.OFFICE_NO,
-                             OTHER_NAME = c.OTHER_NAME,
-                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
-                             RELATIONSHIP = c.RELATIONSHIP,
-                             RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
-                             SEX = c.SEX,
-                             STATE = c.STATE,
-                             STREET_NAME = c.STREET_NAME,
-                             SURNAME = c.SURNAME,
                              TITLE = c.TITLE,
-                             ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE,
+                             SURNAME = c.SURNAME,
+                             FIRST_NAME = c.FIRST_NAME,
+                             OTHER_NAME = c.OTHER_NAME,
+                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                             SEX = c.SEX,
+                             RELATIONSHIP = c.RELATIONSHIP,
+                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                             NEXT_OF_KIN_RESIDENTIALSTREET = c.NEXT_OF_KIN_RESIDENTIALSTREET,
+                             NOK_ADDRESS_NO = c.NOK_ADDRESS_NO,
+                             CITY_TOWN = c.CITY_TOWN,
+                             LGA = c.LGA,
+                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                             STATE = c.STATE,
+                             NEXT_OF_KIN_PHONE_NUMBER = c.NEXT_OF_KIN_PHONE_NUMBER,
+                             NEXT_OF_KIN_PHONE_NUMBER2 = c.NEXT_OF_KIN_PHONE_NUMBER2,
+                             BRANCH_CODE = c.BRANCH_CODE,
                              LastUpdatedby = c.LAST_MODIFIED_BY,
                              LastUpdatedDate = c.LAST_MODIFIED_DATE,
                              LastAuthdby = c.AUTHORISED_BY,
@@ -82,10 +75,11 @@ namespace CMdm.UI.Web.Controllers
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
 
-            //var modelProperties = model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-            if(model != null)
+            var changelog = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_INDIVIDUAL_NEXT_OF_KIN" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            if (changelog != null && model != null)
             {
+                string changeId = changelog.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId);
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -95,23 +89,21 @@ namespace CMdm.UI.Web.Controllers
                             ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
                         }
                     }
-                    //props.Add(item.Name);
-
                 }
             }
-            //List<string> props = new List<string>();
-           
-            //var matchItems = props.Intersect(changedSet);
+
             model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
+
         public ActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Create");
             }
+
             int records = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Count(o => o.CUSTOMER_NO == id);
             var model = new CustomerNOKModel();
             if (records > 1)
@@ -123,31 +115,23 @@ namespace CMdm.UI.Web.Controllers
                              select new CustomerNOKModel
                              {
                                  CUSTOMER_NO = c.CUSTOMER_NO,
-                                 COUNTRY = c.COUNTRY,
-                                 CITY_TOWN = c.CITY_TOWN,
-                                 DATE_OF_BIRTH = c.DATE_OF_BIRTH,
-                                 EMAIL_ADDRESS = c.EMAIL_ADDRESS,
-                                 FIRST_NAME = c.FIRST_NAME,
-                                 HOUSE_NUMBER = c.HOUSE_NUMBER,
-                                 IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
-                                 ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
-                                 ID_ISSUE_DATE = c.ID_ISSUE_DATE,
-                                 LGA = c.LGA,
-                                 MOBILE_NO = c.MOBILE_NO,
-                                 NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
-                                 OFFICE_NO = c.OFFICE_NO,
-                                 OTHER_NAME = c.OTHER_NAME,
-                                 PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
-                                 RELATIONSHIP = c.RELATIONSHIP,
-                                 RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
-                                 SEX = c.SEX,
-                                 STATE = c.STATE,
-                                 STREET_NAME = c.STREET_NAME,
-                                 SURNAME = c.SURNAME,
                                  TITLE = c.TITLE,
-                                 ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE
-
-
+                                 SURNAME = c.SURNAME,
+                                 FIRST_NAME = c.FIRST_NAME,
+                                 OTHER_NAME = c.OTHER_NAME,
+                                 DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                                 SEX = c.SEX,
+                                 RELATIONSHIP = c.RELATIONSHIP,
+                                 EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                                 NEXT_OF_KIN_RESIDENTIALSTREET = c.NEXT_OF_KIN_RESIDENTIALSTREET,
+                                 NOK_ADDRESS_NO = c.NOK_ADDRESS_NO,
+                                 CITY_TOWN = c.CITY_TOWN,
+                                 LGA = c.LGA,
+                                 NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                                 STATE = c.STATE,
+                                 NEXT_OF_KIN_PHONE_NUMBER = c.NEXT_OF_KIN_PHONE_NUMBER,
+                                 NEXT_OF_KIN_PHONE_NUMBER2 = c.NEXT_OF_KIN_PHONE_NUMBER2,
+                                 BRANCH_CODE = c.BRANCH_CODE,
                              }).FirstOrDefault();
             }
             else if(records ==1)
@@ -159,37 +143,56 @@ namespace CMdm.UI.Web.Controllers
                          select new CustomerNOKModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             COUNTRY = c.COUNTRY,
-                             CITY_TOWN = c.CITY_TOWN,
-                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
-                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
-                             FIRST_NAME = c.FIRST_NAME,
-                             HOUSE_NUMBER = c.HOUSE_NUMBER,
-                             IDENTIFICATION_TYPE = c.IDENTIFICATION_TYPE,
-                             ID_EXPIRY_DATE = c.ID_EXPIRY_DATE,
-                             ID_ISSUE_DATE = c.ID_ISSUE_DATE,
-                             LGA = c.LGA,
-                             MOBILE_NO = c.MOBILE_NO,
-                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
-                             OFFICE_NO = c.OFFICE_NO,
-                             OTHER_NAME = c.OTHER_NAME,
-                             PLACE_OF_ISSUANCE = c.PLACE_OF_ISSUANCE,
-                             RELATIONSHIP = c.RELATIONSHIP,
-                             RESIDENT_PERMIT_NUMBER = c.RESIDENT_PERMIT_NUMBER,
-                             SEX = c.SEX,
-                             STATE = c.STATE,
-                             STREET_NAME = c.STREET_NAME,
-                             SURNAME = c.SURNAME,
                              TITLE = c.TITLE,
-                             ZIP_POSTAL_CODE = c.ZIP_POSTAL_CODE
-
-
+                             SURNAME = c.SURNAME,
+                             FIRST_NAME = c.FIRST_NAME,
+                             OTHER_NAME = c.OTHER_NAME,
+                             DATE_OF_BIRTH = c.DATE_OF_BIRTH,
+                             SEX = c.SEX,
+                             RELATIONSHIP = c.RELATIONSHIP,
+                             EMAIL_ADDRESS = c.EMAIL_ADDRESS,
+                             NEXT_OF_KIN_RESIDENTIALSTREET = c.NEXT_OF_KIN_RESIDENTIALSTREET,
+                             NOK_ADDRESS_NO = c.NOK_ADDRESS_NO,
+                             CITY_TOWN = c.CITY_TOWN,
+                             LGA = c.LGA,
+                             NEAREST_BUS_STOP_LANDMARK = c.NEAREST_BUS_STOP_LANDMARK,
+                             STATE = c.STATE,
+                             NEXT_OF_KIN_PHONE_NUMBER = c.NEXT_OF_KIN_PHONE_NUMBER,
+                             NEXT_OF_KIN_PHONE_NUMBER2 = c.NEXT_OF_KIN_PHONE_NUMBER2,
+                             BRANCH_CODE = c.BRANCH_CODE,
                          }).FirstOrDefault();
             }
             
-
-            
             PrepareModel(model);
+
+            var nokcustid = "";
+            try
+            {
+                nokcustid = _db.MdmDqRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_INDIVIDUAL_NEXT_OF_KIN" && a.CUST_ID == model.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (nokcustid != "" && model != null)
+            {
+                var exceptionSet = _db.MdmDqRunExceptions.Where(a => a.CUST_ID == nokcustid); //.Select(a=>a.PROPERTYNAME);
+                if (nokcustid != null)
+                {
+                    foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError(item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
             return View(model);
         }
 
@@ -208,7 +211,6 @@ namespace CMdm.UI.Web.Controllers
             if (ModelState.IsValid)
             {
                 CDMA_INDIVIDUAL_NEXT_OF_KIN originalObject = new CDMA_INDIVIDUAL_NEXT_OF_KIN();
-
                 
                 using (var db = new AppDbContext())
                 {
@@ -218,38 +220,31 @@ namespace CMdm.UI.Web.Controllers
                     {
                         updateFlag = true;                        
                         originalObject = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Where(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
-                       
                         var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO && o.AUTHORISED == "U");
-
-
-                        //var originalObject = entity;
                         
                         if (entity != null)
                         {
-                            entity.SURNAME = nokmodel.SURNAME;
-                            entity.CITY_TOWN = nokmodel.CITY_TOWN;
-                            entity.COUNTRY = nokmodel.COUNTRY;
-                            entity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
-                            entity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
-                            entity.FIRST_NAME = nokmodel.FIRST_NAME;
-                            entity.HOUSE_NUMBER = nokmodel.HOUSE_NUMBER;
-
-                            entity.MOBILE_NO = nokmodel.MOBILE_NO;
-                            entity.PLACE_OF_ISSUANCE = nokmodel.PLACE_OF_ISSUANCE;
-                            entity.RELATIONSHIP = nokmodel.RELATIONSHIP;
-                            entity.RESIDENT_PERMIT_NUMBER = nokmodel.RESIDENT_PERMIT_NUMBER;
-                            entity.SEX = nokmodel.SEX;
-                            entity.STREET_NAME = nokmodel.STREET_NAME;
                             entity.TITLE = nokmodel.TITLE;
-                            entity.ZIP_POSTAL_CODE = nokmodel.ZIP_POSTAL_CODE;
-                            entity.ID_EXPIRY_DATE = nokmodel.ID_EXPIRY_DATE;
-                            entity.ID_ISSUE_DATE = nokmodel.ID_ISSUE_DATE;
-                            entity.IDENTIFICATION_TYPE = nokmodel.IDENTIFICATION_TYPE;
+                            entity.SURNAME = nokmodel.SURNAME;
+                            entity.FIRST_NAME = nokmodel.FIRST_NAME;
+                            entity.OTHER_NAME = nokmodel.OTHER_NAME;
+                            entity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
+                            entity.SEX = nokmodel.SEX;
+                            entity.RELATIONSHIP = nokmodel.RELATIONSHIP;
+                            entity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
+                            entity.NEXT_OF_KIN_RESIDENTIALSTREET = nokmodel.NEXT_OF_KIN_RESIDENTIALSTREET;
+                            entity.NOK_ADDRESS_NO = nokmodel.NOK_ADDRESS_NO;
+                            entity.CITY_TOWN = nokmodel.CITY_TOWN;
+                            entity.LGA = nokmodel.LGA;
+                            entity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
+                            entity.STATE = nokmodel.STATE;
+                            entity.NEXT_OF_KIN_PHONE_NUMBER = nokmodel.NEXT_OF_KIN_PHONE_NUMBER;
+                            entity.NEXT_OF_KIN_PHONE_NUMBER2 = nokmodel.NEXT_OF_KIN_PHONE_NUMBER2;
+                            entity.BRANCH_CODE = nokmodel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
-                            entity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
                             //entity.AUTHORISED = "U";
-
 
                             db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
@@ -265,25 +260,24 @@ namespace CMdm.UI.Web.Controllers
                         originalObject = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Where(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
                         if (originalObject != null)
                         {
-                            entity.SURNAME = nokmodel.SURNAME;
-                            entity.CITY_TOWN = nokmodel.CITY_TOWN;
-                            entity.COUNTRY = nokmodel.COUNTRY;
-                            entity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
-                            entity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
-                            entity.FIRST_NAME = nokmodel.FIRST_NAME;
-                            entity.HOUSE_NUMBER = nokmodel.HOUSE_NUMBER;
-
-                            entity.MOBILE_NO = nokmodel.MOBILE_NO;
-                            entity.PLACE_OF_ISSUANCE = nokmodel.PLACE_OF_ISSUANCE;
-                            entity.RELATIONSHIP = nokmodel.RELATIONSHIP;
-                            entity.RESIDENT_PERMIT_NUMBER = nokmodel.RESIDENT_PERMIT_NUMBER;
-                            entity.SEX = nokmodel.SEX;
-                            entity.STREET_NAME = nokmodel.STREET_NAME;
                             entity.TITLE = nokmodel.TITLE;
-                            entity.ZIP_POSTAL_CODE = nokmodel.ZIP_POSTAL_CODE;
-                            entity.ID_EXPIRY_DATE = nokmodel.ID_EXPIRY_DATE;
-                            entity.ID_ISSUE_DATE = nokmodel.ID_ISSUE_DATE;
-                            entity.IDENTIFICATION_TYPE = nokmodel.IDENTIFICATION_TYPE;
+                            entity.SURNAME = nokmodel.SURNAME;
+                            entity.FIRST_NAME = nokmodel.FIRST_NAME;
+                            entity.OTHER_NAME = nokmodel.OTHER_NAME;
+                            entity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
+                            entity.SEX = nokmodel.SEX;
+                            entity.RELATIONSHIP = nokmodel.RELATIONSHIP;
+                            entity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
+                            entity.NEXT_OF_KIN_RESIDENTIALSTREET = nokmodel.NEXT_OF_KIN_RESIDENTIALSTREET;
+                            entity.NOK_ADDRESS_NO = nokmodel.NOK_ADDRESS_NO;
+                            entity.CITY_TOWN = nokmodel.CITY_TOWN;
+                            entity.LGA = nokmodel.LGA;
+                            entity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
+                            entity.STATE = nokmodel.STATE;
+                            entity.NEXT_OF_KIN_PHONE_NUMBER = nokmodel.NEXT_OF_KIN_PHONE_NUMBER;
+                            entity.NEXT_OF_KIN_PHONE_NUMBER2 = nokmodel.NEXT_OF_KIN_PHONE_NUMBER2;
+                            entity.BRANCH_CODE = nokmodel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
                             entity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
@@ -299,25 +293,24 @@ namespace CMdm.UI.Web.Controllers
                             // There is no 'U' status row in the table so, Add new record with mnt_status U
                             //entity.AUTHORISED = "U";
                             var newentity = new CDMA_INDIVIDUAL_NEXT_OF_KIN();
-                            newentity.SURNAME = nokmodel.SURNAME;
-                            newentity.CITY_TOWN = nokmodel.CITY_TOWN;
-                            newentity.COUNTRY = nokmodel.COUNTRY;
-                            newentity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
-                            newentity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
-                            newentity.FIRST_NAME = nokmodel.FIRST_NAME;
-                            newentity.HOUSE_NUMBER = nokmodel.HOUSE_NUMBER;
-
-                            newentity.MOBILE_NO = nokmodel.MOBILE_NO;
-                            newentity.PLACE_OF_ISSUANCE = nokmodel.PLACE_OF_ISSUANCE;
-                            newentity.RELATIONSHIP = nokmodel.RELATIONSHIP;
-                            newentity.RESIDENT_PERMIT_NUMBER = nokmodel.RESIDENT_PERMIT_NUMBER;
-                            newentity.SEX = nokmodel.SEX;
-                            newentity.STREET_NAME = nokmodel.STREET_NAME;
                             newentity.TITLE = nokmodel.TITLE;
-                            newentity.ZIP_POSTAL_CODE = nokmodel.ZIP_POSTAL_CODE;
-                            newentity.ID_EXPIRY_DATE = nokmodel.ID_EXPIRY_DATE;
-                            newentity.ID_ISSUE_DATE = nokmodel.ID_ISSUE_DATE;
-                            newentity.IDENTIFICATION_TYPE = nokmodel.IDENTIFICATION_TYPE;
+                            newentity.SURNAME = nokmodel.SURNAME;
+                            newentity.FIRST_NAME = nokmodel.FIRST_NAME;
+                            newentity.OTHER_NAME = nokmodel.OTHER_NAME;
+                            newentity.DATE_OF_BIRTH = nokmodel.DATE_OF_BIRTH;
+                            newentity.SEX = nokmodel.SEX;
+                            newentity.RELATIONSHIP = nokmodel.RELATIONSHIP;
+                            newentity.EMAIL_ADDRESS = nokmodel.EMAIL_ADDRESS;
+                            newentity.NEXT_OF_KIN_RESIDENTIALSTREET = nokmodel.NEXT_OF_KIN_RESIDENTIALSTREET;
+                            newentity.NOK_ADDRESS_NO = nokmodel.NOK_ADDRESS_NO;
+                            newentity.CITY_TOWN = nokmodel.CITY_TOWN;
+                            newentity.LGA = nokmodel.LGA;
+                            newentity.NEAREST_BUS_STOP_LANDMARK = nokmodel.NEAREST_BUS_STOP_LANDMARK;
+                            newentity.STATE = nokmodel.STATE;
+                            newentity.NEXT_OF_KIN_PHONE_NUMBER = nokmodel.NEXT_OF_KIN_PHONE_NUMBER;
+                            newentity.NEXT_OF_KIN_PHONE_NUMBER2 = nokmodel.NEXT_OF_KIN_PHONE_NUMBER2;
+                            newentity.BRANCH_CODE = nokmodel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -333,21 +326,103 @@ namespace CMdm.UI.Web.Controllers
                         {
                             string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
                             ModelState.AddModelError("", errorMessage);
-
-                            //string errorMessage = string.Format("Unauthorized record exists for record with Id:{0} .", nokmodel.CUSTOMER_NO);
-                            //ModelState.AddModelError("", errorMessage);
                         }
-                    }
-                    
+                    }                    
                 }
 
-                SuccessNotification("NOK Updated");
+                SuccessNotification("Next of Kin Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(nokmodel);
             return View(nokmodel);
         }
+
+        [NonAction]
+        protected virtual void PrepareModel(CustomerNOKModel model)
+        {
+            //if (model == null)
+            //    throw new ArgumentNullException("model");
+
+            if (model == null)
+                throw new ArgumentNullException("model");
+            model.Genders.Add(new SelectListItem
+            {
+                Text = "Male",
+                Value = "Male"
+            });
+            model.Genders.Add(new SelectListItem
+            {
+                Text = "Female",
+                Value = "Female"
+            });
+            model.IdTypes = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
+            model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            model.LocalGovts = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
+            model.RelationshipTypes = new SelectList(_db.CDMA_CUST_REL_TYPE, "REL_CODE", "REL_DESC").ToList();
+            model.States = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
+            model.TitleTypes = new SelectList(_db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
+            model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+        }
+
+        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
+        [FormValueRequired("approve", "disapprove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Authorize(CustomerNOKModel nokmodel, bool disapproveRecord)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+
+                int exceptionId = 0;
+                if (routeValues.ContainsKey("id"))
+                    exceptionId = int.Parse((string)routeValues["id"]);
+                if (disapproveRecord)
+                {
+
+                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), nokmodel.AuthoriserRemarks);
+                    SuccessNotification("Next of Kin Not Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(nokmodel.LastUpdatedby));
+                }
+
+                else
+                {
+                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    SuccessNotification("Next of Kin Authorised");
+                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(nokmodel.LastUpdatedby));
+                }
+               
+                return RedirectToAction("AuthList", "DQQue");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(nokmodel);
+            return View(nokmodel);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("disapprove", "continueEditing")]
+        [FormValueRequired("disapprove")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DisApprove_(CustomerNOKModel nokmodel, bool continueEditing)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            if (ModelState.IsValid)
+            {
+                _dqQueService.DisApproveExceptionQueItems(nokmodel.ExceptionId.ToString(), nokmodel.AuthoriserRemarks);
+
+                SuccessNotification("Next of Kin Authorised");
+                return continueEditing ? RedirectToAction("Authorize", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustNok");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(nokmodel);
+            return View(nokmodel);
+        }
+
+        #region Scaffolded
         public ActionResult Create()
         {
             //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
@@ -374,12 +449,12 @@ namespace CMdm.UI.Web.Controllers
             {
                 CDMA_INDIVIDUAL_NEXT_OF_KIN nok = new CDMA_INDIVIDUAL_NEXT_OF_KIN
                 {
-                    
+
 
                 };
                 _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Add(nok);
                 _db.SaveChanges();
-                
+
 
                 //_localizationService.GetResource("Admin.Configuration.Stores.Added")
                 SuccessNotification("New NOK has been Added");
@@ -391,100 +466,12 @@ namespace CMdm.UI.Web.Controllers
             return View(nokmodel);
         }
 
-        [NonAction]
-        protected virtual void PrepareModel(CustomerNOKModel model)
-        {
-            //if (model == null)
-            //    throw new ArgumentNullException("model");
-
-            if (model == null)
-                throw new ArgumentNullException("model");
-            model.Genders.Add(new SelectListItem
-            {
-                Text = "Male",
-                Value = "Male"
-            });
-            model.Genders.Add(new SelectListItem
-            {
-                Text = "Female",
-                Value = "Female"
-            });
-            model.IdTypes = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE").ToList();
-
-            model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
-            
-            model.LocalGovts = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME").ToList();
-            model.RelationshipTypes = new SelectList(_db.CDMA_CUST_REL_TYPE, "REL_CODE", "REL_DESC").ToList();
-            model.States = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME").ToList();
-            model.TitleTypes = new SelectList(_db.CDMA_CUST_TITLE, "TITLE_CODE", "TITLE_DESC").ToList();
-
-
-        }
-
-        [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
-        [FormValueRequired("approve", "disapprove")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Authorize(CustomerNOKModel nokmodel, bool disapproveRecord)
-        {
-            if (!User.Identity.IsAuthenticated)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            if (ModelState.IsValid)
-            {
-                var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
-
-                int exceptionId = 0;
-                if (routeValues.ContainsKey("id"))
-                    exceptionId = int.Parse((string)routeValues["id"]);
-                if (disapproveRecord)
-                {
-
-                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), nokmodel.AuthoriserRemarks);
-                    SuccessNotification("NOK Not Authorised");
-                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(nokmodel.LastUpdatedby));
-                }
-
-                else
-                {
-                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
-                    SuccessNotification("NOK Authorised");
-                    _messageService.LogEmailJob(identity.ProfileId, nokmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(nokmodel.LastUpdatedby));
-                }
-               
-                return RedirectToAction("AuthList", "DQQue");
-                //return RedirectToAction("Index");
-            }
-            PrepareModel(nokmodel);
-            return View(nokmodel);
-        }
-
-        [HttpPost, ParameterBasedOnFormName("disapprove", "continueEditing")]
-        [FormValueRequired("disapprove")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DisApprove_(CustomerNOKModel nokmodel, bool continueEditing)
-        {
-            if (!User.Identity.IsAuthenticated)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            if (ModelState.IsValid)
-            {
-                _dqQueService.DisApproveExceptionQueItems(nokmodel.ExceptionId.ToString(), nokmodel.AuthoriserRemarks);
-
-                SuccessNotification("NOK Authorised");
-                return continueEditing ? RedirectToAction("Authorize", new { id = nokmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "CustNok");
-                //return RedirectToAction("Index");
-            }
-            PrepareModel(nokmodel);
-            return View(nokmodel);
-        }
-
-        #region Scaffolded
         // GET: CustNok
-        public ActionResult Index()
-        {
-            var cDMA_INDIVIDUAL_NEXT_OF_KIN = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Include(c => c.Countries).Include(c => c.IdTypes).Include(c => c.LocalGovts).Include(c => c.RelationshipTypes).Include(c => c.States).Include(c => c.TitleTypes);
-            return View(cDMA_INDIVIDUAL_NEXT_OF_KIN.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var cDMA_INDIVIDUAL_NEXT_OF_KIN = _db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Include(c => c.Countries).Include(c => c.IdTypes).Include(c => c.LocalGovts).Include(c => c.RelationshipTypes).Include(c => c.States).Include(c => c.TitleTypes);
+        //    return View(cDMA_INDIVIDUAL_NEXT_OF_KIN.ToList());
+        //}
 
         // GET: CustNok/Details/5
         public ActionResult Details(string id)
@@ -526,9 +513,6 @@ namespace CMdm.UI.Web.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.COUNTRY = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.COUNTRY);
-            ViewBag.IDENTIFICATION_TYPE = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE", cDMA_INDIVIDUAL_NEXT_OF_KIN.IDENTIFICATION_TYPE);
             ViewBag.LGA = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.LGA);
             ViewBag.RELATIONSHIP = new SelectList(_db.CDMA_CUST_REL_TYPE, "REL_CODE", "REL_DESC", cDMA_INDIVIDUAL_NEXT_OF_KIN.RELATIONSHIP);
             ViewBag.STATE = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.STATE);
@@ -548,8 +532,6 @@ namespace CMdm.UI.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.COUNTRY = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.COUNTRY);
-            ViewBag.IDENTIFICATION_TYPE = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE", cDMA_INDIVIDUAL_NEXT_OF_KIN.IDENTIFICATION_TYPE);
             ViewBag.LGA = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.LGA);
             ViewBag.RELATIONSHIP = new SelectList(_db.CDMA_CUST_REL_TYPE, "REL_CODE", "REL_DESC", cDMA_INDIVIDUAL_NEXT_OF_KIN.RELATIONSHIP);
             ViewBag.STATE = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.STATE);
@@ -570,8 +552,6 @@ namespace CMdm.UI.Web.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.COUNTRY = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.COUNTRY);
-            ViewBag.IDENTIFICATION_TYPE = new SelectList(_db.CDMA_IDENTIFICATION_TYPE, "CODE", "ID_TYPE", cDMA_INDIVIDUAL_NEXT_OF_KIN.IDENTIFICATION_TYPE);
             ViewBag.LGA = new SelectList(_db.SRC_CDMA_LGA, "LGA_ID", "LGA_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.LGA);
             ViewBag.RELATIONSHIP = new SelectList(_db.CDMA_CUST_REL_TYPE, "REL_CODE", "REL_DESC", cDMA_INDIVIDUAL_NEXT_OF_KIN.RELATIONSHIP);
             ViewBag.STATE = new SelectList(_db.SRC_CDMA_STATE, "STATE_ID", "STATE_NAME", cDMA_INDIVIDUAL_NEXT_OF_KIN.STATE);

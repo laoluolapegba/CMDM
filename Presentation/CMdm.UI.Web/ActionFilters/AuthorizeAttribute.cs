@@ -20,11 +20,11 @@ namespace CMdm.UI.Web.ActionFilters
             string requiredAction = filterContext.ActionDescriptor.ActionName;
             var userId = filterContext.HttpContext.User.Identity.Name; // GetUserId();
             var identity = ((CustomPrincipal)HttpContext.Current.User).CustomIdentity;
-            PermissionsService _permissionService = new PermissionsService(userId, identity.UserRoleId );
+            PermissionsService _permissionService = new PermissionsService(userId, identity.UserRoleId);
             //Create an instance of our custom user authorization object passing requesting user's 'Windows Username' into constructor
             //CustomMembershipUser requestingUser = new CustomMembershipUser(filterContext.RequestContext.HttpContext.User.Identity.Name);
             //Check if the requesting user has the permission to run the controller's action
-            if (!_permissionService.HasPermission(requiredController, requiredAction) )
+            if (!_permissionService.HasPermission(requiredController, requiredAction))
             {
                 //User doesn't have the required permission and is not a SysAdmin, return our custom “401 Unauthorized” access error
                 //Since we are setting filterContext.Result to contain an ActionResult page, the controller's action will not be run.

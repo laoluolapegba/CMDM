@@ -45,45 +45,14 @@ namespace CMdm.UI.Web.Controllers
         // GET: OutStandingDocs
         public ActionResult Index()
         {
-            return View(db.OutStandingDocs.ToList());
+            return RedirectToAction("List");
         }
 
-        // GET: OutStandingDocs/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            OutStandingDoc outStandingDoc = db.OutStandingDocs.Find(id);
-            if (outStandingDoc == null)
-            {
-                return HttpNotFound();
-            }
-            return View(outStandingDoc);
-        }
-
-        
-        // POST: OutStandingDocs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FORACID,ACCT_NAME,SOL_ID,SCHM_CODE,SCHM_DESC,SCHM_TYPE,ACID,DOCUMENT_CODE,DUE_DATE,FREZ_REASON_CODE,ACCTOFFICER_CODE,ACCTOFFICER_NAME")] OutStandingDoc outStandingDoc)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(outStandingDoc).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(outStandingDoc);
-        }
-        //[Authorize]
+       
         public ActionResult List()
         {
 
-            var model = new OutstandingDocModel();
+            var model = new DistinctDocsModel();
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
@@ -121,19 +90,67 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Individual",
+                Text = "Individual",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Corporate",
+                Text = "Corporate",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
 
             _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Customer Outstanding Documents Report", DateTime.Now);
             return View(model);
         }
+
         [HttpPost]
-        
+        public virtual ActionResult DistinctList(DataSourceRequest command, DistinctDocsModel model, string sort, string sortDir)
+        {
+
+            var items = _dqQueService.GetAllDistinctDocs(model.ACCT_NAME, model.CIF_ID, model.SOL_ID, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            
+            DateTime _today = DateTime.Now.Date;
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new DistinctDocsModel
+                {
+                    Id = x.ID,
+                    ACCT_NAME = x.ACCT_NAME,
+                    DUE_DATE = x.DUE_DATE,
+                    BRANCH_NAME = x.BRANCH_NAME,
+                    FREZ_REASON_CODE = x.FREZ_REASON_CODE,
+                    SOL_ID = x.SOL_ID,
+                    ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
+                    ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
+                }),
+                Total = items.TotalCount
+            };
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]        
         public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID, model.BRANCH_CODE, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -156,38 +173,111 @@ namespace CMdm.UI.Web.Controllers
                     SOL_ID = x.SOL_ID,
                     ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
                     ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
-                    CIF_ID = x.CIF_ID
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
                     //Id = x.RECORD_ID
 
                 }),
                 Total = items.TotalCount
             };
 
-            //var gridModel = new DataSourceResult
-            //{
-            //    Data = items.Select(x =>
-            //    {
-            //        var itemsModel = x.ToModel();
-            //        PrepareSomethingModel(itemsModel, x, false, false);
-            //        return itemsModel;
-            //    }),
-            //    Total = items.TotalCount,
-            //};
+            return Json(gridModel);
+        }
+
+
+        public ActionResult AuthList(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+
+            var model = new OutstandingDocModel();
+            model.CIF_ID = id;
+
+            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+            
+            model.Branches.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Individual",
+                Text = "Individual",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Corporate",
+                Text = "Corporate",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AuthList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
+        {
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+            //RouteValueDictionary routeValues;
+
+            string goldenRecord = "";
+            if (routeValues.ContainsKey("id"))
+                goldenRecord = (string)routeValues["id"];
+
+            var items = _dqQueService.GetAllOutDocItems(model.ACCT_NAME, goldenRecord, model.FORACID, model.BRANCH_CODE, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var gridModel = new DataSourceResult
+            {
+                Data = items.Select(x => new OutstandingDocModel
+                {
+                    Id = x.ID,
+                    ACCT_NAME = x.ACCT_NAME,
+                    ACID = x.ACID,
+                    FORACID = x.FORACID,
+                    DOCUMENT_CODE = x.DOCUMENT_CODE,
+                    DUE_DATE = x.DUE_DATE,
+                    BRANCH_NAME = x.BRANCH_NAME,
+                    REF_DESC = x.REF_DESC,
+                    SCHM_CODE = x.SCHM_CODE,
+                    SCHM_DESC = x.SCHM_DESC,
+                    SCHM_TYPE = x.SCHM_TYPE,
+                    FREZ_REASON_CODE = x.FREZ_REASON_CODE,
+                    SOL_ID = x.SOL_ID,
+                    ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
+                    ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
+                    //Id = x.RECORD_ID
+
+                    }),
+                    Total = items.TotalCount,
+                };
 
             return Json(gridModel);
         }
-        #region Export / Import
 
+
+        #region Export / Import
         [HttpPost, ActionName("List")]
         [FormValueRequired("exportexcel-all")]
-        public virtual ActionResult ExportExcelAll(OutstandingDocModel model)
+        public virtual ActionResult ExportExcelAll(DistinctDocsModel model)
         {
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID);
-
-           
+            var items = _dqQueService.GetAllDistinctDocs(model.ACCT_NAME, model.CIF_ID, model.SOL_ID);
 
             try
             {
@@ -209,14 +299,14 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
 
-            var docs = new List<OutStandingDoc>();
+            var docs = new List<DistinctDocs>();
             if (selectedIds != null)
             {
                 var ids = selectedIds
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToInt32(x))
                     .ToArray();
-                docs.AddRange(_dqQueService.GetOutDocItembyIds(ids));
+                docs.AddRange(_dqQueService.GetDistinctDocsbyIds(ids));
             }
 
             try
@@ -233,7 +323,37 @@ namespace CMdm.UI.Web.Controllers
             }
         }
 
-       #endregion
+        [HttpPost]
+        public virtual ActionResult ExportOutExcelSelected(string selectedIds)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            var docs = new List<OutStandingDoc>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                docs.AddRange(_dqQueService.GetOutDocItembyIds(ids));
+            }
+
+            try
+            {
+                byte[] bytes = _exportManager.ExportOutDocumentsToXlsx(docs);
+                identity = ((CustomPrincipal)User).CustomIdentity;
+                _messagingService.SaveUserActivity(identity.ProfileId, "Downloaded Customers With Outstanding Documents Report", DateTime.Now);
+                return File(bytes, MimeTypes.TextXlsx, "outstandingDocs.xlsx");
+            }
+            catch (Exception exc)
+            {
+                ErrorNotification(exc);
+                return RedirectToAction("List");
+            }
+        }
+
+        #endregion
         protected override void Dispose(bool disposing)
         {
             if (disposing)

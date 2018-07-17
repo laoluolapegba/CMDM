@@ -43,39 +43,34 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_TRUSTS_CLIENT_ACCOUNTS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-            CustomerTCAModel model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
+            CustomerTCAModel model = new CustomerTCAModel();
+            model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
                          where c.CUSTOMER_NO == querecord.CUST_ID
                          where c.AUTHORISED == "U"
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             TRUSTS_CLIENT_ACCOUNTS = c.TRUSTS_CLIENT_ACCOUNTS,
-                             NAME_OF_BENEFICIAL_OWNER = c.NAME_OF_BENEFICIAL_OWNER,
-                             SPOUSE_NAME = c.SPOUSE_NAME,
-                             SPOUSE_DATE_OF_BIRTH = c.SPOUSE_DATE_OF_BIRTH,
-                             SPOUSE_OCCUPATION = c.SPOUSE_OCCUPATION,
-                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             CUSTOMER_BUSINESS_ADDRESS = c.CUSTOMER_BUSINESS_ADDRESS,
+                             CUSTOMER_SPOUSE_DOB = c.CUSTOMER_SPOUSE_DOB,
                              OTHER_SOURCE_EXPECT_ANN_INC = c.OTHER_SOURCE_EXPECT_ANN_INC,
-                             NAME_OF_ASSOCIATED_BUSINESS = c.NAME_OF_ASSOCIATED_BUSINESS,
-                             FREQ_INTERNATIONAL_TRAVELER = c.FREQ_INTERNATIONAL_TRAVELER,
-                             INSIDER_RELATION = c.INSIDER_RELATION,
-                             POLITICALLY_EXPOSED_PERSON = c.POLITICALLY_EXPOSED_PERSON,
-                             POWER_OF_ATTORNEY = c.POWER_OF_ATTORNEY,
-                             HOLDER_NAME = c.HOLDER_NAME,
-                             ADDRESS = c.ADDRESS,
-                             COUNTRY = c.COUNTRY,
-                             NATIONALITY = c.NATIONALITY,
-                             TELEPHONE_NUMBER = c.TELEPHONE_NUMBER,
+                             CUSTOMER_BUSINESS_NAME = c.CUSTOMER_BUSINESS_NAME,
+                             CUSTOMER_SPOUSE_NAME = c.CUSTOMER_SPOUSE_NAME,
+                             CUSTOMER_SPOUSE_OCCUPATION = c.CUSTOMER_SPOUSE_OCCUPATION,
+                             CUSTOMER_BUSINESS_TYPE = c.CUSTOMER_BUSINESS_TYPE,
+                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             BRANCH_CODE = c.BRANCH_CODE,
                              LastUpdatedby = c.LAST_MODIFIED_BY,
                              LastUpdatedDate = c.LAST_MODIFIED_DATE,
                              LastAuthdby = c.AUTHORISED_BY,
                              LastAuthDate = c.AUTHORISED_DATE,
                              ExceptionId = querecord.EXCEPTION_ID
                          }).FirstOrDefault();
-            if (model != null)
+
+            var changelog = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_TRUSTS_CLIENT_ACCOUNTS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            if (changelog != null && model != null)
             {
+                string changeId = changelog.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId);
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -87,6 +82,7 @@ namespace CMdm.UI.Web.Controllers
                     }
                 }
             }
+
             model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
@@ -98,9 +94,9 @@ namespace CMdm.UI.Web.Controllers
             {
                 return RedirectToAction("Create");
             }
+
             int records = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Count(o => o.CUSTOMER_NO == id);
             CustomerTCAModel model = new CustomerTCAModel();
-
             if(records > 1)
             {
                 model = (from c in _db.CDMA_TRUSTS_CLIENT_ACCOUNTS
@@ -109,23 +105,15 @@ namespace CMdm.UI.Web.Controllers
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             TRUSTS_CLIENT_ACCOUNTS = c.TRUSTS_CLIENT_ACCOUNTS,
-                             NAME_OF_BENEFICIAL_OWNER = c.NAME_OF_BENEFICIAL_OWNER,
-                             SPOUSE_NAME = c.SPOUSE_NAME,
-                             SPOUSE_DATE_OF_BIRTH = c.SPOUSE_DATE_OF_BIRTH,
-                             SPOUSE_OCCUPATION = c.SPOUSE_OCCUPATION,
-                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             CUSTOMER_BUSINESS_ADDRESS = c.CUSTOMER_BUSINESS_ADDRESS,
+                             CUSTOMER_SPOUSE_DOB = c.CUSTOMER_SPOUSE_DOB,
                              OTHER_SOURCE_EXPECT_ANN_INC = c.OTHER_SOURCE_EXPECT_ANN_INC,
-                             NAME_OF_ASSOCIATED_BUSINESS = c.NAME_OF_ASSOCIATED_BUSINESS,
-                             FREQ_INTERNATIONAL_TRAVELER = c.FREQ_INTERNATIONAL_TRAVELER,
-                             INSIDER_RELATION = c.INSIDER_RELATION,
-                             POLITICALLY_EXPOSED_PERSON = c.POLITICALLY_EXPOSED_PERSON,
-                             POWER_OF_ATTORNEY = c.POWER_OF_ATTORNEY,
-                             HOLDER_NAME = c.HOLDER_NAME,
-                             ADDRESS = c.ADDRESS,
-                             COUNTRY = c.COUNTRY,
-                             NATIONALITY = c.NATIONALITY,
-                             TELEPHONE_NUMBER = c.TELEPHONE_NUMBER
+                             CUSTOMER_BUSINESS_NAME = c.CUSTOMER_BUSINESS_NAME,
+                             CUSTOMER_SPOUSE_NAME = c.CUSTOMER_SPOUSE_NAME,
+                             CUSTOMER_SPOUSE_OCCUPATION = c.CUSTOMER_SPOUSE_OCCUPATION,
+                             CUSTOMER_BUSINESS_TYPE = c.CUSTOMER_BUSINESS_TYPE,
+                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             BRANCH_CODE = c.BRANCH_CODE,
                          }).FirstOrDefault();
             }else if(records == 1)
             {
@@ -135,26 +123,49 @@ namespace CMdm.UI.Web.Controllers
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             TRUSTS_CLIENT_ACCOUNTS = c.TRUSTS_CLIENT_ACCOUNTS,
-                             NAME_OF_BENEFICIAL_OWNER = c.NAME_OF_BENEFICIAL_OWNER,
-                             SPOUSE_NAME = c.SPOUSE_NAME,
-                             SPOUSE_DATE_OF_BIRTH = c.SPOUSE_DATE_OF_BIRTH,
-                             SPOUSE_OCCUPATION = c.SPOUSE_OCCUPATION,
-                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             CUSTOMER_BUSINESS_ADDRESS = c.CUSTOMER_BUSINESS_ADDRESS,
+                             CUSTOMER_SPOUSE_DOB = c.CUSTOMER_SPOUSE_DOB,
                              OTHER_SOURCE_EXPECT_ANN_INC = c.OTHER_SOURCE_EXPECT_ANN_INC,
-                             NAME_OF_ASSOCIATED_BUSINESS = c.NAME_OF_ASSOCIATED_BUSINESS,
-                             FREQ_INTERNATIONAL_TRAVELER = c.FREQ_INTERNATIONAL_TRAVELER,
-                             INSIDER_RELATION = c.INSIDER_RELATION,
-                             POLITICALLY_EXPOSED_PERSON = c.POLITICALLY_EXPOSED_PERSON,
-                             POWER_OF_ATTORNEY = c.POWER_OF_ATTORNEY,
-                             HOLDER_NAME = c.HOLDER_NAME,
-                             ADDRESS = c.ADDRESS,
-                             COUNTRY = c.COUNTRY,
-                             NATIONALITY = c.NATIONALITY,
-                             TELEPHONE_NUMBER = c.TELEPHONE_NUMBER
+                             CUSTOMER_BUSINESS_NAME = c.CUSTOMER_BUSINESS_NAME,
+                             CUSTOMER_SPOUSE_NAME = c.CUSTOMER_SPOUSE_NAME,
+                             CUSTOMER_SPOUSE_OCCUPATION = c.CUSTOMER_SPOUSE_OCCUPATION,
+                             CUSTOMER_BUSINESS_TYPE = c.CUSTOMER_BUSINESS_TYPE,
+                             SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
+                             BRANCH_CODE = c.BRANCH_CODE,
                          }).FirstOrDefault();
             }
+
             PrepareModel(model);
+
+            var tcacustid = "";
+            try
+            {
+                tcacustid = _db.MdmDqRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_TRUSTS_CLIENT_ACCOUNTS" && a.CUST_ID == model.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (tcacustid != "" && model != null)
+            {
+                var exceptionSet = _db.MdmDqRunExceptions.Where(a => a.CUST_ID == tcacustid); //.Select(a=>a.PROPERTYNAME);
+                if (tcacustid != null)
+                {
+                    foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError(item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+
             return View(model);
         }
 
@@ -187,23 +198,17 @@ namespace CMdm.UI.Web.Controllers
                         var entity = db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "U");
                         if (entity != null)
                         {
-                            entity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
-                            entity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
-                            entity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
-                            entity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
-                            entity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
-                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.CUSTOMER_BUSINESS_ADDRESS = tcamodel.CUSTOMER_BUSINESS_ADDRESS;
+                            entity.CUSTOMER_SPOUSE_DOB = tcamodel.CUSTOMER_SPOUSE_DOB;
                             entity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                            entity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
-                            entity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
-                            entity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
-                            entity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
-                            entity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
-                            entity.HOLDER_NAME = tcamodel.HOLDER_NAME;
-                            entity.ADDRESS = tcamodel.ADDRESS;
-                            entity.COUNTRY = tcamodel.COUNTRY;
-                            entity.NATIONALITY = tcamodel.NATIONALITY;
-                            entity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            entity.CUSTOMER_BUSINESS_NAME = tcamodel.CUSTOMER_BUSINESS_NAME;
+                            entity.CUSTOMER_SPOUSE_NAME = tcamodel.CUSTOMER_SPOUSE_NAME;
+                            entity.CUSTOMER_SPOUSE_OCCUPATION = tcamodel.CUSTOMER_SPOUSE_OCCUPATION;
+                            entity.CUSTOMER_BUSINESS_TYPE = tcamodel.CUSTOMER_BUSINESS_TYPE;
+                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.BRANCH_CODE = tcamodel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
+                            
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -220,23 +225,16 @@ namespace CMdm.UI.Web.Controllers
                         originalObject = _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Where(o => o.CUSTOMER_NO == tcamodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
                         if (originalObject != null)
                         {
-                            entity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
-                            entity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
-                            entity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
-                            entity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
-                            entity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
-                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.CUSTOMER_BUSINESS_ADDRESS = tcamodel.CUSTOMER_BUSINESS_ADDRESS;
+                            entity.CUSTOMER_SPOUSE_DOB = tcamodel.CUSTOMER_SPOUSE_DOB;
                             entity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                            entity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
-                            entity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
-                            entity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
-                            entity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
-                            entity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
-                            entity.HOLDER_NAME = tcamodel.HOLDER_NAME;
-                            entity.ADDRESS = tcamodel.ADDRESS;
-                            entity.COUNTRY = tcamodel.COUNTRY;
-                            entity.NATIONALITY = tcamodel.NATIONALITY;
-                            entity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            entity.CUSTOMER_BUSINESS_NAME = tcamodel.CUSTOMER_BUSINESS_NAME;
+                            entity.CUSTOMER_SPOUSE_NAME = tcamodel.CUSTOMER_SPOUSE_NAME;
+                            entity.CUSTOMER_SPOUSE_OCCUPATION = tcamodel.CUSTOMER_SPOUSE_OCCUPATION;
+                            entity.CUSTOMER_BUSINESS_TYPE = tcamodel.CUSTOMER_BUSINESS_TYPE;
+                            entity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            entity.BRANCH_CODE = tcamodel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -249,23 +247,16 @@ namespace CMdm.UI.Web.Controllers
                             // There is no 'U' status row in the table so, Add new record with mnt_status U
                             //entity.AUTHORISED = "U";
                             var newentity = new CDMA_TRUSTS_CLIENT_ACCOUNTS();
-                            newentity.TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS;
-                            newentity.NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER;
-                            newentity.SPOUSE_NAME = tcamodel.SPOUSE_NAME;
-                            newentity.SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH;
-                            newentity.SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION;
-                            newentity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            newentity.CUSTOMER_BUSINESS_ADDRESS = tcamodel.CUSTOMER_BUSINESS_ADDRESS;
+                            newentity.CUSTOMER_SPOUSE_DOB = tcamodel.CUSTOMER_SPOUSE_DOB;
                             newentity.OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                            newentity.NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS;
-                            newentity.FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER;
-                            newentity.INSIDER_RELATION = tcamodel.INSIDER_RELATION;
-                            newentity.POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON;
-                            newentity.POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY;
-                            newentity.HOLDER_NAME = tcamodel.HOLDER_NAME;
-                            newentity.ADDRESS = tcamodel.ADDRESS;
-                            newentity.COUNTRY = tcamodel.COUNTRY;
-                            newentity.NATIONALITY = tcamodel.NATIONALITY;
-                            newentity.TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER;
+                            newentity.CUSTOMER_BUSINESS_NAME = tcamodel.CUSTOMER_BUSINESS_NAME;
+                            newentity.CUSTOMER_SPOUSE_NAME = tcamodel.CUSTOMER_SPOUSE_NAME;
+                            newentity.CUSTOMER_SPOUSE_OCCUPATION = tcamodel.CUSTOMER_SPOUSE_OCCUPATION;
+                            newentity.CUSTOMER_BUSINESS_TYPE = tcamodel.CUSTOMER_BUSINESS_TYPE;
+                            newentity.SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT;
+                            newentity.BRANCH_CODE = tcamodel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             newentity.LAST_MODIFIED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -283,76 +274,13 @@ namespace CMdm.UI.Web.Controllers
                     }
                 }
 
-                SuccessNotification("TCA Updated");
+                SuccessNotification("Trust Clients Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = tcamodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
             }
             PrepareModel(tcamodel);
             return View(tcamodel);
-        }
-        public ActionResult Create()
-        {
-            CustomerTCAModel model = new CustomerTCAModel();
-            PrepareModel(model);
-            return View(model);
-        }
-
-        // POST: CustTca/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CustomerTCAModel tcamodel, bool continueEditing)
-        {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-            if (!User.Identity.IsAuthenticated)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
-            if (ModelState.IsValid)
-            {
-                CDMA_TRUSTS_CLIENT_ACCOUNTS tca = new CDMA_TRUSTS_CLIENT_ACCOUNTS
-                {
-                    CUSTOMER_NO = tcamodel.CUSTOMER_NO,
-                    TRUSTS_CLIENT_ACCOUNTS = tcamodel.TRUSTS_CLIENT_ACCOUNTS,
-                    NAME_OF_BENEFICIAL_OWNER = tcamodel.NAME_OF_BENEFICIAL_OWNER,
-                    SPOUSE_NAME = tcamodel.SPOUSE_NAME,
-                    SPOUSE_DATE_OF_BIRTH = tcamodel.SPOUSE_DATE_OF_BIRTH,
-                    SPOUSE_OCCUPATION = tcamodel.SPOUSE_OCCUPATION,
-                    SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT,
-                    OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC,
-                    NAME_OF_ASSOCIATED_BUSINESS = tcamodel.NAME_OF_ASSOCIATED_BUSINESS,
-                    FREQ_INTERNATIONAL_TRAVELER = tcamodel.FREQ_INTERNATIONAL_TRAVELER,
-                    INSIDER_RELATION = tcamodel.INSIDER_RELATION,
-                    POLITICALLY_EXPOSED_PERSON = tcamodel.POLITICALLY_EXPOSED_PERSON,
-                    POWER_OF_ATTORNEY = tcamodel.POWER_OF_ATTORNEY,
-                    HOLDER_NAME = tcamodel.HOLDER_NAME,
-                    ADDRESS = tcamodel.ADDRESS,
-                    COUNTRY = tcamodel.COUNTRY,
-                    NATIONALITY = tcamodel.NATIONALITY,
-                    TELEPHONE_NUMBER = tcamodel.TELEPHONE_NUMBER,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address
-                };
-                _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Add(tca);
-                _db.SaveChanges();
-
-
-                //_localizationService.GetResource("Admin.Configuration.Stores.Added")
-                SuccessNotification("New TCA has been Added");
-                //do activity log
-                return continueEditing ? RedirectToAction("Edit", new { id = tcamodel.CUSTOMER_NO }) : RedirectToAction("Create");
-                //return RedirectToAction("Index");
-            }
-            PrepareModel(tcamodel);
-            return View(tcamodel);
-        }
+        }        
 
         [NonAction]
         protected virtual void PrepareModel(CustomerTCAModel model)
@@ -417,6 +345,7 @@ namespace CMdm.UI.Web.Controllers
 
             model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
             model.Nationalities = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
         }
 
         [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
@@ -449,25 +378,6 @@ namespace CMdm.UI.Web.Controllers
                     _messageService.LogEmailJob(identity.ProfileId, tcamodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(tcamodel.LastUpdatedby));
                 }
 
-                //using (var db = new AppDbContext())
-                //{
-                //    var entity = db.CDMA_INDIVIDUAL_NEXT_OF_KIN.FirstOrDefault(o => o.CUSTOMER_NO == nokmodel.CUSTOMER_NO);
-                //    if (entity == null)
-                //    {
-                //        string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", nokmodel.CUSTOMER_NO);
-                //        ModelState.AddModelError("", errorMessage);
-                //    }
-                //    else
-                //    {                       
-                //        entity.AUTHORISED = "A";
-                //        db.CDMA_INDIVIDUAL_NEXT_OF_KIN.Attach(entity);
-                //        db.Entry(entity).State = EntityState.Modified;
-                //        db.SaveChanges();
-
-                //    }
-                //}
-
-
                 return RedirectToAction("AuthList", "DQQue");
                 //return RedirectToAction("Index");
             }
@@ -494,7 +404,56 @@ namespace CMdm.UI.Web.Controllers
             PrepareModel(tcamodel);
             return View(tcamodel);
         }
+
         #region scaffolded
+        public ActionResult Create()
+        {
+            CustomerTCAModel model = new CustomerTCAModel();
+            PrepareModel(model);
+            return View(model);
+        }
+
+        // POST: CustTca/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CustomerTCAModel tcamodel, bool continueEditing)
+        {
+            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
+            //    return AccessDeniedView();
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
+            if (ModelState.IsValid)
+            {
+                CDMA_TRUSTS_CLIENT_ACCOUNTS tca = new CDMA_TRUSTS_CLIENT_ACCOUNTS
+                {
+                    CUSTOMER_NO = tcamodel.CUSTOMER_NO,
+                    SOURCES_OF_FUND_TO_ACCOUNT = tcamodel.SOURCES_OF_FUND_TO_ACCOUNT,
+                    OTHER_SOURCE_EXPECT_ANN_INC = tcamodel.OTHER_SOURCE_EXPECT_ANN_INC,
+                    CREATED_BY = identity.ProfileId.ToString(),
+                    CREATED_DATE = DateTime.Now,
+                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
+                    LAST_MODIFIED_DATE = DateTime.Now,
+                    AUTHORISED_BY = null,
+                    AUTHORISED_DATE = null,
+                    IP_ADDRESS = ip_address
+                };
+                _db.CDMA_TRUSTS_CLIENT_ACCOUNTS.Add(tca);
+                _db.SaveChanges();
+
+
+                //_localizationService.GetResource("Admin.Configuration.Stores.Added")
+                SuccessNotification("New TCA has been Added");
+                //do activity log
+                return continueEditing ? RedirectToAction("Edit", new { id = tcamodel.CUSTOMER_NO }) : RedirectToAction("Create");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(tcamodel);
+            return View(tcamodel);
+        }
         // GET: CusClientAcc/Create
         public ActionResult Create_(string id = "")
         {
@@ -528,23 +487,8 @@ namespace CMdm.UI.Web.Controllers
                     CDMA_TRUSTS_CLIENT_ACCOUNTS entity = new CDMA_TRUSTS_CLIENT_ACCOUNTS();
                     //db.CDMA_TRUSTS_CLIENT_ACCOUNTS.FirstOrDefault(o => o.CUSTOMER_NO == clienaccmodel.CUSTOMER_NO);
                     entity.CUSTOMER_NO = clienaccmodel.CUSTOMER_NO;
-                    entity.TRUSTS_CLIENT_ACCOUNTS = clienaccmodel.TRUSTS_CLIENT_ACCOUNTS;
-                    entity.NAME_OF_BENEFICIAL_OWNER = clienaccmodel.NAME_OF_BENEFICIAL_OWNER;
-                    entity.SPOUSE_NAME = clienaccmodel.SPOUSE_NAME;
-                    entity.SPOUSE_DATE_OF_BIRTH = clienaccmodel.SPOUSE_DATE_OF_BIRTH;
-                    entity.SPOUSE_OCCUPATION = clienaccmodel.SPOUSE_OCCUPATION;
                     entity.SOURCES_OF_FUND_TO_ACCOUNT = clienaccmodel.SOURCES_OF_FUND_TO_ACCOUNT;
                     entity.OTHER_SOURCE_EXPECT_ANN_INC = clienaccmodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                    entity.NAME_OF_ASSOCIATED_BUSINESS = clienaccmodel.NAME_OF_ASSOCIATED_BUSINESS;
-                    entity.FREQ_INTERNATIONAL_TRAVELER = clienaccmodel.FREQ_INTERNATIONAL_TRAVELER;
-                    entity.INSIDER_RELATION = clienaccmodel.INSIDER_RELATION;
-                    entity.POLITICALLY_EXPOSED_PERSON = clienaccmodel.POLITICALLY_EXPOSED_PERSON;
-                    entity.POWER_OF_ATTORNEY = clienaccmodel.POWER_OF_ATTORNEY;
-                    entity.HOLDER_NAME = clienaccmodel.HOLDER_NAME;
-                    entity.ADDRESS = clienaccmodel.ADDRESS;
-                    entity.COUNTRY = clienaccmodel.COUNTRY;
-                    entity.NATIONALITY = clienaccmodel.NATIONALITY;
-                    entity.TELEPHONE_NUMBER = clienaccmodel.TELEPHONE_NUMBER;
                     entity.CREATED_BY = identity.ProfileId.ToString();
                     entity.CREATED_DATE = DateTime.Now;
                     entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
@@ -579,23 +523,8 @@ namespace CMdm.UI.Web.Controllers
                          select new CustomerTCAModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
-                             TRUSTS_CLIENT_ACCOUNTS = c.TRUSTS_CLIENT_ACCOUNTS,
-                             NAME_OF_BENEFICIAL_OWNER = c.NAME_OF_BENEFICIAL_OWNER,
-                             SPOUSE_NAME = c.SPOUSE_NAME,
-                             SPOUSE_DATE_OF_BIRTH = c.SPOUSE_DATE_OF_BIRTH,
-                             SPOUSE_OCCUPATION = c.SPOUSE_OCCUPATION,
                              SOURCES_OF_FUND_TO_ACCOUNT = c.SOURCES_OF_FUND_TO_ACCOUNT,
                              OTHER_SOURCE_EXPECT_ANN_INC = c.OTHER_SOURCE_EXPECT_ANN_INC,
-                             NAME_OF_ASSOCIATED_BUSINESS = c.NAME_OF_ASSOCIATED_BUSINESS,
-                             FREQ_INTERNATIONAL_TRAVELER = c.FREQ_INTERNATIONAL_TRAVELER,
-                             INSIDER_RELATION = c.INSIDER_RELATION,
-                             POLITICALLY_EXPOSED_PERSON = c.POLITICALLY_EXPOSED_PERSON,
-                             POWER_OF_ATTORNEY = c.POWER_OF_ATTORNEY,
-                             HOLDER_NAME = c.HOLDER_NAME,
-                             ADDRESS = c.ADDRESS,
-                             COUNTRY = c.COUNTRY,
-                             NATIONALITY = c.NATIONALITY,
-                             TELEPHONE_NUMBER = c.TELEPHONE_NUMBER,
                          }).FirstOrDefault();
 
 
@@ -627,24 +556,8 @@ namespace CMdm.UI.Web.Controllers
                     }
                     else
                     {
-
-                        entity.TRUSTS_CLIENT_ACCOUNTS = clienaccmodel.TRUSTS_CLIENT_ACCOUNTS;
-                        entity.NAME_OF_BENEFICIAL_OWNER = clienaccmodel.NAME_OF_BENEFICIAL_OWNER;
-                        entity.SPOUSE_NAME = clienaccmodel.SPOUSE_NAME;
-                        entity.SPOUSE_DATE_OF_BIRTH = clienaccmodel.SPOUSE_DATE_OF_BIRTH;
-                        entity.SPOUSE_OCCUPATION = clienaccmodel.SPOUSE_OCCUPATION;
                         entity.SOURCES_OF_FUND_TO_ACCOUNT = clienaccmodel.SOURCES_OF_FUND_TO_ACCOUNT;
                         entity.OTHER_SOURCE_EXPECT_ANN_INC = clienaccmodel.OTHER_SOURCE_EXPECT_ANN_INC;
-                        entity.NAME_OF_ASSOCIATED_BUSINESS = clienaccmodel.NAME_OF_ASSOCIATED_BUSINESS;
-                        entity.FREQ_INTERNATIONAL_TRAVELER = clienaccmodel.FREQ_INTERNATIONAL_TRAVELER;
-                        entity.INSIDER_RELATION = clienaccmodel.INSIDER_RELATION;
-                        entity.POLITICALLY_EXPOSED_PERSON = clienaccmodel.POLITICALLY_EXPOSED_PERSON;
-                        entity.POWER_OF_ATTORNEY = clienaccmodel.POWER_OF_ATTORNEY;
-                        entity.HOLDER_NAME = clienaccmodel.HOLDER_NAME;
-                        entity.ADDRESS = clienaccmodel.ADDRESS;
-                        entity.COUNTRY = clienaccmodel.COUNTRY;
-                        entity.NATIONALITY = clienaccmodel.NATIONALITY;
-                        entity.TELEPHONE_NUMBER = clienaccmodel.TELEPHONE_NUMBER;
                         
                         entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                         entity.LAST_MODIFIED_DATE = DateTime.Now;

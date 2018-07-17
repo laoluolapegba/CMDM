@@ -40,6 +40,10 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string BRANCH_CODE { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_NAME { get; set; }
+        [DisplayName("Account Number")]
+        public string ACCOUNT_NO { get; set; }
+        [DisplayName("Scheme Code")]
+        public string SCHM_CODE { get; set; }
 
         public int Id
         {

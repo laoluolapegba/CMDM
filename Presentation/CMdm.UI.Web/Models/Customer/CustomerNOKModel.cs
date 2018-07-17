@@ -19,59 +19,47 @@ namespace CMdm.UI.Web.Models.Customer
             RelationshipTypes = new List<SelectListItem>();
             TitleTypes = new List<SelectListItem>();
             Genders = new List<SelectListItem>();
+            Branches = new List<SelectListItem>();
         }
-        [DisplayName("Customer NO")]
+        [DisplayName("Customer No")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Title")]
         public int? TITLE { get; set; }
         [DisplayName("Surname")]
         public string SURNAME { get; set; }
-        [DisplayName("Firstname")]
+        [DisplayName("First Name")]
         public string FIRST_NAME { get; set; }
-        [DisplayName("Othername")]
+        [DisplayName("Middle Name")]
         public string OTHER_NAME { get; set; }
         [DisplayName("Date of Birth")]
         [UIHint("DateNullable")]
         public DateTime? DATE_OF_BIRTH { get; set; }
         [DisplayName("Gender")]
         public string SEX { get; set; }
-        [DisplayName("Relationship")]
+        [DisplayName("Next of Kin Relationship")]
         public int? RELATIONSHIP { get; set; }
-        [DisplayName("Office No")]
-        public string OFFICE_NO { get; set; }
-        [DisplayName("Mobile No")]
-        public string MOBILE_NO { get; set; }
-        [DisplayName("Email Address")]
+        [DisplayName("Email")]
         public string EMAIL_ADDRESS { get; set; }
-        [DisplayName("House Number")]
-        public string HOUSE_NUMBER { get; set; }
-        [DisplayName("Identification Type")]
-        public decimal? IDENTIFICATION_TYPE { get; set; }
-        [DisplayName("Expiry Date")]
-        [UIHint("DateNullable")]
-        public DateTime? ID_EXPIRY_DATE { get; set; }
-        [DisplayName("Issue Date")]
-        [UIHint("DateNullable")]
-        public DateTime? ID_ISSUE_DATE { get; set; }
-        [DisplayName("Resident Permit Number")]
-
-        public string RESIDENT_PERMIT_NUMBER { get; set; }
-        [DisplayName("Place of Issue")]
-
-        public string PLACE_OF_ISSUANCE { get; set; }
-        [DisplayName("Street name")]
-
-        public string STREET_NAME { get; set; }
-        [DisplayName("Nearest BStop or Landmark")]
-
-        public string NEAREST_BUS_STOP_LANDMARK { get; set; }
-        [DisplayName("City Town")]
+        [DisplayName("Residential Street")]
+        public string NEXT_OF_KIN_RESIDENTIALSTREET { get; set; }
+        [DisplayName("Address No")]
+        public int? NOK_ADDRESS_NO { get; set; }
+        [DisplayName("City")]
         public string CITY_TOWN { get; set; }
-        public decimal? LGA { get; set; }
-        [DisplayName("Zip or Postal Code")]
-        public string ZIP_POSTAL_CODE { get; set; }
-        public decimal? STATE { get; set; }
-        public decimal? COUNTRY { get; set; }
+        [DisplayName("LGA")]
+        public int? LGA { get; set; }
+        [DisplayName("Nearest Bus Stop")]
+        public string NEAREST_BUS_STOP_LANDMARK { get; set; }
+        [DisplayName("State")]
+        public int? STATE { get; set; }
+        [DisplayName("Phone Number")]
+        public string NEXT_OF_KIN_PHONE_NUMBER { get; set; }
+        [DisplayName("Alternate Phone Number")]
+        public string NEXT_OF_KIN_PHONE_NUMBER2 { get; set; }
+        [DisplayName("Branch")]
+        public string BRANCH_CODE { get; set; }
+        public int? QUEUE_STATUS { get; set; }
+
         public List<SelectListItem> States { get;  set; }
         public List<SelectListItem> LocalGovts { get;  set; }
         public List<SelectListItem> IdTypes { get; set; }
@@ -79,6 +67,8 @@ namespace CMdm.UI.Web.Models.Customer
         public List<SelectListItem> RelationshipTypes { get; set; }
         public List<SelectListItem> Countries { get; set; }
         public List<SelectListItem> Genders { get; set; }
+        public List<SelectListItem> Branches { get; set; }
+
         public string ReadOnlyForm { get; set; }
         public string LastUpdatedby { get; set; }
         public DateTime? LastUpdatedDate { get; set; }

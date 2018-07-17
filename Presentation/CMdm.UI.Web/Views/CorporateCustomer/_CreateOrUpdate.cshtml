@@ -1,6 +1,11 @@
 ﻿@model CMdm.UI.Web.Models.Customer.CorpCustModel
 @Html.ValidationSummary(true)
 @Html.HiddenFor(model => model.CompDetailsModel.CUSTOMER_NO)
+@Html.HiddenFor(model => model.CompInfoModel.CUSTOMER_NO)
+@Html.HiddenFor(model => model.GuarantorModel.CUSTOMER_NO)
+@Html.HiddenFor(model => model.CorpADDModel.CUSTOMER_NO)
+@Html.HiddenFor(model => model.BenOwnersModel.ORGKEY)
+
 
 <div class="content">
     <div class="form-horizontal">
@@ -41,74 +46,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.JURISDICTION_OF_INCORP_REG)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.JURISDICTION_OF_INCORP_REG)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.JURISDICTION_OF_INCORP_REG, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.SCUML_NO)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.SCUML_NO)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.SCUML_NO, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.GENDER_CONTROLLING_51_PERC)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.GENDER_CONTROLLING_51_PERC)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.GENDER_CONTROLLING_51_PERC, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.SECTOR_OR_INDUSTRY)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompDetailsModel.SECTOR_OR_INDUSTRY, Model.CompDetailsModel.BusinessSegments)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.SECTOR_OR_INDUSTRY, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
                                     @Html.LabelFor(model => model.CompDetailsModel.OPERATING_BUSINESS_1)
                                 </div>
                                 <div class="col-md-9">
                                     @Html.CMdmEditorFor(model => model.CompDetailsModel.OPERATING_BUSINESS_1)
                                     @Html.ValidationMessageFor(model => model.CompDetailsModel.OPERATING_BUSINESS_1, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.CITY_1)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CompDetailsModel.CITY_1, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.CITY_1, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.COUNTRY_1)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompDetailsModel.COUNTRY_1, Model.CompDetailsModel.Countries)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.COUNTRY_1, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.ZIP_CODE_1)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.ZIP_CODE_1)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.ZIP_CODE_1, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,144 +62,27 @@
                                     @Html.ValidationMessageFor(model => model.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_1, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.OPERATING_BUSINESS_2)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.OPERATING_BUSINESS_2)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.OPERATING_BUSINESS_2, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.CITY_2)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CompDetailsModel.CITY_2, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return validateKeyStrokes(event)" } })
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.CITY_2, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.COUNTRY_2)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompDetailsModel.COUNTRY_2, Model.CompDetailsModel.Countries)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.COUNTRY_2, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.ZIP_CODE_2)
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
+                                        @Html.ValidationMessageFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.ZIP_CODE_2)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.ZIP_CODE_2, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.COMPANY_EMAIL_ADDRESS)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CompDetailsModel.COMPANY_EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.COMPANY_EMAIL_ADDRESS, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.CompDetailsModel.BRANCH_CODE)
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.CMdmDropDownListFor(model => model.CompDetailsModel.BRANCH_CODE, Model.CompDetailsModel.Branches)
+                                        @Html.ValidationMessageFor(model => model.CompDetailsModel.BRANCH_CODE, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.WEBSITE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.WEBSITE)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.WEBSITE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.OFFICE_NUMBER)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.OFFICE_NUMBER)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.OFFICE_NUMBER, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.MOBILE_NUMBER)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.MOBILE_NUMBER)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.MOBILE_NUMBER, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.TIN)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.TIN)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.TIN, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.CRMB_NO_BORROWER_CODE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.CRMB_NO_BORROWER_CODE)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.CRMB_NO_BORROWER_CODE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0"} })
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH, Model.CompDetailsModel.IsStockExchange)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.STOCK_EXCHANGE_NAME)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompDetailsModel.STOCK_EXCHANGE_NAME)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.STOCK_EXCHANGE_NAME, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompDetailsModel.BRANCH_CODE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompDetailsModel.BRANCH_CODE, Model.CompDetailsModel.Branches)
-                                    @Html.ValidationMessageFor(model => model.CompDetailsModel.BRANCH_CODE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row">
@@ -275,39 +100,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompInfoModel.DATE_OF_INCORP_REGISTRATION)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompInfoModel.DATE_OF_INCORP_REGISTRATION)
-                                    @Html.ValidationMessageFor(model => model.CompInfoModel.DATE_OF_INCORP_REGISTRATION, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompInfoModel.CUSTOMER_TYPE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompInfoModel.CUSTOMER_TYPE, Model.CompInfoModel.CustomerTypes)
-                                    @Html.ValidationMessageFor(model => model.CompInfoModel.CUSTOMER_TYPE, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
                                     @Html.LabelFor(model => model.CompInfoModel.REGISTERED_ADDRESS)
                                 </div>
                                 <div class="col-md-9">
                                     @Html.CMdmEditorFor(model => model.CompInfoModel.REGISTERED_ADDRESS)
                                     @Html.ValidationMessageFor(model => model.CompInfoModel.REGISTERED_ADDRESS, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompInfoModel.CATEGORY_OF_BUSINESS)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompInfoModel.CATEGORY_OF_BUSINESS, Model.CompInfoModel.BusinessSegments)
-                                    @Html.ValidationMessageFor(model => model.CompInfoModel.CATEGORY_OF_BUSINESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -333,7 +130,7 @@
                                     @Html.LabelFor(model => model.CompInfoModel.CURRENT_LINE_OF_BUSINESS)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.CompInfoModel.CURRENT_LINE_OF_BUSINESS, Model.CompInfoModel.BusinessSegments)
+                                    @Html.CMdmEditorFor(model => model.CompInfoModel.CURRENT_LINE_OF_BUSINESS)
                                     @Html.ValidationMessageFor(model => model.CompInfoModel.CURRENT_LINE_OF_BUSINESS, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -387,15 +184,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST)
-                                    @Html.ValidationMessageFor(model => model.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
                                     @Html.LabelFor(model => model.CompInfoModel.ANTICIPATED_TRANS_OUTFLOW)
                                 </div>
                                 <div class="col-md-9">
@@ -419,15 +207,6 @@
                                 <div class="col-md-9">
                                     @Html.EditorFor(model => model.CompInfoModel.LENGTH_OF_STAY_INBUS, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                                     @Html.ValidationMessageFor(model => model.CompInfoModel.LENGTH_OF_STAY_INBUS, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CompInfoModel.DATE_OF_COMMENCEMENT)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CompInfoModel.DATE_OF_COMMENCEMENT)
-                                    @Html.ValidationMessageFor(model => model.CompInfoModel.DATE_OF_COMMENCEMENT, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -508,29 +287,83 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <h4 style="color:#dd4b39;margin-left:2%;">GUARANTOR INFORMATION</h4>
+                        <hr />
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CorpADDModel.PARENT_COMPANY_CTRY_INCORP)
+                                    @Html.LabelFor(model => model.GuarantorModel.LNAME_OF_GUARANTOR)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CorpADDModel.PARENT_COMPANY_CTRY_INCORP)
-                                    @Html.ValidationMessageFor(model => model.CorpADDModel.PARENT_COMPANY_CTRY_INCORP, "", new { @class = "text-danger" })
+                                    @Html.CMdmEditorFor(model => model.GuarantorModel.LNAME_OF_GUARANTOR)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.LNAME_OF_GUARANTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.GuarantorModel.FNAME_OF_GUARANTOR)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.GuarantorModel.FNAME_OF_GUARANTOR)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.FNAME_OF_GUARANTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.GuarantorModel.TIN_OF_GUARANTOR)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.GuarantorModel.TIN_OF_GUARANTOR)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.TIN_OF_GUARANTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.GuarantorModel.BVN_OF_GUARANTOR)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.GuarantorModel.BVN_OF_GUARANTOR)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.BVN_OF_GUARANTOR, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.GuarantorModel.GURANTEED_AMOUNT)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.GuarantorModel.GURANTEED_AMOUNT)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.GURANTEED_AMOUNT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.GuarantorModel.BRANCH_CODE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.GuarantorModel.BRANCH_CODE, Model.CorpADDModel.Branches)
+                                    @Html.ValidationMessageFor(model => model.GuarantorModel.BRANCH_CODE, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function () {
-            $('#zip').keyup(function (e) {
-                $('#zip').val().replace(/\-/g, '');
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+                $('#zip').keyup(function (e) {
+                    $('#zip').val().replace(/\-/g, '');
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }

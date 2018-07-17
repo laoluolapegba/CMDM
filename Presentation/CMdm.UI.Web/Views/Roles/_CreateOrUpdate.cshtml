@@ -52,7 +52,7 @@
                             @Html.LabelFor(model => model.CHECKER_ID)
                         </div>
                         <div class="col-md-9">
-                            @Html.CMdmDropDownListFor(model => model.CHECKER_ID, (IEnumerable<SelectListItem>)ViewBag.CHECKERS)
+                            @Html.DropDownListFor(model => model.CHECKER_ID, (IEnumerable<SelectListItem>)ViewBag.CHECKERS, "--None--", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CHECKER_ID)
                         </div>
                     </div>

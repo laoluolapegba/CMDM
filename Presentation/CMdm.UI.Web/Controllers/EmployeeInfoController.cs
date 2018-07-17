@@ -19,6 +19,7 @@ namespace CMdm.UI.Web.Controllers
 {
     public class EmployeeInfoController : BaseController
     {
+        #region Constructors
         private AppDbContext _db = new AppDbContext();
         private IDqQueService _dqQueService;
         private IMessagingService _messageService;
@@ -28,6 +29,7 @@ namespace CMdm.UI.Web.Controllers
             _dqQueService = new DqQueService();
             _messageService = new MessagingService();
         }
+        #endregion
 
         public ActionResult Authorize(string id)
         {
@@ -45,22 +47,28 @@ namespace CMdm.UI.Web.Controllers
             }
             //get all changed columns
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_ADDITIONAL_INFORMATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
-
             model = (from c in _db.CDMA_EMPLOYMENT_DETAILS
                         where c.CUSTOMER_NO == querecord.CUST_ID
                         where c.AUTHORISED == "U"
                         select new EmpInfoModel
                         {
                             CUSTOMER_NO = c.CUSTOMER_NO,
+                            OCCUPATION = c.OCCUPATION,
                             EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
-                            EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
+                            FAX_NO = c.FAX_NO,
                             DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
-                            SECTOR_CLASS = c.SECTOR_CLASS,
-                            SUB_SECTOR = c.SUB_SECTOR,
+                            EMP_ADDRESS_NO = c.EMP_ADDRESS_NO,
+                            EMPLOYMENT_ADD_LGA = c.EMPLOYMENT_ADD_LGA,
+                            EMPLOYMENT_ADDRESS_CITY = c.EMPLOYMENT_ADDRESS_CITY,
+                            EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
                             NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
-                            INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
+                            OFFICE_NO_CUSTOMER = c.OFFICE_NO_CUSTOMER,
+                            EMPLOYER_ADD_STATE = c.EMPLOYER_ADD_STATE,
+                            STREET_NAME = c.STREET_NAME,
+                            ANNUAL_INCOME = c.ANNUAL_INCOME,
+                            BUSTOP_LANDMARK_EMPLOYMENT_ADD = c.BUSTOP_LANDMARK_EMPLOYMENT_ADD,
+                            BRANCH_CODE = c.BRANCH_CODE,
+                            TIER = c.TIER,
                             LastUpdatedby = c.LAST_MODIFIED_BY,
                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
                             LastAuthdby = c.AUTHORISED_BY,
@@ -68,8 +76,12 @@ namespace CMdm.UI.Web.Controllers
                             ExceptionId = querecord.EXCEPTION_ID
                         }).FirstOrDefault();
 
-            if(model != null)
-            {            
+            var changelog = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_EMPLOYMENT_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+            
+            if (changelog != null && model != null)
+            {
+                string changeId = changelog.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId);
                 foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet)
@@ -105,13 +117,22 @@ namespace CMdm.UI.Web.Controllers
                          select new EmpInfoModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
+                             OCCUPATION = c.OCCUPATION,
                              EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
-                             EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
+                             FAX_NO = c.FAX_NO,
                              DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
-                             SECTOR_CLASS = c.SECTOR_CLASS,
-                             SUB_SECTOR = c.SUB_SECTOR,
+                             EMP_ADDRESS_NO = c.EMP_ADDRESS_NO,
+                             EMPLOYMENT_ADD_LGA = c.EMPLOYMENT_ADD_LGA,
+                             EMPLOYMENT_ADDRESS_CITY = c.EMPLOYMENT_ADDRESS_CITY,
+                             EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
                              NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
-                             INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
+                             OFFICE_NO_CUSTOMER = c.OFFICE_NO_CUSTOMER,
+                             EMPLOYER_ADD_STATE = c.EMPLOYER_ADD_STATE,
+                             STREET_NAME = c.STREET_NAME,
+                             ANNUAL_INCOME = c.ANNUAL_INCOME,
+                             BUSTOP_LANDMARK_EMPLOYMENT_ADD = c.BUSTOP_LANDMARK_EMPLOYMENT_ADD,
+                             BRANCH_CODE = c.BRANCH_CODE,
+                             TIER = c.TIER
                          }).FirstOrDefault();
             }
             else if (records == 1)
@@ -123,16 +144,55 @@ namespace CMdm.UI.Web.Controllers
                          select new EmpInfoModel
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
+                             OCCUPATION = c.OCCUPATION,
                              EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
-                             EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
+                             FAX_NO = c.FAX_NO,
                              DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
-                             SECTOR_CLASS = c.SECTOR_CLASS,
-                             SUB_SECTOR = c.SUB_SECTOR,
+                             EMP_ADDRESS_NO = c.EMP_ADDRESS_NO,
+                             EMPLOYMENT_ADD_LGA = c.EMPLOYMENT_ADD_LGA,
+                             EMPLOYMENT_ADDRESS_CITY = c.EMPLOYMENT_ADDRESS_CITY,
+                             EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
                              NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
-                             INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
+                             OFFICE_NO_CUSTOMER = c.OFFICE_NO_CUSTOMER,
+                             EMPLOYER_ADD_STATE = c.EMPLOYER_ADD_STATE,
+                             STREET_NAME = c.STREET_NAME,
+                             ANNUAL_INCOME = c.ANNUAL_INCOME,
+                             BUSTOP_LANDMARK_EMPLOYMENT_ADD = c.BUSTOP_LANDMARK_EMPLOYMENT_ADD,
+                             BRANCH_CODE = c.BRANCH_CODE,
+                             TIER = c.TIER
                          }).FirstOrDefault();
             }
 
+            var idempid = "";
+            try
+            {
+                idempid = _db.MdmDqRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_EMPLOYMENT_DETAILS" && a.CUST_ID == model.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (idempid != "" && model != null)
+            {
+                var exceptionSet = _db.MdmDqRunExceptions.Where(a => a.CUST_ID == idempid); //.Select(a=>a.PROPERTYNAME);
+                if (model != null)
+                {
+                    foreach (var item in model.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError(item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+
+            model.ReadOnlyForm = "True";
             PrepareModel(model);
             return View(model);
         }
@@ -164,16 +224,25 @@ namespace CMdm.UI.Web.Controllers
                         var entity = db.CDMA_EMPLOYMENT_DETAILS.FirstOrDefault(o => o.CUSTOMER_NO == empmodel.CUSTOMER_NO && o.AUTHORISED == "U");
                         if (entity != null)
                         {
+                            entity.OCCUPATION = empmodel.OCCUPATION;
                             entity.EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS;
-                            entity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
+                            entity.FAX_NO = empmodel.FAX_NO;
                             entity.DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT;
-                            entity.SECTOR_CLASS = empmodel.SECTOR_CLASS;
-                            entity.SUB_SECTOR = empmodel.SUB_SECTOR;
+                            entity.EMP_ADDRESS_NO = empmodel.EMP_ADDRESS_NO;
+                            entity.EMPLOYMENT_ADD_LGA = empmodel.EMPLOYMENT_ADD_LGA;
+                            entity.EMPLOYMENT_ADDRESS_CITY = empmodel.EMPLOYMENT_ADDRESS_CITY;
+                            entity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;                                                    
                             entity.NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION;
-                            entity.INDUSTRY_SEGMENT = empmodel.INDUSTRY_SEGMENT;
+                            entity.OFFICE_NO_CUSTOMER = empmodel.OFFICE_NO_CUSTOMER;
+                            entity.EMPLOYER_ADD_STATE = empmodel.EMPLOYER_ADD_STATE;
+                            entity.STREET_NAME = empmodel.STREET_NAME;
+                            entity.ANNUAL_INCOME = empmodel.ANNUAL_INCOME;
+                            entity.BUSTOP_LANDMARK_EMPLOYMENT_ADD = empmodel.BUSTOP_LANDMARK_EMPLOYMENT_ADD;
+                            entity.BRANCH_CODE = empmodel.BRANCH_CODE;
+                            entity.TIER = empmodel.TIER;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
-                            //entity.AUTHORISED = "U";
                             db.CDMA_EMPLOYMENT_DETAILS.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges(identity.ProfileId.ToString(), empmodel.CUSTOMER_NO, updateFlag, originalObject);
@@ -187,18 +256,25 @@ namespace CMdm.UI.Web.Controllers
                         originalObject = _db.CDMA_EMPLOYMENT_DETAILS.Where(o => o.CUSTOMER_NO == empmodel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
                         if (originalObject != null)
                         {
+                            entity.OCCUPATION = empmodel.OCCUPATION;
                             entity.EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS;
-                            entity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
+                            entity.FAX_NO = empmodel.FAX_NO;
                             entity.DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT;
-                            entity.SECTOR_CLASS = empmodel.SECTOR_CLASS;
-                            entity.SUB_SECTOR = empmodel.SUB_SECTOR;
+                            entity.EMP_ADDRESS_NO = empmodel.EMP_ADDRESS_NO;
+                            entity.EMPLOYMENT_ADD_LGA = empmodel.EMPLOYMENT_ADD_LGA;
+                            entity.EMPLOYMENT_ADDRESS_CITY = empmodel.EMPLOYMENT_ADDRESS_CITY;
+                            entity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
                             entity.NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION;
-                            entity.INDUSTRY_SEGMENT = empmodel.INDUSTRY_SEGMENT;
+                            entity.OFFICE_NO_CUSTOMER = empmodel.OFFICE_NO_CUSTOMER;
+                            entity.EMPLOYER_ADD_STATE = empmodel.EMPLOYER_ADD_STATE;
+                            entity.STREET_NAME = empmodel.STREET_NAME;
+                            entity.ANNUAL_INCOME = empmodel.ANNUAL_INCOME;
+                            entity.BUSTOP_LANDMARK_EMPLOYMENT_ADD = empmodel.BUSTOP_LANDMARK_EMPLOYMENT_ADD;
+                            entity.BRANCH_CODE = empmodel.BRANCH_CODE;
+                            entity.TIER = empmodel.TIER;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
-                            //entity.AUTHORISED = "U";
-
-                            //
 
                             db.CDMA_EMPLOYMENT_DETAILS.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
@@ -207,13 +283,23 @@ namespace CMdm.UI.Web.Controllers
 
                             var newentity = new CDMA_EMPLOYMENT_DETAILS();
 
+                            newentity.OCCUPATION = empmodel.OCCUPATION;
                             newentity.EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS;
-                            newentity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
+                            newentity.FAX_NO = empmodel.FAX_NO;
                             newentity.DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT;
-                            newentity.SECTOR_CLASS = empmodel.SECTOR_CLASS;
-                            newentity.SUB_SECTOR = empmodel.SUB_SECTOR;
+                            newentity.EMP_ADDRESS_NO = empmodel.EMP_ADDRESS_NO;
+                            newentity.EMPLOYMENT_ADD_LGA = empmodel.EMPLOYMENT_ADD_LGA;
+                            newentity.EMPLOYMENT_ADDRESS_CITY = empmodel.EMPLOYMENT_ADDRESS_CITY;
+                            newentity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
                             newentity.NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION;
-                            newentity.INDUSTRY_SEGMENT = empmodel.INDUSTRY_SEGMENT;
+                            newentity.OFFICE_NO_CUSTOMER = empmodel.OFFICE_NO_CUSTOMER;
+                            newentity.EMPLOYER_ADD_STATE = empmodel.EMPLOYER_ADD_STATE;
+                            newentity.STREET_NAME = empmodel.STREET_NAME;
+                            newentity.ANNUAL_INCOME = empmodel.ANNUAL_INCOME;
+                            newentity.BUSTOP_LANDMARK_EMPLOYMENT_ADD = empmodel.BUSTOP_LANDMARK_EMPLOYMENT_ADD;
+                            newentity.BRANCH_CODE = empmodel.BRANCH_CODE;
+                            newentity.TIER = empmodel.TIER;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -228,66 +314,12 @@ namespace CMdm.UI.Web.Controllers
                         {
                             string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", empmodel.CUSTOMER_NO);
                             ModelState.AddModelError("", errorMessage);
-
                         }
                     }
                 }
 
-                SuccessNotification("EMP Updated");
+                SuccessNotification("Employee Details Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
-                //return RedirectToAction("Index");
-            }
-            PrepareModel(empmodel);
-            return View(empmodel);
-        }
-        public ActionResult Create()
-        {
-            EmpInfoModel model = new EmpInfoModel();
-            PrepareModel(model);
-            return View(model);
-        }
-
-        // POST: CustForeigner/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(EmpInfoModel empmodel, bool continueEditing)
-        {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-            if (!User.Identity.IsAuthenticated)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
-            if (ModelState.IsValid)
-            {
-                CDMA_EMPLOYMENT_DETAILS emp = new CDMA_EMPLOYMENT_DETAILS
-                {
-                    CUSTOMER_NO = empmodel.CUSTOMER_NO,
-                    EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS,
-                    EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME,
-                    DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT,
-                    SECTOR_CLASS = empmodel.SECTOR_CLASS,
-                    SUB_SECTOR = empmodel.SUB_SECTOR,
-                    NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION,
-                    INDUSTRY_SEGMENT = empmodel.INDUSTRY_SEGMENT,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address,
-                };
-                _db.CDMA_EMPLOYMENT_DETAILS.Add(emp);
-                _db.SaveChanges();
-
-
-                //_localizationService.GetResource("Admin.Configuration.Stores.Added")
-                SuccessNotification("New EMP has been Added");
-                //do activity log
-                return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Create");
                 //return RedirectToAction("Index");
             }
             PrepareModel(empmodel);
@@ -320,11 +352,14 @@ namespace CMdm.UI.Web.Controllers
             });
 
             model.Occupationtype = new SelectList(_db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION").ToList();
-            model.Subsectortype = new SelectList(_db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME").ToList();
+            //model.Subsectortype = new SelectList(_db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME").ToList();
             model.Businessnature = new SelectList(_db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS").ToList();
             model.Indsegment = new SelectList(_db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT").ToList();
+            model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+            model.States = new SelectList(_db.SRC_CDMA_STATE.OrderBy(x => x.STATE_NAME), "STATE_ID", "STATE_NAME").ToList();
+            model.LGAs = new SelectList(_db.SRC_CDMA_LGA.OrderBy(x => x.LGA_NAME), "LGA_ID", "LGA_NAME").ToList();
         }
-
+    
         [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
         [FormValueRequired("approve", "disapprove")]
         [ValidateAntiForgeryToken]
@@ -342,16 +377,15 @@ namespace CMdm.UI.Web.Controllers
                     exceptionId = int.Parse((string)routeValues["id"]);
                 if (disapproveRecord)
                 {
-
                     _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), empmodel.AuthoriserRemarks);
-                    SuccessNotification("NOK Not Authorised");
+                    SuccessNotification("Employee Details Not Authorised");
                     _messageService.LogEmailJob(identity.ProfileId, empmodel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(empmodel.LastUpdatedby));
                 }
 
                 else
                 {
                     _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
-                    SuccessNotification("NOK Authorised");
+                    SuccessNotification("Employee Details Authorised");
                     _messageService.LogEmailJob(identity.ProfileId, empmodel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(empmodel.LastUpdatedby));
                 }
 
@@ -389,7 +423,7 @@ namespace CMdm.UI.Web.Controllers
                     }
                 }
 
-                SuccessNotification("EMP Authorised");
+                SuccessNotification("Employee Details Authorised");
                 return continueEditing ? RedirectToAction("Authorize", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Authorize", "EmployeeInfo");
                 //return RedirectToAction("Index");
             }
@@ -398,12 +432,62 @@ namespace CMdm.UI.Web.Controllers
         }
 
         #region scaffolded
-        // GET: EmployeeInfo
-        public ActionResult Index()
+        public ActionResult Create()
         {
-            var cDMA_EMPLOYMENT_DETAILS = _db.CDMA_EMPLOYMENT_DETAILS.Include(c => c.Businessnature).Include(c => c.Indsegment).Include(c => c.Occupationtype).Include(c => c.Subsectortype);
-            return View(cDMA_EMPLOYMENT_DETAILS.ToList());
+            EmpInfoModel model = new EmpInfoModel();
+            PrepareModel(model);
+            return View(model);
         }
+
+        // POST: CustForeigner/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(EmpInfoModel empmodel, bool continueEditing)
+        {
+            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
+            //    return AccessDeniedView();
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+            var identity = ((CustomPrincipal)User).CustomIdentity;
+            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
+            if (ModelState.IsValid)
+            {
+                CDMA_EMPLOYMENT_DETAILS emp = new CDMA_EMPLOYMENT_DETAILS
+                {
+                    CUSTOMER_NO = empmodel.CUSTOMER_NO,
+                    EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS,
+                    EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME,
+                    DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT,
+                    NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION,
+                    CREATED_BY = identity.ProfileId.ToString(),
+                    CREATED_DATE = DateTime.Now,
+                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
+                    LAST_MODIFIED_DATE = DateTime.Now,
+                    AUTHORISED_BY = null,
+                    AUTHORISED_DATE = null,
+                    IP_ADDRESS = ip_address,
+                };
+                _db.CDMA_EMPLOYMENT_DETAILS.Add(emp);
+                _db.SaveChanges();
+
+
+                //_localizationService.GetResource("Admin.Configuration.Stores.Added")
+                SuccessNotification("New EMP has been Added");
+                //do activity log
+                return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Create");
+                //return RedirectToAction("Index");
+            }
+            PrepareModel(empmodel);
+            return View(empmodel);
+        }
+        // GET: EmployeeInfo
+        //public ActionResult Index()
+        //{
+          //  var cDMA_EMPLOYMENT_DETAILS = _db.CDMA_EMPLOYMENT_DETAILS.Include(c => c.Businessnature).Include(c => c.Indsegment).Include(c => c.Occupationtype).Include(c => c.Subsectortype);
+            //return View(cDMA_EMPLOYMENT_DETAILS.ToList());
+        //}
 
         // GET: EmployeeInfo/Details/5
         public ActionResult Details(string id)
@@ -450,10 +534,8 @@ namespace CMdm.UI.Web.Controllers
                 return RedirectToAction("Index", "DQQue");
             }
 
-            ViewBag.SECTOR_CLASS = new SelectList(_db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", cDMA_EMPLOYMENT_DETAILS.SECTOR_CLASS);
-            ViewBag.SUB_SECTOR = new SelectList(_db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", cDMA_EMPLOYMENT_DETAILS.SUB_SECTOR);
+
             ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(_db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", cDMA_EMPLOYMENT_DETAILS.NATURE_OF_BUSINESS_OCCUPATION);
-            ViewBag.INDUSTRY_SEGMENT = new SelectList(_db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", cDMA_EMPLOYMENT_DETAILS.INDUSTRY_SEGMENT);
             RedirectToAction("Index", "DQQue");
             return View(cDMA_EMPLOYMENT_DETAILS);
         }
@@ -483,12 +565,9 @@ namespace CMdm.UI.Web.Controllers
                          {
                              CUSTOMER_NO = c.CUSTOMER_NO,
                              NATURE_OF_BUSINESS_OCCUPATION = c.NATURE_OF_BUSINESS_OCCUPATION,
-                             SECTOR_CLASS = c.SECTOR_CLASS,
-                             SUB_SECTOR = c.SUB_SECTOR,
                              DATE_OF_EMPLOYMENT = c.DATE_OF_EMPLOYMENT,
                              EMPLOYER_INSTITUTION_NAME = c.EMPLOYER_INSTITUTION_NAME,
                              EMPLOYMENT_STATUS = c.EMPLOYMENT_STATUS,
-                             INDUSTRY_SEGMENT = c.INDUSTRY_SEGMENT,
                          }).FirstOrDefault();
 
             if (model == null)
@@ -498,10 +577,7 @@ namespace CMdm.UI.Web.Controllers
          //   PrepareModel(model);
          //   return View(model);
 
-            ViewBag.SECTOR_CLASS = new SelectList(_db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", model.SECTOR_CLASS);
-            ViewBag.SUB_SECTOR = new SelectList(_db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", model.SUB_SECTOR);
             ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(_db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", model.NATURE_OF_BUSINESS_OCCUPATION);
-            ViewBag.INDUSTRY_SEGMENT = new SelectList(_db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", model.INDUSTRY_SEGMENT);
             return View(model);
         }
 
@@ -533,11 +609,8 @@ namespace CMdm.UI.Web.Controllers
                         entity.CREATED_DATE = empmodel.CREATED_DATE;
                         entity.DATE_OF_EMPLOYMENT = empmodel.DATE_OF_EMPLOYMENT;
                         entity.EMPLOYER_INSTITUTION_NAME = empmodel.EMPLOYER_INSTITUTION_NAME;
-                        entity.EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS;
-                        entity.INDUSTRY_SEGMENT = empmodel.INDUSTRY_SEGMENT;                        
+                        entity.EMPLOYMENT_STATUS = empmodel.EMPLOYMENT_STATUS;                       
                         entity.NATURE_OF_BUSINESS_OCCUPATION = empmodel.NATURE_OF_BUSINESS_OCCUPATION;
-                        entity.SECTOR_CLASS = empmodel.SECTOR_CLASS;
-                        entity.SUB_SECTOR = empmodel.SUB_SECTOR;
                         entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                         entity.LAST_MODIFIED_DATE = DateTime.Now;
                         entity.AUTHORISED = "U";
@@ -552,10 +625,8 @@ namespace CMdm.UI.Web.Controllers
 
                 }
 
-                ViewBag.SECTOR_CLASS = new SelectList(_db.CDMA_OCCUPATION_LIST, "OCCUPATION_CODE", "OCCUPATION", empmodel.SECTOR_CLASS);
-                ViewBag.SUB_SECTOR = new SelectList(_db.CDMA_INDUSTRY_SUBSECTOR, "SUBSECTOR_CODE", "SUBSECTOR_NAME", empmodel.SUB_SECTOR);
+                
                 ViewBag.NATURE_OF_BUSINESS_OCCUPATION = new SelectList(_db.CDMA_NATURE_OF_BUSINESS, "BUSINESS_CODE", "BUSINESS", empmodel.NATURE_OF_BUSINESS_OCCUPATION);
-                ViewBag.INDUSTRY_SEGMENT = new SelectList(_db.CDMA_INDUSTRY_SEGMENT, "SEGMENT_CODE", "SEGMENT", empmodel.INDUSTRY_SEGMENT);
                 //  PrepareModel(empmodel);
                 SuccessNotification("EMPd Updated");
                 return continueEditing ? RedirectToAction("Edit", new { id = empmodel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");

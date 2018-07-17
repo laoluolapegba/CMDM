@@ -148,6 +148,7 @@ namespace CMdm.UI.Web.Controllers
 
             //default value
             model.ISLOCKED = false;
+            model.COD_PASSWORD = "password";
             return View(model);
         }
 
@@ -161,7 +162,8 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
-            decimal isActive = Convert.ToDecimal(x.ISACTIVE);
+            //decimal isActive = Convert.ToDecimal(x.ISACTIVE);
+            bool isActive = x.ISACTIVE;
             if (ModelState.IsValid)
             {
                 string salt = string.Empty;
@@ -178,7 +180,7 @@ namespace CMdm.UI.Web.Controllers
                     ISAPPROVED = true,
                     PASSWORDSALT = salt,
                     LASTLOGINDATE = DateTime.Now,
-                    ISLOCKED = x.ISLOCKED,
+                    ISLOCKED = isActive,
                     ROLE_ID = x.ROLE_ID,
                     DISPLAY_NAME = x.FIRSTNAME + " " + x.LASTNAME,
                     
@@ -304,7 +306,7 @@ namespace CMdm.UI.Web.Controllers
                         entity.FIRSTNAME = mdmUser.FIRSTNAME;
                         entity.LASTNAME = mdmUser.LASTNAME;
                         //Still defaulting
-                        entity.ISLOCKED = mdmUser.ISACTIVE; // Convert.ToDecimal(!mdmUser.ISACTIVE);
+                        entity.ISLOCKED = !mdmUser.ISACTIVE; // Convert.ToDecimal(!mdmUser.ISACTIVE);
                         //entity.USER_ID = mdmUser.USER_ID;
 
                         if (mdmUser.UserTypes.ToString().Equals("Branch User"))
@@ -369,9 +371,9 @@ namespace CMdm.UI.Web.Controllers
                             _user = database.CM_USER_PROFILE.Where(p => p.USER_ID == user.USER_ID).FirstOrDefault();
                             if (_user != null)
                             {
-                                if (_user.ISLOCKED )
+                                if (_user.ISLOCKED == false)
                                 {
-                                    ModelState.AddModelError(string.Empty, "USER is locked!");
+                                    ModelState.AddModelError(string.Empty, "USER already exists!");
                                 }
                                 else
                                 {
@@ -483,7 +485,7 @@ namespace CMdm.UI.Web.Controllers
             [HttpGet]
             public PartialViewResult filterReset()
             {
-                return PartialView("_ListUserTable", database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false).ToList()); // || r.ISLOCKED == null
+                return PartialView("_ListUserTable", database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false).ToList());  //|| r.ISLOCKED == null
         }
 
             [HttpGet]
@@ -514,8 +516,8 @@ namespace CMdm.UI.Web.Controllers
                 {
                     if (string.IsNullOrEmpty(_surname))
                     {
-                        _ret = database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false).ToList();  // || r.ISLOCKED == null
-                }
+                        _ret = database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false).ToList();
+                    }
                     else
                     {
                         _ret = database.CM_USER_PROFILE.Where(p => p.LASTNAME == _surname).ToList();
@@ -697,7 +699,7 @@ namespace CMdm.UI.Web.Controllers
                 //       .FirstOrDefault();
 
                 // USERS combo
-                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED ==false), "PROFILE_ID", "USER_ID");  //== 0 || r.ISLOCKED == null
+                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false), "PROFILE_ID", "USER_ID"); //|| r.ISLOCKED == null
             ViewBag.RoleId = id;
 
                 // Rights combo
@@ -812,7 +814,7 @@ namespace CMdm.UI.Web.Controllers
                 //.FirstOrDefault();
 
                 // USERS combo
-                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED ==false), "USER_ID", "USER_ID"); //== 0 || r.ISLOCKED == null
+                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false), "USER_ID", "USER_ID");// 0 || r.ISLOCKED == null
             ViewBag.RoleId = id;
 
                 // Rights combo
@@ -840,7 +842,7 @@ namespace CMdm.UI.Web.Controllers
                     return RedirectToAction("RoleDetails", new RouteValueDictionary(new { id = _role.ROLE_ID }));
                 }
                 // USERS combo
-                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false), "USER_ID", "USER_ID");  //|| r.ISLOCKED == null
+                ViewBag.UserId = new SelectList(database.CM_USER_PROFILE.Where(r => r.ISLOCKED == false), "USER_ID", "USER_ID");  //r => r.ISLOCKED == 0 || r.ISLOCKED == null
 
             // Rights combo
             ViewBag.PermissionId = new SelectList(database.CM_PERMISSIONS.OrderBy(a => a.PERMISSION_ID), "PERMISSION_ID", "PERMISSIONDESCRIPTION");

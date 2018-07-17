@@ -14,85 +14,87 @@
             CountryofBirth = new List<SelectListItem>();
             Nationalities = new List<SelectListItem>();
             Religions = new List<SelectListItem>();
-            Branchs = new List<SelectListItem>();
+            Branches = new List<SelectListItem>();
             State = new List<SelectListItem>();
             IndDisAbility = new List<SelectListItem>();
             TitleTypes = new List<SelectListItem>();
             Gender = new List<SelectListItem>();
             CusComplexion = new List<SelectListItem>();
             MaritalStatus = new List<SelectListItem>();
+            LGAs = new List<SelectListItem>();
         }
         [DisplayName("Customer NO")]
         public string CUSTOMER_NO { get; set; }
         [DisplayName("Title")]
         public string TITLE { get; set; }
-        [DisplayName("Surname")]
+        [DisplayName("Last Name")]
         public string SURNAME { get; set; }
         [DisplayName("First Name")]
         public string FIRST_NAME { get; set; }
-        [DisplayName("Other Name")]
+        [DisplayName("Middle Name")]
         public string OTHER_NAME { get; set; }
-        [DisplayName("Nickname")]
-        public string NICKNAME_ALIAS { get; set; }
-        // public string LAST_MODIFIED_BY { get; set; }
         [DisplayName("Date of Birth")]
         [UIHint("DateNullable")]
         public DateTime? DATE_OF_BIRTH { get; set; }
-        [DisplayName("Place of Birth")]
-        public string PLACE_OF_BIRTH { get; set; }
-        [DisplayName("Country of Birth")]
-        public string COUNTRY_OF_BIRTH { get; set; }
-        [DisplayName("Sex")]
+        [DisplayName("Gender")]
         public string SEX { get; set; }
-        [DisplayName("Age")]
-        public int? AGE { get; set; }
         [DisplayName("Marital Status")]
         public string MARITAL_STATUS { get; set; }
+        [DisplayName("LGA of Origin")]
+        public string LGAOFORIGIN { get; set; }
+        [DisplayName("Mother's Maiden Name")]
+        public string MOTHER_MAIDEN_NAME { get; set; }
+        [DisplayName("Country of Birth")]
+        public string COUNTRY_OF_BIRTH { get; set; }
+        [DisplayName("Residence Country")]
+        public string RESIDENCE_COUNTRY { get; set; }
         [DisplayName("Nationality")]
         public string NATIONALITY { get; set; }
-        [DisplayName("State of Origin")]
-        public string STATE_OF_ORIGIN { get; set; }
-        [DisplayName("Mother Maiden Name")]
-        public string MOTHER_MAIDEN_NAME { get; set; }
-        [DisplayName("Disability")]
-        [Required(AllowEmptyStrings = true)]
-        public string DISABILITY { get; set; }
-        [DisplayName("Complexion")]
-        public string COMPLEXION { get; set; }
-        [DisplayName("No of Children")]
-        public int? NUMBER_OF_CHILDREN { get; set; }
         [DisplayName("Religion")]
         public string RELIGION { get; set; }
+        [DisplayName("State of Origin")]
+        public string STATE_OF_ORIGIN { get; set; }
+        [DisplayName("Tin")]
+        public string TIN { get; set; }
+        [DisplayName("BVN")]
+        public string BVN { get; set; }
+        [DisplayName("Residence Permit Issue Date")]
+        [UIHint("DateNullable")]
+        public DateTime? RESIDENCEPERMIT_ISSDATE { get; set; }
+        [DisplayName("Residence Permit Expiry Date")]
+        [UIHint("DateNullable")]
+        public DateTime? RESIDENCEPERMIT_EXPDATE { get; set; }
+        [DisplayName("Purpose of Account")]
+        public string PURPOSEOFACCOUNT { get; set; }
+        [DisplayName("Residence Permit Number")]
+        public string RESIDENCEPERMITNO { get; set; }
+        [DisplayName("Second Nationality")]
+        public string SECONDNATIONALITY { get; set; }
+        [DisplayName("Branch")]
+        public string BRANCH_CODE { get; set; }
+        public int? TIER { get; set; }
 
-
-        ////[DataType(DataType.Date)]
-        ////[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        ////public Nullable<System.DateTime> CREATED_DATE { get; set; }
-        ////public string CREATED_BY { get; set; }
-
-        ////[DataType(DataType.Date)]
-        ////[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        ////public Nullable<System.DateTime> LAST_MODIFIED_DATE { get; set; }
-        ////public string AUTHORISED { get; set; }
-        ////public string AUTHORISED_BY { get; set; }
-
-        ////[DataType(DataType.Date)]
-        ////[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        ////public Nullable<System.DateTime> AUTHORISED_DATE { get; set; }
-        ////public string IP_ADDRESS { get; set; }
-        //[DisplayName("Branch")]
-        //public string BRANCH_CODE { get; set; }
+        public DateTime? CREATED_DATE { get; set; }
+        public string CREATED_BY { get; set; }
+        public DateTime? LAST_MODIFIED_DATE { get; set; }
+        public string LAST_MODIFIED_BY { get; set; }
+        public string AUTHORISED { get; set; }
+        public string AUTHORISED_BY { get; set; }
+        public DateTime? AUTHORISED_DATE { get; set; }
+        public string IP_ADDRESS { get; set; }
+        public int? QUEUE_STATUS { get; set; }
 
         public List<SelectListItem> CountryofBirth { get; set; }
         public List<SelectListItem> Nationalities { get; set; }
         public List<SelectListItem> Religions { get; set; }
-        public List<SelectListItem> Branchs { get; set; }
+        public List<SelectListItem> Branches { get; set; }
         public List<SelectListItem> State { get; set; }
         public List<SelectListItem> IndDisAbility { get; set; }
         public List<SelectListItem> TitleTypes { get; set; }
         public List<SelectListItem> Gender { get; set; }
         public List<SelectListItem> CusComplexion { get; set; }
         public List<SelectListItem> MaritalStatus { get; set; }
+        public List<SelectListItem> LGAs { get; set; }
 
         public string ReadOnlyForm { get; set; }
         public string LastUpdatedby { get; set; }

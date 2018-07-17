@@ -73,6 +73,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
+                                        @Html.Label("Account Number")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmEditorFor(model => model.ACCOUNT_NO)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
                                         @Html.Label("Branch Name")
                                     </div>
                                     <div class="col-md-8">
@@ -87,6 +95,9 @@
                                         @Html.CMdmEditorFor(model => model.EMAIL)
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("Phone Number")
@@ -95,8 +106,6 @@
                                         @Html.CMdmEditorFor(model => model.PREFERREDPHONE)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.Label("First Name")
@@ -125,7 +134,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -199,7 +208,16 @@
                                             title: "Customer ID",
                                             width: 100
                                         },
-
+                                        {
+                                            field: "ACCOUNT_NO",
+                                            title: "Account Number",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "SCHM_CODE",
+                                            title: "Scheme Code",
+                                            width: 50
+                                        },
                                         {
                                             field: "CUST_FIRST_NAME",
                                             title: "First Name",
@@ -277,7 +295,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.ORGKEY)").keydown(function (event) {
+                    $("#ORGKEY, #ACCOUNT_NO, #BRANCH_CODE, #EMAIL, #PREFERREDPHONE, #CUST_FIRST_NAME, #CUST_MIDDLE_NAME, #CUST_LAST_NAME").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -337,6 +355,7 @@
                         BRANCH_CODE: $('#BRANCH_CODE').val(),
                         EMAIL: $('#EMAIL').val(),
                         PREFERREDPHONE: $('#PREFERREDPHONE').val(),
+                        ACCOUNT_NO: $('#ACCOUNT_NO').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;

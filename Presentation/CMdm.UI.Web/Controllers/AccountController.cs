@@ -93,7 +93,7 @@ namespace CMdm.UI.Web.Controllers
             }
 
             // This doesn't count login failures towards account lockout
-            if (Membership.ValidateUser(model.UserName, model.Password))
+            if (Membership.ValidateUser(model.UserName, model.Password+model.Token))
             {
                 //using (var context = new AppDbContext())
                 //{
@@ -120,7 +120,6 @@ namespace CMdm.UI.Web.Controllers
                 if (this.Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                     && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                 {
-
                     return this.Redirect(returnUrl);
                 }
 
@@ -128,7 +127,8 @@ namespace CMdm.UI.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Incorrect username and/or password");
+                ModelState.AddModelError("", Session["Response"].ToString());
+                Session.Remove("Response");
             }
             return this.View();
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);

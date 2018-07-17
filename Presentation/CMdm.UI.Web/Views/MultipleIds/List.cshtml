@@ -112,7 +112,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -264,7 +264,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.FULL_NAME)").keydown(function (event) {
+                    $("#GOLDEN_RECORD, #ACCOUNT_NO, #FULL_NAME, #BVN, #CUSTOMER_NO, #EMAIL, #SOL_ID").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;

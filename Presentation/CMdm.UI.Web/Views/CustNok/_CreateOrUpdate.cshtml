@@ -16,7 +16,6 @@
                                     </div>
                                     <div class="col-md-9">
                                         @Html.CMdmDisplayFor(model => model.CUSTOMER_NO)
-
                                     </div>
                                 </div>
                             </div>
@@ -85,22 +84,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.OFFICE_NO)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.OFFICE_NO)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.MOBILE_NO)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.MOBILE_NO)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
                                     @Html.LabelFor(model => model.EMAIL_ADDRESS)
                                 </div>
                                 <div class="col-md-9">
@@ -109,102 +92,28 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.HOUSE_NUMBER)
+                                    @Html.LabelFor(model => model.NEXT_OF_KIN_RESIDENTIALSTREET)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.HOUSE_NUMBER)
+                                    @Html.CMdmEditorFor(model => model.NEXT_OF_KIN_RESIDENTIALSTREET)
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.Label("Identification Type")
+                                    @Html.LabelFor(model => model.NOK_ADDRESS_NO)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.IDENTIFICATION_TYPE, Model.IdTypes)
-                                    @Html.ValidationMessageFor(model => model.IdTypes)
+                                    @Html.CMdmEditorFor(model => model.NOK_ADDRESS_NO)
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ID_ISSUE_DATE)
+                                    @Html.LabelFor(model => model.CITY_TOWN)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.ID_ISSUE_DATE)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ID_EXPIRY_DATE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.ID_EXPIRY_DATE)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.RESIDENT_PERMIT_NUMBER)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.RESIDENT_PERMIT_NUMBER)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.PLACE_OF_ISSUANCE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.PLACE_OF_ISSUANCE)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.STREET_NAME)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.STREET_NAME)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.NEAREST_BUS_STOP_LANDMARK)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.NEAREST_BUS_STOP_LANDMARK)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ZIP_POSTAL_CODE)
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.ZIP_POSTAL_CODE)
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.Label("Country")
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.COUNTRY, Model.Countries)
-                                    @Html.ValidationMessageFor(model => model.COUNTRY)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.Label("State")
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.CMdmDropDownListFor(model => model.STATE, Model.States)
-                                    @Html.ValidationMessageFor(model => model.STATE)
+                                    @Html.CMdmEditorFor(model => model.CITY_TOWN)
                                 </div>
                             </div>
                             <div class="form-group">
@@ -218,11 +127,46 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    @Html.LabelFor(model => model.CITY_TOWN)
+                                    @Html.LabelFor(model => model.NEAREST_BUS_STOP_LANDMARK)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.CMdmEditorFor(model => model.CITY_TOWN)
+                                    @Html.CMdmEditorFor(model => model.NEAREST_BUS_STOP_LANDMARK)
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.Label("State")
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.STATE, Model.States)
+                                    @Html.ValidationMessageFor(model => model.STATE)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NEXT_OF_KIN_PHONE_NUMBER)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.NEXT_OF_KIN_PHONE_NUMBER)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.NEXT_OF_KIN_PHONE_NUMBER2)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmEditorFor(model => model.NEXT_OF_KIN_PHONE_NUMBER2)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.BRANCH_CODE)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.CMdmDropDownListFor(model => model.BRANCH_CODE, Model.Branches)
                                 </div>
                             </div>
                         </div>

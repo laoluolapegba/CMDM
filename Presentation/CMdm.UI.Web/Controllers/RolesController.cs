@@ -23,6 +23,7 @@ namespace CMdm.UI.Web.Controllers
         {
             ViewBag.PARENT_ID = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
             ViewBag.CHECKERS = new SelectList(db.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME");
+            
             return View(db.CM_USER_ROLES.ToList());
         }
 

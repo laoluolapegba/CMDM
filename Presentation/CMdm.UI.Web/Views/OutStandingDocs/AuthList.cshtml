@@ -13,42 +13,45 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="content-header clearfix">
-        @*<h1 class="pull-left">
+<div class="content-header clearfix">
+    @*<h1 class="pull-left">
             Outstanding Records
         </h1>*@
-        <div class="pull-right">
-            
-           
-            <div class="btn-group">
-                <button type="button" class="btn bg-purple">
-                    <i class="fa fa-download"></i>
-                    Export
-                </button>
-                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">&nbsp;</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                   
-                    <li class="divider"></li>
-                    <li>
-                        <button type="submit" name="exportexcel-all">
-                            <i class="fa fa-file-excel-o"></i>
-                           ExportToExcel All
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" id="exportexcel-selected">
-                            <i class="fa fa-file-excel-o"></i>
-                            ExportToExcel Selected
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            
+    <h1 class="pull-left">
+        <small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("To List", "List")</small>
+    </h1>
+    <div class="pull-right">
+
+
+        <div class="btn-group">
+            <button type="button" class="btn bg-purple">
+                <i class="fa fa-download"></i>
+                Export
+            </button>
+            <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">&nbsp;</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+
+                <li class="divider"></li>
+                @*<li>
+                    <button type="submit" name="exportexcel-all">
+                        <i class="fa fa-file-excel-o"></i>
+                        ExportToExcel All
+                    </button>
+                </li>*@
+                <li>
+                    <button type="button" id="exportexcel-selected">
+                        <i class="fa fa-file-excel-o"></i>
+                        ExportToExcel Selected
+                    </button>
+                </li>
+            </ul>
         </div>
+
     </div>
+</div>
 
     <div class="content">
         <div class="form-horizontal">
@@ -80,7 +83,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -100,7 +103,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("List", "OutStandingDocs"))",
+                                                url: "@Html.Raw(Url.Action("AuthList", "OutStandingDocs"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -142,6 +145,13 @@
                                             width: 50
                                         },
                                         {
+                                            field: "CIF_ID",
+                                            title: "Customer Id",
+                                            width: 100,
+                                            headerAttributes: { style: "text-align:left" },
+                                            attributes: { style: "text-align:left" },
+                                        },
+                                        {
                                        field: "SOL_ID",
                                        title: "Record Id",
                                        width: 70,
@@ -159,22 +169,15 @@
                                        attributes: { style: "text-align:left" },
                                    },
                                     {
-                                        field: "ACID",
-                                        title: "Account Id",
+                                        field: "FORACID",
+                                        title: "Account Number",
                                         width: 100
                                     },
                                     {
                                         field: "FREZ_REASON_CODE",
                                         title: "Reason",
                                         width: 100
-                                    },
-                                    {
-                                        field: "FORACID",
-                                        title: "Customer Id",
-                                        width: 100,
-                                        headerAttributes: { style: "text-align:left" },
-                                        attributes: { style: "text-align:left" },
-                                    },
+                                    },                                    
 
                                     {
                                         field: "ACCT_NAME",
@@ -183,7 +186,7 @@
                                     },
                                     {
                                         field: "SCHM_CODE",
-                                        title: "Product Code",
+                                        title: "Scheme Code",
                                         width: 100,
                                     },
                                     {
@@ -194,6 +197,11 @@
                                     {
                                         field: "SCHM_TYPE",
                                         title: "Type",
+                                        width: 70
+                                    },
+                                    {
+                                        field: "CUSTOMERTYPE",
+                                        title: "Customer Type",
                                         width: 70
                                     },
                                     {
@@ -228,7 +236,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.SearchName), #BRANCH_CODE").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -312,7 +320,7 @@
 
 
 @*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportExcelSelected", "OutStandingDocs", FormMethod.Post, new { id = "export-excel-selected-form" }))
+@using (Html.BeginForm("ExportOutExcelSelected", "OutStandingDocs", FormMethod.Post, new { id = "export-excel-selected-form" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="selectedIds" name="selectedIds" value="" />

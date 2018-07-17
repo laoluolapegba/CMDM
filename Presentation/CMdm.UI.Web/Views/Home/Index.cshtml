@@ -220,7 +220,7 @@
                             }
                         }
                     </div>
-                    <a href="@Url.Action("Index", "DQQue")" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="@Url.Action("List", "DQQue", new { id = "1"})" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
                             if (brnkpi == allKpi.Last())
                             {
                                 <div class="col-xs-6 col-md-6 text-center">
-                                    <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
+                                    <input type="text" class="knob" readonly value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
                                            data-width="100"
                                            data-height="100" data-fgColor="#a94442">
                                     <div class="knob-label"><b>Total Contributions</b></div>
@@ -259,7 +259,7 @@
                             {
                                 <div class="col-xs-6 col-md-6 text-center">
                                     @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                                    <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
+                                    <input type="text" class="knob" readonly value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
                                            data-width="100"
                                            data-height="100" data-fgColor="#605ca8">
                                     <div class="knob-label"><b>Tier @pos</b></div>
@@ -403,7 +403,6 @@
     @Scripts.Render("~/Scripts/Home/DashboardV1")
     @Scripts.Render("~/AdminLTE/plugins/justgage-1.2.2")
     <script>
-        
         var g = new JustGage({
             id: "gauge1",
             value: @allKpi[0].BRN_DQI + "%",
@@ -412,9 +411,8 @@
             levelColors: ["#f0ad4e"],
             title: "Tier 1"
         });
-
+        
         //Find a way to not hard code this guy
-        @*
         var g1 = new JustGage({
             id: "gauge2",
             value: @allKpi[1].BRN_DQI,
@@ -442,7 +440,7 @@
             title: "Total DQI"
         });
         
-        
+        @*
         var address = "/CMDM/Home";
         var address = "/Home";
 

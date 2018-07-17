@@ -6,13 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title - Bluechip MDM</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @* Redirect browser to session expiration page on timeout *@
+    @{
+        var authenticationSettings = System.Configuration.ConfigurationManager.GetSection("system.web/authentication") as System.Web.Configuration.AuthenticationSection;
+    }
     @if (IsSectionDefined("Styles"))
     {@RenderSection("Styles", required: false)}
     @Styles.Render("~/AdminLTE/plugins/font-awesome/css")
     @Styles.Render("~/AdminLTE/plugins/ionicons/css")
     @Styles.Render("~/AdminLTE/bootstrap/css")
     @Styles.Render("~/AdminLTE/dist/css")
-    @Styles.Render("~/AdminLTE/dist/css/skins")    
+    @Styles.Render("~/AdminLTE/dist/css/skins")
     @Scripts.Render("~/AdminLTE/plugins/jquery/js")
     @Scripts.Render("~/Scripts/admin.common.js")
     @RenderSection("menu", required: false)
@@ -23,6 +27,7 @@
     @Scripts.Render("~/Scripts/common.js")
     @Styles.Render("~/Themes/DefaultClean/Content/css/nopcss.css")
     <style>
+
         .main-header .logo i {
             width: 50px;
             height: 50px;
@@ -31,17 +36,17 @@
             /*animation: fa-spin 5s infinite linear reverse;*/
         }
     </style>
-   @* @{
-        var browser = Request.Browser;
-        if (browser.Browser == "IE" && browser.MajorVersion == 8)
-        {
-            Styles.Render("~/Themes/DefaultClean/Content/css/ie8.css");
-        }
+    @* @{
+            var browser = Request.Browser;
+            if (browser.Browser == "IE" && browser.MajorVersion == 8)
+            {
+                Styles.Render("~/Themes/DefaultClean/Content/css/ie8.css");
+            }
 
 
-    }*@
-    
-  
+        }*@
+
+
     <link href="@Url.Content("~/Content/kendo/2017.3.1026/kendo.default.min.css")" rel="stylesheet" type="text/css" />
     @*<script src="@Url.Content("~/Scripts/kendo/2017.3.1026/jszip.min.js")"></script>*@
 </head>
@@ -55,8 +60,7 @@
                     <b>CMDM</b>
                 </span>
             </a>
-            @Html.Partial("_TopBarPartial")            
-
+            @Html.Partial("_TopBarPartial")
         </header>
         <aside class="main-sidebar">
             <section class="sidebar">
@@ -69,7 +73,7 @@
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <form action="#" method="get" class="sidebar-form">
+                @*<form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
@@ -78,7 +82,7 @@
                             </button>
                         </span>
                     </div>
-                </form>
+                </form>*@
                 @Html.Partial("_Menu")
             </section>
         </aside>
@@ -104,18 +108,35 @@
             <strong>Copyrights | Bluechip Technologies Ltd &copy; 2017 <a href="http://www.bluechiptech.biz">Bluechip Technologies Ltd</a>.</strong> All rights
             reserved.
         </footer>
-        
+
         <div class="control-sidebar-bg"></div>
     </div>
+    @* @Scripts.Render("~/AdminLTE/plugins/jquery/js")
 
-   @* @Scripts.Render("~/AdminLTE/plugins/jquery/js")
-
-    @Scripts.Render("~/AdminLTE/bootstrap/js")*@
-
+        @Scripts.Render("~/AdminLTE/bootstrap/js")*@
     @Scripts.Render("~/AdminLTE/plugins/slimscroll/js")
     @Scripts.Render("~/AdminLTE/plugins/fastclick/js")
     @Scripts.Render("~/Scripts/Shared/_Layout")
     @Scripts.Render("~/AdminLTE/dist/js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function ilSessionTimeout() {
+                window.location = '@Url.Action("Login", "Account", new { area = "" })';
+            };
+            function ilSessionTimeoutWarning() {
+                $.jGrowl('You will be logged off soon due to inactivity.', { sticky: true, theme: 'growl-warning', header: 'Attention' });
+            };
+            // remember our timers so we can cancel when we unload this page and reset them on the next page load
+            var g_pageTimer = window.setTimeout(ilSessionTimeout, @authenticationSettings.Forms.Timeout.TotalMilliseconds);
+            var g_pageTimerWarning = window.setTimeout(ilSessionTimeoutWarning, Math.round(@authenticationSettings.Forms.Timeout.TotalMilliseconds*0.8));
+            // clean up anything that needs cleaning before we leave this page
+            window.onbeforeunload = function(e) {
+                // clear the timers
+                window.clearTimeout(g_pageTimer);
+                window.clearTimeout(g_pageTimerWarning);
+            };
+        });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

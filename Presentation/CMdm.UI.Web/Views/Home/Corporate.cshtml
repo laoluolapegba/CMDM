@@ -112,7 +112,7 @@
                         </div>
                 }
                     </div>
-                    <a href="@Url.Action("Index", "DQQue")" class="btn btn-warning pull-right" style="bottom: 0">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="@Url.Action("List", "DQQue", new { id = "2"})" class="btn btn-warning pull-right" style="bottom: 0">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
                     {
                         <div class="col-xs-12 col-md-12 text-center">
                             @{int increment = 1; int pos = (int)allKpi.IndexOf(brnkpi) + increment; }
-                            <input type="text" class="knob" value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
+                            <input type="text" class="knob" readonly value="@Html.DisplayFor(modelItem => brnkpi.BRN_PCT_CONTRIB)"
                                    data-width="100"
                                    data-height="100" data-fgColor="#605ca8">
                             <div class="knob-label"><b>Bankwide Contribution</b></div>

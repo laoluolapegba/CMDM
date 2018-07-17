@@ -39,7 +39,7 @@ namespace CMdm.UI.Web.Controllers
 
             //var model = new AccInfoCtxModel();
 
-            var querecord = _dqQueService.GetQueDetailItembyId(Convert.ToInt32(id));
+            var querecord = _dqQueService.GetCorpDetailItembyId(Convert.ToInt32(id));
             if (querecord == null)
             {
                 return RedirectToAction("AuthList", "DQQue");
@@ -48,67 +48,55 @@ namespace CMdm.UI.Web.Controllers
 
             CorpCustModel model = new CorpCustModel();
 
-            var changeId = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_COMPANY_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId); //.Select(a=>a.PROPERTYNAME);
+            #region CompDetails
+            CompDetailsModel compDetails = new CompDetailsModel();
+            compDetails = (from c in _db.CDMA_COMPANY_DETAILS
+                           where c.CUSTOMER_NO == querecord.CUST_ID
+                           where c.AUTHORISED == "U"
+                           select new CompDetailsModel
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               CERT_OF_INCORP_REG_NO = c.CERT_OF_INCORP_REG_NO,
+                               OPERATING_BUSINESS_1 = c.OPERATING_BUSINESS_1,
+                               BIZ_ADDRESS_REG_OFFICE_1 = c.BIZ_ADDRESS_REG_OFFICE_1,
+                               EXPECTED_ANNUAL_TURNOVER = c.EXPECTED_ANNUAL_TURNOVER,
+                               BRANCH_CODE = c.BRANCH_CODE,
+                               LastUpdatedby = c.LAST_MODIFIED_BY,
+                               LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                               LastAuthdby = c.AUTHORISED_BY,
+                               LastAuthDate = c.AUTHORISED_DATE,
+                               ExceptionId = querecord.EXCEPTION_ID
+                           }).FirstOrDefault();
 
-            var changeId2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_COMPANY_INFORMATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2); //.Select(a=>a.PROPERTYNAME);
+            var changelog = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_COMPANY_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
 
-            var changeId3 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_BENEFICIALOWNERS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet3 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3); //.Select(a=>a.PROPERTYNAME);
+            if (changelog != null && compDetails != null)
+            {
+                string changeId = changelog.CHANGEID;
+                var changedSet = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId);
+                foreach (var item in compDetails.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError("CompDetailsModel." + item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
 
-            var changeId4 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_CORP_ADDITIONAL_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault().CHANGEID;
-            var changedSet4 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId4); //.Select(a=>a.PROPERTYNAME);
-
-            CompDetailsModel compDetails = (from c in _db.CDMA_COMPANY_DETAILS
-                                        where c.CUSTOMER_NO == id
-                                        where c.AUTHORISED == "U"
-                                        select new CompDetailsModel
-                                        {
-                                            CUSTOMER_NO = c.CUSTOMER_NO,
-                                            CERT_OF_INCORP_REG_NO = c.CERT_OF_INCORP_REG_NO,
-                                            JURISDICTION_OF_INCORP_REG = c.JURISDICTION_OF_INCORP_REG,
-                                            SCUML_NO = c.SCUML_NO,
-                                            GENDER_CONTROLLING_51_PERC = c.GENDER_CONTROLLING_51_PERC,
-                                            SECTOR_OR_INDUSTRY = c.SECTOR_OR_INDUSTRY,
-                                            OPERATING_BUSINESS_1 = c.OPERATING_BUSINESS_1,
-                                            CITY_1 = c.CITY_1,
-                                            COUNTRY_1 = c.COUNTRY_1,
-                                            ZIP_CODE_1 = c.ZIP_CODE_1,
-                                            BIZ_ADDRESS_REG_OFFICE_1 = c.BIZ_ADDRESS_REG_OFFICE_1,
-                                            OPERATING_BUSINESS_2 = c.OPERATING_BUSINESS_2,
-                                            CITY_2 = c.CITY_2,
-                                            COUNTRY_2 = c.COUNTRY_2,
-                                            ZIP_CODE_2 = c.ZIP_CODE_2,
-                                            BIZ_ADDRESS_REG_OFFICE_2 = c.BIZ_ADDRESS_REG_OFFICE_2,
-                                            COMPANY_EMAIL_ADDRESS = c.COMPANY_EMAIL_ADDRESS,
-                                            WEBSITE = c.WEBSITE,
-                                            OFFICE_NUMBER = c.OFFICE_NUMBER,
-                                            MOBILE_NUMBER = c.MOBILE_NUMBER,
-                                            TIN = c.TIN,
-                                            CRMB_NO_BORROWER_CODE = c.CRMB_NO_BORROWER_CODE,
-                                            EXPECTED_ANNUAL_TURNOVER = c.EXPECTED_ANNUAL_TURNOVER,
-                                            IS_COMPANY_ON_STOCK_EXCH = c.IS_COMPANY_ON_STOCK_EXCH,
-                                            STOCK_EXCHANGE_NAME = c.STOCK_EXCHANGE_NAME,
-                                            BRANCH_CODE = c.BRANCH_CODE,
-                                            LastUpdatedby = c.LAST_MODIFIED_BY,
-                                            LastUpdatedDate = c.LAST_MODIFIED_DATE,
-                                            LastAuthdby = c.AUTHORISED_BY,
-                                            LastAuthDate = c.AUTHORISED_DATE,
-                                            ExceptionId = querecord.EXCEPTION_ID
-                                        }).FirstOrDefault();
-
-            CompInfoModel compInfo = (from c in _db.CDMA_COMPANY_INFORMATION
-                                               where c.CUSTOMER_NO == id
-                                               where c.AUTHORISED == "U"
+                }
+            }
+            #endregion
+            #region CompInfo
+            CompInfoModel compInfo = new CompInfoModel();
+            compInfo = (from c in _db.CDMA_COMPANY_INFORMATION
+                                               where c.CUSTOMER_NO == querecord.CUST_ID
+                                                where c.AUTHORISED == "U"
                                                select new CompInfoModel
                                                {
                                                    CUSTOMER_NO = c.CUSTOMER_NO,
                                                    COMPANY_NAME = c.COMPANY_NAME,
-                                                   DATE_OF_INCORP_REGISTRATION = c.DATE_OF_INCORP_REGISTRATION,
-                                                   CUSTOMER_TYPE = c.CUSTOMER_TYPE,
                                                    REGISTERED_ADDRESS = c.REGISTERED_ADDRESS,
-                                                   CATEGORY_OF_BUSINESS = c.CATEGORY_OF_BUSINESS,
                                                    BRANCH_CODE = c.BRANCH_CODE,
                                                    EOC_RISK = c.EOC_RISK,
                                                    CURRENT_LINE_OF_BUSINESS = c.CURRENT_LINE_OF_BUSINESS,
@@ -117,11 +105,9 @@ namespace CMdm.UI.Web.Controllers
                                                    BRF_INVESTIGATION_MEDIA_REPORT = c.BRF_INVESTIGATION_MEDIA_REPORT,
                                                    INVESTIGATION_MEDIA_REPORT = c.INVESTIGATION_MEDIA_REPORT,
                                                    ADD_VERIFICATION_STATUS = c.ADD_VERIFICATION_STATUS,
-                                                   COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
                                                    ANTICIPATED_TRANS_OUTFLOW = c.ANTICIPATED_TRANS_OUTFLOW,
                                                    ANTICIPATED_TRANS_INFLOW = c.ANTICIPATED_TRANS_INFLOW,
                                                    LENGTH_OF_STAY_INBUS = c.LENGTH_OF_STAY_INBUS,
-                                                   DATE_OF_COMMENCEMENT = c.DATE_OF_COMMENCEMENT,
                                                    SOURCE_OF_ASSET = c.SOURCE_OF_ASSET,
                                                    HISTORY_OF_CUSTOMER = c.HISTORY_OF_CUSTOMER,
                                                    LastUpdatedby = c.LAST_MODIFIED_BY,
@@ -131,8 +117,29 @@ namespace CMdm.UI.Web.Controllers
                                                    ExceptionId = querecord.EXCEPTION_ID
                                                }).FirstOrDefault();
 
-            BenOwnersModel benOwners = (from c in _db.CDMA_BENEFICIALOWNERS
-                                      where c.ORGKEY == id
+            var changelog2 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_COMPANY_INFORMATION" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+
+            if (changelog2 != null && compInfo != null)
+            {
+                string changeId2 = changelog2.CHANGEID;
+                var changedSet2 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId2);
+                foreach (var item in compInfo.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet2)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError("CompInfoModel." + item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+
+                }
+            }
+            #endregion
+            #region BenOwners
+            BenOwnersModel benOwners = new BenOwnersModel();
+            benOwners = (from c in _db.CDMA_BENEFICIALOWNERS
+                                      where c.ORGKEY == querecord.CUST_ID
                                       where c.AUTHORISED == "U"
                                       select new BenOwnersModel
                                       {
@@ -146,94 +153,111 @@ namespace CMdm.UI.Web.Controllers
                                           LastAuthDate = c.AUTHORISED_DATE,
                                           ExceptionId = querecord.EXCEPTION_ID
                                       }).FirstOrDefault();
+            var changelog3 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_BENEFICIALOWNERS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
 
-            CorpADDModel corpADD = (from c in _db.CDMA_CORP_ADDITIONAL_DETAILS
-                                        where c.CUSTOMER_NO == id
-                                        where c.AUTHORISED == "U"
+            if (changelog3 != null && benOwners != null)
+            {
+                string changeId3 = changelog3.CHANGEID;
+                var changedSet3 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId3);
+                foreach (var item in benOwners.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet3)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError("BenOwnersModel." + item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+
+                }
+            }
+            #endregion
+            #region CorpAdd
+            CorpADDModel corpADD = new CorpADDModel();
+            corpADD = (from c in _db.CDMA_CORP_ADDITIONAL_DETAILS
+                                        where c.CUSTOMER_NO == querecord.CUST_ID
+                              where c.AUTHORISED == "U"
                                         select new CorpADDModel
                                         {
                                             CUSTOMER_NO = c.CUSTOMER_NO,
                                             BRANCH_CODE = c.BRANCH_CODE,
                                             COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
-                                            PARENT_COMPANY_CTRY_INCORP = c.PARENT_COMPANY_CTRY_INCORP,
                                             LastUpdatedby = c.LAST_MODIFIED_BY,
                                             LastUpdatedDate = c.LAST_MODIFIED_DATE,
                                             LastAuthdby = c.AUTHORISED_BY,
                                             LastAuthDate = c.AUTHORISED_DATE,
                                             ExceptionId = querecord.EXCEPTION_ID
                                         }).FirstOrDefault();
+            var changelog4 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_CORP_ADDITIONAL_DETAILS" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
 
-            model.CompDetailsModel = compDetails;
-            model.CompInfoModel = compInfo;
-            model.BenOwnersModel = benOwners;
-            model.CorpADDModel = corpADD;
-
-            if (model.CompDetailsModel != null)
+            if (changelog4 != null && corpADD != null)
             {
-                foreach (var item in model.CompDetailsModel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
-                {
-                    foreach (var item2 in changedSet)
-                    {
-                        if (item2.PROPERTYNAME == item.Name)
-                        {
-                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
-                        }
-                    }
-                }
-            }
-
-            if (model.CompInfoModel != null)
-            {
-                foreach (var item in model.CompInfoModel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
-                {
-                    foreach (var item2 in changedSet2)
-                    {
-                        if (item2.PROPERTYNAME == item.Name)
-                        {
-                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
-                        }
-                    }
-                }
-            }
-
-            if (model.BenOwnersModel != null)
-            {
-                foreach (var item in model.BenOwnersModel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
-                {
-                    foreach (var item2 in changedSet3)
-                    {
-                        if (item2.PROPERTYNAME == item.Name)
-                        {
-                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
-                        }
-                    }
-                }
-            }
-
-            if (model.CorpADDModel != null)
-            {
-                foreach (var item in model.CorpADDModel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                string changeId4 = changelog4.CHANGEID;
+                var changedSet4 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId4);
+                foreach (var item in corpADD.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
                 {
                     foreach (var item2 in changedSet4)
                     {
                         if (item2.PROPERTYNAME == item.Name)
                         {
-                            ModelState.AddModelError(item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                            ModelState.AddModelError("CorpADDModel." + item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
                         }
                     }
+
                 }
             }
+            #endregion
+            #region Guarantor
+            GuarantorModel guarantor = new GuarantorModel();
+            guarantor = (from c in _db.CDMA_GUARANTOR
+                                   where c.CUSTOMER_NO == querecord.CUST_ID
+                                 where c.AUTHORISED == "U"
+                                   select new GuarantorModel
+                                   {
+                                       CUSTOMER_NO = c.CUSTOMER_NO,
+                                       LNAME_OF_GUARANTOR = c.LNAME_OF_GUARANTOR,
+                                       FNAME_OF_GUARANTOR = c.FNAME_OF_GUARANTOR,
+                                       TIN_OF_GUARANTOR = c.TIN_OF_GUARANTOR,
+                                       BVN_OF_GUARANTOR = c.BVN_OF_GUARANTOR,
+                                       GURANTEED_AMOUNT = c.GURANTEED_AMOUNT,
+                                       BRANCH_CODE = c.BRANCH_CODE,
+                                       LastUpdatedby = c.LAST_MODIFIED_BY,
+                                       LastUpdatedDate = c.LAST_MODIFIED_DATE,
+                                       LastAuthdby = c.AUTHORISED_BY,
+                                       LastAuthDate = c.AUTHORISED_DATE,
+                                       ExceptionId = querecord.EXCEPTION_ID
+                                   }).FirstOrDefault();
+            var changelog5 = _db.CDMA_CHANGE_LOGS.Where(a => a.ENTITYNAME == "CDMA_GUARANTOR" && a.PRIMARYKEYVALUE == querecord.CUST_ID).OrderByDescending(a => a.DATECHANGED).FirstOrDefault();
+
+            if (changelog5 != null && guarantor != null)
+            {
+                string changeId5 = changelog5.CHANGEID;
+                var changedSet5 = _db.CDMA_CHANGE_LOGS.Where(a => a.CHANGEID == changeId5);
+                foreach (var item in guarantor.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                {
+                    foreach (var item2 in changedSet5)
+                    {
+                        if (item2.PROPERTYNAME == item.Name)
+                        {
+                            ModelState.AddModelError("GuarantorModel." + item.Name, string.Format("Field has been modified, value was {0}", item2.OLDVALUE));
+                        }
+                    }
+
+                }
+            }
+            #endregion
+
+            model.CompDetailsModel = compDetails;
+            model.CompInfoModel = compInfo;
+            model.BenOwnersModel = benOwners;
+            model.CorpADDModel = corpADD;
+            model.GuarantorModel = guarantor;
 
             model.CompDetailsModel.ReadOnlyForm = "True";
-            model.CompInfoModel.ReadOnlyForm = "True";
-            model.BenOwnersModel.ReadOnlyForm = "True";
-            model.CorpADDModel.ReadOnlyForm = "True";
-
             PrepareCompDetailsModel(model.CompDetailsModel);
             PrepareCompInfoModel(model.CompInfoModel);
             PrepareBenOwnersModel(model.BenOwnersModel);
             PrepareCorpAddModel(model.CorpADDModel);
-            //PrepareModel(model);
             return View(model);
         }
 
@@ -241,19 +265,13 @@ namespace CMdm.UI.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return RedirectToAction("Create");
-            }
-            int records = _db.CDMA_COMPANY_DETAILS.Count(o => o.CUSTOMER_NO == id);
-            int records2 = _db.CDMA_COMPANY_INFORMATION.Count(o => o.CUSTOMER_NO == id);
-            int records3 = _db.CDMA_BENEFICIALOWNERS.Count(o => o.ORGKEY == id);
-            int records4 = _db.CDMA_CORP_ADDITIONAL_DETAILS.Count(o => o.CUSTOMER_NO == id);
-
+                return RedirectToAction("Index", "DQQue");
+            }            
             CorpCustModel model = new CorpCustModel();
-            CompDetailsModel compDetails = new CompDetailsModel();
-            CompInfoModel compInfo = new CompInfoModel();
-            BenOwnersModel benOwners = new BenOwnersModel();
-            CorpADDModel corpADD = new CorpADDModel();
 
+            #region CompanyDetails
+            int records = _db.CDMA_COMPANY_DETAILS.Count(o => o.CUSTOMER_NO == id);
+            CompDetailsModel compDetails = new CompDetailsModel();
             if (records > 1)
             {
                 compDetails = (from c in _db.CDMA_COMPANY_DETAILS
@@ -263,29 +281,9 @@ namespace CMdm.UI.Web.Controllers
                                {
                                    CUSTOMER_NO = c.CUSTOMER_NO,
                                    CERT_OF_INCORP_REG_NO = c.CERT_OF_INCORP_REG_NO,
-                                   JURISDICTION_OF_INCORP_REG = c.JURISDICTION_OF_INCORP_REG,
-                                   SCUML_NO = c.SCUML_NO,
-                                   GENDER_CONTROLLING_51_PERC = c.GENDER_CONTROLLING_51_PERC,
-                                   SECTOR_OR_INDUSTRY = c.SECTOR_OR_INDUSTRY,
                                    OPERATING_BUSINESS_1 = c.OPERATING_BUSINESS_1,
-                                   CITY_1 = c.CITY_1,
-                                   COUNTRY_1 = c.COUNTRY_1,
-                                   ZIP_CODE_1 = c.ZIP_CODE_1,
                                    BIZ_ADDRESS_REG_OFFICE_1 = c.BIZ_ADDRESS_REG_OFFICE_1,
-                                   OPERATING_BUSINESS_2 = c.OPERATING_BUSINESS_2,
-                                   CITY_2 = c.CITY_2,
-                                   COUNTRY_2 = c.COUNTRY_2,
-                                   ZIP_CODE_2 = c.ZIP_CODE_2,
-                                   BIZ_ADDRESS_REG_OFFICE_2 = c.BIZ_ADDRESS_REG_OFFICE_2,
-                                   COMPANY_EMAIL_ADDRESS = c.COMPANY_EMAIL_ADDRESS,
-                                   WEBSITE = c.WEBSITE,
-                                   OFFICE_NUMBER = c.OFFICE_NUMBER,
-                                   MOBILE_NUMBER = c.MOBILE_NUMBER,
-                                   TIN = c.TIN,
-                                   CRMB_NO_BORROWER_CODE = c.CRMB_NO_BORROWER_CODE,
                                    EXPECTED_ANNUAL_TURNOVER = c.EXPECTED_ANNUAL_TURNOVER,
-                                   IS_COMPANY_ON_STOCK_EXCH = c.IS_COMPANY_ON_STOCK_EXCH,
-                                   STOCK_EXCHANGE_NAME = c.STOCK_EXCHANGE_NAME,
                                    BRANCH_CODE = c.BRANCH_CODE,
                                }).FirstOrDefault();
             }
@@ -298,32 +296,47 @@ namespace CMdm.UI.Web.Controllers
                                {
                                    CUSTOMER_NO = c.CUSTOMER_NO,
                                    CERT_OF_INCORP_REG_NO = c.CERT_OF_INCORP_REG_NO,
-                                   JURISDICTION_OF_INCORP_REG = c.JURISDICTION_OF_INCORP_REG,
-                                   SCUML_NO = c.SCUML_NO,
-                                   GENDER_CONTROLLING_51_PERC = c.GENDER_CONTROLLING_51_PERC,
-                                   SECTOR_OR_INDUSTRY = c.SECTOR_OR_INDUSTRY,
                                    OPERATING_BUSINESS_1 = c.OPERATING_BUSINESS_1,
-                                   CITY_1 = c.CITY_1,
-                                   COUNTRY_1 = c.COUNTRY_1,
-                                   ZIP_CODE_1 = c.ZIP_CODE_1,
                                    BIZ_ADDRESS_REG_OFFICE_1 = c.BIZ_ADDRESS_REG_OFFICE_1,
-                                   OPERATING_BUSINESS_2 = c.OPERATING_BUSINESS_2,
-                                   CITY_2 = c.CITY_2,
-                                   COUNTRY_2 = c.COUNTRY_2,
-                                   ZIP_CODE_2 = c.ZIP_CODE_2,
-                                   BIZ_ADDRESS_REG_OFFICE_2 = c.BIZ_ADDRESS_REG_OFFICE_2,
-                                   COMPANY_EMAIL_ADDRESS = c.COMPANY_EMAIL_ADDRESS,
-                                   WEBSITE = c.WEBSITE,
-                                   OFFICE_NUMBER = c.OFFICE_NUMBER,
-                                   MOBILE_NUMBER = c.MOBILE_NUMBER,
-                                   TIN = c.TIN,
-                                   CRMB_NO_BORROWER_CODE = c.CRMB_NO_BORROWER_CODE,
                                    EXPECTED_ANNUAL_TURNOVER = c.EXPECTED_ANNUAL_TURNOVER,
-                                   IS_COMPANY_ON_STOCK_EXCH = c.IS_COMPANY_ON_STOCK_EXCH,
-                                   STOCK_EXCHANGE_NAME = c.STOCK_EXCHANGE_NAME,
                                    BRANCH_CODE = c.BRANCH_CODE,
                                }).FirstOrDefault();
             }
+            PrepareCompDetailsModel(compDetails);
+            #endregion
+            #region Get CompanyDetails Exception Columns
+            var compdetailscustid = "";
+            try
+            {
+                compdetailscustid = _db.MdmCorpRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_COMPANY_DETAILS" && a.CUST_ID == compDetails.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (compdetailscustid != "" && compDetails != null)
+            {
+                var exceptionSet = _db.MdmCorpRunExceptions.Where(a => a.CUST_ID == compdetailscustid); //.Select(a=>a.PROPERTYNAME);
+                if (compDetails != null)
+                {
+                    foreach (var item in compDetails.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError("CompDetailsModel." + item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+            #endregion
+            #region CompanyInfo
+            int records2 = _db.CDMA_COMPANY_INFORMATION.Count(o => o.CUSTOMER_NO == id);
+            CompInfoModel compInfo = new CompInfoModel();
             if (records2 > 1)
             {
                 compInfo = (from c in _db.CDMA_COMPANY_INFORMATION
@@ -333,10 +346,7 @@ namespace CMdm.UI.Web.Controllers
                                   {
                                       CUSTOMER_NO = c.CUSTOMER_NO,
                                       COMPANY_NAME = c.COMPANY_NAME,
-                                      DATE_OF_INCORP_REGISTRATION = c.DATE_OF_INCORP_REGISTRATION,
-                                      CUSTOMER_TYPE = c.CUSTOMER_TYPE,
                                       REGISTERED_ADDRESS = c.REGISTERED_ADDRESS,
-                                      CATEGORY_OF_BUSINESS = c.CATEGORY_OF_BUSINESS,
                                       BRANCH_CODE = c.BRANCH_CODE,
                                       EOC_RISK = c.EOC_RISK,
                                       CURRENT_LINE_OF_BUSINESS = c.CURRENT_LINE_OF_BUSINESS,
@@ -345,11 +355,9 @@ namespace CMdm.UI.Web.Controllers
                                       BRF_INVESTIGATION_MEDIA_REPORT = c.BRF_INVESTIGATION_MEDIA_REPORT,
                                       INVESTIGATION_MEDIA_REPORT = c.INVESTIGATION_MEDIA_REPORT,
                                       ADD_VERIFICATION_STATUS = c.ADD_VERIFICATION_STATUS,
-                                      COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
                                       ANTICIPATED_TRANS_OUTFLOW = c.ANTICIPATED_TRANS_OUTFLOW,
                                       ANTICIPATED_TRANS_INFLOW = c.ANTICIPATED_TRANS_INFLOW,
                                       LENGTH_OF_STAY_INBUS = c.LENGTH_OF_STAY_INBUS,
-                                      DATE_OF_COMMENCEMENT = c.DATE_OF_COMMENCEMENT,
                                       SOURCE_OF_ASSET = c.SOURCE_OF_ASSET,
                                       HISTORY_OF_CUSTOMER = c.HISTORY_OF_CUSTOMER,
                                   }).FirstOrDefault();
@@ -363,10 +371,7 @@ namespace CMdm.UI.Web.Controllers
                                   {
                                       CUSTOMER_NO = c.CUSTOMER_NO,
                                       COMPANY_NAME = c.COMPANY_NAME,
-                                      DATE_OF_INCORP_REGISTRATION = c.DATE_OF_INCORP_REGISTRATION,
-                                      CUSTOMER_TYPE = c.CUSTOMER_TYPE,
                                       REGISTERED_ADDRESS = c.REGISTERED_ADDRESS,
-                                      CATEGORY_OF_BUSINESS = c.CATEGORY_OF_BUSINESS,
                                       BRANCH_CODE = c.BRANCH_CODE,
                                       EOC_RISK = c.EOC_RISK,
                                       CURRENT_LINE_OF_BUSINESS = c.CURRENT_LINE_OF_BUSINESS,
@@ -375,15 +380,48 @@ namespace CMdm.UI.Web.Controllers
                                       BRF_INVESTIGATION_MEDIA_REPORT = c.BRF_INVESTIGATION_MEDIA_REPORT,
                                       INVESTIGATION_MEDIA_REPORT = c.INVESTIGATION_MEDIA_REPORT,
                                       ADD_VERIFICATION_STATUS = c.ADD_VERIFICATION_STATUS,
-                                      COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
                                       ANTICIPATED_TRANS_OUTFLOW = c.ANTICIPATED_TRANS_OUTFLOW,
                                       ANTICIPATED_TRANS_INFLOW = c.ANTICIPATED_TRANS_INFLOW,
                                       LENGTH_OF_STAY_INBUS = c.LENGTH_OF_STAY_INBUS,
-                                      DATE_OF_COMMENCEMENT = c.DATE_OF_COMMENCEMENT,
                                       SOURCE_OF_ASSET = c.SOURCE_OF_ASSET,
                                       HISTORY_OF_CUSTOMER = c.HISTORY_OF_CUSTOMER,
                                   }).FirstOrDefault();
             }
+            PrepareCompInfoModel(compInfo);
+            #endregion
+            #region Get CompanyInfo Exception Columns
+            var compinfocustid = "";
+            try
+            {
+                compinfocustid = _db.MdmCorpRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_COMPANY_INFORMATION" && a.CUST_ID == compInfo.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (compinfocustid != "" && compInfo != null)
+            {
+                var exceptionSet = _db.MdmCorpRunExceptions.Where(a => a.CUST_ID == compinfocustid); //.Select(a=>a.PROPERTYNAME);
+                if (compInfo != null)
+                {
+                    foreach (var item in compInfo.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError("CompInfoModel." + item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+            #endregion
+            #region BenOwners
+            int records3 = _db.CDMA_BENEFICIALOWNERS.Count(o => o.ORGKEY == id);
+            BenOwnersModel benOwners = new BenOwnersModel();
             if (records3 > 1)
             {
                 benOwners = (from c in _db.CDMA_BENEFICIALOWNERS
@@ -410,6 +448,41 @@ namespace CMdm.UI.Web.Controllers
                                 PRIMARY_SOL_ID = c.PRIMARY_SOL_ID,
                             }).FirstOrDefault();
             }
+            PrepareBenOwnersModel(benOwners);
+            #endregion
+            #region Get Ben Owners Exception Columns
+            var bencustid = "";
+            try
+            {
+                bencustid = _db.MdmCorpRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_BENEFICIALOWNERS" && a.CUST_ID == benOwners.ORGKEY).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (bencustid != "" && benOwners != null)
+            {
+                var exceptionSet = _db.MdmCorpRunExceptions.Where(a => a.CUST_ID == bencustid); //.Select(a=>a.PROPERTYNAME);
+                if (bencustid != null)
+                {
+                    foreach (var item in benOwners.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError("BenOwnersModel." + item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+            #endregion
+            #region CorpAdd
+            int records4 = _db.CDMA_CORP_ADDITIONAL_DETAILS.Count(o => o.CUSTOMER_NO == id);
+            CorpADDModel corpADD = new CorpADDModel();
             if (records4 > 1)
             {
                 corpADD = (from c in _db.CDMA_CORP_ADDITIONAL_DETAILS
@@ -420,7 +493,6 @@ namespace CMdm.UI.Web.Controllers
                                  CUSTOMER_NO = c.CUSTOMER_NO,
                                  BRANCH_CODE = c.BRANCH_CODE,
                                  COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
-                                 PARENT_COMPANY_CTRY_INCORP = c.PARENT_COMPANY_CTRY_INCORP,
                              }).FirstOrDefault();
             }
             else if (records4 == 1)
@@ -433,28 +505,121 @@ namespace CMdm.UI.Web.Controllers
                                  CUSTOMER_NO = c.CUSTOMER_NO,
                                  BRANCH_CODE = c.BRANCH_CODE,
                                  COUNTERPARTIES_CLIENTS_OF_CUST = c.COUNTERPARTIES_CLIENTS_OF_CUST,
-                                 PARENT_COMPANY_CTRY_INCORP = c.PARENT_COMPANY_CTRY_INCORP,
                              }).FirstOrDefault();
             }
-
-            PrepareCompDetailsModel(compDetails);
-            PrepareCompInfoModel(compInfo);
-            PrepareBenOwnersModel(benOwners);
             PrepareCorpAddModel(corpADD);
+            #endregion
+            #region Get Corp Add Exception Columns
+            var corpaddcustid = "";
+            try
+            {
+                corpaddcustid = _db.MdmCorpRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_CORP_ADDITIONAL_DETAILS" && a.CUST_ID == corpADD.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (corpaddcustid != "" && corpADD != null)
+            {
+                var exceptionSet = _db.MdmCorpRunExceptions.Where(a => a.CUST_ID == corpaddcustid); //.Select(a=>a.PROPERTYNAME);
+                if (corpaddcustid != null)
+                {
+                    foreach (var item in corpADD.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError("CorpADDModel." + item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+            #endregion
+            #region Guarantor
+            int record5 = _db.CDMA_GUARANTOR.Count(o => o.CUSTOMER_NO == id);
+            GuarantorModel guarantorModel = new GuarantorModel();
+            if (record5 > 1)
+            {
+                guarantorModel = (from c in _db.CDMA_GUARANTOR
+                           where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "U"
+                           select new GuarantorModel
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               LNAME_OF_GUARANTOR = c.LNAME_OF_GUARANTOR,
+                               FNAME_OF_GUARANTOR = c.FNAME_OF_GUARANTOR,
+                               TIN_OF_GUARANTOR = c.TIN_OF_GUARANTOR,
+                               BVN_OF_GUARANTOR = c.BVN_OF_GUARANTOR,
+                               GURANTEED_AMOUNT = c.GURANTEED_AMOUNT,
+                               BRANCH_CODE = c.BRANCH_CODE,
+                           }).FirstOrDefault();
+            }
+            else if (record5 == 1)
+            {
+                guarantorModel = (from c in _db.CDMA_GUARANTOR
+                                  where c.CUSTOMER_NO == id
+                           where c.AUTHORISED == "A"
+                           select new GuarantorModel
+                           {
+                               CUSTOMER_NO = c.CUSTOMER_NO,
+                               LNAME_OF_GUARANTOR = c.LNAME_OF_GUARANTOR,
+                               FNAME_OF_GUARANTOR = c.FNAME_OF_GUARANTOR,
+                               TIN_OF_GUARANTOR = c.TIN_OF_GUARANTOR,
+                               BVN_OF_GUARANTOR = c.BVN_OF_GUARANTOR,
+                               GURANTEED_AMOUNT = c.GURANTEED_AMOUNT,
+                               BRANCH_CODE = c.BRANCH_CODE,
+                           }).FirstOrDefault();
+            }
+            PrepareGuarantorModel(guarantorModel);
+            #endregion
+            #region Get Guarantor Exception Columns
+            var guarantorcustid = "";
+            try
+            {
+                guarantorcustid = _db.MdmCorpRunExceptions.Where(a => a.CATALOG_TABLE_NAME == "CDMA_GUARANTOR" && a.CUST_ID == guarantorModel.CUSTOMER_NO).OrderByDescending(a => a.CREATED_DATE).FirstOrDefault().CUST_ID;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (guarantorcustid != "" && guarantorModel != null)
+            {
+                var exceptionSet = _db.MdmCorpRunExceptions.Where(a => a.CUST_ID == guarantorcustid); //.Select(a=>a.PROPERTYNAME);
+                if (guarantorcustid != null)
+                {
+                    foreach (var item in guarantorModel.GetType().GetProperties())  //BindingFlags.Public | BindingFlags.Static
+                    {
+                        foreach (var item2 in exceptionSet)
+                        {
+                            if (item2.CATALOG_TAB_COL == item.Name)
+                            {
+                                ModelState.AddModelError("GuarantorModel." + item.Name, string.Format("Attention!"));
+                            }
+                        }
+                        //props.Add(item.Name);
+
+                    }
+                }
+            }
+            #endregion
 
             model.CompDetailsModel = compDetails;
             model.CompInfoModel = compInfo;
             model.BenOwnersModel = benOwners;
             model.CorpADDModel = corpADD;
+            model.GuarantorModel = guarantorModel;
 
             if (model == null)
             {
                 return HttpNotFound();
             }
-            //PrepareModel(model);
+            model.CompDetailsModel.ReadOnlyForm = "True";
             return View(model);
         }
-
         // POST: AccInfoContext/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -475,14 +640,12 @@ namespace CMdm.UI.Web.Controllers
                 CDMA_COMPANY_INFORMATION originalObject2 = new CDMA_COMPANY_INFORMATION();
                 CDMA_BENEFICIALOWNERS originalObject3 = new CDMA_BENEFICIALOWNERS();
                 CDMA_CORP_ADDITIONAL_DETAILS originalObject4 = new CDMA_CORP_ADDITIONAL_DETAILS();
+                CDMA_GUARANTOR originalObject5 = new CDMA_GUARANTOR();
 
                 using (var db = new AppDbContext())
                 {
+                    #region CompanyDetails
                     int records = db.CDMA_COMPANY_DETAILS.Count(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO);
-                    int records2 = db.CDMA_COMPANY_INFORMATION.Count(o => o.CUSTOMER_NO == corpCustModel.CompInfoModel.CUSTOMER_NO);
-                    int records3 = db.CDMA_BENEFICIALOWNERS.Count(o => o.ORGKEY == corpCustModel.BenOwnersModel.ORGKEY);
-                    int records4 = db.CDMA_CORP_ADDITIONAL_DETAILS.Count(o => o.CUSTOMER_NO == corpCustModel.CorpADDModel.CUSTOMER_NO);
-
                     if (records > 1)
                     {
                         updateFlag = true;
@@ -490,32 +653,14 @@ namespace CMdm.UI.Web.Controllers
                         var entity = db.CDMA_COMPANY_DETAILS.FirstOrDefault(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO && o.AUTHORISED == "U");
 
                         if (entity != null)
-                        {
-                            entity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
-                            entity.JURISDICTION_OF_INCORP_REG = corpCustModel.CompDetailsModel.JURISDICTION_OF_INCORP_REG;
-                            entity.SCUML_NO = corpCustModel.CompDetailsModel.SCUML_NO;
-                            entity.GENDER_CONTROLLING_51_PERC = corpCustModel.CompDetailsModel.GENDER_CONTROLLING_51_PERC;
-                            entity.SECTOR_OR_INDUSTRY = corpCustModel.CompDetailsModel.SECTOR_OR_INDUSTRY;
-                            entity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
-                            entity.CITY_1 = corpCustModel.CompDetailsModel.CITY_1;
-                            entity.COUNTRY_1 = corpCustModel.CompDetailsModel.COUNTRY_1;
-                            entity.ZIP_CODE_1 = corpCustModel.CompDetailsModel.ZIP_CODE_1;
+                        {                            
                             entity.BIZ_ADDRESS_REG_OFFICE_1 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_1;
-                            entity.OPERATING_BUSINESS_2 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_2;
-                            entity.CITY_2 = corpCustModel.CompDetailsModel.CITY_2;
-                            entity.COUNTRY_2 = corpCustModel.CompDetailsModel.COUNTRY_2;
-                            entity.ZIP_CODE_2 = corpCustModel.CompDetailsModel.ZIP_CODE_2;
-                            entity.BIZ_ADDRESS_REG_OFFICE_2 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2;
-                            entity.COMPANY_EMAIL_ADDRESS = corpCustModel.CompDetailsModel.COMPANY_EMAIL_ADDRESS;
-                            entity.WEBSITE = corpCustModel.CompDetailsModel.WEBSITE;
-                            entity.OFFICE_NUMBER = corpCustModel.CompDetailsModel.OFFICE_NUMBER;
-                            entity.MOBILE_NUMBER = corpCustModel.CompDetailsModel.MOBILE_NUMBER;
-                            entity.TIN = corpCustModel.CompDetailsModel.TIN;
-                            entity.CRMB_NO_BORROWER_CODE = corpCustModel.CompDetailsModel.CRMB_NO_BORROWER_CODE;
+                            entity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
                             entity.EXPECTED_ANNUAL_TURNOVER = corpCustModel.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER;
-                            entity.IS_COMPANY_ON_STOCK_EXCH = corpCustModel.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH;
-                            entity.STOCK_EXCHANGE_NAME = corpCustModel.CompDetailsModel.STOCK_EXCHANGE_NAME;
+                            entity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
                             entity.BRANCH_CODE = corpCustModel.CompDetailsModel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
+
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -533,31 +678,12 @@ namespace CMdm.UI.Web.Controllers
                         originalObject = _db.CDMA_COMPANY_DETAILS.Where(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
                         if (originalObject != null)
                         {
-                            entity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
-                            entity.JURISDICTION_OF_INCORP_REG = corpCustModel.CompDetailsModel.JURISDICTION_OF_INCORP_REG;
-                            entity.SCUML_NO = corpCustModel.CompDetailsModel.SCUML_NO;
-                            entity.GENDER_CONTROLLING_51_PERC = corpCustModel.CompDetailsModel.GENDER_CONTROLLING_51_PERC;
-                            entity.SECTOR_OR_INDUSTRY = corpCustModel.CompDetailsModel.SECTOR_OR_INDUSTRY;
-                            entity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
-                            entity.CITY_1 = corpCustModel.CompDetailsModel.CITY_1;
-                            entity.COUNTRY_1 = corpCustModel.CompDetailsModel.COUNTRY_1;
-                            entity.ZIP_CODE_1 = corpCustModel.CompDetailsModel.ZIP_CODE_1;
                             entity.BIZ_ADDRESS_REG_OFFICE_1 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_1;
-                            entity.OPERATING_BUSINESS_2 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_2;
-                            entity.CITY_2 = corpCustModel.CompDetailsModel.CITY_2;
-                            entity.COUNTRY_2 = corpCustModel.CompDetailsModel.COUNTRY_2;
-                            entity.ZIP_CODE_2 = corpCustModel.CompDetailsModel.ZIP_CODE_2;
-                            entity.BIZ_ADDRESS_REG_OFFICE_2 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2;
-                            entity.COMPANY_EMAIL_ADDRESS = corpCustModel.CompDetailsModel.COMPANY_EMAIL_ADDRESS;
-                            entity.WEBSITE = corpCustModel.CompDetailsModel.WEBSITE;
-                            entity.OFFICE_NUMBER = corpCustModel.CompDetailsModel.OFFICE_NUMBER;
-                            entity.MOBILE_NUMBER = corpCustModel.CompDetailsModel.MOBILE_NUMBER;
-                            entity.TIN = corpCustModel.CompDetailsModel.TIN;
-                            entity.CRMB_NO_BORROWER_CODE = corpCustModel.CompDetailsModel.CRMB_NO_BORROWER_CODE;
+                            entity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
                             entity.EXPECTED_ANNUAL_TURNOVER = corpCustModel.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER;
-                            entity.IS_COMPANY_ON_STOCK_EXCH = corpCustModel.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH;
-                            entity.STOCK_EXCHANGE_NAME = corpCustModel.CompDetailsModel.STOCK_EXCHANGE_NAME;
+                            entity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
                             entity.BRANCH_CODE = corpCustModel.CompDetailsModel.BRANCH_CODE;
+                            entity.QUEUE_STATUS = 1;
                             entity.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -571,31 +697,12 @@ namespace CMdm.UI.Web.Controllers
                             // There is no 'U' status row in the table so, Add new record with mnt_status U
                             //entity.AUTHORISED = "U";
                             var newentity = new CDMA_COMPANY_DETAILS();
-                            newentity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
-                            newentity.JURISDICTION_OF_INCORP_REG = corpCustModel.CompDetailsModel.JURISDICTION_OF_INCORP_REG;
-                            newentity.SCUML_NO = corpCustModel.CompDetailsModel.SCUML_NO;
-                            newentity.GENDER_CONTROLLING_51_PERC = corpCustModel.CompDetailsModel.GENDER_CONTROLLING_51_PERC;
-                            newentity.SECTOR_OR_INDUSTRY = corpCustModel.CompDetailsModel.SECTOR_OR_INDUSTRY;
-                            newentity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
-                            newentity.CITY_1 = corpCustModel.CompDetailsModel.CITY_1;
-                            newentity.COUNTRY_1 = corpCustModel.CompDetailsModel.COUNTRY_1;
-                            newentity.ZIP_CODE_1 = corpCustModel.CompDetailsModel.ZIP_CODE_1;
                             newentity.BIZ_ADDRESS_REG_OFFICE_1 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_1;
-                            newentity.OPERATING_BUSINESS_2 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_2;
-                            newentity.CITY_2 = corpCustModel.CompDetailsModel.CITY_2;
-                            newentity.COUNTRY_2 = corpCustModel.CompDetailsModel.COUNTRY_2;
-                            newentity.ZIP_CODE_2 = corpCustModel.CompDetailsModel.ZIP_CODE_2;
-                            newentity.BIZ_ADDRESS_REG_OFFICE_2 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2;
-                            newentity.COMPANY_EMAIL_ADDRESS = corpCustModel.CompDetailsModel.COMPANY_EMAIL_ADDRESS;
-                            newentity.WEBSITE = corpCustModel.CompDetailsModel.WEBSITE;
-                            newentity.OFFICE_NUMBER = corpCustModel.CompDetailsModel.OFFICE_NUMBER;
-                            newentity.MOBILE_NUMBER = corpCustModel.CompDetailsModel.MOBILE_NUMBER;
-                            newentity.TIN = corpCustModel.CompDetailsModel.TIN;
-                            newentity.CRMB_NO_BORROWER_CODE = corpCustModel.CompDetailsModel.CRMB_NO_BORROWER_CODE;
+                            newentity.CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO;
                             newentity.EXPECTED_ANNUAL_TURNOVER = corpCustModel.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER;
-                            newentity.IS_COMPANY_ON_STOCK_EXCH = corpCustModel.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH;
-                            newentity.STOCK_EXCHANGE_NAME = corpCustModel.CompDetailsModel.STOCK_EXCHANGE_NAME;
+                            newentity.OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1;
                             newentity.BRANCH_CODE = corpCustModel.CompDetailsModel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -611,7 +718,9 @@ namespace CMdm.UI.Web.Controllers
                             ModelState.AddModelError("", errorMessage);
                         }
                     }
-
+                    #endregion
+                    #region CompanyInfo
+                    int records2 = db.CDMA_COMPANY_INFORMATION.Count(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO);
                     if (records2 > 1)
                     {
                         updateFlag = true;
@@ -621,10 +730,7 @@ namespace CMdm.UI.Web.Controllers
                         if (entity2 != null)
                         {
                             entity2.COMPANY_NAME = corpCustModel.CompInfoModel.COMPANY_NAME;
-                            entity2.DATE_OF_INCORP_REGISTRATION = corpCustModel.CompInfoModel.DATE_OF_INCORP_REGISTRATION;
-                            entity2.CUSTOMER_TYPE = corpCustModel.CompInfoModel.CUSTOMER_TYPE;
                             entity2.REGISTERED_ADDRESS = corpCustModel.CompInfoModel.REGISTERED_ADDRESS;
-                            entity2.CATEGORY_OF_BUSINESS = corpCustModel.CompInfoModel.CATEGORY_OF_BUSINESS;
                             entity2.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
                             entity2.EOC_RISK = corpCustModel.CompInfoModel.EOC_RISK;
                             entity2.CURRENT_LINE_OF_BUSINESS = corpCustModel.CompInfoModel.CURRENT_LINE_OF_BUSINESS;
@@ -633,12 +739,12 @@ namespace CMdm.UI.Web.Controllers
                             entity2.BRF_INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.BRF_INVESTIGATION_MEDIA_REPORT;
                             entity2.INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.INVESTIGATION_MEDIA_REPORT;
                             entity2.ADD_VERIFICATION_STATUS = corpCustModel.CompInfoModel.ADD_VERIFICATION_STATUS;
-                            entity2.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST;
                             entity2.ANTICIPATED_TRANS_OUTFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_OUTFLOW;
                             entity2.ANTICIPATED_TRANS_INFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_INFLOW;
                             entity2.LENGTH_OF_STAY_INBUS = corpCustModel.CompInfoModel.LENGTH_OF_STAY_INBUS;
-                            entity2.DATE_OF_COMMENCEMENT = corpCustModel.CompInfoModel.DATE_OF_COMMENCEMENT;
                             entity2.SOURCE_OF_ASSET = corpCustModel.CompInfoModel.SOURCE_OF_ASSET;
+                            entity2.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
+                            entity2.QUEUE_STATUS = 1;
                             entity2.HISTORY_OF_CUSTOMER = corpCustModel.CompInfoModel.HISTORY_OF_CUSTOMER;
                             entity2.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity2.LAST_MODIFIED_DATE = DateTime.Now;
@@ -658,10 +764,7 @@ namespace CMdm.UI.Web.Controllers
                         if (originalObject2 != null)
                         {
                             entity2.COMPANY_NAME = corpCustModel.CompInfoModel.COMPANY_NAME;
-                            entity2.DATE_OF_INCORP_REGISTRATION = corpCustModel.CompInfoModel.DATE_OF_INCORP_REGISTRATION;
-                            entity2.CUSTOMER_TYPE = corpCustModel.CompInfoModel.CUSTOMER_TYPE;
                             entity2.REGISTERED_ADDRESS = corpCustModel.CompInfoModel.REGISTERED_ADDRESS;
-                            entity2.CATEGORY_OF_BUSINESS = corpCustModel.CompInfoModel.CATEGORY_OF_BUSINESS;
                             entity2.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
                             entity2.EOC_RISK = corpCustModel.CompInfoModel.EOC_RISK;
                             entity2.CURRENT_LINE_OF_BUSINESS = corpCustModel.CompInfoModel.CURRENT_LINE_OF_BUSINESS;
@@ -670,13 +773,13 @@ namespace CMdm.UI.Web.Controllers
                             entity2.BRF_INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.BRF_INVESTIGATION_MEDIA_REPORT;
                             entity2.INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.INVESTIGATION_MEDIA_REPORT;
                             entity2.ADD_VERIFICATION_STATUS = corpCustModel.CompInfoModel.ADD_VERIFICATION_STATUS;
-                            entity2.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST;
                             entity2.ANTICIPATED_TRANS_OUTFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_OUTFLOW;
                             entity2.ANTICIPATED_TRANS_INFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_INFLOW;
                             entity2.LENGTH_OF_STAY_INBUS = corpCustModel.CompInfoModel.LENGTH_OF_STAY_INBUS;
-                            entity2.DATE_OF_COMMENCEMENT = corpCustModel.CompInfoModel.DATE_OF_COMMENCEMENT;
                             entity2.SOURCE_OF_ASSET = corpCustModel.CompInfoModel.SOURCE_OF_ASSET;
                             entity2.HISTORY_OF_CUSTOMER = corpCustModel.CompInfoModel.HISTORY_OF_CUSTOMER;
+                            entity2.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
+                            entity2.QUEUE_STATUS = 1;
                             entity2.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity2.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -691,9 +794,6 @@ namespace CMdm.UI.Web.Controllers
                             //entity.AUTHORISED = "U";
                             var newentity = new CDMA_COMPANY_INFORMATION();
                             newentity.COMPANY_NAME = corpCustModel.CompInfoModel.COMPANY_NAME;
-                            newentity.DATE_OF_INCORP_REGISTRATION = corpCustModel.CompInfoModel.DATE_OF_INCORP_REGISTRATION;
-                            newentity.CUSTOMER_TYPE = corpCustModel.CompInfoModel.CUSTOMER_TYPE;
-                            newentity.CATEGORY_OF_BUSINESS = corpCustModel.CompInfoModel.CATEGORY_OF_BUSINESS;
                             newentity.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
                             newentity.EOC_RISK = corpCustModel.CompInfoModel.EOC_RISK;
                             newentity.CURRENT_LINE_OF_BUSINESS = corpCustModel.CompInfoModel.CURRENT_LINE_OF_BUSINESS;
@@ -702,13 +802,13 @@ namespace CMdm.UI.Web.Controllers
                             newentity.BRF_INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.BRF_INVESTIGATION_MEDIA_REPORT;
                             newentity.INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.INVESTIGATION_MEDIA_REPORT;
                             newentity.ADD_VERIFICATION_STATUS = corpCustModel.CompInfoModel.ADD_VERIFICATION_STATUS;
-                            newentity.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST;
                             newentity.ANTICIPATED_TRANS_OUTFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_OUTFLOW;
                             newentity.ANTICIPATED_TRANS_INFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_INFLOW;
                             newentity.LENGTH_OF_STAY_INBUS = corpCustModel.CompInfoModel.LENGTH_OF_STAY_INBUS;
-                            newentity.DATE_OF_COMMENCEMENT = corpCustModel.CompInfoModel.DATE_OF_COMMENCEMENT;
                             newentity.SOURCE_OF_ASSET = corpCustModel.CompInfoModel.SOURCE_OF_ASSET;
                             newentity.HISTORY_OF_CUSTOMER = corpCustModel.CompInfoModel.HISTORY_OF_CUSTOMER;
+                            newentity.BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -724,7 +824,9 @@ namespace CMdm.UI.Web.Controllers
                             ModelState.AddModelError("", errorMessage);
                         }
                     }
-
+                    #endregion
+                    #region BenOwners
+                    int records3 = db.CDMA_BENEFICIALOWNERS.Count(o => o.ORGKEY == corpCustModel.CompDetailsModel.CUSTOMER_NO);
                     if (records3 > 1)
                     {
                         updateFlag = true;
@@ -736,6 +838,7 @@ namespace CMdm.UI.Web.Controllers
                             entity3.PERCENTAGE_OF_BENEFICIARY = corpCustModel.BenOwnersModel.PERCENTAGE_OF_BENEFICIARY;
                             entity3.NAMES_OF_BENEFICIARY = corpCustModel.BenOwnersModel.NAMES_OF_BENEFICIARY;
                             entity3.PRIMARY_SOL_ID = corpCustModel.BenOwnersModel.PRIMARY_SOL_ID;
+                            entity3.QUEUE_STATUS = 1;
                             entity3.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity3.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -756,6 +859,7 @@ namespace CMdm.UI.Web.Controllers
                             entity3.PERCENTAGE_OF_BENEFICIARY = corpCustModel.BenOwnersModel.PERCENTAGE_OF_BENEFICIARY;
                             entity3.NAMES_OF_BENEFICIARY = corpCustModel.BenOwnersModel.NAMES_OF_BENEFICIARY;
                             entity3.PRIMARY_SOL_ID = corpCustModel.BenOwnersModel.PRIMARY_SOL_ID;
+                            entity3.QUEUE_STATUS = 1;
                             entity3.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity3.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -772,6 +876,7 @@ namespace CMdm.UI.Web.Controllers
                             newentity.PERCENTAGE_OF_BENEFICIARY = corpCustModel.BenOwnersModel.PERCENTAGE_OF_BENEFICIARY;
                             newentity.NAMES_OF_BENEFICIARY = corpCustModel.BenOwnersModel.NAMES_OF_BENEFICIARY;
                             newentity.PRIMARY_SOL_ID = corpCustModel.BenOwnersModel.PRIMARY_SOL_ID;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -787,7 +892,9 @@ namespace CMdm.UI.Web.Controllers
                             ModelState.AddModelError("", errorMessage);
                         }
                     }
-
+                    #endregion
+                    #region AddInfo
+                    int records4 = db.CDMA_CORP_ADDITIONAL_DETAILS.Count(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO);
                     if (records4 > 1)
                     {
                         updateFlag = true;
@@ -798,7 +905,8 @@ namespace CMdm.UI.Web.Controllers
                         {
                             entity4.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
                             entity4.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CorpADDModel.COUNTERPARTIES_CLIENTS_OF_CUST;
-                            entity4.PARENT_COMPANY_CTRY_INCORP = corpCustModel.CorpADDModel.PARENT_COMPANY_CTRY_INCORP;
+                            entity4.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
+                            entity4.QUEUE_STATUS = 1;
                             entity4.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity4.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -819,7 +927,8 @@ namespace CMdm.UI.Web.Controllers
                         {
                             entity4.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
                             entity4.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CorpADDModel.COUNTERPARTIES_CLIENTS_OF_CUST;
-                            entity4.PARENT_COMPANY_CTRY_INCORP = corpCustModel.CorpADDModel.PARENT_COMPANY_CTRY_INCORP;
+                            entity4.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
+                            entity4.QUEUE_STATUS = 1;
                             entity4.LAST_MODIFIED_BY = identity.ProfileId.ToString();
                             entity4.LAST_MODIFIED_DATE = DateTime.Now;
                             //entity.AUTHORISED = "U";
@@ -835,7 +944,8 @@ namespace CMdm.UI.Web.Controllers
                             var newentity = new CDMA_CORP_ADDITIONAL_DETAILS();
                             newentity.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
                             newentity.COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CorpADDModel.COUNTERPARTIES_CLIENTS_OF_CUST;
-                            newentity.PARENT_COMPANY_CTRY_INCORP = corpCustModel.CorpADDModel.PARENT_COMPANY_CTRY_INCORP;
+                            newentity.BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
                             newentity.CREATED_BY = identity.ProfileId.ToString();
                             newentity.CREATED_DATE = DateTime.Now;
                             newentity.AUTHORISED = "U";
@@ -851,10 +961,89 @@ namespace CMdm.UI.Web.Controllers
                             ModelState.AddModelError("", errorMessage);
                         }
                     }
+                    #endregion
+                    #region Guarantor
+                    int records5 = db.CDMA_GUARANTOR.Count(o => o.CUSTOMER_NO == corpCustModel.CompDetailsModel.CUSTOMER_NO);
+                    if (records5 > 1)
+                    {
+                        updateFlag = true;
+                        originalObject5 = _db.CDMA_GUARANTOR.Where(o => o.CUSTOMER_NO == corpCustModel.GuarantorModel.CUSTOMER_NO && o.AUTHORISED == "U").FirstOrDefault();
+                        var entity5 = db.CDMA_GUARANTOR.FirstOrDefault(o => o.CUSTOMER_NO == corpCustModel.GuarantorModel.CUSTOMER_NO && o.AUTHORISED == "U");
+
+                        if (entity5 != null)
+                        {
+                            entity5.LNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.LNAME_OF_GUARANTOR;
+                            entity5.FNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.FNAME_OF_GUARANTOR;
+                            entity5.TIN_OF_GUARANTOR = corpCustModel.GuarantorModel.TIN_OF_GUARANTOR;
+                            entity5.BVN_OF_GUARANTOR = corpCustModel.GuarantorModel.BVN_OF_GUARANTOR;
+                            entity5.GURANTEED_AMOUNT = corpCustModel.GuarantorModel.GURANTEED_AMOUNT;
+                            entity5.BRANCH_CODE = corpCustModel.GuarantorModel.BRANCH_CODE;
+                            entity5.QUEUE_STATUS = 1;
+                            entity5.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity5.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+
+                            db.CDMA_GUARANTOR.Attach(entity5);
+                            db.Entry(entity5).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), corpCustModel.GuarantorModel.CUSTOMER_NO, updateFlag, originalObject5);
+                            _messageService.LogEmailJob(identity.ProfileId, entity5.CUSTOMER_NO, MessageJobEnum.MailType.Change);
+                        }
+                    }
+                    else if (records5 == 1)
+                    {
+                        updateFlag = false;
+                        var entity5 = db.CDMA_GUARANTOR.FirstOrDefault(o => o.CUSTOMER_NO == corpCustModel.GuarantorModel.CUSTOMER_NO && o.AUTHORISED == "A");
+                        originalObject5 = _db.CDMA_GUARANTOR.Where(o => o.CUSTOMER_NO == corpCustModel.GuarantorModel.CUSTOMER_NO && o.AUTHORISED == "A").FirstOrDefault();
+
+                        if (originalObject5 != null)
+                        {
+                            entity5.LNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.LNAME_OF_GUARANTOR;
+                            entity5.FNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.FNAME_OF_GUARANTOR;
+                            entity5.TIN_OF_GUARANTOR = corpCustModel.GuarantorModel.TIN_OF_GUARANTOR;
+                            entity5.BVN_OF_GUARANTOR = corpCustModel.GuarantorModel.BVN_OF_GUARANTOR;
+                            entity5.GURANTEED_AMOUNT = corpCustModel.GuarantorModel.GURANTEED_AMOUNT;
+                            entity5.BRANCH_CODE = corpCustModel.GuarantorModel.BRANCH_CODE;
+                            entity5.QUEUE_STATUS = 1;
+                            entity5.LAST_MODIFIED_BY = identity.ProfileId.ToString();
+                            entity5.LAST_MODIFIED_DATE = DateTime.Now;
+                            //entity.AUTHORISED = "U";
+                            //
+
+                            db.CDMA_GUARANTOR.Attach(entity5);
+                            db.Entry(entity5).State = EntityState.Modified;
+                            db.SaveChanges(identity.ProfileId.ToString(), corpCustModel.GuarantorModel.CUSTOMER_NO, updateFlag, originalObject5);  //track the audit
+
+
+                            // There is no 'U' status row in the table so, Add new record with mnt_status U
+                            //entity.AUTHORISED = "U";
+                            var newentity = new CDMA_GUARANTOR();
+                            newentity.LNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.LNAME_OF_GUARANTOR;
+                            newentity.FNAME_OF_GUARANTOR = corpCustModel.GuarantorModel.FNAME_OF_GUARANTOR;
+                            newentity.TIN_OF_GUARANTOR = corpCustModel.GuarantorModel.TIN_OF_GUARANTOR;
+                            newentity.BVN_OF_GUARANTOR = corpCustModel.GuarantorModel.BVN_OF_GUARANTOR;
+                            newentity.GURANTEED_AMOUNT = corpCustModel.GuarantorModel.GURANTEED_AMOUNT;
+                            newentity.BRANCH_CODE = corpCustModel.GuarantorModel.BRANCH_CODE;
+                            newentity.QUEUE_STATUS = 1;
+                            newentity.CREATED_BY = identity.ProfileId.ToString();
+                            newentity.CREATED_DATE = DateTime.Now;
+                            newentity.AUTHORISED = "U";
+                            newentity.CUSTOMER_NO = corpCustModel.GuarantorModel.CUSTOMER_NO;
+                            db.CDMA_GUARANTOR.Add(newentity);
+
+                            db.SaveChanges(); //do not track audit.
+                            _messageService.LogEmailJob(identity.ProfileId, newentity.CUSTOMER_NO, MessageJobEnum.MailType.Change);
+                        }
+                        else
+                        {
+                            string errorMessage = string.Format("Cannot update record with Id:{0} as it's not available.", corpCustModel.GuarantorModel.CUSTOMER_NO);
+                            ModelState.AddModelError("", errorMessage);
+                        }
+                    }
+                    #endregion
                 }
 
                 SuccessNotification("Corporate Customer Updated");
-                return continueEditing ? RedirectToAction("Edit", new { id = corpCustModel.CorpADDModel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
+                return continueEditing ? RedirectToAction("Edit", new { id = corpCustModel.CompDetailsModel.CUSTOMER_NO }) : RedirectToAction("Index", "DQQue");
                 //return RedirectToAction("Index");
             }
 
@@ -862,160 +1051,7 @@ namespace CMdm.UI.Web.Controllers
             PrepareCompInfoModel(corpCustModel.CompInfoModel);
             PrepareBenOwnersModel(corpCustModel.BenOwnersModel);
             PrepareCorpAddModel(corpCustModel.CorpADDModel);
-            //PrepareModel(actxmodel);
-            return View(corpCustModel);
-        }
-
-        public ActionResult Create()
-        {
-            CorpCustModel model = new CorpCustModel();
-            CompDetailsModel compDetailsModel = new CompDetailsModel();
-            CompInfoModel compInfoModel = new CompInfoModel();
-            BenOwnersModel benOwnersModel = new BenOwnersModel();
-            CorpADDModel corpADDModel = new CorpADDModel();
-
-            model.CompDetailsModel = compDetailsModel;
-            model.CompInfoModel = compInfoModel;
-            model.BenOwnersModel = benOwnersModel;
-            model.CorpADDModel = corpADDModel;
-
-            PrepareCompDetailsModel(compDetailsModel);
-            PrepareCompInfoModel(compInfoModel);
-            PrepareBenOwnersModel(benOwnersModel);
-            PrepareCorpAddModel(corpADDModel);
-            //PrepareModel(model);
-            return View(model);
-        }
-
-        // POST: AccInfoContext/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CorpCustModel corpCustModel, bool continueEditing)
-        {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageStores))
-            //    return AccessDeniedView();
-            if (!User.Identity.IsAuthenticated)
-                return AccessDeniedView();
-            var identity = ((CustomPrincipal)User).CustomIdentity;
-            string ip_address = Request.ServerVariables["REMOTE_ADDR"].ToString();
-            if (ModelState.IsValid)
-            {
-                CDMA_COMPANY_DETAILS compDetails = new CDMA_COMPANY_DETAILS
-                {
-                    CUSTOMER_NO = corpCustModel.CompDetailsModel.CUSTOMER_NO,
-                    CERT_OF_INCORP_REG_NO = corpCustModel.CompDetailsModel.CERT_OF_INCORP_REG_NO,
-                    JURISDICTION_OF_INCORP_REG = corpCustModel.CompDetailsModel.JURISDICTION_OF_INCORP_REG,
-                    SCUML_NO = corpCustModel.CompDetailsModel.SCUML_NO,
-                    GENDER_CONTROLLING_51_PERC = corpCustModel.CompDetailsModel.GENDER_CONTROLLING_51_PERC,
-                    SECTOR_OR_INDUSTRY = corpCustModel.CompDetailsModel.SECTOR_OR_INDUSTRY,
-                    OPERATING_BUSINESS_1 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_1,
-                    CITY_1 = corpCustModel.CompDetailsModel.CITY_1,
-                    COUNTRY_1 = corpCustModel.CompDetailsModel.COUNTRY_1,
-                    ZIP_CODE_1 = corpCustModel.CompDetailsModel.ZIP_CODE_1,
-                    BIZ_ADDRESS_REG_OFFICE_1 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_1,
-                    OPERATING_BUSINESS_2 = corpCustModel.CompDetailsModel.OPERATING_BUSINESS_2,
-                    CITY_2 = corpCustModel.CompDetailsModel.CITY_2,
-                    COUNTRY_2 = corpCustModel.CompDetailsModel.COUNTRY_2,
-                    ZIP_CODE_2 = corpCustModel.CompDetailsModel.ZIP_CODE_2,
-                    BIZ_ADDRESS_REG_OFFICE_2 = corpCustModel.CompDetailsModel.BIZ_ADDRESS_REG_OFFICE_2,
-                    COMPANY_EMAIL_ADDRESS = corpCustModel.CompDetailsModel.COMPANY_EMAIL_ADDRESS,
-                    WEBSITE = corpCustModel.CompDetailsModel.WEBSITE,
-                    OFFICE_NUMBER = corpCustModel.CompDetailsModel.OFFICE_NUMBER,
-                    MOBILE_NUMBER = corpCustModel.CompDetailsModel.MOBILE_NUMBER,
-                    TIN = corpCustModel.CompDetailsModel.TIN,
-                    CRMB_NO_BORROWER_CODE = corpCustModel.CompDetailsModel.CRMB_NO_BORROWER_CODE,
-                    EXPECTED_ANNUAL_TURNOVER = corpCustModel.CompDetailsModel.EXPECTED_ANNUAL_TURNOVER,
-                    IS_COMPANY_ON_STOCK_EXCH = corpCustModel.CompDetailsModel.IS_COMPANY_ON_STOCK_EXCH,
-                    STOCK_EXCHANGE_NAME = corpCustModel.CompDetailsModel.STOCK_EXCHANGE_NAME,
-                    BRANCH_CODE = corpCustModel.CompDetailsModel.BRANCH_CODE,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address
-                };
-                _db.CDMA_COMPANY_DETAILS.Add(compDetails);
-                _db.SaveChanges();
-
-                CDMA_COMPANY_INFORMATION compInfo = new CDMA_COMPANY_INFORMATION
-                {
-                    CUSTOMER_NO = corpCustModel.CompInfoModel.CUSTOMER_NO,
-                    COMPANY_NAME = corpCustModel.CompInfoModel.COMPANY_NAME,
-                    DATE_OF_INCORP_REGISTRATION = corpCustModel.CompInfoModel.DATE_OF_INCORP_REGISTRATION,
-                    CUSTOMER_TYPE = corpCustModel.CompInfoModel.CUSTOMER_TYPE,
-                    CATEGORY_OF_BUSINESS = corpCustModel.CompInfoModel.CATEGORY_OF_BUSINESS,
-                    BRANCH_CODE = corpCustModel.CompInfoModel.BRANCH_CODE,
-                    EOC_RISK = corpCustModel.CompInfoModel.EOC_RISK,
-                    CURRENT_LINE_OF_BUSINESS = corpCustModel.CompInfoModel.CURRENT_LINE_OF_BUSINESS,
-                    COMPANY_NETWORTH_SOA = corpCustModel.CompInfoModel.COMPANY_NETWORTH_SOA,
-                    INTRODUCED_BY = corpCustModel.CompInfoModel.INTRODUCED_BY,
-                    BRF_INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.BRF_INVESTIGATION_MEDIA_REPORT,
-                    INVESTIGATION_MEDIA_REPORT = corpCustModel.CompInfoModel.INVESTIGATION_MEDIA_REPORT,
-                    ADD_VERIFICATION_STATUS = corpCustModel.CompInfoModel.ADD_VERIFICATION_STATUS,
-                    COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CompInfoModel.COUNTERPARTIES_CLIENTS_OF_CUST,
-                    ANTICIPATED_TRANS_OUTFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_OUTFLOW,
-                    ANTICIPATED_TRANS_INFLOW = corpCustModel.CompInfoModel.ANTICIPATED_TRANS_INFLOW,
-                    LENGTH_OF_STAY_INBUS = corpCustModel.CompInfoModel.LENGTH_OF_STAY_INBUS,
-                    DATE_OF_COMMENCEMENT = corpCustModel.CompInfoModel.DATE_OF_COMMENCEMENT,
-                    SOURCE_OF_ASSET = corpCustModel.CompInfoModel.SOURCE_OF_ASSET,
-                    HISTORY_OF_CUSTOMER = corpCustModel.CompInfoModel.HISTORY_OF_CUSTOMER,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address
-                };
-                _db.CDMA_COMPANY_INFORMATION.Add(compInfo);
-                _db.SaveChanges();
-
-                CDMA_BENEFICIALOWNERS benOwners = new CDMA_BENEFICIALOWNERS
-                {
-                    ORGKEY = corpCustModel.BenOwnersModel.ORGKEY,
-                    PERCENTAGE_OF_BENEFICIARY = corpCustModel.BenOwnersModel.PERCENTAGE_OF_BENEFICIARY,
-                    NAMES_OF_BENEFICIARY = corpCustModel.BenOwnersModel.NAMES_OF_BENEFICIARY,
-                    PRIMARY_SOL_ID = corpCustModel.BenOwnersModel.PRIMARY_SOL_ID,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address
-                };
-                _db.CDMA_BENEFICIALOWNERS.Add(benOwners);
-                _db.SaveChanges();
-
-                CDMA_CORP_ADDITIONAL_DETAILS corpAddDetails = new CDMA_CORP_ADDITIONAL_DETAILS
-                {
-                    CUSTOMER_NO = corpCustModel.CorpADDModel.CUSTOMER_NO,
-                    BRANCH_CODE = corpCustModel.CorpADDModel.BRANCH_CODE,
-                    COUNTERPARTIES_CLIENTS_OF_CUST = corpCustModel.CorpADDModel.COUNTERPARTIES_CLIENTS_OF_CUST,
-                    PARENT_COMPANY_CTRY_INCORP = corpCustModel.CorpADDModel.PARENT_COMPANY_CTRY_INCORP,
-                    CREATED_BY = identity.ProfileId.ToString(),
-                    CREATED_DATE = DateTime.Now,
-                    LAST_MODIFIED_BY = identity.ProfileId.ToString(),
-                    LAST_MODIFIED_DATE = DateTime.Now,
-                    AUTHORISED_BY = null,
-                    AUTHORISED_DATE = null,
-                    IP_ADDRESS = ip_address
-                };
-                _db.CDMA_CORP_ADDITIONAL_DETAILS.Add(corpAddDetails);
-                _db.SaveChanges();
-
-                SuccessNotification("New Corporate Customer has been Added");
-                return continueEditing ? RedirectToAction("Edit", new { id = corpCustModel.CompDetailsModel.CUSTOMER_NO }) : RedirectToAction("Create");
-            }
-
-            PrepareCompDetailsModel(corpCustModel.CompDetailsModel);
-            PrepareCompInfoModel(corpCustModel.CompInfoModel);
-            PrepareBenOwnersModel(corpCustModel.BenOwnersModel);
-            PrepareCorpAddModel(corpCustModel.CorpADDModel);
+            PrepareGuarantorModel(corpCustModel.GuarantorModel);
             //PrepareModel(actxmodel);
             return View(corpCustModel);
         }
@@ -1023,13 +1059,17 @@ namespace CMdm.UI.Web.Controllers
         [NonAction]
         public virtual void PrepareCompDetailsModel(CompDetailsModel model)
         {
-            //if (model == null)
-            // throw new ArgumentNullException("model");
-            model.IsStockExchange.Add(new SelectListItem { Text = "Yes", Value = "Y" });
-            model.IsStockExchange.Add(new SelectListItem { Text = "No", Value = "N" });
-            model.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
-            model.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
-            model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            if(model != null)
+            {
+                model.IsStockExchange.Add(new SelectListItem { Text = "Yes", Value = "Y" });
+                model.IsStockExchange.Add(new SelectListItem { Text = "No", Value = "N" });
+                model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+                model.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
+                model.Countries = new SelectList(_db.CDMA_COUNTRIES, "COUNTRY_ID", "COUNTRY_NAME").ToList();
+            }            
         }
 
         [NonAction]
@@ -1037,28 +1077,39 @@ namespace CMdm.UI.Web.Controllers
         {
             //if (model == null)
             //    throw new ArgumentNullException("model");
-
-            model.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
-            model.CustomerTypes = new SelectList(_db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE").ToList();
-            model.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+            if (model != null)
+            {
+                model.BusinessSegments = new SelectList(_db.CDMA_BUSINESS_SEGMENT, "ID", "SEGMENT").ToList();
+                model.CustomerTypes = new SelectList(_db.CDMA_CUSTOMER_TYPE, "TYPE_ID", "CUSTOMER_TYPE").ToList();
+                model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+            }
         }
 
         [NonAction]
         public virtual void PrepareBenOwnersModel(BenOwnersModel model)
         {
-            //if (model == null)
-            //    throw new ArgumentNullException("model");
-
-            model.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+            if (model != null)
+            {
+                model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+            }
         }
 
         [NonAction]
         public virtual void PrepareCorpAddModel(CorpADDModel model)
         {
-            //if (model == null)
-            //    throw new ArgumentNullException("model");
+            if (model != null)
+            {
+                model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+            }
+        }
 
-            model.Branches = new SelectList(_db.CM_BRANCH, "BRANCH_ID", "BRANCH_NAME").ToList();
+        [NonAction]
+        public virtual void PrepareGuarantorModel(GuarantorModel model)
+        {
+            if (model != null)
+            {
+                model.Branches = new SelectList(_db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME), "BRANCH_ID", "BRANCH_NAME").ToList();
+            }
         }
 
         [HttpPost, ParameterBasedOnFormName("disapprove", "disapproveRecord")]
@@ -1078,14 +1129,14 @@ namespace CMdm.UI.Web.Controllers
                     exceptionId = int.Parse((string)routeValues["id"]);
                 if (disapproveRecord)
                 {
-                    _dqQueService.DisApproveExceptionQueItems(exceptionId.ToString(), corpCustModel.CompDetailsModel.AuthoriserRemarks);
+                    _dqQueService.DisApproveExceptionCorp(exceptionId.ToString(), corpCustModel.CompDetailsModel.AuthoriserRemarks);
                     SuccessNotification("Corporate Customer Not Authorised");
                     _messageService.LogEmailJob(identity.ProfileId, corpCustModel.CompDetailsModel.CUSTOMER_NO, MessageJobEnum.MailType.Reject, Convert.ToInt32(corpCustModel.CompDetailsModel.LastUpdatedby));
                 }
 
                 else
                 {
-                    _dqQueService.ApproveExceptionQueItems(exceptionId.ToString(), identity.ProfileId);
+                    _dqQueService.ApproveExceptionCorp(exceptionId.ToString(), identity.ProfileId);
                     SuccessNotification("Corporate Customer Authorised");
                     _messageService.LogEmailJob(identity.ProfileId, corpCustModel.CompDetailsModel.CUSTOMER_NO, MessageJobEnum.MailType.Authorize, Convert.ToInt32(corpCustModel.CompDetailsModel.LastUpdatedby));
                 }
@@ -1112,7 +1163,7 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
             if (ModelState.IsValid)
             {
-                _dqQueService.DisApproveExceptionQueItems(corpCustModel.CompDetailsModel.ExceptionId.ToString(), corpCustModel.CompDetailsModel.AuthoriserRemarks);
+                _dqQueService.DisApproveExceptionCorp(corpCustModel.CompDetailsModel.ExceptionId.ToString(), corpCustModel.CompDetailsModel.AuthoriserRemarks);
 
                 SuccessNotification("Account Info Authorised");
                 return continueEditing ? RedirectToAction("Authorize", new { id = corpCustModel.CompDetailsModel.CUSTOMER_NO }) : RedirectToAction("Authorize", "AccInfoContext");
@@ -1127,13 +1178,5 @@ namespace CMdm.UI.Web.Controllers
             return View(corpCustModel);
         }
 
-
-        #region scaffolded
-        // GET: CorporateCustomer
-        public ActionResult Index()
-        {
-            return View();
-        }
-        #endregion scaffolded
     }
 }

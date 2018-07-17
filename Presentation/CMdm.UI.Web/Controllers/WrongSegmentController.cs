@@ -93,7 +93,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
 
@@ -105,7 +106,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult WrongSegmentsList(DataSourceRequest command, WrongSegmentModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllWrongSegments(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, 
+            var items = _dqQueService.GetAllWrongSegments(model.ORGKEY, model.ACCOUNTNO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, 
                 command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
@@ -128,6 +129,8 @@ namespace CMdm.UI.Web.Controllers
                     SUBSEGMENTNAME = x.SUBSEGMENTNAME,
                     CORP_ID = x.CORP_ID,
                     DATE_OF_RUN = x.DATE_OF_RUN,
+                    SCHEME_CODE = x.SCHEME_CODE,
+                    ACCOUNTNO = x.ACCOUNTNO,
                 }),
                 Total = items.TotalCount
             };
@@ -142,7 +145,7 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllWrongSegments(model.ORGKEY, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID);
+            var items = _dqQueService.GetAllWrongSegments(model.ORGKEY, model.ACCOUNTNO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID);
 
             try
             {

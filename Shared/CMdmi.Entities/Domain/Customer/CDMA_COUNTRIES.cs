@@ -18,7 +18,7 @@ namespace CMdm.Entities.Domain.Customer
         }
 
         [Key]
-        public decimal COUNTRY_ID { get; set; }
+        public int COUNTRY_ID { get; set; }
         public string COUNTRY_NAME { get; set; }
         public string COUNTRY_ABBREVIATION { get; set; }
         public decimal UNITED_NATION_NUMBER { get; set; }

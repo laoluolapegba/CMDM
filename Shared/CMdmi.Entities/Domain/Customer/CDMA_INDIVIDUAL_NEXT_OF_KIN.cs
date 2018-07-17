@@ -21,7 +21,7 @@ namespace CMdm.Entities.Domain.Customer
         public string MOBILE_NO { get; set; }
         public string EMAIL_ADDRESS { get; set; }
         public string HOUSE_NUMBER { get; set; }
-        public decimal? IDENTIFICATION_TYPE { get; set; }
+        public int? IDENTIFICATION_TYPE { get; set; }
         public DateTime? ID_EXPIRY_DATE { get; set; }
         public DateTime? ID_ISSUE_DATE { get; set; }
         public string RESIDENT_PERMIT_NUMBER { get; set; }
@@ -29,10 +29,10 @@ namespace CMdm.Entities.Domain.Customer
         public string STREET_NAME { get; set; }
         public string NEAREST_BUS_STOP_LANDMARK { get; set; }
         public string CITY_TOWN { get; set; }
-        public decimal? LGA { get; set; }
+        public int? LGA { get; set; }
         public string ZIP_POSTAL_CODE { get; set; }
-        public decimal? STATE { get; set; }
-        public decimal? COUNTRY { get; set; }
+        public int? STATE { get; set; }
+        public int? COUNTRY { get; set; }
         public DateTime? CREATED_DATE { get; set; }
         public string CREATED_BY { get; set; }
         public DateTime? LAST_MODIFIED_DATE { get; set; }

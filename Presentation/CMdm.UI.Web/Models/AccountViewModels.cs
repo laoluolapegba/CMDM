@@ -145,6 +145,9 @@ namespace CMdm.UI.Web.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Display(Name = "Token")]
+        public string Token { get; set; }
+
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }

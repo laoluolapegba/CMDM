@@ -250,28 +250,28 @@ namespace CMdm.UI.Web.Controllers
             }
 
             // Biodata            
-            cDMA_INDIVIDUAL_BIO_DATA.AGE = DynamicModel.BioData.AGE;
+            //cDMA_INDIVIDUAL_BIO_DATA.AGE = DynamicModel.BioData.AGE;
             //var AUTHORISED = DynamicModel.BioData.AUTHORISED;
             //var BIO_AUTHORISED_BY = DynamicModel.BioData.AUTHORISED_BY;
             // var BIO_AUTHORISED_DATE = DynamicModel.BioData.AUTHORISED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA.BRANCH_CODE = Request["BRANCH"];  //DynamicModel.BioData.BRANCH_CODE;
-            cDMA_INDIVIDUAL_BIO_DATA.COMPLEXION = DynamicModel.BioData.COMPLEXION;
+            //cDMA_INDIVIDUAL_BIO_DATA.COMPLEXION = DynamicModel.BioData.COMPLEXION;
             var COUNTRY_OF_BIRTH = Request["COUNTRY_OF_BIRTH"]; // DynamicModel.BioData.COUNTRY_OF_BIRTH;
                                                                 // var BIO_CREATED_BY = DynamicModel.BioData.CREATED_BY;
                                                                 // var BIO_CREATED_DATE = DynamicModel.BioData.CREATED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA.CUSTOMER_NO = DynamicModel.BioData.CUSTOMER_NO;
             cDMA_INDIVIDUAL_BIO_DATA.DATE_OF_BIRTH = DynamicModel.BioData.DATE_OF_BIRTH;
-            cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
+            //cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
             cDMA_INDIVIDUAL_BIO_DATA.FIRST_NAME = DynamicModel.BioData.FIRST_NAME;
             cDMA_INDIVIDUAL_BIO_DATA.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
             cDMA_INDIVIDUAL_BIO_DATA.LAST_MODIFIED_DATE = dateAndTime;//DynamicModel.BioData.LAST_MODIFIED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = DynamicModel.BioData.MARITAL_STATUS;
             cDMA_INDIVIDUAL_BIO_DATA.MOTHER_MAIDEN_NAME = DynamicModel.BioData.MOTHER_MAIDEN_NAME;
             cDMA_INDIVIDUAL_BIO_DATA.NATIONALITY = Request["BioData_NATIONALITY"];  //// DynamicModel.BioData.NATIONALITY;
-            cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
-            cDMA_INDIVIDUAL_BIO_DATA.NUMBER_OF_CHILDREN = DynamicModel.BioData.NUMBER_OF_CHILDREN;
+            //cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
+            //cDMA_INDIVIDUAL_BIO_DATA.NUMBER_OF_CHILDREN = DynamicModel.BioData.NUMBER_OF_CHILDREN;
             cDMA_INDIVIDUAL_BIO_DATA.OTHER_NAME = DynamicModel.BioData.OTHER_NAME;
-            cDMA_INDIVIDUAL_BIO_DATA.PLACE_OF_BIRTH = DynamicModel.BioData.PLACE_OF_BIRTH;
+            //cDMA_INDIVIDUAL_BIO_DATA.PLACE_OF_BIRTH = DynamicModel.BioData.PLACE_OF_BIRTH;
             cDMA_INDIVIDUAL_BIO_DATA.RELIGION = DynamicModel.BioData.RELIGION;
             cDMA_INDIVIDUAL_BIO_DATA.SEX = DynamicModel.BioData.SEX;
             cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN = DynamicModel.BioData.STATE_OF_ORIGIN;
@@ -356,7 +356,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                //cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_IDENTIFICATION.Add(cDMA_INDIVIDUAL_IDENTIFICATION_SAVE);
                 db.SaveChanges();
@@ -377,7 +377,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                //cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
                 cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "U";
                 CDMA_INDIVIDUAL_IDENTIFICATION identification_data = (CDMA_INDIVIDUAL_IDENTIFICATION)this.Session["cDMA_INDIVIDUAL_IDENTIFICATION"];
 
@@ -924,28 +924,28 @@ namespace CMdm.UI.Web.Controllers
             }
 
             // Biodata            
-            cDMA_INDIVIDUAL_BIO_DATA.AGE = DynamicModel.BioData.AGE;
+            //cDMA_INDIVIDUAL_BIO_DATA.AGE = DynamicModel.BioData.AGE;
            //var AUTHORISED = DynamicModel.BioData.AUTHORISED;
            //var BIO_AUTHORISED_BY = DynamicModel.BioData.AUTHORISED_BY;
            // var BIO_AUTHORISED_DATE = DynamicModel.BioData.AUTHORISED_DATE;
            cDMA_INDIVIDUAL_BIO_DATA.BRANCH_CODE = Request["BRANCH"];  //DynamicModel.BioData.BRANCH_CODE;
-           cDMA_INDIVIDUAL_BIO_DATA.COMPLEXION = DynamicModel.BioData.COMPLEXION;
+           //cDMA_INDIVIDUAL_BIO_DATA.COMPLEXION = DynamicModel.BioData.COMPLEXION;
            var COUNTRY_OF_BIRTH = Request["COUNTRY_OF_BIRTH"]; // DynamicModel.BioData.COUNTRY_OF_BIRTH;
                                                                // var BIO_CREATED_BY = DynamicModel.BioData.CREATED_BY;
                                                                // var BIO_CREATED_DATE = DynamicModel.BioData.CREATED_DATE;
            cDMA_INDIVIDUAL_BIO_DATA.CUSTOMER_NO = DynamicModel.BioData.CUSTOMER_NO;
            cDMA_INDIVIDUAL_BIO_DATA.DATE_OF_BIRTH =  DynamicModel.BioData.DATE_OF_BIRTH;
-           cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
+           //cDMA_INDIVIDUAL_BIO_DATA.DISABILITY = retrunValue(DynamicModel.BioData.DISABILITY);
            cDMA_INDIVIDUAL_BIO_DATA.FIRST_NAME = DynamicModel.BioData.FIRST_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
             //DynamicModel.BioData.LAST_MODIFIED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA.MARITAL_STATUS = Request["MARITAL_STATUS"];//DynamicModel.BioData.MARITAL_STATUS;
            cDMA_INDIVIDUAL_BIO_DATA.MOTHER_MAIDEN_NAME = DynamicModel.BioData.MOTHER_MAIDEN_NAME;
            cDMA_INDIVIDUAL_BIO_DATA.NATIONALITY = Request["BioData_NATIONALITY"];  //// DynamicModel.BioData.NATIONALITY;
-           cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
-           cDMA_INDIVIDUAL_BIO_DATA.NUMBER_OF_CHILDREN = DynamicModel.BioData.NUMBER_OF_CHILDREN;
+           //cDMA_INDIVIDUAL_BIO_DATA.NICKNAME_ALIAS = DynamicModel.BioData.NICKNAME_ALIAS;
+           //cDMA_INDIVIDUAL_BIO_DATA.NUMBER_OF_CHILDREN = DynamicModel.BioData.NUMBER_OF_CHILDREN;
            cDMA_INDIVIDUAL_BIO_DATA.OTHER_NAME = DynamicModel.BioData.OTHER_NAME;
-           cDMA_INDIVIDUAL_BIO_DATA.PLACE_OF_BIRTH = DynamicModel.BioData.PLACE_OF_BIRTH;
+           //cDMA_INDIVIDUAL_BIO_DATA.PLACE_OF_BIRTH = DynamicModel.BioData.PLACE_OF_BIRTH;
            cDMA_INDIVIDUAL_BIO_DATA.RELIGION = DynamicModel.BioData.RELIGION;
            cDMA_INDIVIDUAL_BIO_DATA.SEX = DynamicModel.BioData.SEX;
            cDMA_INDIVIDUAL_BIO_DATA.STATE_OF_ORIGIN = DynamicModel.BioData.STATE_OF_ORIGIN;
@@ -1028,7 +1028,7 @@ namespace CMdm.UI.Web.Controllers
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.LAST_MODIFIED_DATE = dateAndTime;
-                cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                //cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
                 cDMA_INDIVIDUAL_IDENTIFICATION_SAVE.AUTHORISED = "U";
                 db.CDMA_INDIVIDUAL_IDENTIFICATION.Add(cDMA_INDIVIDUAL_IDENTIFICATION_SAVE);
                 
@@ -1048,7 +1048,7 @@ namespace CMdm.UI.Web.Controllers
                   cDMA_INDIVIDUAL_IDENTIFICATION.IP_ADDRESS = this.Request.ServerVariables["REMOTE_ADDR"];
                   cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_BY = DynamicModel.identification.LAST_MODIFIED_BY;
                   cDMA_INDIVIDUAL_IDENTIFICATION.LAST_MODIFIED_DATE = dateAndTime;
-                  cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
+                  //cDMA_INDIVIDUAL_IDENTIFICATION.PLACE_OF_ISSUANCE = DynamicModel.identification.PLACE_OF_ISSUANCE;
                   cDMA_INDIVIDUAL_IDENTIFICATION.AUTHORISED = "U";
                 CDMA_INDIVIDUAL_IDENTIFICATION identification_data = (CDMA_INDIVIDUAL_IDENTIFICATION)this.Session["cDMA_INDIVIDUAL_IDENTIFICATION"];
 
@@ -1893,13 +1893,13 @@ namespace CMdm.UI.Web.Controllers
                                 + current.ID_NO + "</td></tr>";
             }
 
-            if (!(retrunValue(current.PLACE_OF_ISSUANCE).Equals(retrunValue(previous.PLACE_OF_ISSUANCE))))
-            {
-                index_id.Add(6);
-                result = result + "<tr><td> ID Place of Issueance changed from  <strong>"
-                                + previous.PLACE_OF_ISSUANCE + "</strong> To "
-                                + current.PLACE_OF_ISSUANCE + "</td></tr>";
-            }
+            //if (!(retrunValue(current.PLACE_OF_ISSUANCE).Equals(retrunValue(previous.PLACE_OF_ISSUANCE))))
+            //{
+            //    index_id.Add(6);
+            //    result = result + "<tr><td> ID Place of Issueance changed from  <strong>"
+            //                    + previous.PLACE_OF_ISSUANCE + "</strong> To "
+            //                    + current.PLACE_OF_ISSUANCE + "</td></tr>";
+            //}
 
 
             return result;
@@ -1952,21 +1952,21 @@ namespace CMdm.UI.Web.Controllers
                                 + previous.DATE_OF_BIRTH + "</strong> To "
                                 + current.DATE_OF_BIRTH + "</td></tr>";
             }
-            if (!(retrunValue(current.DISABILITY).Equals(retrunValue(previous.DISABILITY))))
-            {
-                index_id.Add(11);
-                result = result + "<tr><td> Disability changed from <strong>"
-                                + previous.DISABILITY + "</strong> To "
-                                + current.DISABILITY + "</td></tr>";
-            }
+            //if (!(retrunValue(current.DISABILITY).Equals(retrunValue(previous.DISABILITY))))
+            //{
+            //    index_id.Add(11);
+            //    result = result + "<tr><td> Disability changed from <strong>"
+            //                    + previous.DISABILITY + "</strong> To "
+            //                    + current.DISABILITY + "</td></tr>";
+            //}
 
-            if (!(retrunValue(current.DISABILITY).Equals(retrunValue(previous.DISABILITY))))
-            {
-                /*index_id.Add(12);
-                result = result +  "<tr><td> Disability changed from <strong>"
-                                + previous.DISABILITY + "</strong> To "
-                                + current.DISABILITY + "</td></tr>";*/
-            }
+            //if (!(retrunValue(current.DISABILITY).Equals(retrunValue(previous.DISABILITY))))
+            //{
+            //    /*index_id.Add(12);
+            //    result = result +  "<tr><td> Disability changed from <strong>"
+            //                    + previous.DISABILITY + "</strong> To "
+            //                    + current.DISABILITY + "</td></tr>";*/
+            //}
 
             if (!(retrunValue(current.FIRST_NAME).Equals(retrunValue(previous.FIRST_NAME))))
             {
@@ -2005,21 +2005,21 @@ namespace CMdm.UI.Web.Controllers
                                + current.NATIONALITY + "</td></tr>";
             }
 
-            if (!(retrunValue(current.NICKNAME_ALIAS).Equals(retrunValue(previous.NICKNAME_ALIAS))))
-            {
-                index_id.Add(17);
-                result = result + "<tr><td> Nickname Changed from<strong>"
-                                + previous.NICKNAME_ALIAS + "</strong> To "
-                                + current.NICKNAME_ALIAS + "</td></tr>";
-            }
+            //if (!(retrunValue(current.NICKNAME_ALIAS).Equals(retrunValue(previous.NICKNAME_ALIAS))))
+            //{
+            //    index_id.Add(17);
+            //    result = result + "<tr><td> Nickname Changed from<strong>"
+            //                    + previous.NICKNAME_ALIAS + "</strong> To "
+            //                    + current.NICKNAME_ALIAS + "</td></tr>";
+            //}
 
-            if (!(current.NUMBER_OF_CHILDREN.Equals(previous.NUMBER_OF_CHILDREN)))
-            {
-                index_id.Add(18);
-                result = result + "<tr><td> Number of children changed from<strong>"
-                                + previous.NUMBER_OF_CHILDREN + "</strong> To "
-                                + current.NUMBER_OF_CHILDREN + "</td></tr>";
-            }
+            //if (!(current.NUMBER_OF_CHILDREN.Equals(previous.NUMBER_OF_CHILDREN)))
+            //{
+            //    index_id.Add(18);
+            //    result = result + "<tr><td> Number of children changed from<strong>"
+            //                    + previous.NUMBER_OF_CHILDREN + "</strong> To "
+            //                    + current.NUMBER_OF_CHILDREN + "</td></tr>";
+            //}
 
             if (!(retrunValue(current.OTHER_NAME).Equals(retrunValue(previous.OTHER_NAME))))
             {
@@ -2028,13 +2028,13 @@ namespace CMdm.UI.Web.Controllers
                                 + previous.OTHER_NAME + "</strong> To "
                                 + current.OTHER_NAME + "</td></tr>";
             }
-            if (!(retrunValue(current.PLACE_OF_BIRTH).Equals(previous.PLACE_OF_BIRTH)))
-            {
-                index_id.Add(20);
-                result = result + "<tr><td> Place of birth changed from<strong>"
-                                + previous.PLACE_OF_BIRTH + "</strong> To "
-                                + current.PLACE_OF_BIRTH + "</td></tr>";
-            }
+            //if (!(retrunValue(current.PLACE_OF_BIRTH).Equals(previous.PLACE_OF_BIRTH)))
+            //{
+            //    index_id.Add(20);
+            //    result = result + "<tr><td> Place of birth changed from<strong>"
+            //                    + previous.PLACE_OF_BIRTH + "</strong> To "
+            //                    + current.PLACE_OF_BIRTH + "</td></tr>";
+            //}
 
             if (!(retrunValue(current.RELIGION).Equals(previous.RELIGION)))
             {
@@ -2674,7 +2674,7 @@ namespace CMdm.UI.Web.Controllers
             cDMA_INDIVIDUAL_IDENTIFICATION_LOG.IP_ADDRESS = identification_data.IP_ADDRESS;//.ServerVariables["REMOTE_ADDR"];
             cDMA_INDIVIDUAL_IDENTIFICATION_LOG.LAST_MODIFIED_BY = identification_data.LAST_MODIFIED_BY;
             cDMA_INDIVIDUAL_IDENTIFICATION_LOG.LAST_MODIFIED_DATE = identification_data.LAST_MODIFIED_DATE;
-            cDMA_INDIVIDUAL_IDENTIFICATION_LOG.PLACE_OF_ISSUANCE = identification_data.PLACE_OF_ISSUANCE;
+            //cDMA_INDIVIDUAL_IDENTIFICATION_LOG.PLACE_OF_ISSUANCE = identification_data.PLACE_OF_ISSUANCE;
             cDMA_INDIVIDUAL_IDENTIFICATION_LOG.LAST_MODIFIED_BY = identification_data.LAST_MODIFIED_BY;
              
             return cDMA_INDIVIDUAL_IDENTIFICATION_LOG;
@@ -2687,28 +2687,28 @@ namespace CMdm.UI.Web.Controllers
             var identity = ((CustomPrincipal)User).CustomIdentity;
             CDMA_INDIVIDUAL_BIO_LOG cDMA_INDIVIDUAL_BIO_DATA_LOG = new CDMA_INDIVIDUAL_BIO_LOG();
 
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.AGE = bio_data.AGE;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.AGE = bio_data.AGE;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.AUTHORISED = bio_data.AUTHORISED;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.AUTHORISED_BY = bio_data.AUTHORISED_BY;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.AUTHORISED_DATE = bio_data.AUTHORISED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.BRANCH_CODE = bio_data.BRANCH_CODE;
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.COMPLEXION = bio_data.COMPLEXION;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.COMPLEXION = bio_data.COMPLEXION;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.COUNTRY_OF_BIRTH = bio_data.COUNTRY_OF_BIRTH; // DynamicModel.BioData.COUNTRY_OF_BIRTH;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.CREATED_BY = bio_data.CREATED_BY;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.CREATED_DATE = bio_data.CREATED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.CUSTOMER_NO = bio_data.CUSTOMER_NO;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.DATE_OF_BIRTH = bio_data.DATE_OF_BIRTH;
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.DISABILITY = bio_data.DISABILITY;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.DISABILITY = bio_data.DISABILITY;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.FIRST_NAME = bio_data.FIRST_NAME;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.IP_ADDRESS = bio_data.IP_ADDRESS;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.LAST_MODIFIED_DATE = bio_data.LAST_MODIFIED_DATE;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.MARITAL_STATUS = bio_data.MARITAL_STATUS;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.MOTHER_MAIDEN_NAME = bio_data.MOTHER_MAIDEN_NAME;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.NATIONALITY = bio_data.NATIONALITY;
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.NICKNAME_ALIAS = bio_data.NICKNAME_ALIAS;
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.NUMBER_OF_CHILDREN = bio_data.NUMBER_OF_CHILDREN;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.NICKNAME_ALIAS = bio_data.NICKNAME_ALIAS;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.NUMBER_OF_CHILDREN = bio_data.NUMBER_OF_CHILDREN;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.OTHER_NAME = bio_data.OTHER_NAME;
-            cDMA_INDIVIDUAL_BIO_DATA_LOG.PLACE_OF_BIRTH = bio_data.PLACE_OF_BIRTH;
+            //cDMA_INDIVIDUAL_BIO_DATA_LOG.PLACE_OF_BIRTH = bio_data.PLACE_OF_BIRTH;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.RELIGION = bio_data.RELIGION;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.SEX = bio_data.SEX;
             cDMA_INDIVIDUAL_BIO_DATA_LOG.STATE_OF_ORIGIN = bio_data.STATE_OF_ORIGIN;

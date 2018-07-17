@@ -234,7 +234,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                    $("#@Html.FieldIdFor(model => model.SearchName), #SOL_ID, #ACCOUNT_NAME").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;

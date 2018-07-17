@@ -4,7 +4,7 @@
     ViewBag.SubTitle = "List";*@
 @{
     ViewBag.Title = "Pending Authorizations";
-    ViewBag.SubTitle = "List";
+    //ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 10;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -49,25 +49,25 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
+                            @*<div class="form-group">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.CreatedOnFrom)
+            </div>
+            <div class="col-md-8">
+                @Html.CMdmEditorFor(model => model.CreatedOnFrom)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.CreatedOnTo)
+            </div>
+            <div class="col-md-8">
+                @Html.CMdmEditorFor(model => model.CreatedOnTo)
+            </div>
+        </div>*@
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    @Html.LabelFor(model => model.CreatedOnFrom)
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.CMdmEditorFor(model => model.CreatedOnFrom)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    @Html.LabelFor(model => model.CreatedOnTo)
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.CMdmEditorFor(model => model.CreatedOnTo)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    @Html.Label("Customer ID")
+                                    @Html.Label("Customer No")
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmEditorFor(model => model.SearchName)
@@ -81,7 +81,15 @@
                                     @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
                                 </div>
                             </div>
-                            
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.Label("Tier")
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.CMdmDropDownListFor(model => model.TIER, Model.Tiers)
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="button" id="search-rule" class="btn btn-warning btn-search">
@@ -92,14 +100,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.ISSUE_PRIORITY_DESC)
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmDropDownList("PRIORITY_CODE", Model.Priorities)
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <div class="col-md-4">
                                     @Html.LabelFor(model => model.ISSUE_STATUS_DESC)
@@ -174,7 +182,9 @@
                                         template: "<input type='checkbox' value='#=EXCEPTION_ID#' class='checkboxGroups'/>",
                                         width: 50
                                     },
-                                    {  template: function (dataItem) {
+                                    {
+                                        width: 50,
+                                        template: function (dataItem) {
                                         //console.log(dataItem);
                                         //var button = $(this);
                                         //var row = $(this).select().closest("tr"); 
@@ -198,7 +208,7 @@
                                 },{
                                     field: "RULE_NAME",
                                     title: "Rulename",
-                                    width: 200
+                                    width: 100
                                 },{
                                     field: "BRANCH_NAME",
                                     title: "Branch",
@@ -206,19 +216,24 @@
                                 },{
                                     field: "CUST_ID",
                                     title: "Customer Id",
-                                    width: 100
+                                    width: 70
                                 },
                                 {
                                     field: "FIRSTNAME",
                                     title: "Firstname",
-                                    width: 150
+                                    width: 100
                                 },
                                 {
                                     field: "SURNAME",
                                     title: "Lastname",
-                                    width: 150
+                                    width: 100
                                 },
-                                @if (1==1)
+                                {
+                                    field: "TIER",
+                                    title: "Tier",
+                                    width: 50
+                                },
+                                @*@if (1==1)
                                 {
                                         <text>{
                                     field: "PRIORITY_CODE",
@@ -232,17 +247,17 @@
                                                 '# if(PRIORITY_CODE == 5) {# green #} #' +
                                                 '">#=ISSUE_PRIORITY_DESC#</span>'
                                         },</text>
-                                    }
+                                    }*@
 
                                 {
                                     field: "RUN_DATE",
                                     title: "Last Run Date",
-                                    width: 150,
+                                    width: 70,
                                     type: "date",
                                     format: "{0:G}",
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
-
+                                    template: "#= kendo.toString(kendo.parseDate(RUN_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
                                 },
                                     @if (1==1)
                                     {
@@ -285,7 +300,7 @@
                                 selectedIds = [];
                                 return false;
                             });
-                            $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                            $("#@Html.FieldIdFor(model => model.SearchName), #BRANCH_CODE, #ISSUE_STATUS_DESC, #CATALOG_ID").keydown(function (event) {
                                 if (event.keyCode == 13) {
                                     $("#search-rule").click();
                                     return false;
@@ -412,9 +427,25 @@
                             });
 
 
-                            $('#mastercheckbox').click(function() {
-                                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                            //$('#mastercheckbox').click(function() {
+                            //    $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+                            //});
+
+                            $('#mastercheckbox').change(function (ev) {
+                                var checked = ev.target.checked;
+                                $('.checkboxGroups').each(function (idx, item) {
+                                    if (checked) {
+                                        if (!($(item).closest('tr').is('.k-state-selected'))) {
+                                            $(item).click();
+                                        }
+                                    } else {
+                                        if ($(item).closest('tr').is('.k-state-selected')) {
+                                            $(item).click();
+                                        }
+                                    }
+                                });
                             });
+
 
                             //wire up checkboxes.
                             $('#dqauth-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function(e) {
@@ -444,7 +475,8 @@
                                 BRANCH_CODE: $('#BRANCH_CODE').val(),
                                 PRIORITY_CODE: $('#PRIORITY_CODE').val(),
                                 STATUS_CODE: $('#STATUS_CODE').val(),
-                                CATALOG_ID: $('#CATALOG_ID').val()
+                                CATALOG_ID: $('#CATALOG_ID').val(),
+                                TIER: $('#TIER').val(),
                                 @*CreatedOnFrom: $('#@Html.FieldIdFor(model => model.CreatedOnFrom)').val(),
                                 CreatedOnTo: $('#@Html.FieldIdFor(model => model.CreatedOnTo)').val(),
                                     Dates in kendo :https://blog.falafel.com/passing-dates-kendo-ui-aspnet/

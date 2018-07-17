@@ -13,6 +13,9 @@ using CMdm.Framework.Kendoui;
 using CMdm.Services.Security;
 using CMdm.Framework.Controllers;
 using CMdm.UI.Web.Helpers.CrossCutting.Security;
+using System.Reflection;
+using System.Data.Entity.Validation;
+using CMdm.Entities.ViewModels;
 
 namespace CMdm.UI.Web.Controllers
 {
@@ -449,6 +452,91 @@ namespace CMdm.UI.Web.Controllers
             //    database.SaveChanges();
             //}
             return PartialView("_ListRolesTable4Permission", mdmPerm);
+        }
+
+        public ActionResult Loadnew()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return AccessDeniedView();
+
+            GetAssemblyActions();
+            var model = new PermissionListModel(); //new SelectList(database.CM_USER_ROLES, "ROLE_ID", "ROLE_NAME").ToList();
+            model.Permissions = new SelectList(db.CM_PERMISSIONS, "PERMISSION_ID", "PERMISSIONDESCRIPTION").ToList();
+            model.Permissions.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0"
+            });
+
+            //return View(model);
+            return RedirectToAction("List");
+        }
+        public static void GetAssemblyActions()
+        {
+            try
+            {
+                var projectName = Assembly.GetExecutingAssembly().FullName.Split(',')[0];
+
+                Assembly asm = Assembly.GetAssembly(typeof(MvcApplication));
+
+                var model = asm.GetTypes().
+                    SelectMany(t => t.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+                    .Where(d => d.ReturnType.Name == "ActionResult").Select(n => new AssemblyMenuModel()
+                    {
+                        Controller = n.DeclaringType?.Name.Replace("Controller", ""),
+                        Action = n.Name,
+                        ReturnType = n.ReturnType.Name,
+                        Attributes = string.Join(",", n.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", ""))),
+                        Area = n.DeclaringType.Namespace.ToString().Replace(projectName + ".", "").Replace("Areas.", "").Replace(".Controllers", "").Replace("Controllers", "")
+                    });
+
+                SaveMenu(model.ToList());
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+        }
+        [NonAction]
+        private static void SaveMenu(List<AssemblyMenuModel> menuItems)
+        {
+            using (AppDbContext _db = new AppDbContext())
+            {
+                foreach (AssemblyMenuModel item in menuItems)
+                {
+
+
+                    int exists = _db.CM_PERMISSIONS.Where(a => a.CONTROLLER_NAME == item.Controller && a.ACTION_NAME == item.Action).Count();
+
+                    if (exists < 1)
+                    {
+                        CM_PERMISSIONS newPermission = new CM_PERMISSIONS();
+                        newPermission.ACTION_NAME = item.Action;
+                        newPermission.CONTROLLER_NAME = item.Controller;
+                        newPermission.TOGGLE_ICON = "fa fa-angle-left";
+                        newPermission.ISACTIVE = false;
+                        newPermission.FORM_URL = "/" + item.Controller + "/" + item.Action;
+                        newPermission.PERMISSIONDESCRIPTION = item.Controller + " " + item.Action;
+                        newPermission.PARENT_PERMISSION = 3;
+                        //newPermission.PERMISSION_ID = 1;
+
+                        _db.CM_PERMISSIONS.Add(newPermission);
+                    }
+
+                }
+                _db.SaveChanges();
+            }
         }
     }
 }

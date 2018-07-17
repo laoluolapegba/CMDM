@@ -32,6 +32,9 @@ namespace CMdm.Data
         public AppDbContext()
             : base("name=AppDbContext")
         {
+            //reducing database "chatter" in code first
+            //step 1: turn off initialization -https://romiller.com/2014/06/10/reducing-code-first-database-chatter/
+            Database.SetInitializer<AppDbContext>(null);
         }
         public int SaveChanges(string userId, string custID, bool updateFlag, object originalEntity)
         {

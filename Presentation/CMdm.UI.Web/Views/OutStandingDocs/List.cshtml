@@ -1,5 +1,5 @@
 ﻿@using CMdm.Framework;
-@model CMdm.UI.Web.Models.CustomModule.Fcmb.OutstandingDocModel
+@model CMdm.UI.Web.Models.CustomModule.Fcmb.DistinctDocsModel
 
 @{
     //page title
@@ -62,7 +62,7 @@
                                         @Html.Label("Account Name")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.SearchName)
+                                        @Html.CMdmEditorFor(model => model.ACCT_NAME)
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -73,30 +73,29 @@
                                         @Html.CMdmEditorFor(model => model.CIF_ID)
                                     </div>
                                 </div>
-                                <div cl
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Account Number")
+                                        @Html.Label("Branch Name")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmEditorFor(model => model.FORACID)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        @Html.LabelFor(model => model.BRANCH_CODE)
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.CMdmDropDownList("BRANCH_CODE", Model.Branches)
+                                        @Html.CMdmDropDownListFor(model => model.SOL_ID, Model.Branches)
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-md-7">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer Type")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.CUSTOMERTYPE, Model.CustomerTypes)
+                                    </div>
                                 </div>
+                            </div>
                             </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -116,7 +115,7 @@
                                         type: "json",
                                         transport: {
                                             read: {
-                                                url: "@Html.Raw(Url.Action("DocumentsList", "OutStandingDocs"))",
+                                                url: "@Html.Raw(Url.Action("DistinctList", "OutStandingDocs"))",
                                                 type: "POST",
                                                 dataType: "json",
                                                 data: additionalData
@@ -158,9 +157,12 @@
                                             width: 50
                                         },
                                         {
-                                            field: "FORACID",
-                                            title: "Account Number",
-                                            width: 100
+                                            field: "CIF_ID",
+                                            title: "Customer Id",
+                                            width: 100,
+                                            headerAttributes: { style: "text-align:left" },
+                                            attributes: { style: "text-align:left" },
+                                            template: '<a href="@Url.Content("~/OutStandingDocs/AuthList/")#=CIF_ID#">#:CIF_ID#</a>'
                                         },
                                         {
                                             field: "ACCT_NAME",
@@ -168,66 +170,43 @@
                                             width: 200
                                         },
                                         {
-                                       field: "SOL_ID",
-                                       title: "Branch Code",
-                                       width: 50,
+                                            field: "SOL_ID",
+                                            title: "Branch Code",
+                                            width: 50,
                                         },
                                         {
                                             field: "BRANCH_NAME",
                                             title: "Branch Name",
                                             width: 100,
                                         },
-                                        
-                                    {
-                                        field: "SCHM_CODE",
-                                        title: "Product Code",
-                                        width: 100,
-                                    },
-                                    {
-                                        field: "SCHM_DESC",
-                                        title: "Product Description",
-                                        width: 200
-                                    },
-                                    {
-                                        field: "SCHM_TYPE",
-                                        title: "Type",
-                                        width: 70
-                                    },
-                                     {
-                                         field: "REF_DESC",
-                                         title: "OutStanding Document",
-                                         width: 200
-                                     },
-                                     
-                                    {
-                                        field: "DUE_DATE",
-                                        title: "Due date",
-                                        width: 100,
-                                        template: "#= kendo.toString(kendo.parseDate(DUE_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
-                                    },                                    
-                                    {
-                                        field: "FREZ_REASON_CODE",
-                                        title: "Reason",
-                                        width: 100
-                                    },
-                                    {
-                                        field: "ACCTOFFICER_CODE",
-                                        title: "Account Officer Code",
-                                        width: 100
-                                    },
-                                    {
-                                        field: "ACCTOFFICER_NAME",
-                                        title: "Account Officer Name",
-                                        width: 100
-                                    },
-                                    {
-                                        field: "CIF_ID",
-                                        title: "Customer Id",
-                                        width: 100,
-                                        headerAttributes: { style: "text-align:left" },
-                                        attributes: { style: "text-align:left" },
-                                    }
-                                    
+                                         
+                                        {
+                                            field: "DUE_DATE",
+                                            title: "Due date",
+                                            width: 100,
+                                            template: "#= kendo.toString(kendo.parseDate(DUE_DATE, 'yyyy-MM-dd'), 'dd/MM/yyyy') #"
+                                        },
+                                        {
+                                            field: "FREZ_REASON_CODE",
+                                            title: "Reason",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "ACCTOFFICER_CODE",
+                                            title: "Account Officer Code",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "ACCTOFFICER_NAME",
+                                            title: "Account Officer Name",
+                                            width: 100
+                                        },
+                                        {
+                                            field: "CUSTOMERTYPE",
+                                            title: "Customer Type",
+                                            width: 70
+                                        }
+
                                     ]
                                 });
                             });
@@ -254,7 +233,7 @@
                         return false;
                     });
 
-                    $("#@Html.FieldIdFor(model => model.SearchName)").keydown(function (event) {
+                    $("#ACCT_NAME, #CIF_ID, #SOL_ID").keydown(function (event) {
                         if (event.keyCode === 13) {
                             $("#search-products").click();
                             return false;
@@ -308,10 +287,11 @@
 
                 function additionalData() {
                     var data = {
-                        SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
-                        BRANCH_CODE: $('#BRANCH_CODE').val(),
-                        FORACID: $('#FORACID').val(),
+                        SearchName: $('#@Html.FieldIdFor(model => model.ACCT_NAME)').val(),
+                        SOL_ID: $('#SOL_ID').val(),
+                        ACCT_NAME: $('#ACCT_NAME').val(),
                         CIF_ID: $('#CIF_ID').val(),
+                        CUSTOMERTYPE: $('#CUSTOMERTYPE').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;

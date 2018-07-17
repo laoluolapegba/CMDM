@@ -15,7 +15,7 @@ public partial class SRC_CDMA_STATE
 
         
         [Key]
-        public decimal STATE_ID { get; set; }
+        public int STATE_ID { get; set; }
         public string STATE_NAME { get; set; }
 
         public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }

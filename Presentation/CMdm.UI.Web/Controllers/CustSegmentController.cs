@@ -75,18 +75,33 @@ namespace CMdm.UI.Web.Controllers
                 Text = "All",
                 Selected = true
             });
-
-            model.Reasons.Add(new SelectListItem
+            model.SectorList.Add(new SelectListItem
             {
-                Text = "MISMATCH SECTOR AND SUBSECTOR",
-                Value = "MISMATCH SECTOR AND SUBSECTOR"
+                Value = "Sector is null",
+                Text = "Sector is null"
             });
-            model.Reasons.Add(new SelectListItem
+            model.SectorList.Add(new SelectListItem
             {
-                Text = "SECTOR AND SUBSECTOR ARE NULL",
-                Value = "SECTOR AND SUBSECTOR ARE NULL"
+                Value = "Sector is not null",
+                Text = "Sector is not null"
             });
-            model.Reasons.Add(new SelectListItem
+            model.SectorList.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+            model.SubsectorList.Add(new SelectListItem
+            {
+                Value = "Subsector is null",
+                Text = "Subsector is null"
+            });
+            model.SubsectorList.Add(new SelectListItem
+            {
+                Value = "Subsector is not null",
+                Text = "Subsector is not null"
+            });
+            model.SubsectorList.Add(new SelectListItem
             {
                 Value = "0",
                 Text = "All",
@@ -124,7 +139,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
 
@@ -138,7 +154,7 @@ namespace CMdm.UI.Web.Controllers
         {
 
             var items = _dqQueService.GetAllCustSegments(model.ORGKEY, model.CUSTOMER_TYPE, model.ACCOUNT_NO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, 
-                model.REASON, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+                model.SECTOR, model.SUBSECTOR, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -184,7 +200,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var items = _dqQueService.GetAllCustSegments(model.ORGKEY, model.CUSTOMER_TYPE, model.ACCOUNT_NO, model.CUST_FIRST_NAME, 
-                model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, model.REASON);
+                model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.PRIMARY_SOL_ID, model.SECTOR, model.SUBSECTOR);
 
             try
             {

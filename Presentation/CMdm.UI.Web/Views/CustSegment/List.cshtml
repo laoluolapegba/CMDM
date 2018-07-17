@@ -81,8 +81,6 @@
                                         @Html.CMdmEditorFor(model => model.CUST_FIRST_NAME)
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.LabelFor(model => model.CUST_MIDDLE_NAME)
@@ -91,6 +89,8 @@
                                         @Html.CMdmEditorFor(model => model.CUST_MIDDLE_NAME)
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         @Html.LabelFor(model => model.CUST_LAST_NAME)
@@ -109,17 +109,25 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        @Html.Label("Reason")
+                                        @Html.Label("Sector")
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.CMdmDropDownListFor(model => model.REASON, Model.Reasons)
+                                        @Html.CMdmDropDownListFor(model => model.SECTOR, Model.SectorList)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Subsector")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.SUBSECTOR, Model.SubsectorList)
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -284,11 +292,6 @@
                                             title: "Corp ID",
                                             width: 50
                                         },
-                                        {
-                                            field: "REASON",
-                                            title: "Reason",
-                                            width: 100
-                                        },
                                     ]
                                 });
                             });
@@ -316,7 +319,7 @@
             });
 
             /**/
-            $("#CUST_FIRST_NAME").keydown(function (event) {
+            $("#CUST_FIRST_NAME,#ACCOUNT_NO, #ORGKEY, #CUSTOMER_TYPE, #CUST_FIRST_NAME, #CUST_MIDDLE_NAME, #CUST_LAST_NAME, #PRIMARY_SOL_ID, #REASON").keydown(function (event) {
             /**/
             if (event.keyCode === 13) {
                 $("#search-products").click();
@@ -377,7 +380,8 @@
             PRIMARY_SOL_ID: $('#PRIMARY_SOL_ID').val(),
             ACCOUNT_NO: $("#ACCOUNT_NO").val(),
             CUSTOMER_TYPE: $("#CUSTOMER_TYPE").val(),
-            REASON: $("#REASON").val(),
+            SECTOR: $('#SECTOR').val(),
+            SUBSECTOR: $('#SUBSECTOR').val(),
         };
         addAntiForgeryToken(data);
         return data;

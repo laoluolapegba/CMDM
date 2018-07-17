@@ -14,7 +14,8 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         {
             Branches = new List<SelectListItem>();
             CustomerTypes = new List<SelectListItem>();
-            Reasons = new List<SelectListItem>();
+            SectorList = new List<SelectListItem>();
+            SubsectorList = new List<SelectListItem>();
         }
 
         [DisplayName("Organization Key ")]
@@ -67,6 +68,7 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         }
         public IList<SelectListItem> Branches { get; set; }
         public IList<SelectListItem> CustomerTypes { get; set; }
-        public IList<SelectListItem> Reasons { get; set; }
+        public IList<SelectListItem> SectorList { get; set; }
+        public IList<SelectListItem> SubsectorList { get; set; }
     }
 }

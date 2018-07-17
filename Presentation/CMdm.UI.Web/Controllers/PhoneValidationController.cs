@@ -85,7 +85,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
 
@@ -97,7 +98,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult PhoneValidationList(DataSourceRequest command, PhoneValidationModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllPhoneValidations(model.CUSTOMER_NO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME,
+            var items = _dqQueService.GetAllPhoneValidations(model.CUSTOMER_NO, model.ACCOUNTNO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME,
                 model.CUST_LAST_NAME, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
@@ -117,6 +118,8 @@ namespace CMdm.UI.Web.Controllers
                     PHONE_NO = x.PHONE_NO,
                     TYPE = x.TYPE,
                     BRANCH_NAME = x.BRANCH_NAME,
+                    SCHEME_CODE = x.SCHEME_CODE,
+                    ACCOUNTNO = x.ACCOUNTNO,
                 }),
                 Total = items.TotalCount
             };
@@ -131,7 +134,7 @@ namespace CMdm.UI.Web.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
-            var items = _dqQueService.GetAllPhoneValidations(model.CUSTOMER_NO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE);
+            var items = _dqQueService.GetAllPhoneValidations(model.CUSTOMER_NO, model.ACCOUNTNO, model.CUST_FIRST_NAME, model.CUST_MIDDLE_NAME, model.CUST_LAST_NAME, model.BRANCH_CODE);
 
             try
             {

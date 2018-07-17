@@ -37,7 +37,7 @@ namespace CMdm.UI.Web.Models.Customer
         [DisplayName("Purpose of Account")]
         public string PURPOSE_OF_ACCOUNT { get; set; }
         [DisplayName("Country")]
-        public decimal? COUNTRY { get; set; }
+        public int? COUNTRY { get; set; }
         [DisplayName("Foreigner")]
         public string FOREIGNER { get; set; }
         [DisplayName("Multiple Citezenship")]

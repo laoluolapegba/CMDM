@@ -41,6 +41,10 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public int? CORP_ID { get; set; }
         [DisplayName("Date of Run ")]
         public DateTime? DATE_OF_RUN { get; set; }
+        [DisplayName("Scheme Code ")]
+        public string SCHEME_CODE { get; set; }
+        [DisplayName("Account Number ")]
+        public string ACCOUNTNO { get; set; }
 
         public int Id
         {
